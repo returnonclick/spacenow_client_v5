@@ -1,42 +1,30 @@
+/* 
+ * MODEL NAME
+ * User
+ * 
+ * IMPORTED MODELS
+ * UserData
+ * 
+ * Path to firebase: `/users/{$userUID}`
+ * 
+ *  */
+
+import { UserData } from "@shared/models/user-data";
 import * as firebase from 'firebase/app';
 
 export class User {
-  userId: string;
-  displayName: string;
-  email: string;
-  password: string;
-  photoURL: string;
-  emailVerified: boolean;
-  status?: UserStatus;
+  userUID: string = null;
+  userData: Array<UserData> = new Array();
+  isVerified: boolean = false;
   idToken?: string;
   roles: any[];
-  createdBy?: string;
-  createdAt?: Date;
-  lastUpdatedBy?: string;
-  lastUpdatedAt?: Date;
-  approvedBy?: string;
-  approvedAt?: Date;
-  authState: firebase.User;
-  type: UserType;
 
-  constructor(authState?: firebase.User) {
-    if (authState) {
-      this.authState = authState;
-      this.userId = authState.uid;
-      this.emailVerified = authState.emailVerified;
-      this.email = authState.providerData[0].email;
-      this.photoURL = authState.providerData[0].photoURL ? authState.providerData[0].photoURL : 'https://pickaface.net/assets/images/slides/slide2.png';
-      this.displayName = (authState.providerData[0].displayName ? authState.providerData[0].displayName : this.email);
+  constructor(model: any = null) {
+    if (model) {
+      this.userData.push(new UserData(model))
+      this.userUID = model.userUID || model.uid
     }
   }
 }
 
-export enum UserStatus {
-  ACTIVE,
-  INACTIVE
-}
-
-export enum UserType {
-  INDIVIDUAL = 'individual',
-  BUSINESS = 'business'
-}
+export default [ User ]

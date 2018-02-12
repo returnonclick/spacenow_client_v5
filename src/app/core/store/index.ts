@@ -1,38 +1,118 @@
 import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
-} from '@ngrx/store';
-import { environment } from '@environments/environment';
-import * as fromUser from './user/user.reducer';
-import * as fromPost from './post/post.reducer';
+    ActionReducerMap,
+    createSelector,
+    createFeatureSelector,
+    ActionReducer,
+    MetaReducer,
+} from '@ngrx/store'
+import { environment } from '../../../environments/environment'
+import { RouterStateUrl } from './utils'
+import * as fromRouter from '@ngrx/router-store'
 
+/**
+ * storeFreeze prevents state from being mutated. When mutation occurs, an
+ * exception will be thrown. This is useful during development mode to
+ * ensure that none of the reducers accidentally mutates the state.
+ */
+import { storeFreeze } from 'ngrx-store-freeze'
+
+/**
+ * Every reducer module's default export is the reducer function itself. In
+ * addition, each module should export a type or interface that describes
+ * the state of the reducer plus any selector functions. The `* as`
+ * notation packages up all of the exports into a single object.
+ */
+
+/**
+ * The following line about layout is commented, but you can refer to
+ * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts
+ * for detailed implementations
+ */
+
+import * as fromAuth            from '@core/store/auth/reducers/auth'
+import * as fromUsers           from '@core/store/users/reducers/users'
+
+/**
+ * As mentioned, we treat each reducer like a table in a database. This means
+ * our top level state interface is just a map of keys to inner state types.
+ */
 export interface State {
-
-  user: fromUser.State;
-  post: fromPost.State;
+    auth:          fromAuth.State
+    users:         fromUsers.State
+    routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
 }
 
+/**
+ * Our state is composed of a map of action reducer functions.
+ * These reducer functions are called with each dispatched action
+ * and the current or initial state and return a new immutable state.
+ */
 export const reducers: ActionReducerMap<State> = {
+    auth:          fromAuth.reducer,
+    users:         fromUsers.reducer,
+    routerReducer: fromRouter.routerReducer,
+}
 
-  user: fromUser.reducer,
-  post: fromPost.reducer,
-};
+// console.log all actions
+export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
+    return function (state: State, action: any): State {
+        console.log('state', state)
+        console.log('action', action)
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+        return reducer(state, action)
+    }
+}
 
-export const selectPostState = createFeatureSelector<fromPost.State>('post');
+/**
+ * By default, @ngrx/store uses combineReducers with the reducer map to compose
+ * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
+ * that will be composed to form the root meta-reducer.
+ */
+export const metaReducers: MetaReducer<State>[] = !environment.production
+    ? [logger, storeFreeze]
+    : []
 
-export const selectPostIds = createSelector(selectPostState, fromPost.selectPostIds);
-export const selectPostEntities = createSelector(selectPostState, fromPost.selectPostEntities);
-export const selectAllPosts = createSelector(selectPostState, fromPost.selectAllPosts);
-export const selectPostTotal = createSelector(selectPostState, fromPost.selectPostTotal);
-// export const selectCurrentPostId = createSelector(selectPostState, fromPost.getSelectedPostId);
-//
-// export const selectCurrentPost = createSelector(
-//   selectPostEntities,
-//   selectCurrentPostId,
-//   (postEntities, postId) => postEntities[postId]
-// );
+/**
+ * Auth Reducers
+ */
+export const getAuthState = createFeatureSelector<fromAuth.State>('auth')
+
+export const getAuthEntitiesState = createSelector(
+    getAuthState,
+    (state) => state
+)
+
+export const {
+    selectIds: getAuthIds,
+    selectEntities: getAuthEntities,
+    selectAll: getAllAuth,
+    selectTotal: getTotalAuth,
+  } = fromAuth.authAdapter.getSelectors(getAuthEntitiesState)
+
+export const getAuthUserState = createSelector(
+    getAuthState,
+    fromAuth.getAuthUser
+)
+
+export const getIsSignedInState = createSelector(
+    getAuthState,
+    fromAuth.isSignedIn
+)
+
+/**
+ * Users Reducer
+ */
+
+export const getUsersState = createFeatureSelector<fromUsers.State>('users')
+
+export const getUserEntitiesState = createSelector(
+    getUsersState,
+    (state) => state
+)
+
+export const {
+    selectIds: getUserIds,
+    selectEntities: getUserEntities,
+    selectAll: getAllUsers,
+    selectTotal: getTotalUsers,
+  } = fromUsers.userAdapter.getSelectors(getUserEntitiesState)

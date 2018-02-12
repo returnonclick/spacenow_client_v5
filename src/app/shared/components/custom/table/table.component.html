@@ -1,0 +1,21 @@
+<div class="action-bar" fxLayoutAlign="end center" fxLayoutGap="10px">
+  <button mat-button color="primary" (click)="openFilterDialog()">Filter: {{ hasFilter ? 'On' : 'Off' }}</button>
+  <button mat-raised-button color="primary" (click)="addItemDialog()">Create New</button>
+</div>
+
+<mat-table [dataSource]="dataSource" matSort>
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <ng-container *ngFor="let column of itemsCols" [matColumnDef]="column.name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.displayName }}</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ valMap(column.name, row) }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editItemDialog(row)"></mat-row>
+
+</mat-table>
+
+<mat-paginator></mat-paginator>

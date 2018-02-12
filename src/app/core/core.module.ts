@@ -1,17 +1,33 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
 
-import { PostService } from './store/post/post.service';
+import { AngularFireDatabaseModule } from 'angularfire2/database'
+import { AngularFireAuthModule } from 'angularfire2/auth'
+import { AngularFirestoreModule } from 'angularfire2/firestore'
+
+import {
+} from './services'
+
+import { AuthService } from '@core/store/auth/services'
+import { AuthEffects } from '@core/store/auth/effects/auth'
 
 @NgModule({
   imports: [
-    CommonModule,
-  ],
-  declarations: [],
-
-  providers: [
-    PostService
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    EffectsModule.forFeature([AuthEffects]),
   ]
 })
 
-export class CoreModule { }
+export class CoreModule {
+  static forRoot() {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        AuthService
+      ]
+    }
+  }
+}

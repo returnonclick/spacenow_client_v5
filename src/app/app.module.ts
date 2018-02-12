@@ -17,12 +17,13 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr'; // For notification
 // TT. Required for material animation
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core/core.module';
+import { SharedModule } from '@shared/shared.module';
+import { CoreModule } from '@core/core.module';
+import { FeatureModule } from '@features/feature.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { reducers, metaReducers } from './core/store';
+import { reducers, metaReducers } from '@core/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
@@ -35,6 +36,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserAnimationsModule, // TT. required for material2/animation
     SharedModule,
     CoreModule,
+    FeatureModule.forRoot(),
     RouterModule,
 
     EffectsModule.forRoot([]),

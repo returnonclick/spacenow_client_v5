@@ -1,0 +1,13 @@
+.selector {
+  border: 1px #ddd solid;
+  overflow-y: scroll;
+
+  mat-checkbox {
+    padding: 4px 8px;
+
+    &:nth-child(2n) {
+      background-color: #ddd
+    }
+  }
+
+}
