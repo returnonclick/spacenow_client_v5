@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,900');
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+/* 
+ * Default $config has these values
+ * @function mat-typography-config(
+ *   $font-family:   'Roboto, "Helvetica Neue", sans-serif',
+ *   $display-4:     mat-typography-level(112px, 112px, 300),
+ *   $display-3:     mat-typography-level(56px, 56px, 400),
+ *   $display-2:     mat-typography-level(45px, 48px, 400),
+ *   $display-1:     mat-typography-level(34px, 40px, 400),
+ *   $headline:      mat-typography-level(24px, 32px, 400),
+ *   $title:         mat-typography-level(20px, 32px, 500),
+ *   $subheading-2:  mat-typography-level(16px, 28px, 400),
+ *   $subheading-1:  mat-typography-level(15px, 24px, 400),
+ *   $body-2:        mat-typography-level(14px, 24px, 500),
+ *   $body-1:        mat-typography-level(14px, 20px, 400),
+ *   $caption:       mat-typography-level(12px, 20px, 400),
+ *   $button:        mat-typography-level(14px, 14px, 500),
+ *   // Line-height must be unit-less fraction of the font-size.
+ *   $input:         mat-typography-level(16px, 1.125, 400)
+ * )
+ *  */
+
+// Customer Typography
+$general-typography: mat-typography-config(
+  $font-family: 'Montserrat, sans-serif',
+  $button: mat-typography-level(16pt, 21pt, 700)
+);
+
+$secondary-typography: mat-typography-config(
+  $font-family: 'Montserrat, sans-serif'
+);
+
+// Include the base styles for Angular Material core. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+@include mat-core($general-typography);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+
+
+// mat-palette($base-palette, $default, $lighter, $darker)
+
+$spacenow-blue: (
+  50: #6cde93,
+  100: #6cde93,
+  200: #6cde93,
+  300: #6cde93,
+  400: #6cde93,
+  500: #6cde93,
+  600: #29a554,
+  700: #29a554,
+  800: #29a554,
+  900: #29a554,
+  A100: #29a554,
+  A200: #29a554,
+  A400: #29a554,
+  A700: #29a554,
+  contrast: (
+    50: #173839,
+    100: #173839,
+    200: #173839,
+    300: #173839,
+    400: #173839,
+    500: #173839,
+    600: #4d6364,
+    700: #4d6364,
+    800: #4d6364,
+    900: #4d6364,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$spacenow-theme-primary: mat-palette($spacenow-blue, 500, 50, A700);
+$spacenow-theme-accent: mat-palette($mat-blue-grey);
+
+// The warn palette is optional (defaults to red).
+// $spacenow-theme-warn:    mat-palette($mat-red);
+$spacenow-theme-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$spacenow-light-theme: mat-light-theme($spacenow-theme-primary, $spacenow-theme-accent, $spacenow-theme-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($spacenow-light-theme);
+
+.my-theme-dark-theme {
+  $dark-primary: mat-palette($mat-blue-grey);
+  $dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+  $dark-warn:    mat-palette($mat-deep-orange);
+
+  $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+  @include angular-material-theme($dark-theme);
+  @include mat-button-typography($general-typography);
+}

@@ -1,0 +1,38 @@
+<div class="search-input-container">
+    <input class="search-input" width="300" placeholder="Search product..." [(ngModel)]="queryTerm" type="text" #query (input)="change(query.value)">
+</div>
+
+<div class="search-result-container" [ngClass]="{'products-list': products.length > 0, 'search-result-container': products.length == 0}">
+    <div class="search-result-total">
+        <h4>Found {{totalFoundProducts}} products. 
+            <a *ngIf="totalFoundProducts > 10"
+                class="search-browse-all"
+                (click)="browseAllProducts();"
+                >Browse all results?
+            </a>
+        </h4> 
+        <p *ngIf="totalFoundProducts > 10">Here is top 10 matched products</p>
+    </div>
+    <div class="search-result-first-page" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-card class="product-item mat-elevation-z0" *ngFor="let product of products" 
+          (click)="onSelect(product.id);" 
+          fxFlex="100%" fxFlex.lt-md="calc(50% - 48px)">
+        <img mat-card-image class="image" 
+            [src]="'https://firebasestorage.googleapis.com/v0/b/ngdemo-v01.appspot.com/o/cw-images%2F'+product.ID+'%2F'+product.ID+'_200.jpg?alt=media&token=3cc786c9-7bfd-4f27-905f-7763769cceb0'">
+        <mat-card-content>
+            <h3 class="product-name">{{product.NAME}}</h3>
+            <div fxLayout="column" fxLayoutAlign="start start" fxFlexFill>
+                <div fxFlex="1 1 auto">
+                    <del class="RRP">RRP: ${{(toNumber(product.Price) + toNumber(product.SALE)) | number: '1.2-2'}}</del>
+                </div>
+                <div fxFlex="1 1 auto">
+                    <span class="listing-price">Now: ${{product.Price}}</span>
+                </div>
+                <div fxFlex="1 1 auto">
+                    <span class="sale-price">Saving: ${{product.SALE}}</span>
+                </div>
+            </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+</div>

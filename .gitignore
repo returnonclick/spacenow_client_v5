@@ -40,3 +40,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+## TT added #####################
+# Env
+.env
+
+# Environment
+#/environments/environment.ts
+
+#################################

@@ -1,0 +1,12 @@
+<p>Posts Module Works</p>
+<div *ngIf="posts | async as p">
+  <div *ngFor="let post of p">
+    <h2>{{post.title}}</h2>
+    <p>ID: {{post.id}}</p>
+    <p>{{post.content}}</p>
+    <p>Votes: {{post.votes}}</p>
+  </div>
+
+</div>
+
+<button (click)="getPosts()">Load Post from Firebase</button>

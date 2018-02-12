@@ -1,0 +1,50 @@
+$padding__main-panel__level2: 10px;
+$padding__main-panel__level3: 20px;
+$padding__main-panel__level4: 30px;
+$padding__main-panel__level5: 40px;
+$padding__main-panel__level6: 40px;
+
+$margin__main-panel__level2: 10px;
+$margin__main-panel__level3: 20px;
+$margin__main-panel__level4: 30px;
+$margin__main-panel__level5: 40px;
+$margin__main-panel__level6: 40px;
+
+.mat-accordion {
+  padding: 0;
+
+  > .mat-expansion-panel {
+
+    > .mat-expansion-panel-header {
+      // padding: $padding__main-panel__level2;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      > .mat-content {
+
+        > .mat-expansion-panel-header-title {
+          margin: 0;
+
+          .mat-card-avatar {
+            margin-right: 10px;
+          }
+
+        }
+
+      }
+
+    }
+
+    > .mat-expansion-panel-content {
+
+      > .mat-expansion-panel-body {
+
+        margin: 0;
+
+      }
+
+    }
+
+  }
+
+}

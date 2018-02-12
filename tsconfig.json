@@ -14,6 +14,20 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    
+    "baseUrl": "src",
+    "paths": {
+      "@core/*": ["app/core/*"],
+      "@shared/*": ["app/shared/*"],
+      "@features/*": ["app/features/*"],
+      "@store/*": ["app/core/store/*"],
+      "@models/*": ["app/shared/models/*"],
+      "@pipes/*": ["app/shared/pipes/*"],
+      "@directives/*": ["app/shared/directives/*"],
+      "@components/*": ["app/shared/components/*"],
+      "@utils/*": ["app/shared/utils/*"],
+      "@environments/*": ["environments/*"]
+    }
   }
 }

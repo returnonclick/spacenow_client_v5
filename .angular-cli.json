@@ -19,9 +19,14 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
+        "styles.scss",
+        "spacenow-light-theme.scss",
+        "../node_modules/material-design-icons/iconfont/material-icons.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -56,5 +61,8 @@
   "defaults": {
     "styleExt": "scss",
     "component": {}
+  },
+  "schematics": {
+    "collection": "@ngrx/schematics"
   }
 }

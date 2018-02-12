@@ -1,0 +1,236 @@
+$padding__main-card__level2: 10px;
+$padding__main-card__level3: 20px;
+$padding__main-card__level4: 30px;
+$padding__main-card__level5: 40px;
+$padding__main-card__level6: 40px;
+
+$margin__main-card__level2: 10px;
+$margin__main-card__level3: 20px;
+$margin__main-card__level4: 30px;
+$margin__main-card__level5: 40px;
+$margin__main-card__level6: 40px;
+
+.mat-card {
+  padding: 0 !important;
+  margin: $margin__main-card__level2 !important;
+
+  > .mat-card-header {
+    padding: $padding__main-card__level2 !important;
+    
+    > .mat-card-avatar {
+      margin-right: 10px !important;
+    }
+
+    > .mat-card-header-text {
+      margin: 0 !important;
+
+      > .mat-card-title {
+        margin: 0 !important;
+      }
+
+      > .mat-card-subtitle {
+        margin: 0 !important;
+      }
+
+    }
+
+  }
+
+  > .mat-card-content {
+    padding: $padding__main-card__level2 !important;
+
+    > .mat-divider {
+      margin: $margin__main-card__level2
+    }
+
+  }
+
+  > .mat-card-actions {
+    padding: $padding__main-card__level2 !important;
+    margin: 0 !important;
+  }
+
+  > .mat-card-footer {
+    padding: $padding__main-card__level2 !important;
+  }
+
+  &.new-card {
+    margin: $margin__main-card__level2 !important;
+    background: #FFF;
+    border: 5px dashed #D1D1D1;
+
+    > .mat-card-content {
+
+      > .mat-icon {
+        display: inline;
+        font-size: 40px !important;
+        margin-right: 0;
+      }
+
+    }
+
+    &:hover {
+      @include mat-elevation(5);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+  }
+  
+}
+
+.social-card {
+  position: relative;
+
+  [md-card-avatar] {
+    margin-right: 4px;
+    width: 40px;
+  }
+
+  md-card-subtitle {
+    margin-bottom: 4px;
+  }
+}
+
+.activity-card {
+  position: relative;
+  background: white;
+  padding: 0;
+
+  .title-container {
+    padding: 12px 18px;
+    color: #757575;
+    background: #EEEEEE;
+    border-bottom: 1px solid #E1E1E1;
+
+    .title {
+      font-weight: 500;
+    }
+
+    .extra {
+      font-size: 13px;
+
+      .arrow {
+        width: 14px;
+        height: 14px;
+        font-size: 14px;
+        vertical-align: sub;
+      }
+    }
+  }
+
+  md-list {
+    padding: 0;
+
+    .extra {
+      color: #757575;
+    }
+  }
+}
+
+.traffic-sources-card {
+  position: relative;
+  background: white;
+  padding: 0;
+
+  .title-container {
+    padding: 12px 18px;
+    color: #757575;
+    background: #EEEEEE;
+    border-bottom: 1px solid #E1E1E1;
+
+    .title {
+      font-weight: 500;
+    }
+
+    .extra {
+      font-size: 13px;
+    }
+  }
+
+  .content {
+    padding: 12px 18px;
+
+    .section {
+      padding: 12px 0;
+
+      .source {
+        color: white;
+        border-radius: 15px;
+        padding: 5px 0;
+        font-size: 16px;
+      }
+
+      .value {
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.post-card {
+
+  .mat-card-actions {
+    padding: 8px 0;
+    margin: 0 !important;
+  }
+
+  .mat-card-footer {
+    position: relative;
+    padding: 8px 0;
+
+    > ms-comment-list-item {
+
+      padding: 0;
+
+      > .mat-card-header {
+        padding: $padding__main-card__level2 !important;
+
+        > .mat-mini-fab {
+          background: rgba(0, 0, 0, 0.015);
+          height: 24px !important;
+          width: 24px !important;
+          @include mat-elevation(0);
+
+          &:hover {
+            @include mat-elevation(5);
+            transition: all 0.15s;
+          }
+
+          > span .mat-icon {
+            padding: 0 !important;
+          }
+
+        }
+
+      }
+
+      &:last-child {
+
+        > .mat-divider {
+          display: none !important;
+        }
+
+        > .mat-card-header {
+          padding-bottom: 0 !important;
+        }
+
+      }
+
+      &:first-child {
+
+        > .mat-card-header {
+          padding-top: 0 !important;
+        }
+
+      }
+
+    }
+
+    > .mat-card-header {
+      padding: $padding__main-card__level2 !important;
+    }
+
+  }
+}

@@ -1,27 +1,104 @@
-# SpacenowClientV5
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.4.
+# README
 
-## Development server
+## Requirement
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+Angular CLI: 1.5.4
+Node: 8.6.0
+Angular: 5.2.1
+... animations, common, compiler, compiler-cli, core, forms
+... http, language-service, platform-browser
+... platform-browser-dynamic, router
 
-## Code scaffolding
+@angular/cli: 1.5.4
+@angular-devkit/build-optimizer: 0.0.41
+@angular-devkit/core: 0.0.28
+@angular-devkit/schematics: 0.0.51
+@ngtools/json-schema: 1.1.0
+@ngtools/webpack: 1.8.4
+@schematics/angular: 0.1.16
+typescript: 2.4.2
+webpack: 3.8.1
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Project structure
 
-## Build
+```bash
++--/src/app
+|   |
+|   +--/core
+|   |   |
+|   |   +--/services
+|   |   |
+|   |   +--/store
+|   |   |   |
+|   |   |   +--/STATE-ONE
+|   |   |   |   |
+|   |   |   |   +--/actions
+|   |   |   |   |
+|   |   |   |   +--/reducers
+|   |   |   |   |
+|   |   |   |   +--/effects
+|   |   |   |   |
+|   |   |   |   +--/services
+|   |   |   |
+|   |   |   +--/STATE-TWO
+|   |   |   |
+|   |   |   +--reducers.ts (or index.ts)
+|   |   |
+|   |   +--core.module.ts
+|   |
+|   +--/features
+|   |   |
+|   |   +--/FEATURE-MODULE1
+|   |   |
+|   |   +--/FEATURE-MODULE2
+|   |
+|   +--/shared
+|   |   |
+|   |   +--/components
+|   |   |
+|   |   +--/directives
+|   |   |
+|   |   +--/pipes
+|   |   |
+|   |   +--/utils
+|   |   |
+|   |   +--shared.module.ts
+|   |
+|   +--app-routing.module.ts
+|   |
+|   +--app.module.ts
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+```
 
-## Running unit tests
+## How to run
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+git clone https://github.com/returnonclick/spacenow_client_v5
 
-## Running end-to-end tests
+yarn
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+# Create .env at project root and fill up firebase account setting
+# Update environment.ts by running
+npm run config
 
-## Further help
+ng serve --open
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Git commit & change log update
+
+When doing `git commit` make sure to update CHANGELOG file by using [standard-version](https://github.com/conventional-changelog/standard-version)
+
+**Example**
+
+```bash
+git add .
+git commit -a -m "feat(NEW FEATURE): New feature description"
+npm run release -- --prerelease alpha
+git push --follow-tags origin master
+```
+
+
+
