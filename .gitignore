@@ -43,7 +43,7 @@ Thumbs.db
 
 ## TT added #####################
 # Env
-.env
+#.env
 
 # Environment
 #/environments/environment.ts
