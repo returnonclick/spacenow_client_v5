@@ -12,10 +12,19 @@
 }
 
 body {
-	display: grid;
-	grid-template-columns: repeat(12, 70px);
-	grid-column-gap: 30px;
+	background-color: $color__gable_green;
     font-family: unquote($font-family);
 	font-size: 16px;
-	position: relative;
+}
+
+gen-layout {
+	display: grid;
+	grid-template-rows: auto;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
+	grid-template-rows: auto;
+	grid-column-gap: 30px;
 }
