@@ -2,7 +2,7 @@ import {Component, ElementRef, NgZone, ViewChild, Output, Input} from '@angular/
 import { FormControl } from '@angular/forms'
 import { } from 'googlemaps'
 import { MapsAPILoader } from '@agm/core'
-import { AddressModel } from '@shared/models/address.model';
+import { AddressModel } from '@shared/models/address.model'
 /**
  *  COMPONENT USE DESCRIPTION
  *  COMPONENT TO ACCESS GOOGLE API - RETURNING ADDRESS INFORMATION (ADDRESS MODEL).
@@ -21,7 +21,7 @@ export class GoogleAddressComponent {
   @Input()  placeholder  : string
   @Output() address      : AddressModel
   @ViewChild("search")
-  public searchElementRef: ElementRef;
+  public searchElementRef: ElementRef
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -29,9 +29,9 @@ export class GoogleAddressComponent {
   ) {}
 
   ngOnInit() {
+    
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {});
-
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {})
       autocomplete.addListener("place_changed",() => {
         this.ngZone.run(() => {
           this.address = new AddressModel
@@ -46,25 +46,25 @@ export class GoogleAddressComponent {
               address.types.map(type => {
                 switch (type) {
                   case "postal_code":
-                    return (this.address.postalCode = address.long_name);
+                    return (this.address.postalCode = address.long_name)
                   case "street_number":
-                    return (number = address.short_name);
+                    return (number = address.short_name)
                   case "country":
                     this.address.countryName = address.long_name;
-                    this.address.countryCodeAlpha2 = address.short_name;
+                    this.address.countryCodeAlpha2 = address.short_name
                   case "locality":
-                    return (this.address.locality = address.long_name);
+                    return (this.address.locality = address.long_name)
                   case "route":
-                    return (this.address.streetAddress = number + " " + address.long_name);
+                    return (this.address.streetAddress = number + " " + address.long_name)
                   case "administrative_area_level_1":
-                    return (this.address.region = address.short_name);
+                    return (this.address.region = address.short_name)
                 }
-              });
-            });
+              })
+            })
           }
-        });
-      });
-    });
+        })
+      })
+    })
   }
 }
 
