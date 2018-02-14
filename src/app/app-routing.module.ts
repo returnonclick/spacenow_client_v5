@@ -13,6 +13,10 @@ import {
   UserListComponent
 } from '@features/users'
 
+import {
+  HomeComponent
+} from '@features/pages/home/home.component'
+
 const appRoutes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
@@ -20,7 +24,8 @@ const appRoutes: Routes = [
     component: LayoutComponent,
     // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
-      { path: 'users', component: UserListComponent }
+      { path: 'home', component: HomeComponent },
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
     ] 
   },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },

@@ -12,19 +12,27 @@
 }
 
 body {
-	background-color: $color__gable_green;
-    font-family: unquote($font-family);
-	font-size: 16px;
+	background-color: $color__white;
 }
 
 gen-layout {
 	display: grid;
-	grid-template-rows: auto;
+	grid-template-columns: 1fr;
+	grid-auto-rows: auto;
 }
 
 .grid {
 	display: grid;
 	grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
-	grid-template-rows: auto;
 	grid-column-gap: 30px;
+}
+
+a {
+	color: $color__eucalyptus;
+	text-decoration: none;
+
+	&:hover {
+		color: $color__pastel_green;
+	}
+
 }

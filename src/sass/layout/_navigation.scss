@@ -1,3 +1,44 @@
-#main-nav ul{
-    grid-column: 2 / span 12;
+#main-nav {
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(12, 1fr);
+    padding: 30px;
+
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    z-index: 2;
+
+    a {
+
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+
+        &:nth-child(2) {
+            justify-self: end;
+            grid-column-start: 8;
+            grid-column-end: 11;
+        }
+
+        &:nth-child(3) {
+
+            justify-self: end;
+            grid-column-start: 11;
+            grid-column-end: 12;
+
+        }
+
+        &:last-child {
+
+            justify-self: end;
+            grid-column-start: 12;
+            grid-column-end: 13;
+
+        }
+
+    }
+
 }

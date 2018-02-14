@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<aside id="main-sidebar" class="sidebar">
+<aside id="main-sidebar">
     <h1>Log In</h1>
     <h3>Complete form to log in</h3>
     <mat-form-field>
@@ -24,62 +24,16 @@
 </aside>
 
 <!-- Nav -->
-<nav id="main-nav" class="grid">
-  <ul>
-    <li><a href="#"><img src="assets/images/logo/spacenow-logo-white.png" width="200px"></a></li>
-    <li><a href="#">List your space</a></li>
-    <li><a href="#">Log in</a></li>
-    <li><a href="#">Sign up</a></li>
-  </ul>
+<nav id="main-nav">
+  <a href="#"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
+  <a href="#">List your space</a>
+  <a href="#">Log in</a>
+  <a href="#">Sign up</a>
 </nav>
 
-<!-- Header -->
-<header id="header">
-  <div class="full bg"></div>
-  <div class="inner">
-    <h2>Find any space</h2>
-    <h2>anytime</h2>
-    <h2>anywhere</h2>
-    <ul>
-      <li>
-        <mat-form-field>
-          <mat-icon matPrefix>search</mat-icon>
-          <input type="text" matInput placeholder="Location">
-        </mat-form-field>
-      </li>
-      <li>
-        <mat-form-field>
-          <mat-icon matPrefix>business</mat-icon>
-          <input type="text" matInput placeholder="Category">
-        </mat-form-field>
-      </li>
-      <li>
-          <mat-form-field>
-            <mat-icon matPrefix>access_time</mat-icon>
-            <input type="text" matInput placeholder="Location">
-          </mat-form-field>
-        </li>
-    </ul>
-  </div>
-</header>
 
-<div class="main">
+<router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
 
-
-
-<!-- Banner -->
-<section id="section-one">
-  <ul>
-    <li>
-      <h2>Any space by the hour day or month</h2>
-    </li>
-    <li>
-      <div class="card">
-        
-      </div>
-    </li>
-  </ul>
-</section>
 
 <!-- Footer -->
 <footer id="footer">

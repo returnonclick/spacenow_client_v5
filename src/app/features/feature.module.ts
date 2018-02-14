@@ -21,9 +21,14 @@ import {
   UserListComponent
 } from '@features/users'
 
+import { 
+  HomeComponent
+} from '@features/pages/home/home.component'
+
 const COMPONENTS = [
   UserComponent,
-  UserListComponent
+  UserListComponent,
+  HomeComponent
 ]
 
 const ENTRY_COMPONENTS = [

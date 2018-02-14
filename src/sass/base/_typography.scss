@@ -153,10 +153,16 @@ $custom-typography: mat-typography-config(
 // Override the typography in the core CSS.
 @include mat-core($custom-typography);
 
-h1 { font-size: 60px };
-h2 { font-size: 40px };
-h3 { font-size: 25px };
-h4 { font-size: 20px };
+body {
+  color: $color__cutty_sark;
+	font-family: unquote($font-family);
+	font-size: 16px;
+}
+
+h1 { font-size: 60px; color: $color__gable_green; font-weight: 600; };
+h2 { font-size: 40px; color: $color__gable_green; font-weight: 600; };
+h3 { font-size: 25px; color: $color__gable_green; font-weight: 600; };
+h4 { font-size: 20px; color: $color__gable_green; font-weight: 600; };
 p  { font-size: 16px };
 caption { font-size: 14px };
 
