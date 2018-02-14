@@ -1,0 +1,72 @@
+import { Action } from '@ngrx/store'
+import { Listing } from '@shared/models/Listing'
+
+export const QUERY      = '[Listing] query'
+
+export const ADDED      = '[Listing] added'
+export const MODIFIED   = '[Listing] modified'
+export const REMOVED    = '[Listing] removed'
+
+export const CREATE     = '[Listing] create'
+export const UPDATE     = '[Listing] update'
+export const DELETE     = '[Listing] delete'
+export const SUCCESS    = '[Listing] success'
+export const FAIL       = '[Listing] fail'
+
+export class Query implements Action {
+    readonly type = QUERY
+    constructor( ) { }
+}
+
+export class Added implements Action {
+    readonly type = ADDED
+    constructor( public payload: Listing ) { }
+}
+
+export class Modified implements Action {
+    readonly type = MODIFIED
+    constructor( public payload: Listing ) { }
+}
+
+export class Removed implements Action {
+    readonly type = REMOVED
+    constructor( public payload: Listing ) { }
+}
+
+export class Create implements Action {
+    readonly type = CREATE
+    constructor( public payload: Listing ) { }
+}
+
+export class Update implements Action {
+    readonly type = UPDATE
+    constructor( 
+        public id: string, 
+        public changes: Partial<Listing> 
+    ) { }
+}
+
+export class Delete implements Action {
+    readonly type = DELETE
+    constructor( public id: string ) { }
+}
+
+export class Success implements Action {
+    readonly type = SUCCESS
+    constructor( ) { }
+}
+
+export class Fail implements Action {
+    readonly type = FAIL
+    constructor( public payload: any ) { }
+}
+
+export type ListingActions = 
+    | Query
+    | Added
+    | Modified
+    | Removed
+    | Create
+    | Update
+    | Delete
+    | Success

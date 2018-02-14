@@ -31,6 +31,7 @@ import { storeFreeze } from 'ngrx-store-freeze'
 
 import * as fromAuth            from '@core/store/auth/reducers/auth'
 import * as fromUsers           from '@core/store/users/reducers/users'
+import * as fromListings        from '@core/store/listings/reducers/listings'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -39,6 +40,7 @@ import * as fromUsers           from '@core/store/users/reducers/users'
 export interface State {
     auth:          fromAuth.State
     users:         fromUsers.State
+    listings:      fromListings.State
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
 }
 
@@ -50,6 +52,7 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
     auth:          fromAuth.reducer,
     users:         fromUsers.reducer,
+    listings:      fromListings.reducer,
     routerReducer: fromRouter.routerReducer,
 }
 
@@ -116,3 +119,21 @@ export const {
     selectAll: getAllUsers,
     selectTotal: getTotalUsers,
   } = fromUsers.userAdapter.getSelectors(getUserEntitiesState)
+
+ /**
+ * Listings Reducers
+ */
+
+export const getListingsState = createFeatureSelector<fromListings.State>('listings')
+
+export const getListingEntitiesState = createSelector(
+    getListingsState,
+    (state) => state
+)
+
+export const {
+    selectIds: getListingIds,
+    selectEntities: getListingEntities,
+    selectAll: getAllListings,
+    selectTotal: getTotalListings,
+  } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)

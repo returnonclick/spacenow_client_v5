@@ -1,0 +1,13 @@
+
+<mat-form-field>
+  <input matInput placeholder="{{'Price per'}}">
+</mat-form-field>
+
+<mat-form-field>
+  <mat-select placeholder="Minimum Term" name="term">
+    <mat-option *ngFor="let term of terms" [value]="term">
+      {{ term }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button (click)="save(price)">Save</button>
