@@ -22,6 +22,8 @@ import {
 import { LoadingComponent } from './loading/loading.component'
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component'
 
+import { googleAddressComponent } from './googleAddress/googleAddress.component'
+
 export {
   ForgotPasswordComponent,
   SignInComponent,
@@ -35,7 +37,8 @@ export {
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  googleAddressComponent
 }
 
 export default {
@@ -51,5 +54,6 @@ export default {
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  googleAddressComponent
 }
