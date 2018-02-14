@@ -11,6 +11,8 @@ import { MaterialModule } from "@shared/material.module"
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
 
+import { AgmCoreModule } from '@agm/core';
+
 import {
   ForgotPasswordComponent,
   SignInComponent,
@@ -24,7 +26,8 @@ import {
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  googleAddressComponent
 } from './components'
 
 const COMPONENTS = [
@@ -40,7 +43,8 @@ const COMPONENTS = [
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  googleAddressComponent
 ]
 
 const MODULES = [
@@ -64,7 +68,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RouterModule,
     MODULES,
     CoreModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyAOMhtcFm3WnFDUAsK7OfWOvpo3V0EtvBQ",
+      libraries: ["places"]
+    })
   ],
   declarations: [COMPONENTS, PIPES],
   entryComponents: COMPONENTS,
@@ -73,7 +81,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ]
 })
-export class SharedModule { 
+export class SharedModule {
   static forRoot() {
     return {
       ngModule: SharedModule
