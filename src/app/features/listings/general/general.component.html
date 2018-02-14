@@ -1,0 +1,82 @@
+<form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+  <mat-horizontal-stepper linear>
+    <!-- Title section -->
+    <mat-step>
+      <ng-template matStepLabel>Title of your space</ng-template>
+      <h2 mat-dialog-title>Title of your space</h2>
+      <mat-form-field>
+        <input matInput placeholder="Name your space" formControlName="title" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <!-- Price section -->
+    <mat-step>
+      <ng-template matStepLabel>Space price</ng-template>
+      <h2 mat-dialog-title>Space price</h2>
+
+      <mat-form-field>
+        <mat-select placeholder="Pricing System" name="unit">
+          <mat-option *ngFor="let unit of units" [value]="unit.value">
+            {{ unit.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <sn-hourly-price></sn-hourly-price> -->
+      <!-- <sn-daily-price
+      [parentCount] = 'count'
+      (price)=updateFromChild($event)></sn-daily-price> -->
+      <!--<sn-weekly-price></sn-weekly-price>
+      <sn-monthly-price></sn-monthly-price> -->
+
+      <div>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <!-- Categories and rules section -->
+    <mat-step>
+      <ng-template matStepLabel>Categories</ng-template>
+
+      <div>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+
+    <!-- Address and rules section -->
+    <mat-step>
+      <ng-template matStepLabel>Address</ng-template>
+
+      <div>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+
+    <!-- Description and rules section -->
+    <mat-step>
+      <ng-template matStepLabel>Describe your space</ng-template>
+      <mat-form-field>
+        <textarea matInput placeholder="Description" formControlName="description" required></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Space Rules" formControlName="rules" required></textarea>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <!-- Save section -->
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>You are now done.
+      <div>
+        <button mat-button type="submit" [disabled]="listingForm.invalid || listingForm.pristine">Save</button>
+        <button mat-button matStepperPrevious>Back</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</form>

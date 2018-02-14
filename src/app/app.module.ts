@@ -35,7 +35,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserModule,
     BrowserAnimationsModule, // TT. required for material2/animation
     SharedModule,
-    CoreModule,
+    CoreModule.forRoot(),
     FeatureModule.forRoot(),
     RouterModule,
 
