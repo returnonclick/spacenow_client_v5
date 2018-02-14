@@ -1,0 +1,62 @@
+$breakpoints: (
+    "phone":        (min-width: 400px),
+    "phone-wide":   (min-width: 480px),
+    "phablet":      (min-width: 560px),
+    "tablet-small": (min-width: 640px),
+    "tablet":       (min-width: 768px),
+    "tablet-wide":  (min-width: 1024px),
+    "desktop":      (min-width: 1248px),
+    "desktop-wide": (min-width: 1440px)
+);
+
+/// Responsive breakpoint manager
+/// @access public
+/// @param {String} $breakpoint - Breakpoint
+/// @requires $breakpoints
+///
+/// @example scss - Usage
+/// .foo {
+///   color: red;
+///   @include respond-to('small') {
+///     color: blue;
+///   }
+/// }
+///
+@mixin respond-to($breakpoint) {
+    $raw-query: map-get($breakpoints, $breakpoint);
+  
+    @if $raw-query {
+      $query: if(
+        type-of($raw-query) == 'string',
+        unquote($raw-query),
+        inspect($raw-query)
+      );
+  
+      @media #{$query} {
+        @content;
+      }
+    } @else {
+      @error 'No value found for `#{$breakpoint}`. '
+           + 'Please make sure it is defined in `$breakpoints` map.';
+    }
+  }
+
+/// Mixin helper to output vendor prefixes
+/// @access public
+/// @author HugoGiraudel
+/// @param {String} $property - Unprefixed CSS property
+/// @param {*} $value - Raw CSS value
+/// @param {List} $prefixes - List of prefixes to output
+///
+/// @example scss - Usage
+/// .foo {
+///   @include prefix(transform, rotate(90deg), ('webkit', 'ms'));
+/// }
+///
+@mixin prefix($property, $value, $prefixes: ()) {
+    @each $prefix in $prefixes {
+      -#{$prefix}-#{$property}: $value;
+    }
+  
+    #{$property}: $value;
+  }

@@ -1,0 +1,8 @@
+#main-sidebar {
+    position: fixed; /* or choose `absolute` depending on desired behavior*/
+    top: 0;
+    bottom: 0;
+    width: $sidebar__max-width;
+    right: -$sidebar__max-width;
+    transition: transform .3s ease-in-out;
+}

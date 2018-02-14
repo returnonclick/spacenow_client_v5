@@ -1,0 +1,38 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+	&:focus {
+		outline: none !important;
+	}
+}
+
+body {
+	background-color: $color__white;
+}
+
+gen-layout {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-auto-rows: auto;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
+	grid-column-gap: 30px;
+}
+
+a {
+	color: $color__eucalyptus;
+	text-decoration: none;
+
+	&:hover {
+		color: $color__pastel_green;
+	}
+
+}

@@ -69,12 +69,6 @@ $margin__main-card__level6: 40px;
 
     }
 
-    &:hover {
-      @include mat-elevation(5);
-      transition: all 0.15s;
-      cursor: pointer;
-    }
-
   }
   
 }
@@ -191,12 +185,6 @@ $margin__main-card__level6: 40px;
           background: rgba(0, 0, 0, 0.015);
           height: 24px !important;
           width: 24px !important;
-          @include mat-elevation(0);
-
-          &:hover {
-            @include mat-elevation(5);
-            transition: all 0.15s;
-          }
 
           > span .mat-icon {
             padding: 0 !important;
