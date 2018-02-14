@@ -1,11 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
 
-// TT. pre-built material2 theme
-// TODO (TT): customize theme to spacenow style
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import
+  '~sass/abstracts/variables',
+  '~sass/abstracts/functions',
+  '~sass/abstracts/mixins',
+  '~sass/abstracts/placeholders';
 
-// Add Fonts
-@import "./assets/fonts/fonts.css";
+@import
+  '~sass/vendors/bootstrap',
+  '~sass/vendors/jquery-ui';
 
-// TODO(TT): normalized and basic styles
+@import
+  '~sass/base/reset',
+  '~sass/base/typography';
 
+@import
+  '~sass/layout/navigation',
+  '~sass/layout/grid',
+  '~sass/layout/header',
+  '~sass/layout/footer',
+  '~sass/layout/sidebar',
+  '~sass/layout/forms';
+
+@import
+  '~sass/components/buttons',
+  '~sass/components/cards',
+  '~sass/components/carousel',
+  '~sass/components/cover',
+  '~sass/components/dropdown',
+  '~sass/components/panels';
+
+@import
+  '~sass/pages/home';
+
+@import
+  '~sass/themes/theme';

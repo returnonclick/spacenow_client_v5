@@ -11,6 +11,10 @@ import {
   UserListComponent
 } from '@features/users'
 
+import {
+  GeneralComponent
+} from '@features/listings/general/general.component'
+
 export const appRoutes: Routes = [
     { path: 'sign-in', component: SignInComponent },
     { path: 'register', component: SignUpComponent },
@@ -18,7 +22,8 @@ export const appRoutes: Routes = [
       component: LayoutComponent,
       // canActivate: [AuthGuard, AuthGuardVerified],
       children: [
-        { path: 'users', component: UserListComponent }
+        { path: 'users', component: UserListComponent },
+        { path: 'listings', component: GeneralComponent }
       ] 
     },
     { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },

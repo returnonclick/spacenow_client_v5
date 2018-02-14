@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects'
 
 import { CoreModule } from '@core/core.module'
 import { SharedModule } from '@shared/shared.module'
+import { ListingModule } from '@features/listings/listings.module'
 
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -21,9 +22,14 @@ import {
   UserListComponent
 } from '@features/users'
 
+import { 
+  HomeComponent
+} from '@features/pages/home/home.component'
+
 const COMPONENTS = [
   UserComponent,
-  UserListComponent
+  UserListComponent,
+  HomeComponent
 ]
 
 const ENTRY_COMPONENTS = [
@@ -42,6 +48,7 @@ const SERVICES = [
     FlexLayoutModule,
     CoreModule,
     SharedModule,
+    ListingModule,
     EffectsModule.forFeature([UserEffects]),
   ],
   declarations: COMPONENTS,

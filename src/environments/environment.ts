@@ -2,11 +2,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyAGWO_epViG8iG415NCPvqu1QRV7YFKW78",
-    authDomain: "spacenow-v5-sandbox.firebaseapp.com",
-    databaseURL: "https://spacenow-v5-sandbox.firebaseio.com",
-    projectId: "spacenow-v5-sandbox",
-    storageBucket: "spacenow-v5-sandbox.appspot.com",
-    messagingSenderId: "753943064007"
+    apiKey: "AIzaSyDPThaUFMtL1-hWllScsDsKuu002DrRqIU",
+    authDomain: "spacenow-bca9c.firebaseapp.com",
+    databaseURL: "https://spacenow-bca9c.firebaseio.com",
+    projectId: "spacenow-bca9c",
+    storageBucket: "spacenow-bca9c.appspot.com",
+    messagingSenderId: "259396936923"
   }
 };
