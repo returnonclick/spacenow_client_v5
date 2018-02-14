@@ -20,14 +20,14 @@ import {
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
+  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent,
-  googleAddressComponent
+  LoadingOverlayComponent
 } from './components'
 
 const COMPONENTS = [
@@ -37,14 +37,14 @@ const COMPONENTS = [
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
+  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent,
-  googleAddressComponent
+  LoadingOverlayComponent
 ]
 
 const MODULES = [

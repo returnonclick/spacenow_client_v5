@@ -8,6 +8,7 @@ import {
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
+  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   TableComponent,
@@ -22,8 +23,6 @@ import {
 import { LoadingComponent } from './loading/loading.component'
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component'
 
-import { googleAddressComponent } from './googleAddress/googleAddress.component'
-
 export {
   ForgotPasswordComponent,
   SignInComponent,
@@ -31,14 +30,14 @@ export {
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
+  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent,
-  googleAddressComponent
+  LoadingOverlayComponent
 }
 
 export default {
@@ -48,12 +47,12 @@ export default {
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
+  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent,
-  googleAddressComponent
+  LoadingOverlayComponent
 }

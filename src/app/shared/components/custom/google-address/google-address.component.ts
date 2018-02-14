@@ -12,12 +12,12 @@ import { AddressModel } from '@shared/models/address.model';
  *  address:         Address Information returned from google maps. (AddressModel)
  */
 @Component({
-  selector: 'gen-googleAddress',
-  templateUrl: './googleAddress.component.html',
-  styleUrls: ['./googleAddress.component.scss']
+  selector: 'sn-google-address',
+  templateUrl: './google-address.component.html',
+  styleUrls: ['./google-address.component.scss']
 })
 
-export class googleAddressComponent {
+export class GoogleAddressComponent {
   @Input()  placeholder  : string
   @Output() address      : AddressModel
   @ViewChild("search")
