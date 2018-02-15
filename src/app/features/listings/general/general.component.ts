@@ -22,6 +22,7 @@ export class GeneralComponent {
   listing: Listing
   listingForm: FormGroup
   price: any
+  priceValid: boolean = false
 
   units = [
     { value: 'hourly', display: 'Price per hour' },
@@ -38,8 +39,14 @@ export class GeneralComponent {
     private _store: Store<fromRoot.State>
   ) {}
 
+  // Get price form
   getPrice(price) {
-    this.price = price
+    this.price = price 
+  }
+
+  // Get price form validation
+  getPriceValid(status) {
+    this.priceValid = status
   }
   
   ngOnInit() {
@@ -60,7 +67,8 @@ export class GeneralComponent {
 
     this.listingForm.updateValueAndValidity()
     this.listing = this.listingForm.value
-    this.listing.price = this.price
+    if (this.price) 
+      this.listing.price = this.price
 
     if(this.listing.id)
       this._store.dispatch(new actions.Update( this.listing.id, this.listing ))

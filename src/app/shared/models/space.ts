@@ -45,7 +45,7 @@ export class Space extends Object{
     }
   }
   
-  class Price extends Object {
+  export class Price extends Object {
     price:       number
     minimumTerm: number
     incentives:  boolean
@@ -55,25 +55,25 @@ export class Space extends Object{
       super (model)
 
       if ( model ) {
-        this.price          = model.price || 0
-        this.minimumTerm    = model.minimumTerm || 0
-        this.incentives     = model.incentives || false
+        this.price        = model.price || 0
+        this.minimumTerm  = model.minimumTerm || 0
+        this.incentives   = model.incentives || false
       }
     }
   }
 
   export class Hourly extends Price {
 
-    halfDay:  number
-    day:      number
+    halfDay: number
+    day:     number
 
     constructor( model: any = null ) {
 
       super(model)
 
       if (model) {
-        this.halfDay        = model.halfDay || 0
-        this.day            = model.day || 0
+        this.halfDay = model.halfDay || 0
+        this.day     = model.day || 0
       }
 
     }
@@ -81,7 +81,7 @@ export class Space extends Object{
 
   export class Daily extends Price {
     
-    week:      number
+    week: number
 
     constructor( model: any = null ) {  
 
@@ -96,14 +96,14 @@ export class Space extends Object{
 
   export class Weekly extends Price {
 
-    month:      number
+    month: number
 
     constructor( model: any = null ) {
 
       super(model)
 
       if (model) {
-        this.month           = model.month || 0
+        this.month = model.month || 0
       }
       
     }
@@ -111,16 +111,16 @@ export class Space extends Object{
 
   export class Monthly extends Price {
 
-    halfYear:  number
-    year:      number
+    sixMonths:  number
+    year:       number
 
     constructor( model: any = null ) {
 
       super(model)
 
       if (model) {
-        this.halfYear       = model.halfYear || 0
-        this.year           = model.year || 0
+        this.sixMonths = model.sixMonths || 0
+        this.year      = model.year || 0
       }
 
     }

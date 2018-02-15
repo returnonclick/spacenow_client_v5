@@ -8,26 +8,26 @@ import * as actions from '@core/store/listings/actions/listing'
 import * as fromRoot from '@core/store'
 
 import { ConfirmDeleteComponent, ConfirmSaveComponent } from '@shared/components'
-import { Daily } from '@shared/models/space'
+import { Monthly } from '@shared/models/space'
 
 @Component({
-  selector: 'sn-daily-price',
-  templateUrl: './daily.component.html',
-  styleUrls: ['./daily.component.scss']
+  selector: 'sn-monthly-price',
+  templateUrl: './monthly.component.html',
+  styleUrls: ['./monthly.component.scss']
 })
-export class DailyComponent {
+export class MonthlyComponent {
 
-  @Output() price = new EventEmitter<Daily>();
+  @Output() price = new EventEmitter<Monthly>();
   @Output() priceValid = new EventEmitter<boolean>();
 
-  daily: Daily = new Daily
+  monthly: Monthly = new Monthly
   priceForm: FormGroup
 
   terms = [
-    { value: '1', display: '1 day'},
-    { value: '2', display: '2 days'},
-    { value: '3', display: '3 days'},
-    { value: '4', display: '4 days'}
+    { value: '1', display: '1 month'},
+    { value: '2', display: '2 months'},
+    { value: '3', display: '3 months'},
+    { value: '4', display: '4 months'}
   ]
 
   constructor(
@@ -35,12 +35,11 @@ export class DailyComponent {
   ) {}
 
   sendPrice() {
-    console.log(this.priceForm)
     this.priceForm.updateValueAndValidity()
-    this.daily = this.priceForm.value
+    this.monthly = this.priceForm.value
     // Send price values
     this.price.emit(
-       this.daily
+       this.monthly
     )
     // Send form status for validation
     this.priceValid.emit(
@@ -50,13 +49,14 @@ export class DailyComponent {
 
   ngOnInit() {
     // Initialize
-    this.daily.incentives = false
+    this.monthly.incentives = false
 
     this.priceForm = this._fb.group({
-      price:              [this.daily.price],
-      minimumTerm:        [this.daily.minimumTerm],
-      incentives:         [this.daily.incentives],
-      week:               [this.daily.week]
+      price:              [this.monthly.price],
+      minimumTerm:        [this.monthly.minimumTerm],
+      incentives:         [this.monthly.incentives],
+      sixMonths:          [this.monthly.sixMonths],
+      year:               [this.monthly.year]
     })
 
   }

@@ -9,17 +9,20 @@
         <input matInput placeholder="Name your space" formControlName="title" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext type="button">Next</button>
+        <button mat-button matStepperNext type="button" 
+                [disabled]="listingForm.controls.title.invalid">
+                Next
+        </button>
       </div>
     </mat-step>
 
     <!-- Price section -->
     <mat-step>
       <ng-template matStepLabel>Space price</ng-template>
-      <h2 mat-dialog-title>Space price {{listingForm.controls.unit.value}}</h2>
+      <h2 mat-dialog-title>Space price</h2>
 
       <mat-form-field>
-        <mat-select placeholder="Pricing System" name="unit" formControlName="unit">
+        <mat-select placeholder="Pricing System" name="unit" formControlName="unit" required>
           <mat-option *ngFor="let unit of units" [value]="unit.value">
             {{ unit.display }} 
           </mat-option>
@@ -27,16 +30,19 @@
       </mat-form-field>
 
       <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
-      <ng-container *ngIf="listingForm.controls.unit.value === 'daily'">
-        <sn-daily-price (price)=getPrice($event)></sn-daily-price>
+      <!-- <price [unit]="listingForm.controls.unit.value"></price> -->
+
+      <!-- Leave the old way (ngIf) for one component for you to see it working -->
+      <ng-container *ngIf="listingForm.controls.unit.value === 'hourly'">
+        <sn-hourly-price (price)=getPrice($event) (priceValid)=getPriceValid($event)></sn-hourly-price>
       </ng-container>
-      <!-- <ng-template *ngSwitchCase="hourly"><sn-hourly-price></sn-hourly-price></ng-template> -->
-      <!-- <ng-template *ngSwitchCase="weekly"><sn-weekly-price></sn-weekly-price></ng-template>-->
-      <!-- <ng-template *ngSwitchCase="monthly"><sn-monthly-price></sn-monthly-price></ng-template>  -->
 
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
-        <button mat-button matStepperNext type="button">Next</button>
+        <button mat-button matStepperNext type="button" 
+                > <!-- [disabled]="!priceValid" -->
+                Next
+        </button>
       </div>
     </mat-step>
 
@@ -71,7 +77,10 @@
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
-        <button mat-button matStepperNext type="button">Next</button>
+        <button mat-button matStepperNext type="button" 
+                [disabled]="listingForm.controls.description.invalid || listingForm.controls.rules.invalid">
+                Next
+        </button>
       </div>
     </mat-step>
 
@@ -79,8 +88,11 @@
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>You are now done.
       <div>
-        <button mat-button type="submit" [disabled]="listingForm.invalid || listingForm.pristine">Save</button>
-        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button type="submit" 
+                [disabled]="listingForm.invalid || listingForm.pristine">
+                Save
+        </button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

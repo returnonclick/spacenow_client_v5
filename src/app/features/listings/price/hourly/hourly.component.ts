@@ -8,26 +8,26 @@ import * as actions from '@core/store/listings/actions/listing'
 import * as fromRoot from '@core/store'
 
 import { ConfirmDeleteComponent, ConfirmSaveComponent } from '@shared/components'
-import { Daily } from '@shared/models/space'
+import { Hourly } from '@shared/models/space'
 
 @Component({
-  selector: 'sn-daily-price',
-  templateUrl: './daily.component.html',
-  styleUrls: ['./daily.component.scss']
+  selector: 'sn-hourly-price',
+  templateUrl: './hourly.component.html',
+  styleUrls: ['./hourly.component.scss']
 })
-export class DailyComponent {
+export class HourlyComponent {
 
-  @Output() price = new EventEmitter<Daily>();
+  @Output() price = new EventEmitter<Hourly>();
   @Output() priceValid = new EventEmitter<boolean>();
 
-  daily: Daily = new Daily
+  hourly: Hourly = new Hourly
   priceForm: FormGroup
 
   terms = [
-    { value: '1', display: '1 day'},
-    { value: '2', display: '2 days'},
-    { value: '3', display: '3 days'},
-    { value: '4', display: '4 days'}
+    { value: '1', display: '1 hour'},
+    { value: '2', display: '2 hours'},
+    { value: '3', display: '3 hours'},
+    { value: '4', display: '4 hours'}
   ]
 
   constructor(
@@ -37,10 +37,10 @@ export class DailyComponent {
   sendPrice() {
     console.log(this.priceForm)
     this.priceForm.updateValueAndValidity()
-    this.daily = this.priceForm.value
+    this.hourly = this.priceForm.value
     // Send price values
     this.price.emit(
-       this.daily
+       this.hourly
     )
     // Send form status for validation
     this.priceValid.emit(
@@ -50,13 +50,14 @@ export class DailyComponent {
 
   ngOnInit() {
     // Initialize
-    this.daily.incentives = false
+    this.hourly.incentives = false
 
     this.priceForm = this._fb.group({
-      price:              [this.daily.price],
-      minimumTerm:        [this.daily.minimumTerm],
-      incentives:         [this.daily.incentives],
-      week:               [this.daily.week]
+      price:              [this.hourly.price],
+      minimumTerm:        [this.hourly.minimumTerm],
+      incentives:         [this.hourly.incentives],
+      halfDay:            [this.hourly.halfDay],
+      day:                [this.hourly.day]
     })
 
   }
