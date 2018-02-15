@@ -29,7 +29,9 @@
   by the hour<br>
   day or month</h2>
 
-  <button mat-raised-button>coworking</button>
+  <!-- <sn-card></sn-card> -->
+
+  <gen-slider [component]="sliderComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
 
 </section>
 
