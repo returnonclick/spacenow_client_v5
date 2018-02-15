@@ -5,7 +5,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 
-import { MaterialModule } from "@shared/material.module"
+// import { MaterialModule } from "@shared/material.module"
+
+import { SharedModule } from '@shared/shared.module'
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
 
@@ -38,7 +40,8 @@ const ENTRY_COMPONENTS = [
 ]
 
 const MODULES = [
-  MaterialModule
+  // MaterialModule
+  SharedModule
 ]
 
 const PIPES = [

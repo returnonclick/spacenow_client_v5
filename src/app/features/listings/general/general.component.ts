@@ -31,6 +31,34 @@ export class GeneralComponent {
     { value: 'monthly', display: 'Price per month' }
   ]
 
+  categories = [
+    { value: 'Office', display: 'Office' },
+    { value: 'Desk only', display: 'Desk only' },
+    { value: 'Event', display: 'Event' },
+    { value: 'Studio', display: 'Studio' },
+    { value: 'Popup retail', display: 'Popup retail' },
+    { value: 'Hospitality', display: 'Hospitality' },
+    { value: 'Fitness', display: 'Fitness' },
+    { value: 'Medical & consulting', display: 'Medical & consulting' },
+    { value: 'Car park', display: 'Car park' },
+    { value: 'Warehouse', display: 'Warehouse' },
+    { value: 'Market & stalls', display: 'Market & stalls' },
+    { value: 'Home office', display: 'Home office' },
+    { value: 'Wedding venues', display: 'Wedding venues' },
+    { value: 'Coworking', display: 'Coworking' },
+    { value: 'Meeting room', display: 'Meeting room' },
+    { value: 'Function centre', display: 'Function centre' },
+    { value: 'Retail', display: 'Retail' },
+    { value: 'Kitchen', display: 'Kitchen' },
+    { value: 'Yoga & pilates', display: 'Yoga & pilates' },
+    { value: 'Music studio', display: 'Music studio' },
+    { value: 'Remedial & sports injury', display: 'Remedial & sports injury' },
+    { value: 'Storage', display: 'Storage' },
+    { value: 'Shared office', display: 'Shared office' },
+    { value: 'Conference room', display: 'Conference room' },
+    { value: 'Unique workspace', display: 'Unique workspace' },
+  ]
+
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any,
     // public  dialog: MatDialog,
@@ -59,7 +87,21 @@ export class GeneralComponent {
       title:              [this.listing.title, Validators.required],
       description:        [this.listing.description],
       rules:              [this.listing.rules, Validators.required],
-      unit:               [this.listing.unit, Validators.required]
+      unit:               [this.listing.unit, Validators.required],
+
+      categoryId:               [this.listing.categoryId, Validators.required],
+      amenityIds:               [this.listing.amenityIds, Validators.required],
+      capacity:               [this.listing.capacity, Validators.required],
+      size:               [this.listing.size, Validators.required],
+
+      extendedAddress:               [this.listing.address.extendedAddress, Validators.required],
+      streetAddress:               [this.listing.address.streetAddress, Validators.required],
+      locality:               [this.listing.address.locality, Validators.required],
+      region:               [this.listing.address.region, Validators.required],
+      postalCode:               [this.listing.address.postalCode, Validators.required],
+      countryCodeAlpha2:               [this.listing.address.countryCodeAlpha2, Validators.required],
+      countryName:               [this.listing.address.countryName, Validators.required],
+
     })
   }
 
