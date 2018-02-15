@@ -17,6 +17,10 @@ import {
   HomeComponent
 } from '@features/pages/home/home.component'
 
+import {
+  GeneralComponent
+} from '@features/listings/general/general.component'
+
 const appRoutes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
@@ -26,6 +30,7 @@ const appRoutes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
+      { path: 'listings', component: GeneralComponent }
     ] 
   },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },

@@ -1,5 +1,6 @@
 <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
   <mat-horizontal-stepper linear>
+
     <!-- Title section -->
     <mat-step>
       <ng-template matStepLabel>Title of your space</ng-template>
@@ -11,32 +12,35 @@
         <button mat-button matStepperNext type="button">Next</button>
       </div>
     </mat-step>
+
     <!-- Price section -->
     <mat-step>
       <ng-template matStepLabel>Space price</ng-template>
-      <h2 mat-dialog-title>Space price</h2>
+      <h2 mat-dialog-title>Space price {{listingForm.controls.unit.value}}</h2>
 
       <mat-form-field>
-        <mat-select placeholder="Pricing System" name="unit">
+        <mat-select placeholder="Pricing System" name="unit" formControlName="unit">
           <mat-option *ngFor="let unit of units" [value]="unit.value">
-            {{ unit.display }}
+            {{ unit.display }} 
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <!-- <sn-hourly-price></sn-hourly-price> -->
-      <!-- <sn-daily-price
-      [parentCount] = 'count'
-      (price)=updateFromChild($event)></sn-daily-price> -->
-      <!--<sn-weekly-price></sn-weekly-price>
-      <sn-monthly-price></sn-monthly-price> -->
+      <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
+      <ng-container *ngIf="listingForm.controls.unit.value === 'daily'">
+        <sn-daily-price (price)=getPrice($event)></sn-daily-price>
+      </ng-container>
+      <!-- <ng-template *ngSwitchCase="hourly"><sn-hourly-price></sn-hourly-price></ng-template> -->
+      <!-- <ng-template *ngSwitchCase="weekly"><sn-weekly-price></sn-weekly-price></ng-template>-->
+      <!-- <ng-template *ngSwitchCase="monthly"><sn-monthly-price></sn-monthly-price></ng-template>  -->
 
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
         <button mat-button matStepperNext type="button">Next</button>
       </div>
     </mat-step>
-    <!-- Categories and rules section -->
+
+    <!-- Categories section -->
     <mat-step>
       <ng-template matStepLabel>Categories</ng-template>
 
@@ -46,7 +50,7 @@
       </div>
     </mat-step>
 
-    <!-- Address and rules section -->
+    <!-- Address section -->
     <mat-step>
       <ng-template matStepLabel>Address</ng-template>
 
@@ -70,6 +74,7 @@
         <button mat-button matStepperNext type="button">Next</button>
       </div>
     </mat-step>
+
     <!-- Save section -->
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>You are now done.

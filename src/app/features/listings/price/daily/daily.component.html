@@ -1,13 +1,21 @@
+<form [formGroup]="priceForm">
 
-<mat-form-field>
-  <input matInput placeholder="{{'Price per'}}">
-</mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Price per day" formControlName="price" (input)="sendPrice()">
+  </mat-form-field>
 
-<mat-form-field>
-  <mat-select placeholder="Minimum Term" name="term">
-    <mat-option *ngFor="let term of terms" [value]="term">
-      {{ term }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<button (click)="save(price)">Save</button>
+  <mat-form-field>
+    <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" (change)="sendPrice()">
+      <mat-option *ngFor="let term of terms" [value]="term.value">
+        {{ term.display }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives</mat-checkbox>
+
+  <mat-form-field *ngIf="priceForm.controls.incentives.value">
+    <input matInput placeholder="Price per week" formControlName="week" (input)="sendPrice()">
+  </mat-form-field>
+
+</form>

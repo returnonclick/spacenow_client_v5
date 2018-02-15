@@ -17,13 +17,11 @@ import { Daily } from '@shared/models/space'
 })
 export class DailyComponent {
 
-  @Output() price: EventEmitter<number> = new EventEmitter<number>()
+  @Output() price = new EventEmitter<Daily>();
 
-  @Input()
-  parentCount: number;
+  daily: Daily = new Daily
+  priceForm: FormGroup
 
-  aux: number = 2
-  
   terms = [
     { value: '1', display: '1 day'},
     { value: '2', display: '2 days'},
@@ -31,31 +29,27 @@ export class DailyComponent {
     { value: '4', display: '4 days'}
   ]
 
+  constructor(
+    private _fb: FormBuilder
+  ) {}
+
+  sendPrice() {
+    this.priceForm.updateValueAndValidity()
+    this.daily = this.priceForm.value
+    this.price.emit(
+       this.daily
+    )
+  }
+
   ngOnInit() {
-    // this.price.emit(2)
-    
-    // this.daily = new Daily() 
-    // console.log(this.price)
-    // this.daily.subscribe(daily => {
-    //   if(daily)
-    //     this.dailyMap = daily.reduce((acc, curr) => {
-    //       acc[curr.id] = curr
-    //       return acc
-    //     }, {})
-    // })
+
+    this.priceForm = this._fb.group({
+      price:              [this.daily.price],
+      minimumTerm:        [this.daily.minimumTerm],
+      incentives:         [this.daily.incentives],
+      week:               [this.daily.week]
+    })
 
   }
 
-  // valMap = (key, obj) => {
-  //   let value = obj[key] || ''
-  //   switch(key) {
-  //     case 'incentives':   return value
-  //     case 'price':        return value
-  //     case 'unit':         return value
-  //     case 'minimumTerm':  return value
-  //     case 'halfWeek':     return value
-  //     case 'week':         return value
-  //     default:             return (JSON.stringify(value) || '').replace(/\"/g, '')
-  //   }
-  // }
 }
