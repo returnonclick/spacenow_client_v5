@@ -6,35 +6,39 @@ import {
   Renderer2,
   ViewChild,
   ViewContainerRef,
-  ViewEncapsulation,
+  // ViewEncapsulation,
 } from '@angular/core'
+import { Observable } from 'rxjs'
 
 /**
  *  COMPONENT USE DESCRIPTION
  *  Generic slider that maps an Array of data into any Component
  *
  *  Inputs:
- *  component:  Any Component to show as an item in the slider                          *required
- *  items:      Array of items in the format that component is expecting. Note that     *required
+ *  component:  Any Component to show as an item in the slider                          * required
+ *  items:      Array of items in the format that component is expecting. Note that     * required
  *              the data will be passed under the data property
- *  perPage:    How many items to be displayed in a "page". Also should be passed as    *default: 4
+ *  perPage:    How many items to be displayed in a "page". Also should be passed as    * default: 4
  *              a custom CSS property
+ *  autoPlay:   Set to true if you want to autoscroll your slider                       * default: false
  *
  *  CSS Properties:
- *  --totalItems: number of items this slider will render                               *required
- *  --perPage: should be the same value as perPage input.                               *default: 4
+ *  --totalItems: number of items this slider will render                               * required
+ *  --perPage:    should be the same value as perPage input.                            * default: 4
  */
 @Component({
   selector: 'gen-slider',
   templateUrl: './slider.component.html',
   styleUrls: [ './slider.component.scss' ],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 export class SliderComponent {
 
-  @Input() component: any
-  @Input() items:     any[]
-  @Input() perPage:   number = 4
+  @Input() component:     any
+  @Input() items:         any[]
+  @Input() perPage:       number  = 4
+  @Input() autoPlay:      boolean = false
+  @Input() autoPlayDelay: number  = 3000
 
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef
 
@@ -53,11 +57,14 @@ export class SliderComponent {
     let factory     = this._factoryResolver.resolveComponentFactory(this.component)
 
     this.items.forEach(item => {
-        let sliderItem = this.container.createComponent(factory)
-        sliderItem.instance['data'] = item
+      let sliderItem = this.container.createComponent(factory)
+      sliderItem.instance['data'] = item
 
-        this._renderer.appendChild(this.slider, sliderItem.location.nativeElement)
+      this._renderer.appendChild(this.slider, sliderItem.location.nativeElement)
     })
+
+    if(this.autoPlay)
+      Observable.timer(0, this.autoPlayDelay).subscribe(() => this.nextPage())
   }
 
   applyTransition() {

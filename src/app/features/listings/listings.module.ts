@@ -11,13 +11,19 @@ import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLL
 
 import { GeneralComponent } from '@features/listings/general/general.component'
 import { DailyComponent } from '@features/listings/price/daily/daily.component'
+import { HourlyComponent } from '@features/listings/price/hourly/hourly.component'
+import { WeeklyComponent } from '@features/listings/price/weekly/weekly.component'
+import { MonthlyComponent } from '@features/listings/price/monthly/monthly.component'
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 
 const COMPONENTS = [
   GeneralComponent,
-  DailyComponent
+  DailyComponent,
+  HourlyComponent,
+  WeeklyComponent,
+  MonthlyComponent
 ]
 
 const MODULES = [

@@ -19,11 +19,10 @@ import { DailyComponent } from '@features/listings/price/daily/daily.component'
 })
 export class GeneralComponent {
 
-  isNew: boolean = true
   listing: Listing
   listingForm: FormGroup
-  unit: any
-  count: number = 0
+  price: any
+  priceValid: boolean = false
 
   units = [
     { value: 'hourly', display: 'Price per hour' },
@@ -40,69 +39,43 @@ export class GeneralComponent {
     private _store: Store<fromRoot.State>
   ) {}
 
+  // Get price form
+  getPrice(price) {
+    this.price = price 
+  }
+
+  // Get price form validation
+  getPriceValid(status) {
+    this.priceValid = status
+  }
+  
   ngOnInit() {
 
-    // this.listing = this.data.item || new Listing() -> Change lines
+    // this.listing = this.data.item || new Listing() -> Enable line when ready to edit
     this.listing = new Listing() // remove
-    
-    // Show Price per day as a default
-    // this.listing.price.unit = this.listing.price.unit || this.units[1].value
-    // this.listing.price.unit = this.units[1].value
-
-    if(!this.listing.id) // change for this.data.item
-      this.isNew = false
+    this.listing.unit = 'daily' // set when not listing.id
 
     this.listingForm = this._fb.group({
       title:              [this.listing.title, Validators.required],
       description:        [this.listing.description],
-      rules:              [this.listing.rules, Validators.required]
+      rules:              [this.listing.rules, Validators.required],
+      unit:               [this.listing.unit, Validators.required]
     })
   }
- 
+
   onSubmit() {
-    this.isNew = true // Change for the validation
-    // let dialogRef = this.dialog.open(ConfirmSaveComponent)
 
-    // dialogRef.afterClosed().subscribe(res => {
+    this.listingForm.updateValueAndValidity()
+    this.listing = this.listingForm.value
+    if (this.price) 
+      this.listing.price = this.price
 
-      // if(res) {
-        // if (this.listing.id)
-        //   this.isNew = false
-
-        this.listingForm.updateValueAndValidity()
-        
-        // if(this.listingForm.invalid)
-        //   return
-
-        this.listing = this.listingForm.value
-
-        if(this.isNew)
-          this._store.dispatch(new actions.Create( this.listing ))
-        else
-          this._store.dispatch(new actions.Update( this.listing.id, this.listing ))
-
-        // this._dialogRef.close()
-
-      }
-
-    // })
+    if(this.listing.id)
+      this._store.dispatch(new actions.Update( this.listing.id, this.listing ))
+    else
+      this._store.dispatch(new actions.Create( this.listing ))
 
   }
 
-  // onDelete() {
+}
 
-    // let dialogRef = this.dialog.open(ConfirmDeleteComponent)
-
-    // dialogRef.afterClosed().subscribe(res => {
-
-    //   if(res) {
-    //     this.listing['isDeleted'] = true
-    //     this._store.dispatch(new actions.Delete( this.listing.id ))
-    //     this._dialogRef.close()
-    //   }
-
-    // })
-
-  // }
-
-// }

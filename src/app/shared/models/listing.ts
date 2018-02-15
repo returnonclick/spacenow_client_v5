@@ -3,19 +3,12 @@
  * ListingModel
  * 
  * IMPORTED MODELS
- * ImageDataModel
- * BookingSlotModel
- * RatingModel
- * AddressModel
+ * SpaceDataModel
  * 
  * Path to firebase: `/listings`
  * 
  *  */
 import { Space } from '@shared/models/space';
-// import { ImageDataModel } from './image-data.model';
-// import { BookingSlotModel } from './booking-slot.model';
-// import { RatingModel } from './rating.model';
-// import { AddressModel } from './address.model';
 
 export class Listing extends Space {
   constructor() {
@@ -28,10 +21,11 @@ export class CarListing extends Space {
   carparks: number
 
   constructor (model: any = null ) {
-    super()
+
+    super(model)
 
     if (model) {
-      this.carparks = model.carparks
+      this.carparks = model.carparks || 0
     }
 
   }

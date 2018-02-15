@@ -8,26 +8,26 @@ import * as actions from '@core/store/listings/actions/listing'
 import * as fromRoot from '@core/store'
 
 import { ConfirmDeleteComponent, ConfirmSaveComponent } from '@shared/components'
-import { Daily } from '@shared/models/space'
+import { Weekly } from '@shared/models/space'
 
 @Component({
-  selector: 'sn-daily-price',
-  templateUrl: './daily.component.html',
-  styleUrls: ['./daily.component.scss']
+  selector: 'sn-Weekly-price',
+  templateUrl: './Weekly.component.html',
+  styleUrls: ['./Weekly.component.scss']
 })
-export class DailyComponent {
+export class WeeklyComponent {
 
-  @Output() price = new EventEmitter<Daily>();
+  @Output() price = new EventEmitter<Weekly>();
   @Output() priceValid = new EventEmitter<boolean>();
 
-  daily: Daily = new Daily
+  weekly: Weekly = new Weekly
   priceForm: FormGroup
 
   terms = [
-    { value: '1', display: '1 day'},
-    { value: '2', display: '2 days'},
-    { value: '3', display: '3 days'},
-    { value: '4', display: '4 days'}
+    { value: '1', display: '1 week'},
+    { value: '2', display: '2 weeks'},
+    { value: '3', display: '3 weeks'},
+    { value: '4', display: '4 weeks'}
   ]
 
   constructor(
@@ -35,12 +35,11 @@ export class DailyComponent {
   ) {}
 
   sendPrice() {
-    console.log(this.priceForm)
     this.priceForm.updateValueAndValidity()
-    this.daily = this.priceForm.value
+    this.weekly = this.priceForm.value
     // Send price values
     this.price.emit(
-       this.daily
+       this.weekly
     )
     // Send form status for validation
     this.priceValid.emit(
@@ -50,13 +49,13 @@ export class DailyComponent {
 
   ngOnInit() {
     // Initialize
-    this.daily.incentives = false
+    this.weekly.incentives = false
 
     this.priceForm = this._fb.group({
-      price:              [this.daily.price],
-      minimumTerm:        [this.daily.minimumTerm],
-      incentives:         [this.daily.incentives],
-      week:               [this.daily.week]
+      price:              [this.weekly.price],
+      minimumTerm:        [this.weekly.minimumTerm],
+      incentives:         [this.weekly.incentives],
+      month:              [this.weekly.month]
     })
 
   }

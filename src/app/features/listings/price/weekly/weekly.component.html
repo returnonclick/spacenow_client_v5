@@ -1,7 +1,7 @@
 <form [formGroup]="priceForm">
-
+    
   <mat-form-field>
-    <input matInput type="number" placeholder="Price per day" formControlName="price" (input)="sendPrice()" required>
+    <input matInput type="number" placeholder="Price per week" formControlName="price" (input)="sendPrice()" required>
   </mat-form-field>
 
   <mat-form-field>
@@ -15,7 +15,7 @@
   <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives</mat-checkbox>
 
   <mat-form-field *ngIf="priceForm.controls.incentives.value">
-    <input matInput type="number" placeholder="Price per week" formControlName="week" (input)="sendPrice()">
+    <input matInput type="number" placeholder="Price per month" formControlName="month" (input)="sendPrice()">
   </mat-form-field>
 
 </form>
