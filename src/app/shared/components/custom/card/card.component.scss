@@ -3,9 +3,9 @@
 
 :host {
 
-  mat-card {
+  --background-color: linear-gradient(rgba($color__pastel_green, .85), rgba($color__pastel_green, .8));
 
-    --background-color: linear-gradient(rgba($color__pastel_green, .5), rgba($color__pastel_green, .8));
+  mat-card {
 
     background: var(--background-color), url('http://wiki.coworking.org/f/1390509060/blitz-sala.jpg');
     background-size: cover;
