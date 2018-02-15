@@ -19,6 +19,8 @@ export class Listing extends Space {
 export class CarListing extends Space {
 
   carparks: number
+  // capacity: number
+  // kitchen: number
 
   constructor (model: any = null ) {
 
@@ -30,3 +32,18 @@ export class CarListing extends Space {
 
   }
 }
+
+export class OfficeListing extends Space {
+  
+    carparks: number
+  
+    constructor (model: any = null ) {
+  
+      super(model)
+  
+      if (model) {
+        this.carparks = model.carparks || 0
+      }
+  
+    }
+  }

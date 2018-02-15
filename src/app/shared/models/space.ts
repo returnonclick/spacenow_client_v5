@@ -14,8 +14,6 @@ export class Space extends Object{
     unit:         string
     categoryId:   string
     amenityIds:   string[]
-    capacity?: number
-    size?: number
     isApproved:   boolean
     address:      AddressModel = new AddressModel()
     // availability: BookingSlot[]
@@ -44,8 +42,6 @@ export class Space extends Object{
         this.categoryId  = model.categoryId || null
         this.amenityIds  = model.amenityIds || []
         this.isApproved  = model.isApproved || false
-        this.capacity = model.capacity || 0
-        this.size = model.size || 0
         this.address = model.address || new AddressModel()
       }
     }

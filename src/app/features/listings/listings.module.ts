@@ -22,6 +22,9 @@ import { SNPriceDirective } from '@features/listings/price/price.directive'
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 
+import { CategoryService } from '@core/store/categories/services/category'
+import { CategoryEffects } from '@core/store/categories/effects/category'
+
 const COMPONENTS = [
   GeneralComponent,
   DailyComponent,
@@ -61,12 +64,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MODULES,
     PerfectScrollbarModule,
     EffectsModule.forFeature([ListingEffects]),
+    EffectsModule.forFeature([CategoryEffects]),
   ],
   declarations: [COMPONENTS, PIPES],
   entryComponents: ENTRY_COMPONENTS,
   exports: [COMPONENTS, MODULES, PIPES],
   providers: [
     ListingService,
+    CategoryService,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ]
 })

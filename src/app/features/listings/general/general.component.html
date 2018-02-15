@@ -44,7 +44,13 @@
     <!-- Categories section -->
     <mat-step>
       <ng-template matStepLabel>Categories</ng-template>
-
+      <mat-form-field>
+        <mat-select placeholder="Category" name="category" formControlName="categoryId" required>
+          <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+            {{ category.name }} 
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
         <button mat-button matStepperNext type="button">Next</button>
