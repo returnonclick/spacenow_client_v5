@@ -30,12 +30,7 @@
       </mat-form-field>
 
       <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
-      <!-- <price [unit]="listingForm.controls.unit.value"></price> -->
-
-      <!-- Leave the old way (ngIf) for one component for you to see it working -->
-      <ng-container *ngIf="listingForm.controls.unit.value === 'hourly'">
-        <sn-hourly-price (price)=getPrice($event) (priceValid)=getPriceValid($event)></sn-hourly-price>
-      </ng-container>
+      <sn-price [unit]="listingForm.controls.unit.value"></sn-price>
 
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>

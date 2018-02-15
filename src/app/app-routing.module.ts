@@ -29,8 +29,8 @@ const appRoutes: Routes = [
     // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
       { path: 'home', component: HomeComponent },
+      { path: 'listings', component: GeneralComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
-      { path: 'listings', component: GeneralComponent }
     ] 
   },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },

@@ -14,6 +14,8 @@ import { DailyComponent } from '@features/listings/price/daily/daily.component'
 import { HourlyComponent } from '@features/listings/price/hourly/hourly.component'
 import { WeeklyComponent } from '@features/listings/price/weekly/weekly.component'
 import { MonthlyComponent } from '@features/listings/price/monthly/monthly.component'
+import { PriceComponent } from '@features/listings/price/price.component'
+import { SNPriceDirective } from '@features/listings/price/price.directive'
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
@@ -23,7 +25,16 @@ const COMPONENTS = [
   DailyComponent,
   HourlyComponent,
   WeeklyComponent,
-  MonthlyComponent
+  MonthlyComponent,
+  PriceComponent,
+  SNPriceDirective
+]
+
+const ENTRY_COMPONENTS = [
+  DailyComponent,
+  HourlyComponent,
+  WeeklyComponent,
+  MonthlyComponent,
 ]
 
 const MODULES = [
@@ -49,7 +60,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EffectsModule.forFeature([ListingEffects]),
   ],
   declarations: [COMPONENTS, PIPES],
-  entryComponents: COMPONENTS,
+  entryComponents: ENTRY_COMPONENTS,
   exports: [COMPONENTS, MODULES, PIPES],
   providers: [
     ListingService,
