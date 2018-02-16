@@ -9,21 +9,26 @@ import { Address } from '@shared/models/address'
  *  address:         Address Information returned from google maps. (AddressModel)
  */
 @Directive({
-  selector: '[d-google-address]'
+  selector: '[d-google-address]',
+  host: {
+    '(change)': 'sendAddress()'
+  }
 })
 
 export class GoogleAddressDirective {
 
-  @Output() address: Address
+  address: Address
+  @Output() addressEvent = new EventEmitter<any>()
 
-  addressEvent = new EventEmitter()
+
+
   constructor(
     private viewContainerRef: ViewContainerRef,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
   ) {
 
-    this.addressEvent.emit(
+
       this.mapsAPILoader.load().then(() => {
         let autocomplete = new google.maps.places.Autocomplete(this.viewContainerRef.element.nativeElement, {})
         autocomplete.addListener("place_changed", () => {
@@ -34,6 +39,7 @@ export class GoogleAddressDirective {
             if (place.geometry === undefined || place.geometry === null) {
               return;
             } else {
+
               this.address.lng = place.geometry.location.lng();
               this.address.lat = place.geometry.location.lat();
               place.address_components.map(address => {
@@ -56,9 +62,15 @@ export class GoogleAddressDirective {
                 })
               })
             }
+            // console.log(this.address)
+            this.viewContainerRef.element.nativeElement.dispatchEvent('change')
           })
         })
       })
-    )
   }
+  sendAddress() {
+    this.addressEvent.emit(this.address)
+  }
+
+
 }

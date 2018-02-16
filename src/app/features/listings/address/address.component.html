@@ -1,29 +1,40 @@
 <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
-  <div>
-      <input d-google-address (addressEvent)='addressEvent()' matInput placeholder="Type to search address..." autocorrect="off" autocapitalize="off" spellcheck="off" type="text" id="address-search">
+    <h2>List your space address</h2>
+    <div id="address-search-container">
+        <input d-google-address (addressEvent)='getAddress($event)'  matInput placeholder="Type to search address..." autocorrect="off"
+            autocapitalize="off" spellcheck="off" type="text" id="address-search">
+    </div>
 
-    <!-- <mat-form-field>
-        <input matInput placeholder="Country" formControlName="countryName" required>
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput placeholder="Street Address" formControlName="street1" required>
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput placeholder="Unit / Apartment / Suite (optional)" formControlName="street2" required>
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput placeholder="Suburb / Town" formControlName="city" required>
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput placeholder="State" formControlName="state" required>
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput placeholder="Postcode" formControlName="postalCode" required>
-    </mat-form-field> -->
-  </div>
+    <div id="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start">
+        <div fxFlex="28%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+                <input matInput placeholder="Country Name" readonly formControlName="countryName">
+            </mat-form-field>
+        </div>
+        <div fxFlex="70%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+                <input matInput placeholder="street Address" readonly formControlName="street1" required>
+            </mat-form-field>
+        </div>
+        <div fxFlex="24%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+                <input matInput placeholder="Unit / Apartment / Suite" formControlName="street2">
+            </mat-form-field>
+        </div>
+        <div fxFlex="24%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+                <input matInput placeholder="Suburb / City" readonly formControlName="city">
+            </mat-form-field>
+        </div>
+        <div fxFlex="24%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+                <input matInput placeholder="Postal code" readonly formControlName="postalCode">
+            </mat-form-field>
+        </div>
+        <div fxFlex="25%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+                <input matInput placeholder="State" readonly formControlName="state">
+            </mat-form-field>
+        </div>
+    </div>
 </form>

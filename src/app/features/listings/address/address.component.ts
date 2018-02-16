@@ -17,11 +17,12 @@ export class AddressComponent {
   addressForm: FormGroup
   address: Address
   vSearch: string
+  add: any
 
   constructor(
     private _fb: FormBuilder
   ) {
-    this.vSearch = 'test'
+
   }
 
   ngOnInit() {
@@ -30,8 +31,8 @@ export class AddressComponent {
     this.addressForm = this._fb.group({
       countryName:              [this.address.countryName, Validators.required],
       countryCode:              [this.address.countryCode, Validators.required],
-      countryStreet1:           [this.address.street1, Validators.required],
-      countryStreet2:           [this.address.street2],
+      street1:                  [this.address.street1, Validators.required],
+      street2:                  [this.address.street2],
       city:                     [this.address.city, Validators.required],
       state:                    [this.address.state, Validators.required],
       postalCode:               [this.address.postalCode, Validators.required],
@@ -39,6 +40,9 @@ export class AddressComponent {
     })
   }
 
-  onSubmit() {
+   // Get address form
+   getAddress(address) {
+    this.add = address
+    console.log(this.add)
   }
 }

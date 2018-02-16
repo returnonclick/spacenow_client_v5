@@ -1,7 +1,7 @@
-import { AddressModel } from '@models/address.model'
+import { Address } from '@models/address'
 
 export class Space extends Object{
-  
+
     id:           string
     ref:          string
     ownerUid:     string
@@ -15,7 +15,7 @@ export class Space extends Object{
     categoryId:   string
     amenityIds:   string[]
     isApproved:   boolean
-    address:      AddressModel = new AddressModel()
+    address:      Address = new Address()
     // availability: BookingSlot[]
 
     constructor( model: any = null ) {
@@ -42,11 +42,11 @@ export class Space extends Object{
         this.categoryId  = model.categoryId || null
         this.amenityIds  = model.amenityIds || []
         this.isApproved  = model.isApproved || false
-        this.address = model.address || new AddressModel()
+        this.address = model.address || new Address()
       }
     }
   }
-  
+
   export class Price extends Object {
     price:       number
     minimumTerm: number
@@ -82,10 +82,10 @@ export class Space extends Object{
   }
 
   export class Daily extends Price {
-    
+
     week: number
 
-    constructor( model: any = null ) {  
+    constructor( model: any = null ) {
 
       super(model)
 
@@ -107,7 +107,7 @@ export class Space extends Object{
       if (model) {
         this.month = model.month || 0
       }
-      
+
     }
   }
 

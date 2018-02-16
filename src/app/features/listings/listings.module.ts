@@ -18,6 +18,7 @@ import { WeeklyComponent } from '@features/listings/price/weekly/weekly.componen
 import { MonthlyComponent } from '@features/listings/price/monthly/monthly.component'
 import { PriceComponent } from '@features/listings/price/price.component'
 import { SNPriceDirective } from '@features/listings/price/price.directive'
+import { AddressComponent } from '@features/listings/address/address.component'
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
@@ -32,7 +33,8 @@ const COMPONENTS = [
   WeeklyComponent,
   MonthlyComponent,
   PriceComponent,
-  SNPriceDirective
+  SNPriceDirective,
+  AddressComponent
 ]
 
 const ENTRY_COMPONENTS = [
@@ -40,6 +42,7 @@ const ENTRY_COMPONENTS = [
   HourlyComponent,
   WeeklyComponent,
   MonthlyComponent,
+  AddressComponent
 ]
 
 const MODULES = [
@@ -75,7 +78,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ]
 })
-export class ListingModule { 
+export class ListingModule {
   static forRoot() {
     return {
       ngModule: ListingModule
