@@ -26,15 +26,15 @@ import {
   HomeComponent
 } from '@features/pages/home/home.component'
 
-import {
-  MySpacesComponent,
-} from '@features/my-spaces/my-spaces.component'
+import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
+import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 
 const COMPONENTS = [
   UserComponent,
   UserListComponent,
   HomeComponent,
   MySpacesComponent,
+  MyCalendarComponent,
 ]
 
 const ENTRY_COMPONENTS = [
