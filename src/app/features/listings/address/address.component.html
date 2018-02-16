@@ -1,0 +1,29 @@
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  <div>
+      <input d-google-address (addressEvent)='addressEvent()' matInput placeholder="Type to search address..." autocorrect="off" autocapitalize="off" spellcheck="off" type="text" id="address-search">
+
+    <!-- <mat-form-field>
+        <input matInput placeholder="Country" formControlName="countryName" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Street Address" formControlName="street1" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Unit / Apartment / Suite (optional)" formControlName="street2" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Suburb / Town" formControlName="city" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="State" formControlName="state" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Postcode" formControlName="postalCode" required>
+    </mat-form-field> -->
+  </div>
+</form>
