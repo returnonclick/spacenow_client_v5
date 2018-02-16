@@ -1,0 +1,14 @@
+<div class="space-item" (click)="handleClick('view')">
+  <img class="featured-image" [src]="space.imageUrl"/>
+  <button mat-icon-button class="space-options" type="button" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+    <mat-icon>more_horiz</mat-icon>
+  </button>
+  <h4>{{ space.name }}</h4>
+  <span class="price-desc">From <span class="price">{{ space.price }}</span> a {{ space.priceUnit }}</span>
+  <small>{{ space.details }}</small>
+</div>
+<mat-menu #menu>
+  <button mat-menu-item type="button" (click)="handleClick('edit')">Edit</button>
+  <button mat-menu-item type="button" (click)="handleClick('delete')">Delete</button>
+  <button mat-menu-item type="button" (click)="handleClick('duplicate')">Duplicate</button>
+</mat-menu>

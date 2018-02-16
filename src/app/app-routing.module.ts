@@ -21,6 +21,10 @@ import {
   GeneralComponent
 } from '@features/listings/general/general.component'
 
+import {
+  MySpacesComponent,
+} from '@features/my-spaces/my-spaces.component'
+
 const appRoutes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
@@ -30,8 +34,9 @@ const appRoutes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'listings', component: GeneralComponent },
+      { path: 'my-spaces', component: MySpacesComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
-    ] 
+    ]
   },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   // { path: 'page-not-found', component:  }
@@ -41,9 +46,8 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-       // { enableTracing: true } // <-- debugging purposes only
+      // { enableTracing: true } // <-- debugging purposes only
     )
-    
   ],
   // providers: [ appRoutingProviders ],
   exports: [ RouterModule ]
