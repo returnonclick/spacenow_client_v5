@@ -1,0 +1,8 @@
+<div class="calendar-month" *ngFor="let month of calendar">
+  <h3>{{ month.date }}</h3>
+  <div class="space-list">
+    <div class="space-container" *ngFor="let space of month.spaces">
+      <sn-space-list-item [space]="space"></sn-space-list-item>
+    </div>
+  </div>
+</div>

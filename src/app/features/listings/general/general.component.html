@@ -27,23 +27,21 @@
       </div>
     </div>
 
-    <!-- Categories -->
-    <h2>Select a category</h2>
-      <mat-radio-group fxLayout="row" fxLayoutAlign="space-between start"
-        formControlName="categoryId" *ngFor="let category of categories">
-        <mat-radio-button 
-          fxFlex = "49%"
-          [value]="category.value" class="radio-list">
-          {{category.display}}
-        </mat-radio-button>
-      </mat-radio-group>
-
-    <!-- Amenities -->
-    <h2>Select amenities</h2>
-    <div id="amenity-container">
-      <mat-checkbox class="checkbox-list">Checked</mat-checkbox>
-      <mat-checkbox class="checkbox-list">Indeterminate</mat-checkbox>
-    </div>
+    <!-- Categories section -->
+    <mat-step>
+      <ng-template matStepLabel>Categories</ng-template>
+      <mat-form-field>
+        <mat-select placeholder="Category" name="category" formControlName="categoryId" required>
+          <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+            {{ category.name }} 
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
 
     <!-- Space specification -->
     <h2>Space Specifications</h2>

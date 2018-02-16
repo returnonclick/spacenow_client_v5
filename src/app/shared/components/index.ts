@@ -10,7 +10,6 @@ import {
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
-  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   SliderComponent,
@@ -22,6 +21,7 @@ import {
   LayoutComponent
 } from './theme'
 
+import { SpaceListItemComponent } from './space-list-item/space-list-item.component'
 
 import { LoadingComponent } from './loading/loading.component'
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component'
@@ -35,10 +35,10 @@ export {
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
-  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   SliderComponent,
+  SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,
@@ -55,10 +55,10 @@ export default {
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
-  GoogleAddressComponent,
   ImageDataComponent,
   InputCardComponent,
   SliderComponent,
+  SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,

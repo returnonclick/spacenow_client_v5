@@ -18,13 +18,16 @@ import { WeeklyComponent } from '@features/listings/price/weekly/weekly.componen
 import { MonthlyComponent } from '@features/listings/price/monthly/monthly.component'
 import { PriceComponent } from '@features/listings/price/price.component'
 import { SNPriceDirective } from '@features/listings/price/price.directive'
+import { AddressComponent } from '@features/listings/address/address.component'
 
 import { ListingAddressComponent } from '@features/listings/address/listing-address/listing-address.component'
-import { AddressComponent } from '@features/listings/address/address.component'
 import { SNAddressDirective } from '@features/listings/address/address.directive'
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
+
+import { CategoryService } from '@core/store/categories/services/category'
+import { CategoryEffects } from '@core/store/categories/effects/category'
 
 const COMPONENTS = [
   GeneralComponent,
@@ -33,10 +36,8 @@ const COMPONENTS = [
   WeeklyComponent,
   MonthlyComponent,
   PriceComponent,
-  ListingAddressComponent,
-  AddressComponent,
   SNPriceDirective,
-  SNAddressDirective
+  AddressComponent
 ]
 
 const ENTRY_COMPONENTS = [
@@ -44,7 +45,7 @@ const ENTRY_COMPONENTS = [
   HourlyComponent,
   WeeklyComponent,
   MonthlyComponent,
-  ListingAddressComponent,
+  AddressComponent
 ]
 
 const MODULES = [
@@ -69,16 +70,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MODULES,
     PerfectScrollbarModule,
     EffectsModule.forFeature([ListingEffects]),
+    EffectsModule.forFeature([CategoryEffects]),
   ],
   declarations: [COMPONENTS, PIPES],
   entryComponents: ENTRY_COMPONENTS,
   exports: [COMPONENTS, MODULES, PIPES],
   providers: [
     ListingService,
+    CategoryService,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ]
 })
-export class ListingModule { 
+export class ListingModule {
   static forRoot() {
     return {
       ngModule: ListingModule

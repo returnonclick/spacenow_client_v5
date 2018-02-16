@@ -1,0 +1,24 @@
+.calendar-month {
+  padding: 20px;
+}
+
+.space-list {
+  --hover: #6cde93;
+  --borderColor: transparent;
+
+  display: grid;
+  grid-template-columns: repeat(4, calc(100% / 4 - 60px));
+  grid-gap: 60px;
+  margin-top: 20px;
+
+  > .space-container {
+    padding: 20px;
+    border: 2px solid var(--borderColor);
+    transition: all 0.5s ease;
+    box-shadow: 0px 20px 40px 0 #dddddd;
+
+    &:hover {
+      --borderColor: var(--hover)
+    }
+  }
+}
