@@ -17,19 +17,24 @@ import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { UserService } from '@core/store/users/services/user'
 import { UserEffects } from '@core/store/users/effects/user'
 
-import { 
+import {
   UserComponent,
   UserListComponent
 } from '@features/users'
 
-import { 
+import {
   HomeComponent
 } from '@features/pages/home/home.component'
+
+import {
+  MySpacesComponent,
+} from '@features/my-spaces/my-spaces.component'
 
 const COMPONENTS = [
   UserComponent,
   UserListComponent,
-  HomeComponent
+  HomeComponent,
+  MySpacesComponent,
 ]
 
 const ENTRY_COMPONENTS = [
@@ -55,7 +60,7 @@ const SERVICES = [
   entryComponents: ENTRY_COMPONENTS,
   providers: SERVICES
 })
-export class FeatureModule { 
+export class FeatureModule {
   static forRoot() {
     return {
       ngModule: FeatureModule
