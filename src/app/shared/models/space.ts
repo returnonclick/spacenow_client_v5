@@ -1,3 +1,4 @@
+import { AddressModel } from '@models/address.model'
 
 export class Space extends Object{
   
@@ -5,7 +6,6 @@ export class Space extends Object{
     ref:          string
     ownerUid:     string
     title:        string
-    // address:      Address
     description:  string
     rules:        string
     tags:         string[]
@@ -14,8 +14,9 @@ export class Space extends Object{
     unit:         string
     categoryId:   string
     amenityIds:   string[]
-    // availability: BookingSlot[]
     isApproved:   boolean
+    address:      AddressModel = new AddressModel()
+    // availability: BookingSlot[]
 
     constructor( model: any = null ) {
 
@@ -41,6 +42,7 @@ export class Space extends Object{
         this.categoryId  = model.categoryId || null
         this.amenityIds  = model.amenityIds || []
         this.isApproved  = model.isApproved || false
+        this.address = model.address || new AddressModel()
       }
     }
   }

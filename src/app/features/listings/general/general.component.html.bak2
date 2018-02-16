@@ -1,0 +1,188 @@
+
+<section>
+  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+    <!-- Title -->
+    <h2>Title of your space</h2>
+    <div fxLayout="row">
+      <mat-form-field fxFlex>
+        <input matInput placeholder="Name your space" formControlName="title" required>
+      </mat-form-field>
+    </div>
+
+    <!-- Pricing -->
+    <h2>Space Price</h2>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+      <div fxFlex="30%" fxFlex.lt-md="100%">
+        <mat-form-field>
+          <mat-select id="mat-select-test" placeholder="Pricing System" name="unit" formControlName="unit" required>
+            <mat-option *ngFor="let unit of units" [value]="unit.value">
+              {{ unit.display }} 
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="60%" fxFlex.lt-md="100%">
+        <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
+        <sn-price [unit]="listingForm.controls.unit.value"></sn-price>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <h2>Select a category</h2>
+      <mat-radio-group fxLayout="row" fxLayoutAlign="space-between start"
+        formControlName="categoryId" *ngFor="let category of categories">
+        <mat-radio-button 
+          fxFlex = "49%"
+          [value]="category.value" class="radio-list">
+          {{category.display}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+    <!-- Amenities -->
+    <h2>Select amenities</h2>
+    <div id="amenity-container">
+      <mat-checkbox class="checkbox-list">Checked</mat-checkbox>
+      <mat-checkbox class="checkbox-list">Indeterminate</mat-checkbox>
+    </div>
+
+    <!-- Space specification -->
+    <h2>Space Specifications</h2>
+    <div flexLayout="row" fxLayoutAlign="space-between start">
+      <div fxFlex="49%">
+        <mat-form-field class="input-container-full">
+          <input matInput placeholder="Capacity" formControlName="capacity" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex="49%">
+        <mat-form-field class="input-container-full">
+          <input matInput placeholder="Size (in sqm)" formControlName="size" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Address -->
+    <h2>List your space address</h2>
+    <div id="address-search-container" >
+      <sn-google-address></sn-google-address>
+    </div>
+    <div id="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start">
+      <div fxFlex="28%" fxFlex.lt-md="49%">
+          <mat-form-field  class="input-container-full">
+            <input matInput placeholder="Unit" 
+              [ngModel]=""
+              formControlName="extendedAddress">
+          </mat-form-field>
+      </div>
+      <div fxFlex="70%" fxFlex.lt-md="49%">
+          <mat-form-field  class="input-container-full">
+            <input matInput placeholder="Street"
+              [ngModel]=""
+              readonly
+              formControlName="streetAddress" required>
+          </mat-form-field>
+      </div>
+      <div fxFlex="24%" fxFlex.lt-md="49%">
+          <mat-form-field class="input-container-full">
+            <input matInput placeholder="Suburb, District" 
+              [ngModel]=""
+              readonly
+              formControlName="locality">
+          </mat-form-field>
+      </div>
+      <div fxFlex="24%" fxFlex.lt-md="49%">
+          <mat-form-field class="input-container-full">
+            <input matInput placeholder="State or Province" 
+              [ngModel]=""
+              readonly
+              formControlName="region">
+          </mat-form-field>
+      </div>
+      <div fxFlex="24%" fxFlex.lt-md="49%">
+          <mat-form-field class="input-container-full">
+            <input matInput placeholder="Postal code" 
+              [ngModel]=""
+              readonly
+              formControlName="postalCode">
+          </mat-form-field>
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="49%">
+          <mat-form-field class="input-container-full">
+            <input matInput placeholder="Country Code" 
+              [ngModel]=""
+              readonly
+              formControlName="countryCodeAlpha2">
+          </mat-form-field>
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="100%">
+          <mat-form-field class="input-container-full">
+            <input matInput placeholder="Country" #inputCountry
+              readonly
+              formControlName="countryName">
+          </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <h2>Describe your space</h2>
+    <!-- <mat-form-field class=""> -->
+    <!--   <input matInput placeholder="Title"  -->
+    <!--     [ngModel]="" -->
+    <!--     formControlName="title"> -->
+    <!-- </mat-form-field> -->
+      <mat-form-field class="input-container-full">
+        <textarea matInput placeholder="Space Rules"
+          matTextareaAutosize
+          matAutosizeMinRows="8"
+          matAustosizeMaxRows="8"
+          formControlName="rules">
+        </textarea>
+      </mat-form-field>
+
+    <!-- Upload images -->
+    <h2>Upload your photos</h2>
+
+
+    <!-- Booking system -->
+    <h2>Booking system</h2>
+
+    <!-- Link other spaces -->
+    <h2>Do you want to link any other spaces?</h2>
+    <span>You can link other spaces to the one account, click on the related spaces below</span>
+    <div>
+      <mat-checkbox class="checkbox-list">Car Park</mat-checkbox>
+      <mat-checkbox class="checkbox-list">Conference Room</mat-checkbox>
+      <mat-checkbox class="checkbox-list">Storage</mat-checkbox>
+      <mat-checkbox class="checkbox-list">Meeting Room</mat-checkbox>
+      <mat-checkbox class="checkbox-list">Other</mat-checkbox>
+    </div>
+
+    <!-- Accept T&C -->
+    <h2>Accept spacenow t+c</h2>
+    <div >
+      <mat-checkbox class="checkbox-list">I accept the hosts terms</mat-checkbox>
+      <mat-checkbox class="checkbox-list">I accept spacenow t+c</mat-checkbox>
+    </div>
+    <div>
+      <mat-form-field class="input-container-full">
+        <textarea matInput placeholder="space t+c"
+          matTextareaAutosize
+          matAutosizeMinRows="15"
+          matAustosizeMaxRows="15"
+          readonly
+          > This is the spacenow T&C
+        </textarea>
+      </mat-form-field>
+    </div>
+
+
+    <!-- Form Action -->
+    <div>
+      <button mat-button type="button" class="sn-button">Back</button>
+      <button mat-button type="submit"  class="sn-button"
+              [disabled]="listingForm.invalid || listingForm.pristine">
+              Save
+      </button>
+    </div>
+
+  </form>
+
+</section>

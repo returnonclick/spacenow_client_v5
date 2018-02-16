@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore'
-import { User } from '@shared/models/User';
+import { User } from '@shared/models/user';
 
 @Injectable()
 export class UserService {

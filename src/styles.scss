@@ -1,3 +1,6 @@
+// Fix `Could not find Angular Material core theme`
+// Ref. https://github.com/angular/material2/issues/4125
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~@angular/material/theming';
 
 @import
@@ -31,7 +34,8 @@
   '~sass/components/panels';
 
 @import
-  '~sass/pages/home';
+  '~sass/pages/home',
+  '~sass/listings/general';
 
 @import
   '~sass/themes/theme';

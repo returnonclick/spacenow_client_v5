@@ -1,0 +1,49 @@
+
+section {
+  width: 960.0px;
+  // width: 70%;
+  position: relative;
+  clear: both;
+  margin-left: auto;
+  margin-right: auto;
+  // padding-top: 100px;
+  // padding-top: 10rem;
+  // border: 1px solid red;
+  min-height: 800px;
+}
+
+section:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+h2 {
+  padding-top: 2em;
+  padding-bottom: 1em;
+}
+
+.input-container-full {
+    /* border: 1px solid red; */
+    width: 100%;
+}
+
+.checkbox-list,
+.radio-list{
+  display: block;
+}
+
+/* 
+ * Mobile screen
+ * ************************************ */
+@media screen and (max-width: 959px) {
+  section {
+    width: 100%;
+    padding: 5px;
+  }
+
+  h2 {
+    padding-top: 0.5em;
+    padding-bottom: 0.2em;
+    font-size: 16pt;
+  }
+}

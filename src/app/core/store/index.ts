@@ -32,6 +32,7 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import * as fromAuth            from '@core/store/auth/reducers/auth'
 import * as fromUsers           from '@core/store/users/reducers/users'
 import * as fromListings        from '@core/store/listings/reducers/listings'
+import * as fromCategories      from '@core/store/categories/reducers/categories'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -41,6 +42,7 @@ export interface State {
     auth:          fromAuth.State
     users:         fromUsers.State
     listings:      fromListings.State
+    categories:    fromCategories.State
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
 }
 
@@ -53,6 +55,7 @@ export const reducers: ActionReducerMap<State> = {
     auth:          fromAuth.reducer,
     users:         fromUsers.reducer,
     listings:      fromListings.reducer,
+    categories:    fromCategories.reducer,
     routerReducer: fromRouter.routerReducer,
 }
 
@@ -137,3 +140,21 @@ export const {
     selectAll: getAllListings,
     selectTotal: getTotalListings,
   } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
+
+/**
+ * Categories Reducers
+ */
+
+export const getCategoriesState = createFeatureSelector<fromCategories.State>('categories')
+
+export const getCategoryEntitiesState = createSelector(
+    getCategoriesState,
+    (state) => state
+)
+
+export const {
+    selectIds: getCategoryIds,
+    selectEntities: getCategoryEntities,
+    selectAll: getAllCategories,
+    selectTotal: getTotalCategories,
+  } = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)

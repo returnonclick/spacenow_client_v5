@@ -30,7 +30,8 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatTableModule,
-  MatStepperModule
+  MatStepperModule,
+  MatRadioModule
 } from '@angular/material'
 
 const MODULES = [
@@ -61,7 +62,8 @@ const MODULES = [
   MatToolbarModule,
   MatTooltipModule,
   MatTableModule,
-  MatStepperModule
+  MatStepperModule,
+  MatRadioModule
 ]
 
 @NgModule({

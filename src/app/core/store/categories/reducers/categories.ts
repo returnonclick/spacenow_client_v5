@@ -1,25 +1,25 @@
 import { createSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-import { User } from '@shared/models/user';
-import * as actions from '@core/store/users/actions/user';
+import { Category } from '@shared/models/category';
+import * as actions from '@core/store/categories/actions/category';
 
-export interface State extends EntityState<User> {
+export interface State extends EntityState<Category> {
     loading: boolean;
 }
 
-export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>({
-    selectId: (obj: User) => obj.userUID,
+export const categoryAdapter: EntityAdapter<Category> = createEntityAdapter<Category>({
+    selectId: (obj: Category) => obj.id,
     sortComparer: false,
-})
+});
 
-export const initialState: State = userAdapter.getInitialState({
-    loading: false
+export const initialState: State = categoryAdapter.getInitialState({
+    loading: false,
 });
 
 export function reducer(
     state = initialState,
-    action: actions.UserActions
+    action: actions.CategoryActions
 ): State {
     switch (action.type) {
 
@@ -27,16 +27,16 @@ export function reducer(
             return {
                 ...state,
                 loading: true,
-                ...userAdapter.addOne(action.payload, state)
-            }
+                ...categoryAdapter.addOne(action.payload, state)
+            };
         }
 
         case actions.MODIFIED: {
             return { 
                 ...state,
                 loading: true,
-                ...userAdapter.updateOne({
-                    id: action.payload.userUID,
+                ...categoryAdapter.updateOne({
+                    id: action.payload.id,
                     changes: action.payload
                 }, state)
             }
@@ -46,7 +46,7 @@ export function reducer(
             return {
                 ...state,
                 loading: true,
-                ...userAdapter.removeOne(action.payload.userUID, state)
+                ...categoryAdapter.removeOne(action.payload.id, state)
             }
         }
 

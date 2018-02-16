@@ -12,8 +12,8 @@ import { Weekly } from '@shared/models/space'
 
 @Component({
   selector: 'sn-Weekly-price',
-  templateUrl: './Weekly.component.html',
-  styleUrls: ['./Weekly.component.scss']
+  templateUrl: './weekly.component.html',
+  styleUrls: ['./weekly.component.scss']
 })
 export class WeeklyComponent {
 

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store'
-import { User } from '@shared/models/User'
+import { User } from '@shared/models/user'
 
 export const QUERY               = '[User] query'
 

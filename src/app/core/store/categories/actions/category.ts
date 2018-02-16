@@ -1,17 +1,17 @@
 import { Action } from '@ngrx/store'
-import { Listing } from '@shared/models/listing'
+import { Category } from '@shared/models/category'
 
-export const QUERY      = '[Listing] query'
+export const QUERY      = '[Category] query'
 
-export const ADDED      = '[Listing] added'
-export const MODIFIED   = '[Listing] modified'
-export const REMOVED    = '[Listing] removed'
+export const ADDED      = '[Category] added'
+export const MODIFIED   = '[Category] modified'
+export const REMOVED    = '[Category] removed'
 
-export const CREATE     = '[Listing] create'
-export const UPDATE     = '[Listing] update'
-export const DELETE     = '[Listing] delete'
-export const SUCCESS    = '[Listing] success'
-export const FAIL       = '[Listing] fail'
+export const CREATE     = '[Category] create'
+export const UPDATE     = '[Category] update'
+export const DELETE     = '[Category] delete'
+export const SUCCESS    = '[Category] success'
+export const FAIL       = '[Category] fail'
 
 export class Query implements Action {
     readonly type = QUERY
@@ -20,29 +20,29 @@ export class Query implements Action {
 
 export class Added implements Action {
     readonly type = ADDED
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Category ) { }
 }
 
 export class Modified implements Action {
     readonly type = MODIFIED
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Category ) { }
 }
 
 export class Removed implements Action {
     readonly type = REMOVED
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Category ) { }
 }
 
 export class Create implements Action {
     readonly type = CREATE
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Category ) { }
 }
 
 export class Update implements Action {
     readonly type = UPDATE
     constructor( 
         public id: string, 
-        public changes: Partial<Listing> 
+        public changes: Partial<Category> 
     ) { }
 }
 
@@ -61,7 +61,7 @@ export class Fail implements Action {
     constructor( public payload: any ) { }
 }
 
-export type ListingActions = 
+export type CategoryActions = 
     | Query
     | Added
     | Modified
