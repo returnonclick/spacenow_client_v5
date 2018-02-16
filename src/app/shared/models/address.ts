@@ -14,8 +14,9 @@
 
 export class Address {
 
-  street1:      string = ''       // (50)	An echo of the customer's street address
-  street2:      string = ''       // (50)	An echo of the customer's street address
+  unit:         string = ''       // (50)	An echo of the customer's unit number
+  streetNumber: string = ''       // (50)	An echo of the customer's street number
+  street:      string = ''       // (50)	An echo of the customer's street address
   city:         string = ''       // (50) An echo of the customer's city / town / suburb
   state:        string = ''       // (50) An echo of the customer's state / country
   postalCode:   string = ''       // (30) An echo of the customer's post / zip code
@@ -28,8 +29,9 @@ export class Address {
 
     if (model) {
 
-      this.street1      = model.street1
-      this.street2      = model.street2
+      this.unit         = model.unit
+      this.streetNumber = model.streetNumber
+      this.street       = model.street
       this.city         = model.city
       this.state        = model.state
       this.postalCode   = model.postalCode

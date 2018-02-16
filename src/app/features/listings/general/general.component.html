@@ -28,8 +28,8 @@
     </div>
 
     <!-- Categories section -->
-    <mat-step>
-      <ng-template matStepLabel>Categories</ng-template>
+    <!-- <mat-step> -->
+      <!-- <ng-template matStepLabel>Categories</ng-template> -->
       <mat-form-field>
         <mat-select placeholder="Category" name="category" formControlName="categoryId" required>
           <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
@@ -37,14 +37,14 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div>
+      <!-- <div>
         <button mat-button matStepperPrevious type="button">Back</button>
         <button mat-button matStepperNext type="button">Next</button>
-      </div>
-    </mat-step>
+      </div> -->
+    <!-- </mat-step> -->
 
     <!-- Space specification -->
-    <h2>Space Specifications</h2>
+    <!-- <h2>Space Specifications</h2>
     <div flexLayout="row" fxLayoutAlign="space-between start">
       <div fxFlex="49%">
         <mat-form-field class="input-container-full">
@@ -56,76 +56,61 @@
           <input matInput placeholder="Size (in sqm)" formControlName="size" required>
         </mat-form-field>
       </div>
-    </div>
+    </div> -->
     
     <!-- Address -->
     <h2>List your space address</h2>
     <div id="address-search-container" >
       <div fxFlex="100%" fxFlex.lt-md="100%">
-        
-        <input d-sn-address (addressEvent)='addressEvent()' matInput placeholder="Type to search address..." autocorrect="off" autocapitalize="off" spellcheck="off" type="text" id="address-search">
-
-        
-        <!-- <mat-form-field  class="input-container-full">
-          <sn-google-address></sn-google-address>
-        </mat-form-field> -->
+          <mat-form-field  class="input-container-full">
+            <input sn-google-address matInput (getAddress)="getAddressChange($event)" placeholder="Type to search address...">
+          </mat-form-field>
       </div>
     </div>
-    <div id="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start">
-      <div fxFlex="28%" fxFlex.lt-md="49%">
+    <div id="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start" formGroupName="address">
+      <div fxFlex="19%" fxFlex.lt-md="49%">
           <mat-form-field  class="input-container-full">
             <input matInput placeholder="Unit" 
-              [ngModel]=""
-              formControlName="extendedAddress">
+              formControlName="unit_number">
           </mat-form-field>
       </div>
-      <div fxFlex="70%" fxFlex.lt-md="49%">
+      <div fxFlex="19%" fxFlex.lt-md="49%">
+          <mat-form-field  class="input-container-full">
+            <input matInput placeholder="Street Number" 
+              formControlName="street_number">
+          </mat-form-field>
+      </div>
+      <div fxFlex="60%" fxFlex.lt-md="100%">
           <mat-form-field  class="input-container-full">
             <input matInput placeholder="Street"
-              [ngModel]=""
-              readonly
-              formControlName="streetAddress" required>
+              formControlName="route">
           </mat-form-field>
       </div>
-      <div fxFlex="24%" fxFlex.lt-md="49%">
+      <div fxFlex="40%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
             <input matInput placeholder="Suburb, District" 
-              [ngModel]=""
-              readonly
               formControlName="locality">
           </mat-form-field>
       </div>
-      <div fxFlex="24%" fxFlex.lt-md="49%">
+      <div fxFlex="18%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
             <input matInput placeholder="State or Province" 
-              [ngModel]=""
-              readonly
-              formControlName="region">
+              formControlName="administrative_area_level_1">
           </mat-form-field>
       </div>
-      <div fxFlex="24%" fxFlex.lt-md="49%">
+      <div fxFlex="14%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
             <input matInput placeholder="Postal code" 
-              [ngModel]=""
-              readonly
-              formControlName="postalCode">
+              formControlName="postal_code">
           </mat-form-field>
       </div>
       <div fxFlex="25%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
-            <input matInput placeholder="Country Code" 
-              [ngModel]=""
-              readonly
-              formControlName="countryCodeAlpha2">
+            <input matInput placeholder="Country"
+              formControlName="country">
           </mat-form-field>
       </div>
-      <div fxFlex="25%" fxFlex.lt-md="100%">
-          <mat-form-field class="input-container-full">
-            <input matInput placeholder="Country" #inputCountry
-              readonly
-              formControlName="countryName">
-          </mat-form-field>
-      </div>
+
     </div>
 
     <!-- Description -->

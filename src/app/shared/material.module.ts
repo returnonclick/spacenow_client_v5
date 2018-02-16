@@ -19,6 +19,7 @@ import {
   MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
+  MatRadioModule,
   MatRippleModule,
   MatSelectModule,
   MatSidenavModule,
@@ -26,12 +27,11 @@ import {
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
+  MatStepperModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatTableModule,
-  MatStepperModule,
-  MatRadioModule
+  MatTableModule
 } from '@angular/material'
 
 const MODULES = [
@@ -51,6 +51,7 @@ const MODULES = [
   MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
+  MatRadioModule,
   MatRippleModule,
   MatSelectModule,
   MatSidenavModule,
@@ -58,12 +59,11 @@ const MODULES = [
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
+  MatStepperModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatTableModule,
-  MatStepperModule,
-  MatRadioModule
+  MatTableModule
 ]
 
 @NgModule({

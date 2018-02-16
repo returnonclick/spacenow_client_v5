@@ -70,19 +70,27 @@ export class GeneralComponent {
       unit:               [this.listing.unit, Validators.required],
 
       categoryId:               [this.listing.categoryId, Validators.required],
-      // amenityIds:               [this.listing.amenityIds, Validators.required],
+      amenityIds:               [this.listing.amenityIds, Validators.required],
       // capacity:               [this.listing.capacity, Validators.required],
       // size:               [this.listing.size, Validators.required],
 
-      // extendedAddress:               [this.listing.address.extendedAddress, Validators.required],
-      // streetAddress:               [this.listing.address.streetAddress, Validators.required],
-      // locality:               [this.listing.address.locality, Validators.required],
-      // region:               [this.listing.address.region, Validators.required],
-      // postalCode:               [this.listing.address.postalCode, Validators.required],
-      // countryCodeAlpha2:               [this.listing.address.countryCodeAlpha2, Validators.required],
-      // countryName:               [this.listing.address.countryName, Validators.required],
+      address: this._fb.group({
+        unit_number:                  [this.listing.address.unit, Validators.required],
+        street_number:                [this.listing.address.streetNumber, Validators.required],
+        route:                        [this.listing.address.street, Validators.required],
+        locality:                     [this.listing.address.city, Validators.required],
+        administrative_area_level_1:  [this.listing.address.state, Validators.required],
+        country:                      [this.listing.address.countryName, Validators.required],
+        postal_code:                  [this.listing.address.postalCode, Validators.required],
+      })
 
     })
+  }
+
+  getAddressChange(event) {
+    const address = this.listingForm.get('address');
+    console.log(event)
+    address.setValue(event)
   }
 
   onSubmit() {

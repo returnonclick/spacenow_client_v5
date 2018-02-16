@@ -5,8 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 
-// import { MaterialModule } from "@shared/material.module"
-
+import { MaterialModule } from "@shared/material.module"
 import { SharedModule } from '@shared/shared.module'
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
@@ -18,16 +17,13 @@ import { WeeklyComponent } from '@features/listings/price/weekly/weekly.componen
 import { MonthlyComponent } from '@features/listings/price/monthly/monthly.component'
 import { PriceComponent } from '@features/listings/price/price.component'
 import { SNPriceDirective } from '@features/listings/price/price.directive'
-import { AddressComponent } from '@features/listings/address/address.component'
-
-import { ListingAddressComponent } from '@features/listings/address/listing-address/listing-address.component'
-import { SNAddressDirective } from '@features/listings/address/address.directive'
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 
 import { CategoryService } from '@core/store/categories/services/category'
 import { CategoryEffects } from '@core/store/categories/effects/category'
+import { MatStepper } from '@angular/material';
 
 const COMPONENTS = [
   GeneralComponent,
@@ -36,20 +32,18 @@ const COMPONENTS = [
   WeeklyComponent,
   MonthlyComponent,
   PriceComponent,
-  SNPriceDirective,
-  AddressComponent
+  SNPriceDirective
 ]
 
 const ENTRY_COMPONENTS = [
   DailyComponent,
   HourlyComponent,
   WeeklyComponent,
-  MonthlyComponent,
-  AddressComponent
+  MonthlyComponent
 ]
 
 const MODULES = [
-  // MaterialModule
+  MaterialModule,
   SharedModule
 ]
 
@@ -78,6 +72,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     ListingService,
     CategoryService,
+    MatStepper,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ]
 })

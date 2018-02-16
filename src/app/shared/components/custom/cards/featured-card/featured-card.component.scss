@@ -43,11 +43,20 @@
 
       .nav-slider {
         grid-column: 2/3;
-        align-self: end;
+        align-self: start;
         justify-self: end;
+        padding-right: 10px;
 
         > .mat-icon-button {
           width: auto;
+
+          .material-icons {
+
+            font-size: 14px;
+            color: $color__pastel_green;
+
+          }
+
         }
 
       }
@@ -71,11 +80,11 @@
   }
 
   .ratings {
-    display: grid;
+    display: flex;
+    justify-content: center;
 
-    > * {
-      grid-row-start: 1;
-      grid-row-end: 2;
+    * {
+      width: 30px;
     }
 
   }

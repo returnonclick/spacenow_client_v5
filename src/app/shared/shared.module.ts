@@ -13,7 +13,7 @@ import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLL
 
 import { AgmCoreModule } from '@agm/core';
 
-import { GoogleAddressDirective } from '@shared/directives/google-address.directive'
+import { GoogleAddressDirective } from '@shared/directives/google-address/google-address.directive'
 
 import {
   ForgotPasswordComponent,
