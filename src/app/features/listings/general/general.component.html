@@ -1,5 +1,6 @@
 <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
   <mat-horizontal-stepper linear>
+
     <!-- Title section -->
     <mat-step>
       <ng-template matStepLabel>Title of your space</ng-template>
@@ -8,47 +9,60 @@
         <input matInput placeholder="Name your space" formControlName="title" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext type="button">Next</button>
+        <button mat-button matStepperNext type="button" 
+                [disabled]="listingForm.controls.title.invalid">
+                Next
+        </button>
       </div>
     </mat-step>
+
     <!-- Price section -->
     <mat-step>
       <ng-template matStepLabel>Space price</ng-template>
       <h2 mat-dialog-title>Space price</h2>
 
       <mat-form-field>
-        <mat-select placeholder="Pricing System" name="unit">
+        <mat-select placeholder="Pricing System" name="unit" formControlName="unit" required>
           <mat-option *ngFor="let unit of units" [value]="unit.value">
-            {{ unit.display }}
+            {{ unit.display }} 
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <!-- <sn-hourly-price></sn-hourly-price> -->
-      <!-- <sn-daily-price
-      [parentCount] = 'count'
-      (price)=updateFromChild($event)></sn-daily-price> -->
-      <!--<sn-weekly-price></sn-weekly-price>
-      <sn-monthly-price></sn-monthly-price> -->
+      <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
+      <sn-price [unit]="listingForm.controls.unit.value"></sn-price>
 
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
-        <button mat-button matStepperNext type="button">Next</button>
+        <button mat-button matStepperNext type="button" 
+                > <!-- [disabled]="!priceValid" -->
+                Next
+        </button>
       </div>
     </mat-step>
-    <!-- Categories and rules section -->
+
+    <!-- Categories section -->
     <mat-step>
       <ng-template matStepLabel>Categories</ng-template>
-
+      <mat-form-field>
+        <mat-select placeholder="Category" name="category" formControlName="categoryId" required>
+          <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+            {{ category.name }} 
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
         <button mat-button matStepperNext type="button">Next</button>
       </div>
     </mat-step>
 
-    <!-- Address and rules section -->
+    <!-- Address section -->
     <mat-step>
       <ng-template matStepLabel>Address</ng-template>
+      <div>
+        <sn-google-address></sn-google-address>
+      </div>
 
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
@@ -67,15 +81,22 @@
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
-        <button mat-button matStepperNext type="button">Next</button>
+        <button mat-button matStepperNext type="button" 
+                [disabled]="listingForm.controls.description.invalid || listingForm.controls.rules.invalid">
+                Next
+        </button>
       </div>
     </mat-step>
+
     <!-- Save section -->
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>You are now done.
       <div>
-        <button mat-button type="submit" [disabled]="listingForm.invalid || listingForm.pristine">Save</button>
-        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button type="submit" 
+                [disabled]="listingForm.invalid || listingForm.pristine">
+                Save
+        </button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

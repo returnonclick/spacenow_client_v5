@@ -32,10 +32,7 @@ export class ListingEffects {
     @Effect()
     public create$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Create>( actions.CREATE ),
-        switchMap(data => {
-            console.log(data.payload)
-            return Observable.fromPromise(this.listingService.create(data.payload))
-        }),
+        switchMap(data => Observable.fromPromise(this.listingService.create(data.payload))),
         map(() => new actions.Success())
     )
 

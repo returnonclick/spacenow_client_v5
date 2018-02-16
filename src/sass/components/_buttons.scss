@@ -1,0 +1,22 @@
+$button-padding-tb: 10px;
+$button-padding-lr: 4 * $button-padding-tb;
+$button-radius: 2 * $button-padding-lr;
+
+button {
+
+    background-color: $color__gable_green !important;
+    border-radius: $button-radius !important;
+    color: $color__pastel_green !important;
+    height: fit-content;
+    padding: $button-padding-tb $button-padding-lr !important;
+    text-transform: uppercase;
+    width: fit-content;
+
+    &:hover {
+
+        background-color: transparent !important;
+        border: 1px solid $color__gable_green;
+
+    }
+
+}

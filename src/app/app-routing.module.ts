@@ -17,6 +17,10 @@ import {
   HomeComponent
 } from '@features/pages/home/home.component'
 
+import {
+  GeneralComponent
+} from '@features/listings/general/general.component'
+
 const appRoutes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
@@ -25,6 +29,7 @@ const appRoutes: Routes = [
     // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
       { path: 'home', component: HomeComponent },
+      { path: 'listings', component: GeneralComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ] 
   },
@@ -36,7 +41,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-       { enableTracing: true } // <-- debugging purposes only
+       // { enableTracing: true } // <-- debugging purposes only
     )
     
   ],

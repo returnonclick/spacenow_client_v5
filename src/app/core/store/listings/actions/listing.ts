@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store'
-import { Listing } from '@shared/models/Listing'
+import { Listing } from '@shared/models/listing'
 
 export const QUERY      = '[Listing] query'
 

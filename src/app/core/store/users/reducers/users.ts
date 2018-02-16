@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-import { User } from '@shared/models/User';
+import { User } from '@shared/models/user';
 import * as actions from '@core/store/users/actions/user';
 
 export interface State extends EntityState<User> {

@@ -1,0 +1,23 @@
+<form [formGroup]="priceForm">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+    <div fxFlex="45%" fxFlex.lt-md="100%" fxLayout="column">
+      <mat-form-field>
+        <input matInput type="number" placeholder="Price per month" formControlName="price" (input)="sendPrice()" required>
+      </mat-form-field>
+      <mat-form-field *ngIf="priceForm.controls.incentives.value">
+        <input matInput type="number" placeholder="Price per year" formControlName="year" (input)="sendPrice()">
+      </mat-form-field>
+
+      <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives</mat-checkbox>
+    </div>
+    <div fxFlex="45%" fxFlex.lt-md="100%">
+      <mat-form-field>
+        <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" (change)="sendPrice()" required>
+          <mat-option *ngFor="let term of terms" [value]="term.value">
+            {{ term.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</form>
