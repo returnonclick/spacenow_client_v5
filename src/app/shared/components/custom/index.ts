@@ -1,4 +1,4 @@
-import { CardComponent } from "./card/card.component"
+import { CardComponent, FeaturedCardComponent } from "./cards"
 import { ConfirmDeleteComponent } from "./confirm-delete/confirm-delete.component"
 import { ConfirmSaveComponent } from "./confirm-save/confirm-save.component"
 import { FilterComponent } from './filter/filter.component'
@@ -11,7 +11,8 @@ import { TableSelectorComponent } from './table-sel/table-sel.component'
 
 
 export {
-  CardComponent,
+  CardComponent, 
+  FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,
@@ -24,7 +25,8 @@ export {
 }
 
 export default {
-  CardComponent,
+  CardComponent, 
+  FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
   FilterComponent,

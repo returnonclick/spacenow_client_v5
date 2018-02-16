@@ -1,0 +1,83 @@
+@import
+  '~sass/abstracts/variables';
+
+:host {
+
+  --background-color: linear-gradient(rgba($color__gable_green, .3), rgba($color__gable_green, .35));
+
+  mat-card {
+
+    background: var(--background-color), url('http://wiki.coworking.org/f/1390509060/blitz-sala.jpg');
+    background-size: cover;
+    color: $color__white;
+
+    border-radius: 5px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 380px 100px;
+
+    mat-card-header {
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+
+      > * {
+        grid-row-start: 1;
+        grid-row-end: 2;
+      }
+
+      .stamp {
+        grid-column: 1/2;
+        background-color: $color__gable_green;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 20px;
+        font-weight: 600;
+        margin-left: -10px;
+        padding: 10px 15px;
+        text-transform: uppercase;
+        align-self: end;
+        justify-self: start;
+      }
+
+      .nav-slider {
+        grid-column: 2/3;
+        align-self: end;
+        justify-self: end;
+
+        > .mat-icon-button {
+          width: auto;
+        }
+
+      }
+
+    }
+
+    mat-card-content {
+
+      align-self: center;
+      text-align: center;
+
+      padding: 0 40px !important;
+
+    }
+
+    mat-card-actions {
+      align-self: start;
+      justify-self: center;
+    }
+
+  }
+
+  .ratings {
+    display: grid;
+
+    > * {
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+
+  }
+
+}

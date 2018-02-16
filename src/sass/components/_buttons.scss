@@ -1,21 +1,44 @@
+@import '~@angular/material/theming';
+
 $button-padding-tb: 10px;
 $button-padding-lr: 4 * $button-padding-tb;
 $button-radius: 2 * $button-padding-lr;
 
-button {
 
-    background-color: $color__gable_green !important;
-    border-radius: $button-radius !important;
-    color: $color__pastel_green !important;
-    height: fit-content;
-    padding: $button-padding-tb $button-padding-lr !important;
-    text-transform: uppercase;
-    width: fit-content;
 
-    &:hover {
+@mixin mat-button-theme($theme) {
 
-        background-color: transparent !important;
-        border: 1px solid $color__gable_green;
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .mat-raised-button, .mat-fab, .mat-mini-fab {
+        border-radius: $button-radius !important;
+        padding: $button-padding-tb $button-padding-lr !important;
+        text-transform: uppercase;
+
+        color: mat-color($primary, 50, 1) !important;
+        background: mat-color($primary, default-contrast, 1);
+        border: 1px solid mat-color($primary, default-contrast, 1) !important;
+
+        &:hover {
+            background: transparent;
+        }
+
+
+        &.primary {
+            color: mat-color($primary, default-contrast, 1) !important;
+            background: mat-color($primary, 50, 1);
+            border: 1px solid mat-color($primary, 50, 1) !important;
+
+            &:hover {
+                background: transparent;
+            }
+
+        }
 
     }
 

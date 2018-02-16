@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { CardComponent } from '@shared/components/custom/card/card.component'
+import { CardComponent, FeaturedCardComponent } from '@shared/components/custom/cards'
 
 @Component({
   selector: 'sn-home',
@@ -9,6 +9,7 @@ import { CardComponent } from '@shared/components/custom/card/card.component'
 export class HomeComponent {
 
   sliderComponent: any = CardComponent
+  sliderFeaturedComponent: any = FeaturedCardComponent
   data: Array<any> = [{
     isNew: true
   }, {
@@ -27,3 +28,4 @@ export class HomeComponent {
     isNew: true
   }]
 }
+

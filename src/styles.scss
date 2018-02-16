@@ -34,8 +34,9 @@
   '~sass/components/panels';
 
 @import
-  '~sass/pages/home',
-  '~sass/listings/general';
+  '~sass/pages/home';
 
 @import
+  '~sass/themes/_sn-material-theme',
   '~sass/themes/theme';
+ 

@@ -19,6 +19,10 @@ import { MonthlyComponent } from '@features/listings/price/monthly/monthly.compo
 import { PriceComponent } from '@features/listings/price/price.component'
 import { SNPriceDirective } from '@features/listings/price/price.directive'
 
+import { ListingAddressComponent } from '@features/listings/address/listing-address/listing-address.component'
+import { AddressComponent } from '@features/listings/address/address.component'
+import { SNAddressDirective } from '@features/listings/address/address.directive'
+
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 
@@ -29,7 +33,10 @@ const COMPONENTS = [
   WeeklyComponent,
   MonthlyComponent,
   PriceComponent,
-  SNPriceDirective
+  ListingAddressComponent,
+  AddressComponent,
+  SNPriceDirective,
+  SNAddressDirective
 ]
 
 const ENTRY_COMPONENTS = [
@@ -37,6 +44,7 @@ const ENTRY_COMPONENTS = [
   HourlyComponent,
   WeeklyComponent,
   MonthlyComponent,
+  ListingAddressComponent,
 ]
 
 const MODULES = [

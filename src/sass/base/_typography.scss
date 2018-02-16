@@ -140,14 +140,14 @@ $custom-typography: mat-typography-config(
   $display-3:     mat-typography-level(56px, 56px, 400),
   $display-2:     mat-typography-level(45px, 48px, 400),
   $display-1:     mat-typography-level(34px, 40px, 400),
-  $headline:      mat-typography-level(60px, 60px, 400),
-  $title:         mat-typography-level(40px, 40px, 400),
+  $headline:      mat-typography-level(60px, 60px, 600),
+  $title:         mat-typography-level(40px, 40px, 600),
   $subheading-2:  mat-typography-level(25px, 25px, 400),
   $subheading-1:  mat-typography-level(20px, 20px, 400),
   $body-2:        mat-typography-level(16px, 16px, 600),
-  $body-1:        mat-typography-level(16px, 16px, 400),
+  $body-1:        mat-typography-level(16px, 24px, 400),
   $caption:       mat-typography-level(14px, 14px, 400),
-  $button:        mat-typography-level(16px, 16px, 600),
+  $button:        mat-typography-level(16px, 16px, 700),
   $input:         mat-typography-level(inherit, 1.125, 400)
 );
 
@@ -159,19 +159,3 @@ $custom-typography: mat-typography-config(
 
 // Override the typography in the core CSS.
 @include mat-core($custom-typography);
-
-body {
-  color: $color__cutty_sark;
-	font-family: unquote($font-family);
-  font-size: 16px;
-}
-
-h1 { font-size: 60px; color: $color__gable_green; font-weight: 600; };
-h2 { font-size: 40px; color: $color__gable_green; font-weight: 600; };
-h3 { font-size: 25px; color: $color__gable_green; font-weight: 600; };
-h4 { font-size: 20px; color: $color__gable_green; font-weight: 600; };
-p  { font-size: 16px; letter-spacing: 2px; line-height: 24px; font-weight: 400; };
-span  { font-size: 18px; letter-spacing: 1px; line-height: 24px; font-weight: 300; };
-caption { font-size: 14px };
-
-
