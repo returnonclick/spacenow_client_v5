@@ -41,16 +41,13 @@ export class GoogleAddressDirective {
           if (!place) {
             return;
           } else {
-            console.log(place)
             for (var i = 0; i < place.address_components.length; i++) {
               var addressType = place.address_components[i].types[0];
               if (this.componentForm[addressType]) {
                 this.address[addressType] = place.address_components[i][this.componentForm[addressType]]
               }
             }
-            
            this.getAddress.emit(this.address)
-      
           }
         });
       })

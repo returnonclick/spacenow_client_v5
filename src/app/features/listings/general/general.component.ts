@@ -89,7 +89,6 @@ export class GeneralComponent {
 
   getAddressChange(event) {
     const address = this.listingForm.get('address');
-    console.log(event)
     address.setValue(event)
   }
 

@@ -16,6 +16,7 @@ $button-radius: 2 * $button-padding-lr;
     $foreground: map-get($theme, foreground);
 
     .mat-raised-button, .mat-fab, .mat-mini-fab {
+        
         border-radius: $button-radius !important;
         padding: $button-padding-tb $button-padding-lr !important;
         text-transform: uppercase;
