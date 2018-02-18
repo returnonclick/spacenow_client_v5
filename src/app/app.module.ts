@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 // Angularfire2 and Firebase
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from '../environments/environment';
 
 // @ngrx
@@ -43,6 +45,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    AngularFirestoreModule,
 
     ToastModule.forRoot(),
 

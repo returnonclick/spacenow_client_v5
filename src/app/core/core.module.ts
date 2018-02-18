@@ -6,11 +6,11 @@ import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireAuthModule } from 'angularfire2/auth'
 import { AngularFirestoreModule } from 'angularfire2/firestore'
 
-import {
-} from './services'
-
 import { AuthService } from '@core/store/auth/services'
 import { AuthEffects } from '@core/store/auth/effects/auth'
+
+import { ImageUploadService } from './services/'
+
 
 @NgModule({
   imports: [
@@ -26,7 +26,8 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        AuthService
+        AuthService,
+        ImageUploadService
       ]
     }
   }

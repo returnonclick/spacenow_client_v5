@@ -1,0 +1,121 @@
+#image-upload-section {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#image-input-container {
+  padding: 20px 5px 10px;
+}
+
+#image-card-container {
+}
+
+#image-card-container > .image-card {
+  padding-top: 20px !important;
+  height: 280px;
+  border: 2px solid transparent;
+  transition: all 0.5s ease;
+  box-shadow: 0px 20px 40px 0 #dddddd;
+}
+#image-card-container > .image-card:hover {
+  border: 0.5 solid #29a554;
+}
+
+.uploaded-image {
+  width: 260px;
+  border-radius: 10px;
+  display: block;
+  margin: auto;
+}
+
+.card-action-container {
+}
+
+.card-action-button {
+  // float: right;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30pt;
+}
+
+::ng-deep .card-action-menu {
+  border: 0.5px solid #29a554;
+}
+
+.card-action-menu-item {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+}
+
+.mat-menu-content {
+}
+
+.card-action-icon {
+  color: #29a554;
+  font-size: 30pt;
+  margin-left: -12px;
+  margin-top: -5px;
+}
+
+.edit-title-container {
+  position: absolute;
+  bottom: 5px;
+
+  // border: 1px solid red;
+}
+
+.edit-title-input {
+  font-size: 14px;
+}
+
+.sn-button-small {
+  font-size: 14px;
+  // width: 100px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-family: "Monserrat-Light", sans-serif;
+    color: #29a554;
+    display: inline-block;
+}
+
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
+.inputfile:focus + label {
+	// outline: 1px dotted #000;
+	// outline: -webkit-focus-ring-color auto 5px;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 45pt;
+  font-weight: normal;
+  color: #173839;
+}
+
+.image-title {
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 14pt;
+  color: #173839;
+  position: absolute;
+  bottom: 20px;
+  padding-left: 20px;
+}
+
+.image-loading {
+  padding: 20px;
+}
+

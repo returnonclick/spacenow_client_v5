@@ -12,7 +12,7 @@
  *  */
 
 
-export class Address {
+export class Address extends Object{
 
   unit:         string = ''       // (50)	An echo of the customer's unit number
   streetNumber: string = ''       // (50)	An echo of the customer's street number
@@ -26,19 +26,20 @@ export class Address {
   lat:          number = 0        // (10) Latitude to use on GOOGLE API
 
   constructor(model: any = null) {
+    super(model)
 
     if (model) {
 
-      this.unit         = model.unit
-      this.streetNumber = model.streetNumber
-      this.street       = model.street
-      this.city         = model.city
-      this.state        = model.state
-      this.postalCode   = model.postalCode
-      this.countryCode  = model.countryCode
-      this.countryName  = model.countryName
-      this.lng          = model.lng
-      this.lat          = model.lat
+      this.unit         = model.unit || ''
+      this.streetNumber = model.streetNumber || 0
+      this.street       = model.street || ''
+      this.city         = model.city || ''
+      this.state        = model.state || ''
+      this.postalCode   = model.postalCode || ''
+      this.countryCode  = model.countryCode || ''
+      this.countryName  = model.countryName || ''
+      this.lng          = model.lng || 0
+      this.lat          = model.lat || 0
 
     }
 

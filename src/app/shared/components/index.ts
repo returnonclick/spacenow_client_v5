@@ -22,6 +22,7 @@ import {
 } from './theme'
 
 import { SpaceListItemComponent } from './space-list-item/space-list-item.component'
+import { ImageUploadComponent } from './image-upload/image-upload.component'
 
 import { LoadingComponent } from './loading/loading.component'
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component'
@@ -43,7 +44,8 @@ export {
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  ImageUploadComponent
 }
 
 export default {
@@ -63,5 +65,6 @@ export default {
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  ImageUploadComponent
 }

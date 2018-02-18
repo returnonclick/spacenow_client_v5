@@ -23,10 +23,7 @@ import { storeFreeze } from 'ngrx-store-freeze'
  * notation packages up all of the exports into a single object.
  */
 
-/**
- * The following line about layout is commented, but you can refer to
- * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts
- * for detailed implementations
+/** * The following line about layout is commented, but you can refer to * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts * for detailed implementations
  */
 
 import * as fromAuth            from '@core/store/auth/reducers/auth'

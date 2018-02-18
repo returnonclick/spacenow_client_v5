@@ -1,10 +1,13 @@
-import { Component, Inject } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { Component, Inject, ViewContainerRef } from '@angular/core'
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms'
+import { Router } from '@angular/router'
+
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
+import { ToastsManager } from 'ng2-toastr'
 
 import * as listingActions from '@core/store/listings/actions/listing'
+import { ListingEffects } from '@core/store/listings/effects/listing'
 import * as categoryActions from '@core/store/categories/actions/category'
 import * as fromRoot from '@core/store'
 
@@ -25,6 +28,9 @@ export class GeneralComponent {
   price: any
   priceValid: boolean = false
 
+  isTCChecked: boolean = false // Terms and Conditions flag
+  isHTChecked: boolean = false // Host Terms flag
+
   units = [
     { value: 'hourly', display: 'Price per hour' },
     { value: 'daily', display: 'Price per day' },
@@ -32,14 +38,28 @@ export class GeneralComponent {
     { value: 'monthly', display: 'Price per month' }
   ]
 
+  amenities = [
+    { id: '24/7 access', name: '24/7 access' },
+    { id: 'AV Equipment', name: 'AV Equipment' },
+    { id: 'Cafe', name: 'Cafe' },
+    { id: 'Coffee/Tea', name: 'Coffee/Tea' },
+    { id: 'Full Serviced', name: 'Full Serviced' },
+    { id: 'Gym', name: 'Gym' },
+    { id: 'Kitchen', name: 'Kitchen' },
+    { id: 'Natural Lighting', name: 'Natural Lighting' },
+  ]
+
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: any,
-    // public  dialog: MatDialog,
-    // private _dialogRef: MatDialogRef<GeneralComponent>,
     private _fb: FormBuilder,
-    private _store: Store<fromRoot.State>
+    private _store: Store<fromRoot.State>,
+    private listingEffects: ListingEffects,
+    private toastr: ToastsManager,
+    vcr: ViewContainerRef,
+    private router: Router
   ) {
 
+    // Set root view for toastr notification
+    this.toastr.setRootViewContainerRef(vcr)
     this.categories$ = this._store.select(fromRoot.getAllCategories)
     
   }
@@ -55,36 +75,51 @@ export class GeneralComponent {
   }
   
   ngOnInit() {
+
+    
     console.log()
     // this.listing = this.data.item || new Listing() -> Enable line when ready to edit
     this.listing = new Listing() // remove
+    console.log(this.listing)
     this.listing.unit = 'daily' // set when not listing.id
+
+    // create a new listing
+    this._store.dispatch(new listingActions.Create( this.listing ))
 
     // Get the categories
     this._store.dispatch(new categoryActions.Query)
 
     this.listingForm = this._fb.group({
       title:              [this.listing.title, Validators.required],
-      description:        [this.listing.description],
-      rules:              [this.listing.rules, Validators.required],
+      description:        [this.listing.description, Validators.required],
+      rules:              [this.listing.rules],
       unit:               [this.listing.unit, Validators.required],
 
       categoryId:               [this.listing.categoryId, Validators.required],
-      amenityIds:               [this.listing.amenityIds, Validators.required],
+      // amenityIds:               [this.listing.amenityIds, Validators.required],
       // capacity:               [this.listing.capacity, Validators.required],
       // size:               [this.listing.size, Validators.required],
+      // tcAcceptance: [Validators.required],
 
       address: this._fb.group({
-        unit_number:                  [this.listing.address.unit, Validators.required],
+        unit_number:                  [this.listing.address.unit],
         street_number:                [this.listing.address.streetNumber, Validators.required],
         route:                        [this.listing.address.street, Validators.required],
         locality:                     [this.listing.address.city, Validators.required],
         administrative_area_level_1:  [this.listing.address.state, Validators.required],
         country:                      [this.listing.address.countryName, Validators.required],
         postal_code:                  [this.listing.address.postalCode, Validators.required],
-      })
+      }),
+
+      amenities: this._fb.array([])
 
     })
+
+    // Add controls to amenities FormArray
+    const formArray = this.listingForm.get('amenities') as FormArray;
+    this.amenities.forEach(x => formArray.push(new FormControl(false)));
+
+
   }
 
   getAddressChange(event) {
@@ -92,17 +127,72 @@ export class GeneralComponent {
     address.setValue(event)
   }
 
+  onTCChange(event) {
+    this.isTCChecked = event.checked
+    console.log(this.isTCChecked)
+  }
+
+  onHTChange(event) {
+    this.isHTChecked = event.checked
+  }
+
+
+
   onSubmit() {
 
-    this.listingForm.updateValueAndValidity()
-    this.listing = this.listingForm.value
-    if (this.price) 
-      this.listing.price = this.price
+    this.toastr.info("submiting now...")
 
-    if(this.listing.id)
-      this._store.dispatch(new listingActions.Update( this.listing.id, this.listing ))
-    else
-      this._store.dispatch(new listingActions.Create( this.listing ))
+
+    // TODO(TT): create private function to convert checkbox groups
+    // into array of selected items. 
+    let tmpAmenityIDs = []
+    let i = 0
+    const result = Object.assign({}, 
+      this.listingForm.value, { 
+        amenityIds: this.amenities
+        .filter((x, i) => !!this.listingForm.value.amenities[i]).map(a =>{
+          return a.id
+        })
+      })
+
+    delete result.amenities
+
+    // console.log(result);
+
+    this.listingForm.updateValueAndValidity()
+    // this.listing = this.listingForm.value
+    if (this.price)
+      result.price = this.price
+      if(result.id) {
+        this._store.dispatch(new listingActions.Update( result.id, result ))
+
+        // Listen for `success` action generated from update effect.  
+        this.listingEffects.update$
+          .filter(action => action.type === listingActions.SUCCESS)
+          .subscribe(res =>{
+            this.toastr.success("listing updated successfully.")
+          })
+
+      } else {
+        this._store.dispatch(new listingActions.Create( result ))
+
+        // Listen for `success` action generated from create effect.  
+        this.listingEffects.create$
+          .filter(action => action.type === listingActions.SUCCESS)
+          .subscribe(res =>{
+            this.toastr.success("listing created successfully.")
+            setTimeout(() =>{
+              this.router.navigate(['/home'])
+            }, 3000)
+          })
+
+        // Listen for `fail` action generated from create effect.  
+        this.listingEffects.create$
+          .filter(action => action.type === listingActions.FAIL)
+          .subscribe(res =>{
+            this.toastr.error("Oops. Something goes wrong at our side. Please try again.")
+          })
+      }
 
   }
 

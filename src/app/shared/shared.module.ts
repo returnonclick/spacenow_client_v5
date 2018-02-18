@@ -14,6 +14,7 @@ import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLL
 import { AgmCoreModule } from '@agm/core';
 
 import { GoogleAddressDirective } from '@shared/directives/google-address/google-address.directive'
+import { ImageUploadDirective } from '@shared/directives/image-resize-upload/image-upload.directive'
 
 import {
   ForgotPasswordComponent,
@@ -32,7 +33,8 @@ import {
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  ImageUploadComponent
 } from './components'
 
 const COMPONENTS = [
@@ -52,7 +54,12 @@ const COMPONENTS = [
   TableSelectorComponent,
   LayoutComponent,
   LoadingComponent,
-  LoadingOverlayComponent
+  LoadingOverlayComponent,
+  ImageUploadComponent
+]
+
+const DIRECTIVES = [
+  ImageUploadDirective  
 ]
 
 const MODULES = [
@@ -82,9 +89,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       libraries: ["places"]
     })
   ],
-  declarations: [COMPONENTS, PIPES, GoogleAddressDirective],
+  declarations: [
+    COMPONENTS, 
+    DIRECTIVES,
+    PIPES, 
+    GoogleAddressDirective],
   entryComponents: COMPONENTS,
-  exports: [COMPONENTS, MODULES, PIPES, GoogleAddressDirective],
+  exports: [
+    COMPONENTS, 
+    DIRECTIVES,
+    MODULES, 
+    PIPES, 
+    GoogleAddressDirective
+  ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ]

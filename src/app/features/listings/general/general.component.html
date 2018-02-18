@@ -43,6 +43,20 @@
       </div> -->
     <!-- </mat-step> -->
 
+
+    <!-- Amenities -->
+    <h2>Select amenities</h2>
+    <!-- Ref. https://stackoverflow.com/questions/46749251/ -->
+    <ng-container formArrayName="amenities">
+      <div *ngFor="let amenity of amenities; let i = index" >
+         <mat-checkbox class="checkboxk-list" 
+           [value]="amenity.id"
+           [formControlName]="i">
+           {{amenity.name}}
+         </mat-checkbox>
+      </div>
+    </ng-container>
+
     <!-- Space specification -->
     <!-- <h2>Space Specifications</h2>
     <div flexLayout="row" fxLayoutAlign="space-between start">
@@ -70,43 +84,49 @@
     <div id="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start" formGroupName="address">
       <div fxFlex="19%" fxFlex.lt-md="49%">
           <mat-form-field  class="input-container-full">
-            <input matInput placeholder="Unit" 
+            <input matInput placeholder="Unit/block (optional)"
               formControlName="unit_number">
           </mat-form-field>
       </div>
       <div fxFlex="19%" fxFlex.lt-md="49%">
           <mat-form-field  class="input-container-full">
-            <input matInput placeholder="Street Number" 
+            <input matInput placeholder="Street number"
+              readonly
               formControlName="street_number">
           </mat-form-field>
       </div>
       <div fxFlex="60%" fxFlex.lt-md="100%">
           <mat-form-field  class="input-container-full">
-            <input matInput placeholder="Street"
+            <input matInput placeholder="Street name"
+              readonly
               formControlName="route">
           </mat-form-field>
       </div>
       <div fxFlex="40%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
-            <input matInput placeholder="Suburb, District" 
+            <input matInput placeholder="Suburb/district"
+              readonly
               formControlName="locality">
           </mat-form-field>
       </div>
       <div fxFlex="18%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
-            <input matInput placeholder="State or Province" 
+            <input matInput placeholder="State/province"
+              readonly
               formControlName="administrative_area_level_1">
           </mat-form-field>
       </div>
       <div fxFlex="14%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
-            <input matInput placeholder="Postal code" 
+            <input matInput placeholder="Postal code"
+              readonly
               formControlName="postal_code">
           </mat-form-field>
       </div>
       <div fxFlex="25%" fxFlex.lt-md="49%">
           <mat-form-field class="input-container-full">
             <input matInput placeholder="Country"
+              readonly
               formControlName="country">
           </mat-form-field>
       </div>
@@ -115,13 +135,17 @@
 
     <!-- Description -->
     <h2>Describe your space</h2>
-    <!-- <mat-form-field class=""> -->
-    <!--   <input matInput placeholder="Title"  -->
-    <!--     [ngModel]="" -->
-    <!--     formControlName="title"> -->
-    <!-- </mat-form-field> -->
       <mat-form-field class="input-container-full">
-        <textarea matInput placeholder="Space Rules"
+        <textarea matInput placeholder="Space description"
+          required
+          matTextareaAutosize
+          matAutosizeMinRows="8"
+          matAustosizeMaxRows="8"
+          formControlName="description">
+        </textarea>
+      </mat-form-field>
+      <mat-form-field class="input-container-full">
+        <textarea matInput placeholder="Space rules"
           matTextareaAutosize
           matAutosizeMinRows="8"
           matAustosizeMaxRows="8"
@@ -131,27 +155,28 @@
 
     <!-- Upload images -->
     <h2>Upload your photos</h2>
-
+    <image-upload></image-upload>
 
     <!-- Booking system -->
     <h2>Booking system</h2>
 
     <!-- Link other spaces -->
-    <h2>Do you want to link any other spaces?</h2>
-    <span>You can link other spaces to the one account, click on the related spaces below</span>
-    <div>
-      <mat-checkbox class="checkbox-list">Car Park</mat-checkbox>
-      <mat-checkbox class="checkbox-list">Conference Room</mat-checkbox>
-      <mat-checkbox class="checkbox-list">Storage</mat-checkbox>
-      <mat-checkbox class="checkbox-list">Meeting Room</mat-checkbox>
-      <mat-checkbox class="checkbox-list">Other</mat-checkbox>
-    </div>
+    <!-- <h2>Do you want to link any other spaces?</h2> -->
+    <!-- <span>You can link other spaces to the one account, click on the related spaces below</span> -->
+    <!-- <div> -->
+    <!--   <mat-checkbox class="checkbox-list">Car Park</mat-checkbox> -->
+    <!--   <mat-checkbox class="checkbox-list">Conference Room</mat-checkbox> -->
+    <!--   <mat-checkbox class="checkbox-list">Storage</mat-checkbox> -->
+    <!--   <mat-checkbox class="checkbox-list">Meeting Room</mat-checkbox> -->
+    <!--   <mat-checkbox class="checkbox-list">Other</mat-checkbox> -->
+    <!-- </div> -->
 
     <!-- Accept T&C -->
     <h2>Accept spacenow t+c</h2>
     <div >
-      <mat-checkbox class="checkbox-list">I accept the hosts terms</mat-checkbox>
-      <mat-checkbox class="checkbox-list">I accept spacenow t+c</mat-checkbox>
+      <mat-checkbox class="checkbox-list" (change)="onTCChange($event)" #tc>I accept the hosts terms</mat-checkbox>
+      <mat-checkbox class="checkbox-list" (change)="onHTChange($event)" #ht>I accept spacenow t+c</mat-checkbox>
+      <mat-error align="start" *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error>
     </div>
     <div>
       <mat-form-field class="input-container-full">
@@ -168,10 +193,13 @@
 
     <!-- Form Action -->
     <div>
-      <button mat-button type="button" class="sn-button">Back</button>
-      <button mat-button type="submit"  class="sn-button"
-              [disabled]="listingForm.invalid || listingForm.pristine">
-              Save
+      <button mat-raised-button type="button" [routerLink]="['/home']">Cancel</button>
+      <!-- <button mat-raised-button type="submit" -->
+      <!--         [disabled]="listingForm.invalid || !isTCChecked || !isHTChecked"> -->
+      <!--         Submit -->
+      <!-- </button> -->
+      <button mat-raised-button type="submit">
+              Submit
       </button>
     </div>
 
