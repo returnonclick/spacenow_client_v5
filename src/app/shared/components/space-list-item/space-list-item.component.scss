@@ -35,6 +35,11 @@
         --bgColor: 190, 190, 190;
       }
 
+      &.space-is-favorite {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+      }
+
       &.space-options {
         grid-column: 3 / 4;
         grid-row: 1 / 2;
