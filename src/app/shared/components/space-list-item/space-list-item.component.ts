@@ -27,6 +27,10 @@ export class SpaceListItemComponent {
       case 'duplicate':
         console.log('duplicate', this.space.id)
         break;
+      case 'favorite':
+        console.log('favorite', this.space.id)
+        this.space.isFavorite = !this.space.isFavorite
+        break;
       default:
         break;
     }

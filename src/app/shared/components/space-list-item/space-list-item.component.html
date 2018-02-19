@@ -1,6 +1,9 @@
 <div class="space-item" (click)="handleClick('view')">
   <div class="space-image">
     <img class="featured-image" [src]="multipleImages ? space.images[imageIndex] : space.imageUrl"/>
+    <button mat-icon-button class="over-image space-is-favorite" type="button" (click)="handleClick('favorite'); $event.stopPropagation()">
+      <mat-icon>favorite{{ space.isFavorite ? '' : '_border' }}</mat-icon>
+    </button>
     <button mat-icon-button class="over-image space-options" type="button" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
       <mat-icon>more_horiz</mat-icon>
     </button>

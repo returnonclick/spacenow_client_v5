@@ -4,21 +4,24 @@
 
 .space-list {
   --hover: #6cde93;
-  --borderColor: transparent;
+  --gridSpace: 60px;
+  --numColumns: 4;
 
   display: grid;
-  grid-template-columns: repeat(4, calc(100% / 4 - 60px));
-  grid-gap: 60px;
+  grid-template-columns: repeat(var(--numColumns), calc(100% / var(--numColumns) - var(--gridSpace)));
+  grid-gap: var(--gridSpace);
   margin-top: 20px;
 
   > .space-container {
+    --borderColor: transparent;
+
     padding: 20px;
     border: 2px solid var(--borderColor);
     transition: all 0.5s ease;
     box-shadow: 0px 20px 40px 0 #dddddd;
 
     &:hover {
-      --borderColor: var(--hover)
+      --borderColor: var(--hover);
     }
   }
 }

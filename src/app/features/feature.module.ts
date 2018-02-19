@@ -28,6 +28,7 @@ import {
 
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
+import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 
 const COMPONENTS = [
   UserComponent,
@@ -35,6 +36,7 @@ const COMPONENTS = [
   HomeComponent,
   MySpacesComponent,
   MyCalendarComponent,
+  MyFavoritesComponent,
 ]
 
 const ENTRY_COMPONENTS = [
