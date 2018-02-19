@@ -20,7 +20,7 @@ import {
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  CardComponent, 
+  CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
@@ -41,7 +41,7 @@ const COMPONENTS = [
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  CardComponent, 
+  CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
@@ -59,7 +59,7 @@ const COMPONENTS = [
 ]
 
 const DIRECTIVES = [
-  ImageUploadDirective  
+  ImageUploadDirective
 ]
 
 const MODULES = [
@@ -90,16 +90,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     })
   ],
   declarations: [
-    COMPONENTS, 
+    COMPONENTS,
     DIRECTIVES,
-    PIPES, 
+    PIPES,
     GoogleAddressDirective],
   entryComponents: COMPONENTS,
   exports: [
-    COMPONENTS, 
+    COMPONENTS,
     DIRECTIVES,
-    MODULES, 
-    PIPES, 
+    MODULES,
+    PIPES,
     GoogleAddressDirective
   ],
   providers: [

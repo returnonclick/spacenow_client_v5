@@ -8,7 +8,10 @@ import { Component, Input, ViewEncapsulation } from '@angular/core'
 })
 export class SpaceListItemComponent {
 
-  @Input() space: any = null
+  @Input() space:          any     = null
+  @Input() multipleImages: boolean = true
+  @Input() showOptions:    boolean = true
+  imageIndex:              number  = 0
 
   handleClick(src) {
     switch(src) {
@@ -27,6 +30,14 @@ export class SpaceListItemComponent {
       default:
         break;
     }
+  }
+
+  nextImage() {
+    this.imageIndex = (++this.imageIndex + this.space.images.length) % this.space.images.length
+  }
+
+  prevImage() {
+    this.imageIndex = (--this.imageIndex + this.space.images.length) % this.space.images.length
   }
 
 }

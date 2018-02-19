@@ -10,7 +10,7 @@ import { TableSelectorComponent } from './table-sel/table-sel.component'
 
 
 export {
-  CardComponent, 
+  CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
@@ -23,7 +23,7 @@ export {
 }
 
 export default {
-  CardComponent, 
+  CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
