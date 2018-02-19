@@ -14,6 +14,7 @@ import { HomeComponent } from '@features/pages/home/home.component'
 import { GeneralComponent } from '@features/listings/general/general.component'
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
+import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 
 const appRoutes: Routes = [
   { path: 'sign-in', component: SignInComponent },
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
       { path: 'listings', component: GeneralComponent },
       { path: 'my-spaces', component: MySpacesComponent },
       { path: 'my-calendar', component: MyCalendarComponent },
+      { path: 'my-favorites', component: MyFavoritesComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ]
   },
