@@ -1,11 +1,15 @@
 import { Component } from '@angular/core'
 
 @Component({
-  selector: 'sn-my-favorites',
-  templateUrl: './my-favorites.component.html',
-  styleUrls: [ './my-favorites.component.scss' ]
+  selector: 'sn-search',
+  templateUrl: './search.component.html',
+  styleUrls: [ './search.component.scss' ]
 })
-export class MyFavoritesComponent {
+export class SearchComponent {
+
+  zoom: number = 8
+  lat:  number = -33.9276137
+  long: number = 151.1964078
 
   spaces: any[] = [
     {
@@ -71,49 +75,49 @@ export class MyFavoritesComponent {
       priceUnit: 'day',
       details: 'Multiple spaces',
     },
-    {
-      id: 'e1tkzwW9BBVyqC3Bpvgr',
-      name: 'Newtown Office',
-      imageUrl: 'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-    },
-    {
-      id: 'OLxJ9e0CrrBPnWcRlmhz',
-      name: 'Newtown Office',
-      images: [
-        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
-        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-    },
-    {
-      id: 'HzjXF6miyaHFxmHy3Ovi',
-      name: 'Newtown Office',
-      images: [
-        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
-        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
-        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
-        'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-    },
-    {
-      id: 'iJs5UQ60wEl5U1yOvLay',
-      name: 'Newtown Office',
-      images: [
-        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
-        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-    },
+    // {
+    //   id: 'e1tkzwW9BBVyqC3Bpvgr',
+    //   name: 'Newtown Office',
+    //   imageUrl: 'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
+    //   price: '40 AUD',
+    //   priceUnit: 'day',
+    //   details: 'Multiple spaces',
+    // },
+    // {
+    //   id: 'OLxJ9e0CrrBPnWcRlmhz',
+    //   name: 'Newtown Office',
+    //   images: [
+    //     'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
+    //     'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
+    //   ],
+    //   price: '40 AUD',
+    //   priceUnit: 'day',
+    //   details: 'Multiple spaces',
+    // },
+    // {
+    //   id: 'HzjXF6miyaHFxmHy3Ovi',
+    //   name: 'Newtown Office',
+    //   images: [
+    //     'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
+    //     'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
+    //     'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
+    //     'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
+    //   ],
+    //   price: '40 AUD',
+    //   priceUnit: 'day',
+    //   details: 'Multiple spaces',
+    // },
+    // {
+    //   id: 'iJs5UQ60wEl5U1yOvLay',
+    //   name: 'Newtown Office',
+    //   images: [
+    //     'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
+    //     'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
+    //   ],
+    //   price: '40 AUD',
+    //   priceUnit: 'day',
+    //   details: 'Multiple spaces',
+    // },
   ]
 
 }

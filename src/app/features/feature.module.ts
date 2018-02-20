@@ -1,3 +1,5 @@
+import { AgmCoreModule } from '@agm/core'
+
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FlexLayoutModule } from '@angular/flex-layout'
@@ -17,6 +19,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { UserService } from '@core/store/users/services/user'
 import { UserEffects } from '@core/store/users/effects/user'
 
+import { environment } from '../../environments/environment'
+
 import {
   UserComponent,
   UserListComponent
@@ -29,6 +33,7 @@ import {
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
+import { SearchComponent } from '@features/search/search.component'
 
 const COMPONENTS = [
   UserComponent,
@@ -37,6 +42,7 @@ const COMPONENTS = [
   MySpacesComponent,
   MyCalendarComponent,
   MyFavoritesComponent,
+  SearchComponent,
 ]
 
 const ENTRY_COMPONENTS = [
@@ -49,6 +55,9 @@ const SERVICES = [
 
 @NgModule({
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleApi
+    }),
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  margin: 20px;
+}
+
+.search-container {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: 1fr;
+
+  .search-results {
+    --numColumns: 2;
+    --gridGap: 20px;
+    grid-column: 1 / 2;
+
+    display: grid;
+    grid-template-columns: repeat(var(--numColumns), calc(100% / var(--numColumns) - var(--gridGap)));
+    grid-gap: var(--gridGap);
+  }
+
+  agm-map {
+    grid-column: 2 / 3;
+    height: 100vh;
+  }
+}
