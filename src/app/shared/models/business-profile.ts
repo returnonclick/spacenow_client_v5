@@ -28,7 +28,7 @@ import { Contact } from "@shared/models/contact";
 import { ImageData } from "@shared/models/image-data";
 import { Address } from "@shared/models/address";
 
-export class BusinessProfile {
+export class BusinessProfile extends Object {
 
   businessProfilesID:     string            = "";
   userUID:                string            = "";               // connect to user who represents the business. 
@@ -48,6 +48,8 @@ export class BusinessProfile {
   description:            string            = "";               // business introduction to display on business page
 
   constructor( model: any = null ) {
+
+    super (model)
 
     if ( model ) {
 

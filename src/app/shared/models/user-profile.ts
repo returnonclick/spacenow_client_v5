@@ -22,7 +22,7 @@ import { Card } from "@shared/models/card";
 import { Contact } from "@shared/models/contact";
 import { ImageData } from "@shared/models/image-data";
 
-export class UserProfile {
+export class UserProfile extends Object{
 
   userUID:            string                    = null
   bankAccounts:       Array<BankAccount>        = new Array()
@@ -31,6 +31,8 @@ export class UserProfile {
   coverUrl:           ImageData                 = new ImageData()
 
   constructor( model: any = null ) {
+
+    super(model)
 
     if ( model ) {
 

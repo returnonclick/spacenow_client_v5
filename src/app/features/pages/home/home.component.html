@@ -21,30 +21,119 @@
   </div>
 </header>
 
+<!-- SECTIONS -->
+<div id="sections">
 
-<!-- SECTION ONE -->
-<section id="section-one">
-  
-  <h2>Any space <br>
-  by the hour<br>
-  day or month</h2>
-
-  <!-- <sn-card></sn-card> -->
-
-  <gen-slider [component]="sliderComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
-
-</section>
-
-<!-- SECTION TWO -->
-<section id="section-two">
-  
-    <h2>Any space <br>
+  <!-- SECTION ONE -->
+  <section id="section-one">
+    
+    <h1>Any space <br>
     by the hour<br>
-    day or month</h2>
-  
+    day or month</h1>
+
+    <gen-slider [component]="sliderComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
+
+  </section>
+
+  <!-- SECTION TWO -->
+  <section id="section-two">
+    
+    <h1>Any space <br>
+    by the hour<br>
+    day or month</h1>
+
     <!-- <sn-card></sn-card> -->
-  
+
+    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
+
+  </section>
+
+  <!-- SECTION THREE -->
+  <section id="section-three">
+    <div>
+        <iframe src="https://www.youtube.com/embed/Nyw7ytSKbus?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="video"></iframe>
+    </div>
+    <div>
+      <h3>our story</h3>
+      <h1>Let us help you <br>
+      find the right<br>
+      space to grow<br>
+      your business</h1>
+      <p>Arash<br>
+      CEO of spacenow</p>
+    </div>
+  </section>
+
+  <!-- SECTION FOUR -->
+  <section id="section-four" class="grid">
+    <div>
+      <h1>Your space is safe and secured</h1>
+      <p>We are, and have been for some time, rooted very firmly in the moment, just as John Muir must have been in the late 1800s when he spent his first-ever summer in the Sierra. Muir was born and grew up in East Lothian, Scotland, where he developed a fascination with the surrounding countryside and the nearby coastli</p>
+      <div class="perc">
+        <mat-card>
+            <mat-card-content>
+              <mat-progress-spinner
+                  class="spinner-perc"
+                  color="primary"
+                  mode="determinate"
+                  value="25">
+              </mat-progress-spinner>
+              <h4>25% more income</h4>
+              <p>We are, and have been for some time, rooted very firmly in the moment, just as John Muir must have been in the late 1800s when</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+              <mat-card-content>
+                <mat-progress-spinner
+                    class="spinner-perc"
+                    color="primary"
+                    mode="determinate"
+                    value="25">
+                </mat-progress-spinner>
+                <h4>25% more income</h4>
+                <p>We are, and have been for some time, rooted very firmly in the moment, just as John Muir must have been in the late 1800s when</p>
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-content>
+                  <mat-progress-spinner
+                      class="spinner-perc"
+                      color="primary"
+                      mode="determinate"
+                      value="25">
+                  </mat-progress-spinner>
+                  <h4>25% more income</h4>
+                  <p>We are, and have been for some time, rooted very firmly in the moment, just as John Muir must have been in the late 1800s when</p>
+                </mat-card-content>
+              </mat-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION FIVE -->
+  <section id="section-five">
+  </section>
+
+  <!-- SECTION SIX -->
+  <section id="section-six">
+    
+    <h1>Any space <br>
+      by the hour<br>
+      day or month</h1>
+
     <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
   
   </section>
 
+  <!-- SECTION SEVEN -->
+  <section id="section-seven">
+    
+    <h1>Any space <br>
+    by the hour<br>
+    day or month</h1>
+
+    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
+
+  </section>
+
+</div>

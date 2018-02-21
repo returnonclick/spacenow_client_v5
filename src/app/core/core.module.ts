@@ -9,7 +9,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { AuthService } from '@core/store/auth/services'
 import { AuthEffects } from '@core/store/auth/effects/auth'
 
-import { ImageUploadService } from './services/'
+import { 
+  ImageUploadService,
+  NotifyService
+} from './services/'
 
 
 @NgModule({
@@ -27,7 +30,8 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         AuthService,
-        ImageUploadService
+        ImageUploadService,
+        NotifyService
       ]
     }
   }

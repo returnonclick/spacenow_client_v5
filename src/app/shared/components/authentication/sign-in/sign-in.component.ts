@@ -51,4 +51,8 @@ export class SignInComponent implements OnInit {
     )
   }
 
+  googleLogin() {
+    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.GoogleAuthProvider()));
+  }
+
 }

@@ -16,19 +16,19 @@ import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 
 const appRoutes: Routes = [
-  { path: 'sign-in', component: SignInComponent },
+  { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
   { path: 'register', component: SignUpComponent },
-  { path: '',
+  { path: 'home',
     component: LayoutComponent,
     // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
-      { path: 'home', component: HomeComponent },
+      { path: '', component: HomeComponent },
       { path: 'listings', component: GeneralComponent },
       { path: 'my-spaces', component: MySpacesComponent },
       { path: 'my-calendar', component: MyCalendarComponent },
-      { path: '', redirectTo: '/home', pathMatch: 'full' },
     ]
   },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   // { path: 'page-not-found', component:  }
 ]

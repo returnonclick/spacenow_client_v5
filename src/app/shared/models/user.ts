@@ -9,23 +9,32 @@
  * 
  *  */
 
-import { UserData } from "@shared/models/user-data";
-import * as firebase from 'firebase/app';
+import { UserData } from "@shared/models/user-data"
+import * as firebase from 'firebase/app'
 
 export class User extends Object{
-  userUID: string = null;
-  userData: Array<UserData> = new Array();
-  isVerified: boolean = false;
-  idToken?: string;
-  roles: any[];
+  uid:          string          = null
+  email:        string          = null
+  displayName:  string          = null
+  phoneNumber:  string          = null
+  photoURL:     string          = null
+  userData:     Array<UserData> = new Array()
+  isVerified:   boolean         = false
+  idToken:      string          = null
+  roles:        any[]
 
   constructor(model: any = null) {
 
     super(model)
 
     if (model) {
-      this.userData.push(new UserData(model))
-      this.userUID = model.userUID || model.uid
+      this.uid           = model.uid
+      this.email         = model.email
+      this.displayName   = model.displayName
+      this.phoneNumber   = model.phoneNumber
+      this.photoURL      = model.photoURL
+      this.isVerified    = model.isVerified
+      this.idToken       = model.idToken
     }
   }
 }

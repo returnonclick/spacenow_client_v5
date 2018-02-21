@@ -28,7 +28,15 @@ export class AuthEffects {
     @Effect()
     public signIn$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignIn>( actions.SIGN_IN ),
-        switchMap(data  => this.authService.signIn(data.payload.username, data.payload.password)),
+        switchMap(data => this.authService.signIn(data.payload.username, data.payload.password)),
+        map((user) => new actions.GetUser(user)),
+        catchError((err) => of(new actions.Fail(err)))
+    )
+
+    @Effect()
+    public signInWithProvider$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.SignInWithProvider>( actions.SIGN_IN_WITH_PROVIDER ),
+        switchMap(data => this.authService.signInWithProvider(data.payload)),
         map((user) => new actions.GetUser(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
@@ -36,7 +44,7 @@ export class AuthEffects {
     @Effect({ dispatch: false })
     success$ = this.actions$.pipe(
         ofType(actions.SUCCESS),
-        tap(() => this.router.navigate(['/users'])),
+        tap(() => this.router.navigate(['/'])),
         catchError((err) => of(new actions.Fail(err)))
     );
 

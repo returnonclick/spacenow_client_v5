@@ -1,55 +1,86 @@
 <!-- Sidebar -->
-<aside id="main-sidebar">
-    <h1>Log In</h1>
-    <h3>Complete form to log in</h3>
-    <mat-form-field>
-      <input matInput placeholder="Email" [errorStateMatcher]="matcher">
-      <!-- <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error> -->
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Password" [errorStateMatcher]="matcher">
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <!-- <mat-error *ngIf="passFormControl.hasError('required')">
-        Password is <strong>required</strong>
-      </mat-error> -->
-    </mat-form-field>
-    <mat-checkbox >Remember me</mat-checkbox>
-    <button mat-button>Log in</button>
-</aside>
+<mat-drawer-container class="main-container">
+
+  <mat-drawer class="sidenav" [opened]="sidenavOpen" align="end" mode="over" #sidenav>
+
+      <router-outlet name="sidenav"></router-outlet>
+
+    <!-- <ng-template #signIn>
+      <gen-sign-in></gen-sign-in>
+    </ng-template>
+
+    <ng-template #register>
+      <gen-sign-up></gen-sign-up>
+    </ng-template>
+
+    <ng-template #menu>
+      <ul class="help-pages">
+        <li><a href="#">my profile</a></li>
+        <li><a href="#">manage listings</a></li>
+        <li><a href="#">history</a></li>
+      </ul>
+    </ng-template> -->
+
+  </mat-drawer>
+  <mat-drawer-content>
+  
 
 <!-- Nav -->
 <nav id="main-nav">
-  <a href="#"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
-  <a href="#">List your space</a>
+  <a href="#" class="logo"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
+  <span><!-- fill space --></span>
+  <a [routerLink]="['/sign-in', { outlets: { sidenav: ['sign-in'] } }]" routerLinkActive="active">List your space</a>
+  <div *ngIf="authUser; then authenticated else guest"></div>
+</nav>
+
+<!-- User NOT logged in -->
+<ng-template #guest>
   <a href="#">Log in</a>
   <a href="#">Sign up</a>
-</nav>
+</ng-template>
+
+<!-- User logged in -->
+<ng-template #authenticated>
+  <a [routerLink]="" (click)="sidenav.toggle()">{{authUser.displayName}} <img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a>
+</ng-template>
 
 
 <router-outlet></router-outlet>
 
 
 <!-- Footer -->
-<footer id="footer">
+<footer class="grid">
   <div class="inner">
-
-    <!-- <h3>Get in touch</h3> -->
-    <!--  -->
-    <!-- <div class="copyright"> -->
-    <!--   &copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>. -->
-    <!-- </div> -->
-
+    <img src='assets/images/logo/spacenow-logo.png' width="200px"/>
+    <ul class="help-pages">
+      <li><a href="#">about</a></li>
+      <li><a href="#">news</a></li>
+      <li><a href="#">careers</a></li>
+      <li><a href="#">press</a></li>
+      <li><a href="#">help</a></li>
+    </ul>
+    <div class="menu">
+      <span>spacenow 2017</span>
+      <ul>
+        <li><a href="#">terms of serviec</a></li>
+        <li><a href="#">host terms</a></li>
+        <li><a href="#">privacy policy</a></li>
+        <li><a href="#">refunds policy</a></li>
+        <li><a href="#">cancellation policy</a></li>
+      </ul>
+    </div>
+    <ul class="social-media">
+      <li><a href="#">facebook</a></li>
+      <li><a href="#">linkedin</a></li>
+      <li><a href="#">twitter</a></li>
+    </ul>
   </div>
 </footer>
 
+</mat-drawer-content>
 
-<!-- <mat-sidenav-container class="admin-container">
+
+<!-- <mat-drawer-content class="admin-container">
 
   <mat-sidenav class="quickpanel" [opened]="quickpanelOpen" align="end" mode="over" #quickpanel>
 
@@ -71,4 +102,6 @@
      </div>
   </div>
 
-</mat-sidenav-container> -->
+</mat-drawer-content> -->
+
+</mat-drawer-container>

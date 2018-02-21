@@ -26,7 +26,7 @@ export class UserService {
   public create(user: User) {
     var data = Object.assign({}, user)
     const cRef = this.afs.firestore.collection(this.ref).doc()
-    data.userUID = cRef.id
+    data.uid = cRef.id
     return this.afs.collection<User>(this.ref).doc(cRef.id).set(data)
   }
 
