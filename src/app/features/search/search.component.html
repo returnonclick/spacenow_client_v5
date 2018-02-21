@@ -4,7 +4,7 @@
 <div class="search-container">
   <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
     <mat-form-field>
-      <input matInput sn-google-address type="text" placeholder="Location" (getAddress)="selectedAddress($event)" formControlName="location">
+      <input matInput sn-google-address type="text" placeholder="Location" (getAddress)="selectedAddress($event)" formControlName="name">
     </mat-form-field>
     <div class="radius-slider">
       Search Radius

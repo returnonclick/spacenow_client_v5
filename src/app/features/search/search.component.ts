@@ -16,9 +16,11 @@ import * as searchActions from '@core/store/search/actions/search'
 })
 export class SearchComponent {
 
-  zoom: number = 16
-  lat:  number = -33.9108137
-  lng:  number = 151.1960078
+  zoom:   number = 16
+  name:   string = ''
+  radius: number = 20
+  lat:    number = -33.9108137
+  lng:    number = 151.
 
   results$:   Observable<Space[]>
   isLoading$: Observable<boolean>
@@ -37,22 +39,25 @@ export class SearchComponent {
 
   ngOnInit() {
     this._route.queryParams.subscribe(query => {
-      this.lat = +query.lat || this.lat
-      this.lng = +query.lng || this.lng
+      this.name   = decodeURIComponent(query.name) || this.name
+      this.radius = +query.radius || this.radius
+      this.lat    = +query.lat || this.lat
+      this.lng    = +query.lng || this.lng
       this._store.dispatch(new searchActions.Query(query))
     })
 
     this.form = this._fb.group({
-      location: ['', Validators.required],
-      radius:   [20, Validators.required],
-      lat:      [0],
-      lng:      [0],
+      name:   [ this.name, Validators.required ],
+      radius: [ this.radius, Validators.required ],
+      lat:    [ this.lat ],
+      lng:    [ this.lng ],
     })
   }
 
   selectedAddress(address) {
     this.form.get('lat').setValue(address.latitude)
     this.form.get('lng').setValue(address.longitude)
+    this.form.get('name').setValue(address.full_name)
   }
 
   onSubmit() {
@@ -64,10 +69,10 @@ export class SearchComponent {
 
     this._router.navigate(['search'], {
       queryParams: {
+        name:   encodeURIComponent(formVal.name),
+        radius: formVal.radius,
         lat:    formVal.lat,
         lng:    formVal.lng,
-        radius: formVal.radius,
-        name:   'this.location.name'
       }
     })
   }

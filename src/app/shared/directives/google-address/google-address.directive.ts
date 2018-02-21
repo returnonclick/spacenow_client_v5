@@ -32,6 +32,7 @@ export class GoogleAddressDirective {
           return
 
         let address       = new GoogleAddress()
+        address.full_name = place.name
         let location      = place.geometry.location
         address.latitude  = location.lat()
         address.longitude = location.lng()
@@ -50,6 +51,7 @@ export class GoogleAddressDirective {
 }
 
 class GoogleAddress {
+  full_name:                   string = ''
   unit_number:                 string = ''
   street_number:               string = ''
   route:                       string = ''
@@ -62,6 +64,7 @@ class GoogleAddress {
 
   constructor(model: any = null) {
     if(model) {
+      this.full_name                   = model.full_name
       this.unit_number                 = model.unit_number
       this.street_number               = model.street_number
       this.route                       = model.route
