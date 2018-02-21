@@ -1,15 +1,33 @@
-<h4>Search</h4>
+<h3>Search</h3>
+<!-- <form novalidate> -->
+<!-- </form> -->
 <div class="search-container">
-  <div class="search-results">
-    <sn-space-list-item *ngFor="let space of spaces"
+  <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <mat-form-field>
+      <input matInput sn-google-address type="text" placeholder="Location" (getAddress)="selectedAddress($event)" formControlName="location">
+    </mat-form-field>
+    <div class="radius-slider">
+      Search Radius
+      <mat-slider min="1" max="50" formControlName="radius"></mat-slider>
+      {{ form.get('radius').value }} km
+    </div>
+    <button mat-raised-button type="submit">Filter Spaces</button>
+  </form>
+  <ng-container *ngIf="(isLoading$ | async); else doneLoading">
+    <mat-spinner></mat-spinner>
+  </ng-container>
+  <ng-template #doneLoading>
+    <div class="search-results">
+      <sn-space-list-item *ngFor="let space of results$ | async"
       [space]="space"
       [multipleImages]="!!space.images"
       [showOptions]="false">
     </sn-space-list-item>
   </div>
+  </ng-template>
   <agm-map [zoom]="zoom"
     [latitude]="lat"
-    [longitude]="long"
+    [longitude]="lng"
     [streetViewControl]="false">
   </agm-map>
 </div>

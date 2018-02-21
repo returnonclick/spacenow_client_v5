@@ -4,7 +4,7 @@
     <button mat-icon-button class="over-image space-is-favorite" type="button" (click)="handleClick('favorite'); $event.stopPropagation()">
       <mat-icon>favorite{{ space.isFavorite ? '' : '_border' }}</mat-icon>
     </button>
-    <button mat-icon-button class="over-image space-options" type="button" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+    <button mat-icon-button class="over-image space-options" type="button" *ngIf="showOptions" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
       <mat-icon>more_horiz</mat-icon>
     </button>
     <button mat-icon-button class="over-image prev-image" type="button" *ngIf="multipleImages" (click)="prevImage(); $event.stopPropagation()">

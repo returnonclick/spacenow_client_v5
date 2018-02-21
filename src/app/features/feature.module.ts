@@ -19,6 +19,9 @@ import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { UserService } from '@core/store/users/services/user'
 import { UserEffects } from '@core/store/users/effects/user'
 
+import { SearchService } from '@core/store/search/services/search'
+import { SearchEffects } from '@core/store/search/effects/search'
+
 import { environment } from '../../environments/environment'
 
 import {
@@ -51,12 +54,16 @@ const ENTRY_COMPONENTS = [
 
 const SERVICES = [
   UserService,
+  SearchService,
 ]
 
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: environment.googleApi
+      apiKey: environment.googleApi,
+      libraries: [
+        'places'
+      ]
     }),
     CommonModule,
     FormsModule,
@@ -65,7 +72,10 @@ const SERVICES = [
     CoreModule,
     SharedModule,
     ListingModule,
-    EffectsModule.forFeature([UserEffects]),
+    EffectsModule.forFeature([
+      UserEffects,
+      SearchEffects,
+    ]),
   ],
   declarations: COMPONENTS,
   entryComponents: ENTRY_COMPONENTS,
