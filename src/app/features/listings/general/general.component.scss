@@ -38,7 +38,7 @@ h2 {
 @media screen and (max-width: 959px) {
   section {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
   }
 
   h2 {
@@ -46,4 +46,8 @@ h2 {
     padding-bottom: 0.2em;
     font-size: 16pt;
   }
+}
+
+#tc-notification {
+  font-size: 10px;
 }

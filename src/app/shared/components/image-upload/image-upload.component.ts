@@ -34,13 +34,17 @@ export class StorageFileModel {
   styleUrls: ['./image-upload.component.scss']
 })
 
-export class ImageUploadComponent {
+export class ImageUploadComponent implements OnInit {
 
   subfolderPath: string = "listings"
 
   listings: Observable<Listing[]>
   //mockup spaceID
   spaceID = "jdeDFNJooBPhIkpRcY9I"
+
+  listingId: Observable<string>
+  listing: Observable<Listing>
+
   uploadStatus: Observable<string>
   imageTitle: string = ""
 
@@ -65,10 +69,21 @@ export class ImageUploadComponent {
     private listingEffects: ListingEffects,
   ) { 
 
-    this.listings = this.store.select(fromRoot.getAllListings)
-    this.listings.subscribe(l =>{
-      console.log(l)
+
+  }
+
+
+  ngOnInit() {
+    // use selector to get entity by Id
+    this.listingId = this.store.select(fromRoot.selectCurrentListingId)
+
+    this.listingId.subscribe(id =>{
+      if(id) {
+        console.log(id)
+        this.spaceID = id
+      }
     })
+    // this.listing = this.store.select(fromRoot.selectCurrentListing)
   }
 
   /** 

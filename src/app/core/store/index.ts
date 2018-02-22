@@ -30,6 +30,7 @@ import * as fromAuth            from '@core/store/auth/reducers/auth'
 import * as fromUsers           from '@core/store/users/reducers/users'
 import * as fromListings        from '@core/store/listings/reducers/listings'
 import * as fromCategories      from '@core/store/categories/reducers/categories'
+import * as fromSpace from '@core/store/space/space.reducer'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -41,6 +42,7 @@ export interface State {
     listings:      fromListings.State
     categories:    fromCategories.State
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
+    spaces: fromSpace.State
 }
 
 /**
@@ -54,6 +56,7 @@ export const reducers: ActionReducerMap<State> = {
     listings:      fromListings.reducer,
     categories:    fromCategories.reducer,
     routerReducer: fromRouter.routerReducer,
+    spaces: fromSpace.reducer,
 }
 
 // console.log all actions
@@ -73,6 +76,7 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
     ? [logger, storeFreeze]
+    // ? [logger]
     : []
 
 /**
@@ -131,12 +135,42 @@ export const getListingEntitiesState = createSelector(
     (state) => state
 )
 
+/* 
+ * selectors to select specfic `listing` slices from store
+ *  */
+export const getSelectedListingId = (state: fromListings.State) => state.selectedListingId
+export const selectCurrentListingId = createSelector(getListingsState, getSelectedListingId)
+
+export const selectListingEntities = createSelector(getListingsState, (listingsState) => listingsState.entities)
+export const selectCurrentListing = createSelector(
+  selectListingEntities,
+  selectCurrentListingId,
+  (listingEntities, listingId) => listingEntities[listingId]
+)
+
 export const {
     selectIds: getListingIds,
     selectEntities: getListingEntities,
     selectAll: getAllListings,
     selectTotal: getTotalListings,
   } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
+
+/* 
+ * SPACE REDUCERS
+ * **************************************************************************** */
+export const getSpaceState = createFeatureSelector<fromSpace.State>('space')
+
+export const getSelectedSpaceID = (state: fromSpace.State) => state.selectedSpaceID
+export const selectCurrentSpaceID = createSelector(getSpaceState, getSelectedSpaceID)
+export const selectSpaceEntities = createSelector(getSpaceState, (spaceState) => spaceState.entities)
+export const selectCurrentSpace = createSelector(
+  selectSpaceEntities,
+  selectCurrentSpaceID,
+  (spaceEntities, spaceID) => spaceEntities[spaceID]
+)
+
+
+/* *********************End of Space reducers **********************************/
 
 /**
  * Categories Reducers
@@ -155,3 +189,4 @@ export const {
     selectAll: getAllCategories,
     selectTotal: getTotalCategories,
   } = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
+

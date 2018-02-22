@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, ViewChild, ComponentFactoryResolver, Type } from '@angular/core'
+import { Component, Input,Output, EventEmitter, AfterViewInit, OnInit, OnChanges, ViewChild, ComponentFactoryResolver, Type } from '@angular/core'
 import { SNPriceDirective } from './price.directive';
 
 import {
@@ -15,9 +15,10 @@ import {
   styleUrls: ['./price.component.scss']
 })
 
-export class PriceComponent implements OnInit, OnChanges {
+export class PriceComponent implements OnInit, OnChanges, AfterViewInit {
 
     @Input() unit: string
+    // @Output() price = new EventEmitter<Monthly>();
 
     @ViewChild(SNPriceDirective) snPriceHost: SNPriceDirective;
     
@@ -32,6 +33,10 @@ export class PriceComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.loadComponent()
+    }
+
+    ngAfterViewInit(){
+     
     }
 
     ngOnChanges() {

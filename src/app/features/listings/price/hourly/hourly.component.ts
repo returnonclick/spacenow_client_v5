@@ -35,7 +35,7 @@ export class HourlyComponent {
   ) {}
 
   sendPrice() {
-    console.log(this.priceForm)
+    // console.log(this.priceForm)
     this.priceForm.updateValueAndValidity()
     this.hourly = this.priceForm.value
     // Send price values

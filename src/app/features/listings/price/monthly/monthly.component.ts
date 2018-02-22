@@ -35,6 +35,7 @@ export class MonthlyComponent {
   ) {}
 
   sendPrice() {
+    // console.log(this.priceForm.value)
     this.priceForm.updateValueAndValidity()
     this.monthly = this.priceForm.value
     // Send price values

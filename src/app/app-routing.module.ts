@@ -5,30 +5,38 @@ import { Routes } from '@angular/router';
 import {
   SignInComponent,
   SignUpComponent,
-  LayoutComponent,
+  // LayoutComponent,
   ForgotPasswordComponent
 } from '@shared/components'
+
+import { LayoutComponent } from '@shared/components/theme/layout/layout.component'
 
 import { UserListComponent } from '@features/users'
 import { HomeComponent } from '@features/pages/home/home.component'
 import { GeneralComponent } from '@features/listings/general/general.component'
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
+// import { SpaceComponent } from '@features/spaces/space/space.component'
 
 const appRoutes: Routes = [
-  { path: 'sign-in', component: SignInComponent },
-  { path: 'register', component: SignUpComponent },
-  { path: '',
-    component: LayoutComponent,
+  // { path: 'layout', component: LayoutComponent },
+  // { path: 'sign-in', component: SignInComponent },
+  // { path: 'register', component: SignUpComponent },
+  { path: '', component: LayoutComponent,
     // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'listings', component: GeneralComponent },
-      { path: 'my-spaces', component: MySpacesComponent },
-      { path: 'my-calendar', component: MyCalendarComponent },
+      // { path: 'listings', component: GeneralComponent },
+      // { path: 'my-spaces', component: MySpacesComponent },
+      // { path: 'my-calendar', component: MyCalendarComponent },
+      // { path: 'my-calendar', component: MyCalendarComponent },
+      // { path: 'space', component: SpaceComponent },
+      { path: 'spaces', loadChildren: 'app/features/spaces/spaces.module#SpacesModule'},
+      { path: 'listings', loadChildren: 'app/features/listings/listings.module#ListingModule'},
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ]
   },
+  // ...spacesRoutes,
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   // { path: 'page-not-found', component:  }
 ]

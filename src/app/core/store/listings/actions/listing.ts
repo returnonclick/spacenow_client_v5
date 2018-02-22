@@ -11,7 +11,10 @@ export const CREATE     = '[Listing] create'
 export const UPDATE     = '[Listing] update'
 export const DELETE     = '[Listing] delete'
 export const SUCCESS    = '[Listing] success'
+export const CREATE_SUCCESS    = '[Listing] create success'
 export const FAIL       = '[Listing] fail'
+
+export const SELECT_LISTING = '[Listing] select-listing'
 
 export class Query implements Action {
     readonly type = QUERY
@@ -56,9 +59,19 @@ export class Success implements Action {
     constructor( ) { }
 }
 
+export class CreateSuccess implements Action {
+    readonly type = CREATE_SUCCESS
+    constructor(public listingId ) { }
+}
+
 export class Fail implements Action {
     readonly type = FAIL
     constructor( public payload: any ) { }
+}
+
+export class SelectListing implements Action {
+  readonly type = SELECT_LISTING
+  constructor(public payload: { listingId: string }) {}
 }
 
 export type ListingActions = 
@@ -70,3 +83,6 @@ export type ListingActions =
     | Update
     | Delete
     | Success
+    | CreateSuccess
+    | SelectListing
+

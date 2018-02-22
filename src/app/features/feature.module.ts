@@ -8,7 +8,7 @@ import { EffectsModule } from '@ngrx/effects'
 
 import { CoreModule } from '@core/core.module'
 import { SharedModule } from '@shared/shared.module'
-import { ListingModule } from '@features/listings/listings.module'
+import { SpacesModule } from '@features/spaces/spaces.module'
 
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -53,7 +53,7 @@ const SERVICES = [
     FlexLayoutModule,
     CoreModule,
     SharedModule,
-    ListingModule,
+    SpacesModule,
     EffectsModule.forFeature([UserEffects]),
   ],
   declarations: COMPONENTS,

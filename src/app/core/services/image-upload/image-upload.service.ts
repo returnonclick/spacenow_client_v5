@@ -67,7 +67,8 @@ export class ImageUploadService {
             observer.complete()
           }
         } else { // doc does not exist
-          observer.next(imageList)
+          // observer.next(imageList)
+          observer.next(null)
           observer.complete()
         }
       })
@@ -269,7 +270,9 @@ export class ImageUploadService {
           // get existing imageData list
           this.getImageList(collectionName, documentID, imageItemName).subscribe(imageDataList =>{
             let newImageList: ImageDataModel[] = new Array()
-            if(imageDataList.length > 0) {
+            // No data exist, just create a new document with image data
+
+            if(imageDataList.length >= 0) {
               console.log(imageDataList)
               // add new imageData to the list
               // if imageData exist, filter it out first
@@ -298,7 +301,6 @@ export class ImageUploadService {
                   isSuccess: false
                 })
               })
-            // No data exist, just create a new document with image data
             } else {
               console.log("doc not exist. Creating one with image data")
               newImageList.push(imageMetaData)
@@ -319,8 +321,7 @@ export class ImageUploadService {
                   isSuccess: false
                 })
               })
-
-            }
+            }// End if else
 
           }) 
 
@@ -379,12 +380,12 @@ export class ImageUploadService {
                   })
 
                 }, 2000)
-              } else { // no image meta data list
+                 
+              } else {
                 newImageList.push(imageData)
                 dataRef.update({
                   [imageItemName]: newImageList
                 })
-
               }
             }) // end of calling getImageList function
             

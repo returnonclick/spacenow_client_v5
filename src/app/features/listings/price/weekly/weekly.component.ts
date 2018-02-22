@@ -11,7 +11,7 @@ import { ConfirmDeleteComponent, ConfirmSaveComponent } from '@shared/components
 import { Weekly } from '@shared/models/space'
 
 @Component({
-  selector: 'sn-Weekly-price',
+  selector: 'sn-weekly-price',
   templateUrl: './weekly.component.html',
   styleUrls: ['./weekly.component.scss']
 })
@@ -35,6 +35,7 @@ export class WeeklyComponent {
   ) {}
 
   sendPrice() {
+    // console.log(this.priceForm.value)
     this.priceForm.updateValueAndValidity()
     this.weekly = this.priceForm.value
     // Send price values
@@ -45,6 +46,7 @@ export class WeeklyComponent {
     this.priceValid.emit(
       this.priceForm.valid
     )
+    // console.log(this.priceForm.valid)
   }
 
   ngOnInit() {

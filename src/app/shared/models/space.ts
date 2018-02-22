@@ -1,4 +1,5 @@
 import { Address } from '@models/address'
+import { Booking } from '@models/booking'
 
 export class Space extends Object{
 
@@ -17,6 +18,7 @@ export class Space extends Object{
     isApproved:   boolean
     address:      Address = new Address()
     // availability: BookingSlot[]
+    booking: Booking = new Booking()
 
     constructor( model: any = null ) {
 
@@ -43,6 +45,7 @@ export class Space extends Object{
         this.amenityIds  = model.amenityIds || []
         this.isApproved  = model.isApproved || false
         this.address = model.address || new Address()
+        this.booking = model.booking || new Booking()
       }
     }
   }
@@ -51,6 +54,7 @@ export class Space extends Object{
     price:       number
     minimumTerm: number
     incentives:  boolean
+    unit: string
 
     constructor( model: any = null ) {
 
@@ -60,6 +64,7 @@ export class Space extends Object{
         this.price        = model.price || 0
         this.minimumTerm  = model.minimumTerm || 0
         this.incentives   = model.incentives || false
+        this.unit = model.unit || 'daily'
       }
     }
   }

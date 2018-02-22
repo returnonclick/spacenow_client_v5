@@ -46,6 +46,12 @@ export class DailyComponent {
     this.priceValid.emit(
       this.priceForm.valid
     )
+    console.log(this.priceForm.valid)
+  }
+
+  sendPriceValid() {
+    console.log(this.priceForm.valid)
+    this.priceValid.emit(this.priceForm.valid)
   }
 
   ngOnInit() {

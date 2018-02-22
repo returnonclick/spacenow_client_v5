@@ -81,7 +81,8 @@
   <!-- </div> -->
 
   <div *ngIf="(uploadStatus | async) == 'loading'" class="image-loading">
-    <gen-loading></gen-loading>
+    <!-- <gen-loading></gen-loading> -->
+    <gen-loading-overlay></gen-loading-overlay>
     <span>Loading...</span>
   </div>
 

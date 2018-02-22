@@ -41,12 +41,20 @@ export class GoogleAddressDirective {
           if (!place) {
             return;
           } else {
+            // console.log(place)
+            // console.log("lat: " + place.geometry.location.lat())
+            // console.log("lng: " + place.geometry.location.lng())
+            this.address.lat = place.geometry.location.lat()
+            this.address.lng = place.geometry.location.lng()
             for (var i = 0; i < place.address_components.length; i++) {
               var addressType = place.address_components[i].types[0];
+              // console.log(addressType)
               if (this.componentForm[addressType]) {
                 this.address[addressType] = place.address_components[i][this.componentForm[addressType]]
+                // console.log(this.address)
               }
             }
+           console.log(this.address)
            this.getAddress.emit(this.address)
           }
         });
@@ -65,6 +73,8 @@ class GoogleAddress {
   administrative_area_level_1:  string = ''
   country:                      string = ''
   postal_code:                  string = ''
+  lat: number = 0
+  lng: number = 0
 
   constructor ( model: any = null) {
 
@@ -78,6 +88,8 @@ class GoogleAddress {
       this.country                      = model.country                   
       this.postal_code                  = model.postal_code               
 
+      this.lat = model.lat
+      this.lng = model.lng
     }
 
   }

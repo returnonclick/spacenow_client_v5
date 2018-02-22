@@ -31,7 +31,7 @@ import {
   SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
-  LayoutComponent,
+  // LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent
@@ -52,7 +52,7 @@ const COMPONENTS = [
   SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
-  LayoutComponent,
+  // LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent

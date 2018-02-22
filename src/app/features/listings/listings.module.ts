@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { RouterModule } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 
 import { MaterialModule } from "@shared/material.module"
@@ -24,6 +23,9 @@ import { ListingEffects } from '@core/store/listings/effects/listing'
 import { CategoryService } from '@core/store/categories/services/category'
 import { CategoryEffects } from '@core/store/categories/effects/category'
 import { MatStepper } from '@angular/material';
+import { ListingsComponent } from './listings.component';
+
+import { ListingsRoutingModule } from './listings-routing.module'
 
 const COMPONENTS = [
   GeneralComponent,
@@ -44,7 +46,8 @@ const ENTRY_COMPONENTS = [
 
 const MODULES = [
   MaterialModule,
-  SharedModule
+  SharedModule,
+  ListingsRoutingModule,
 ]
 
 const PIPES = [
@@ -60,13 +63,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    RouterModule,
     MODULES,
     PerfectScrollbarModule,
     EffectsModule.forFeature([ListingEffects]),
     EffectsModule.forFeature([CategoryEffects]),
   ],
-  declarations: [COMPONENTS, PIPES],
+  declarations: [COMPONENTS, PIPES, ListingsComponent],
   entryComponents: ENTRY_COMPONENTS,
   exports: [COMPONENTS, MODULES, PIPES],
   providers: [

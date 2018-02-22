@@ -23,7 +23,29 @@
       </div>
       <div fxFlex="60%" fxFlex.lt-md="100%">
         <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
-        <sn-price [unit]="listingForm.controls.unit.value"></sn-price>
+        <!-- <sn-price [unit]="listingForm.controls.unit.value" -->
+        <!--   (price)=getPrice($event) -->
+        <!--    (priceValid)=getPriceValid($event) -->
+        <!--   ></sn-price> -->
+
+        <ng-container>
+          <sn-hourly-price *ngIf="listingForm.controls.unit.value === 'hourly'"
+            (price)=getPrice($event)
+            (priceValid)=getPriceValid($event)>
+          </sn-hourly-price>
+          <sn-daily-price *ngIf="listingForm.controls.unit.value === 'daily'"
+            (price)=getPrice($event)
+            (priceValid)=getPriceValid($event)>
+          </sn-daily-price>
+          <sn-weekly-price *ngIf="listingForm.controls.unit.value === 'weekly'"
+            (price)=getPrice($event)
+            (priceValid)=getPriceValid($event)>
+          </sn-weekly-price>
+          <sn-monthly-price *ngIf="listingForm.controls.unit.value === 'monthly'"
+            (price)=getPrice($event)
+            (priceValid)=getPriceValid($event)>
+          </sn-monthly-price>
+        </ng-container>
       </div>
     </div>
 
@@ -130,6 +152,10 @@
               formControlName="country">
           </mat-form-field>
       </div>
+      <div>
+        <input type="hidden" formControlName="lat">
+        <input type="hidden" formControlName="lng">
+      </div>
 
     </div>
 
@@ -159,6 +185,97 @@
 
     <!-- Booking system -->
     <h2>Booking system</h2>
+    <div id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start">
+      <div id="booking-general-container" fxFlex="40%">
+        <!-- <h3>General</h3> -->
+        <div fxLayout="column" >
+          <div fxLayout="row" fxLayoutAlign="space-between start">
+            <mat-form-field fxFlex="49%">
+              <mat-select placeholder="Booking Type" name="booking-type" formControlName="bookingType" required>
+                <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
+                  {{ bookingType }} 
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="49%">
+              <input matInput 
+                type="number"
+                placeholder="Lead time (days)" 
+                formControlName="leadTime" required>
+            </mat-form-field>
+          </div>
+          <div >
+            <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)">Open 24/7</mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div id="opening-time-container" fxFlex="58%">
+        <!-- <h3>Opening time</h3> -->
+        <div *ngIf="!listing.booking.isOpen247">
+          <mat-form-field>
+            <mat-select placeholder="Opening time" 
+              (selectionChange)="filterClosingHours($event)"
+              name="opening-time" 
+              formControlName="openingTime" required>
+              <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
+                {{ openingHour.value }} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Closing time" name="closing-time" formControlName="closingTime" required>
+              <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key">
+                {{ closingHour.value }} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="exception-container">
+            <!-- <span>Exception</span> -->
+            <div id="week-day-container">
+              <h3>Opening days</h3>
+              <div *ngFor="let weekday of weekdays">
+                <mat-slide-toggle (change)="onWeekDayChange( weekday.key, $event)">{{weekday.value}}</mat-slide-toggle>
+              </div>
+              <div>{{closingWeekDays | json}}</div>
+            </div>
+            <div id="exception-day-container">
+              <h3>Exception days</h3> 
+              <div id="date-picker-container">
+                <mat-form-field class="booking-exception">
+                  <input matInput 
+                    id="date-picker-input"
+                    readonly
+                    placeholder="Choose a date"
+                    [min]="minDate" 
+                    [max]="maxDate" 
+                    [matDatepicker]="picker" 
+                    (dateChange)="addExceptionDate('change', $event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <span>{{picker.value}}</span>
+              </div>
+              <div *ngIf="exceptionDays.length > 0">
+                <span>Current exception dates</span>
+                <ul>
+                  <li *ngFor="let date of exceptionDays">
+                    {{date | date: 'EEEE, d/M/yyyy'}}
+                    <button mat-icon-button
+                      (click)="deleteExceptionDay(date)">
+                      <mat-icon>highlight_off</mat-icon>
+                    </button>
+                  </li>
+                  <div>{{exceptionDays | json}}</div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Link other spaces -->
     <!-- <h2>Do you want to link any other spaces?</h2> -->
@@ -176,7 +293,10 @@
     <div >
       <mat-checkbox class="checkbox-list" (change)="onTCChange($event)" #tc>I accept the hosts terms</mat-checkbox>
       <mat-checkbox class="checkbox-list" (change)="onHTChange($event)" #ht>I accept spacenow t+c</mat-checkbox>
-      <mat-error align="start" *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error>
+      <mat-error 
+        id="tc-notification"
+        align="start" 
+        *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error>
     </div>
     <div>
       <mat-form-field class="input-container-full">
@@ -194,13 +314,13 @@
     <!-- Form Action -->
     <div>
       <button mat-raised-button type="button" [routerLink]="['/home']">Cancel</button>
-      <!-- <button mat-raised-button type="submit" -->
-      <!--         [disabled]="listingForm.invalid || !isTCChecked || !isHTChecked"> -->
-      <!--         Submit -->
-      <!-- </button> -->
-      <button mat-raised-button type="submit">
+      <button mat-raised-button type="submit"
+              [disabled]="listingForm.invalid || !priceValid || !isTCChecked || !isHTChecked">
               Submit
       </button>
+      <!-- <button mat-raised-button type="submit"> -->
+      <!--         Submit -->
+      <!-- </button> -->
     </div>
 
   </form>

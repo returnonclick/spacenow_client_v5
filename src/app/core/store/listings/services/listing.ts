@@ -6,6 +6,7 @@ import { Listing } from '@shared/models/listing';
 export class ListingService {
 
   ref: string = `listings`
+  // ref: string = `tt-listings`
 
   constructor( public afs: AngularFirestore ) {
   }
@@ -23,7 +24,16 @@ export class ListingService {
     var data = Object.assign({}, listing)
     const cRef = this.afs.firestore.collection(this.ref).doc()
     data.id = cRef.id
+    // return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
     return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
+      .then(() =>{
+          console.log("new document ID: " + data.id)
+          return data.id 
+      })
+      .catch(error =>{
+        console.log(error)
+      })
+
   }
 
   public delete(id: string) {
