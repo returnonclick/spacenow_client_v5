@@ -5,7 +5,7 @@ import {
 } from './authentication'
 
 import {
-  CardComponent, 
+  CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
@@ -31,7 +31,7 @@ export {
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  CardComponent, 
+  CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
@@ -52,7 +52,7 @@ export default {
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  CardComponent, 
+  CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,

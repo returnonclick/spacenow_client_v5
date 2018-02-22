@@ -18,6 +18,8 @@ import { HomeComponent } from '@features/pages/home/home.component'
 import { GeneralComponent } from '@features/listings/general/general.component'
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
+import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
+import { SearchComponent } from '@features/search/search.component'
 
 const appRoutes: Routes = [
   { 

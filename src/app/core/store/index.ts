@@ -30,6 +30,7 @@ import * as fromAuth            from '@core/store/auth/reducers/auth'
 import * as fromUsers           from '@core/store/users/reducers/users'
 import * as fromListings        from '@core/store/listings/reducers/listings'
 import * as fromCategories      from '@core/store/categories/reducers/categories'
+import * as fromSearch          from '@core/store/search/reducers/search'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -40,6 +41,7 @@ export interface State {
     users:         fromUsers.State
     listings:      fromListings.State
     categories:    fromCategories.State
+    search:        fromSearch.State
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
 }
 
@@ -53,6 +55,7 @@ export const reducers: ActionReducerMap<State> = {
     users:         fromUsers.reducer,
     listings:      fromListings.reducer,
     categories:    fromCategories.reducer,
+    search:        fromSearch.reducer,
     routerReducer: fromRouter.routerReducer,
 }
 
@@ -162,3 +165,21 @@ export const {
     selectAll: getAllCategories,
     selectTotal: getTotalCategories,
   } = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
+
+/**
+ *  Search Reducers
+ */
+export const getSearchState = createFeatureSelector<fromSearch.State>('search')
+
+export const getSearchEntitiesState = createSelector(
+  getSearchState,
+  (state) => state
+)
+
+export const {
+  selectIds:      getSearchIds,
+  selectEntities: getSearchEntities,
+  selectAll:      getAllSearches,
+  selectTotal:    getTotalSearches,
+} = fromSearch.searchAdapter.getSelectors(getSearchEntitiesState)
+export const isLoadingSearch = createSelector(getSearchState, fromSearch.isLoading)
