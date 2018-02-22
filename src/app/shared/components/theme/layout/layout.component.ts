@@ -32,9 +32,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
   private _routerEventsSubscription: Subscription;
   private _ngUnsubscribe: Subject<void> = new Subject<void>()
 
-  quickpanelOpen: boolean = false;
   sidenavOpen: boolean = false;
-  sidenavMode: string = 'side';
+  sidenavMode: string = 'over';
   isMobile: boolean = false;
 
   buyNowToolbarVisible = true;

@@ -1,7 +1,7 @@
 <!-- Sidebar -->
-<mat-drawer-container class="main-container">
+<mat-drawer-container class="main-container" fullscreen>
 
-  <mat-drawer class="sidenav" [opened]="sidenavOpen" align="end" mode="over" #sidenav>
+  <mat-drawer class="sidenav" [mode]="sidenavMode" [opened]="sidenavOpen" align="end" #sidenav>
 
       <router-outlet name="sidenav"></router-outlet>
 
@@ -29,7 +29,7 @@
 <nav id="main-nav">
   <a href="#" class="logo"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
   <span><!-- fill space --></span>
-  <a [routerLink]="['/sign-in', { outlets: { sidenav: ['sign-in'] } }]" routerLinkActive="active">List your space</a>
+  <a [routerLink]="[{ outlets: { sidenav: ['register'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">List your space</a>
   <div *ngIf="authUser; then authenticated else guest"></div>
 </nav>
 

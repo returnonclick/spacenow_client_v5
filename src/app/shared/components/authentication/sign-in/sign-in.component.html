@@ -1,23 +1,31 @@
+<div fxLayout="column" fxLayoutAlign="center center" fxFill>
 
-<form #form="ngForm" (ngSubmit)="onSigninSubmit()" [formGroup]="signinForm">
-
-    <mat-form-field>
-      <input matInput placeholder="E-Mail" type="text" name="username" required formControlName="username">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Password" type="password" name="password" required formControlName="password">
-    </mat-form-field>
-   
+  <form #form="ngForm" (ngSubmit)="onSigninSubmit()" [formGroup]="signinForm" fxLayout="column" class="signinForm">
+      <h1>Log 1n</h1>
+      <h3>Complete for to log in</h3>
+      <mat-form-field>
+        <input matInput placeholder="E-Mail" type="text" name="username" required formControlName="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" type="password" name="password" required formControlName="password">
+      </mat-form-field>
+    
       <mat-checkbox class="remember-me">Remember Me</mat-checkbox>
-      <a class="forgot-password" [routerLink]="['/forgot-password']">Forgot Password?</a>
+      <button mat-raised-button [disabled]="!signinForm.valid" class="primary">log in</button>
+        
+      <a class="forgot-password" [routerLink]="['../', { outlets: { sidenav: ['forgot-password'] } }]">Forgot Password?</a>
+      <p class="note">Not a member? <a [routerLink]="['../', { outlets: { sidenav: ['register'] } }]">Sign up</a></p>
 
-    <button color="primary" mat-raised-button [disabled]="!signinForm.valid">SIGN IN</button>
-    <p class="note">Don't have an account?<br/> <a [routerLink]="['/register']">Click here to create one</a></p>
+  </form>
 
-</form>
-
-<button
-          (click)="googleLogin()">
-
-      Sign In with Google
+  <button mat-raised-button (click)="googleLogin()">
+    Google
   </button>
+  <button mat-raised-button (click)="facebookLogin()">
+    Facebook
+  </button>
+  <button mat-raised-button (click)="linkedinLogin()">
+    Linkedin
+  </button>
+
+</div>

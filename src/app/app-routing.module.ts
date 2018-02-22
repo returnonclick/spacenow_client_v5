@@ -16,13 +16,14 @@ import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 
 const appRoutes: Routes = [
-  { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
-  { path: 'register', component: SignUpComponent },
   { path: 'home',
     component: LayoutComponent,
     // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
       { path: '', component: HomeComponent },
+      { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
+      { path: 'register', component: SignUpComponent, outlet: 'sidenav' },
+      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' },
       { path: 'listings', component: GeneralComponent },
       { path: 'my-spaces', component: MySpacesComponent },
       { path: 'my-calendar', component: MyCalendarComponent },
