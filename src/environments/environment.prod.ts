@@ -7,5 +7,6 @@ export const environment = {
       projectId: "project id",
       storageBucket: "storage bucket",
       messagingSenderId: "messaging sender id"
-    }
+    },
+    googleApi: "AIzaSyAOMhtcFm3WnFDUAsK7OfWOvpo3V0EtvBQ",
 };

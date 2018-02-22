@@ -8,5 +8,6 @@ export const environment = {
     projectId: "spacenow-bca9c",
     storageBucket: "spacenow-bca9c.appspot.com",
     messagingSenderId: "259396936923"
-  }
+  },
+  googleApi: "AIzaSyAOMhtcFm3WnFDUAsK7OfWOvpo3V0EtvBQ",
 };
