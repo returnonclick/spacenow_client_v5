@@ -68,7 +68,6 @@ const SERVICES = [
     FlexLayoutModule,
     CoreModule,
     SharedModule,
-    ListingModule,
     EffectsModule.forFeature([
       UserEffects,
       SearchEffects,
