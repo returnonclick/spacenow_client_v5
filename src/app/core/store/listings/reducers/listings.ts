@@ -6,6 +6,7 @@ import * as actions from '@core/store/listings/actions/listing';
 
 export interface State extends EntityState<Listing> {
     loading: boolean;
+    selectedListingId: string | null;
 }
 
 export const listingAdapter: EntityAdapter<Listing> = createEntityAdapter<Listing>({
@@ -15,6 +16,7 @@ export const listingAdapter: EntityAdapter<Listing> = createEntityAdapter<Listin
 
 export const initialState: State = listingAdapter.getInitialState({
     loading: false,
+    selectedListingId: null
 });
 
 export function reducer(
@@ -57,3 +59,4 @@ export function reducer(
 }
 
 export const getLoading = (state: State) => state.loading;
+export const getSelectedListingId = (state: State) => state.selectedListingId;

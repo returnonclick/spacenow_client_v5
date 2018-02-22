@@ -20,7 +20,7 @@ import { Card } from '@shared/models/card'
 import { Contact } from '@shared/models/contact'
 import { ImageData } from '@shared/models/image-data'
 
-export class Profile {
+export class Profile extends Object {
 
   userUID:      string    = ''          
   contact:      Contact   = new Contact()
@@ -29,6 +29,8 @@ export class Profile {
   coverUrl:     ImageData = new ImageData()
 
   constructor( model: any = null ) {
+
+    super(model)
 
     if ( model ) {
 

@@ -9,7 +9,7 @@ export interface State extends EntityState<User> {
 }
 
 export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
-    selectId: (obj: User) => obj.userUID,
+    selectId: (obj: User) => obj.uid,
     sortComparer: false,
 })
 

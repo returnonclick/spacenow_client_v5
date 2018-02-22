@@ -138,8 +138,15 @@ export const {
     selectIds: getListingIds,
     selectEntities: getListingEntities,
     selectAll: getAllListings,
-    selectTotal: getTotalListings,
+    selectTotal: getTotalListings
   } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
+
+  
+export const getSelectedListing = createSelector(
+    getListingEntities,
+    fromListings.getSelectedListingId,
+    (listingEntities, listingId) => listingEntities[listingId]
+)
 
 /**
  * Categories Reducers
