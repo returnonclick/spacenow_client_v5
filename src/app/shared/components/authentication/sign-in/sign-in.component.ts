@@ -52,7 +52,11 @@ export class SignInComponent implements OnInit {
   }
 
   googleLogin() {
-    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.GoogleAuthProvider()));
+    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.GoogleAuthProvider));
+  }
+
+  facebookLogin() {
+    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.FacebookAuthProvider));
   }
 
 }

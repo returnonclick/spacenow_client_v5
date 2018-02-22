@@ -52,7 +52,7 @@ export class AuthEffects {
     fail$ = this.actions$.pipe(
         ofType(actions.FAIL, actions.SIGN_OUT),
         map(() => this.authService.signOut()),
-        tap(() => this.router.navigate(['/sign-in']))
+        tap(() => this.router.navigate(['/']))
     );
 
     constructor(

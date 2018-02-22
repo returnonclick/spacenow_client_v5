@@ -2,106 +2,61 @@
 <mat-drawer-container class="main-container" fullscreen>
 
   <mat-drawer class="sidenav" [mode]="sidenavMode" [opened]="sidenavOpen" align="end" #sidenav>
-
       <router-outlet name="sidenav"></router-outlet>
-
-    <!-- <ng-template #signIn>
-      <gen-sign-in></gen-sign-in>
-    </ng-template>
-
-    <ng-template #register>
-      <gen-sign-up></gen-sign-up>
-    </ng-template>
-
-    <ng-template #menu>
-      <ul class="help-pages">
-        <li><a href="#">my profile</a></li>
-        <li><a href="#">manage listings</a></li>
-        <li><a href="#">history</a></li>
-      </ul>
-    </ng-template> -->
-
   </mat-drawer>
+
   <mat-drawer-content>
   
+    <!-- Nav -->
+    <nav id="main-nav">
+      <a routerLink="/" class="logo"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
+      <span><!-- fill space --></span>
+      <a routerLink="/app/listings">List your space</a>
+      <div *ngIf="authUser; then authenticated else guest"></div>
+    </nav>
 
-<!-- Nav -->
-<nav id="main-nav">
-  <a href="#" class="logo"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
-  <span><!-- fill space --></span>
-  <a [routerLink]="[{ outlets: { sidenav: ['register'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">List your space</a>
-  <div *ngIf="authUser; then authenticated else guest"></div>
-</nav>
+    <!-- User NOT logged in -->
+    <ng-template #guest>
+      <a [routerLink]="[{ outlets: { sidenav: ['sign-in'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">Log in</a>
+      <a [routerLink]="[{ outlets: { sidenav: ['register'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">Sign up</a>
+    </ng-template>
 
-<!-- User NOT logged in -->
-<ng-template #guest>
-  <a href="#">Log in</a>
-  <a href="#">Sign up</a>
-</ng-template>
+    <!-- User logged in -->
+    <ng-template #authenticated>
+      <a [routerLink]="[{ outlets: { sidenav: ['user-menu'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">{{authUser.displayName}} <img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a>
+    </ng-template>
 
-<!-- User logged in -->
-<ng-template #authenticated>
-  <a [routerLink]="" (click)="sidenav.toggle()">{{authUser.displayName}} <img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a>
-</ng-template>
+    <router-outlet></router-outlet>
 
+    <!-- Footer -->
+    <footer class="grid">
+      <div class="inner">
+        <img src='assets/images/logo/spacenow-logo.png' width="200px"/>
+        <ul class="help-pages">
+          <li><a href="#">about</a></li>
+          <li><a href="#">news</a></li>
+          <li><a href="#">careers</a></li>
+          <li><a href="#">press</a></li>
+          <li><a href="#">help</a></li>
+        </ul>
+        <div class="menu">
+          <span>spacenow 2017</span>
+          <ul>
+            <li><a href="#">terms of serviec</a></li>
+            <li><a href="#">host terms</a></li>
+            <li><a href="#">privacy policy</a></li>
+            <li><a href="#">refunds policy</a></li>
+            <li><a href="#">cancellation policy</a></li>
+          </ul>
+        </div>
+        <ul class="social-media">
+          <li><a href="#">facebook</a></li>
+          <li><a href="#">linkedin</a></li>
+          <li><a href="#">twitter</a></li>
+        </ul>
+      </div>
+    </footer>
 
-<router-outlet></router-outlet>
-
-
-<!-- Footer -->
-<footer class="grid">
-  <div class="inner">
-    <img src='assets/images/logo/spacenow-logo.png' width="200px"/>
-    <ul class="help-pages">
-      <li><a href="#">about</a></li>
-      <li><a href="#">news</a></li>
-      <li><a href="#">careers</a></li>
-      <li><a href="#">press</a></li>
-      <li><a href="#">help</a></li>
-    </ul>
-    <div class="menu">
-      <span>spacenow 2017</span>
-      <ul>
-        <li><a href="#">terms of serviec</a></li>
-        <li><a href="#">host terms</a></li>
-        <li><a href="#">privacy policy</a></li>
-        <li><a href="#">refunds policy</a></li>
-        <li><a href="#">cancellation policy</a></li>
-      </ul>
-    </div>
-    <ul class="social-media">
-      <li><a href="#">facebook</a></li>
-      <li><a href="#">linkedin</a></li>
-      <li><a href="#">twitter</a></li>
-    </ul>
-  </div>
-</footer>
-
-</mat-drawer-content>
-
-
-<!-- <mat-drawer-content class="admin-container">
-
-  <mat-sidenav class="quickpanel" [opened]="quickpanelOpen" align="end" mode="over" #quickpanel>
-
-    <gen-quickpanel></gen-quickpanel>
-
-  </mat-sidenav>
-
-  <mat-sidenav class="sidenav" [opened]="sidenavOpen" align="start" [mode]="sidenavMode" msIconSidenav #sidenav>
-
-    <gen-sidenav></gen-sidenav>
-
-  </mat-sidenav>
-
-  <div class="content-container" fxLayout="column">
-    <gen-toolbar [quickpanel]="quickpanel" [sidenav]="sidenav"></gen-toolbar>
-
-    <div class="main-container" #scrollContainer>
-      <router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
-     </div>
-  </div>
-
-</mat-drawer-content> -->
+  </mat-drawer-content>
 
 </mat-drawer-container>

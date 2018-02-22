@@ -8,7 +8,6 @@ import { EffectsModule } from '@ngrx/effects'
 
 import { CoreModule } from '@core/core.module'
 import { SharedModule } from '@shared/shared.module'
-import { ListingModule } from '@features/listings/listings.module'
 
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -19,12 +18,9 @@ import { UserEffects } from '@core/store/users/effects/user'
 
 import {
   UserComponent,
-  UserListComponent
+  UserListComponent,
+  UserMenuComponent
 } from '@features/users'
-
-import {
-  HomeComponent
-} from '@features/pages/home/home.component'
 
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
@@ -32,17 +28,18 @@ import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component
 const COMPONENTS = [
   UserComponent,
   UserListComponent,
-  HomeComponent,
+  UserMenuComponent,
   MySpacesComponent,
   MyCalendarComponent,
 ]
 
 const ENTRY_COMPONENTS = [
-  UserComponent
+  UserComponent,
+  UserMenuComponent
 ]
 
 const SERVICES = [
-  UserService,
+  UserService
 ]
 
 @NgModule({
@@ -53,7 +50,6 @@ const SERVICES = [
     FlexLayoutModule,
     CoreModule,
     SharedModule,
-    ListingModule,
     EffectsModule.forFeature([UserEffects]),
   ],
   declarations: COMPONENTS,
