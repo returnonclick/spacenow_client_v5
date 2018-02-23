@@ -10,20 +10,31 @@
 
 import * as firebase from 'firebase/app';
 
-export class UserData {
-  uid: string = "" // user ID associated with social account
-  provider: string = "unknown" // social account provider e.g. Facebook, Google+
-  email: string = "notprovided@example.com"
-  photoURL: string = "https://pickaface.net/assets/images/slides/slide2.png"
-  displayName: string = "not provided"
+export class UserData extends Object{
+  displayName:  string = null
+  email:        string = null
+  phoneNumber:  string = null
+  photoURL:     string = "https://pickaface.net/assets/images/slides/slide2.png"
+  providerId:   string = null // social account provider e.g. Facebook, Google+
+  uid:          string = null // user ID associated with social account
 
   constructor( model: any = null ){
-    this.uid = model.uid
-    this.provider = model.providerId
-    this.email = model.email
-    this.photoURL = model.photoURL ? model.photoURL : 'https://pickaface.net/assets/images/slides/slide2.png'
-    this.displayName = model.displayName ? model.displayName : this.email
+
+    super(model)
+
+    if ( model ) {
+  
+      this.displayName  = model.displayName
+      this.email        = model.email
+      this.phoneNumber  = model.phoneNumber
+      this.photoURL     = model.photoURL
+      this.providerId   = model.providerId
+      this.uid          = model.uid
+    
+    }
+  
   }
+
 }
 
 export default [ UserData ]

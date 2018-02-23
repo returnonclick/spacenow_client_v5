@@ -9,7 +9,11 @@ import {
   ForgotPasswordComponent
 } from '@shared/components'
 
-import { UserListComponent } from '@features/users'
+import { 
+  UserListComponent, 
+  UserMenuComponent 
+} from '@features/users'
+
 import { HomeComponent } from '@features/pages/home/home.component'
 import { GeneralComponent } from '@features/listings/general/general.component'
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
@@ -18,30 +22,31 @@ import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.compon
 import { SearchComponent } from '@features/search/search.component'
 
 const appRoutes: Routes = [
-  { path: 'sign-in', component: SignInComponent },
-  { path: 'register', component: SignUpComponent },
-  { path: '',
+  { 
+    path: 'app',
     component: LayoutComponent,
-    // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
-      { path: 'home', component: HomeComponent },
-      { path: 'listings', component: GeneralComponent },
-      { path: 'my-spaces', component: MySpacesComponent },
-      { path: 'my-calendar', component: MyCalendarComponent },
-      { path: 'my-favorites', component: MyFavoritesComponent },
-      { path: 'search', component: SearchComponent },
-      { path: '', redirectTo: '/home', pathMatch: 'full' },
+      { path: '', loadChildren: '@features/pages/pages.module#PagesModule' },
+      { path: 'listings', loadChildren: '@features/listings/listings.module#ListingModule' },
+      { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
+      { path: 'register', component: SignUpComponent, outlet: 'sidenav' },
+      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' },
+      { path: 'user-menu', component: UserMenuComponent, outlet: 'sidenav' },
     ]
   },
+  { path: '', redirectTo: '/app', pathMatch: 'full' },
+  // { path: 'my-spaces', component: MySpacesComponent },
+  // { path: 'my-calendar', component: MyCalendarComponent },
+ 
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
-  // { path: 'page-not-found', component:  }
+  { path: 'page-not-found', component:  SignInComponent}
 ]
 
 @NgModule({
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      // { enableTracing: true } // <-- debugging purposes only
+      { enableTracing: true } // <-- debugging purposes only
     )
   ],
   // providers: [ appRoutingProviders ],

@@ -33,7 +33,7 @@ export class UserListComponent implements OnInit {
     this.users$.subscribe(users => {
       if(users)
         this.userMap = users.reduce((acc, curr) => {
-          acc[curr.userUID] = curr
+          acc[curr.uid] = curr
           return acc
         }, {})
     })
@@ -46,9 +46,9 @@ export class UserListComponent implements OnInit {
   valMap = (key, obj) => {
     let value = obj[key] || ''
     switch(key) {
-      case 'photoURL': return `<img matListAvatar src='${this.userMap[obj.userUID].userData[0].photoURL}'>`
-      case 'displayName': return this.userMap[obj.userUID].userData[0].displayName
-      case 'isVerified':  return this.userMap[obj.userUID].isVerified ? 'Verified' : 'Unverified'
+      case 'photoURL': return `<img matListAvatar src='${this.userMap[obj.uid].userData[0].photoURL}'>`
+      case 'displayName': return this.userMap[obj.uid].userData[0].displayName
+      case 'isVerified':  return this.userMap[obj.uid].isVerified ? 'Verified' : 'Unverified'
       default:          return (JSON.stringify(value) || '').replace(/\"/g, '')
     }
   }

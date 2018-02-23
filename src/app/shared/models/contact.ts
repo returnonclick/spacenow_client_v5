@@ -2,7 +2,7 @@
 
 import { Address } from '@shared/models/address';
 
-export class Contact {
+export class Contact extends Object{
   
   title:          string          = ''                // (5)  The customer's title empty string allowed
   firstName:      string          = ''                // (50) The user's first name
@@ -15,6 +15,8 @@ export class Contact {
   addresses:      Array<Address>  = new Array()       // The imported object from AddressModel
 
   constructor( model: any = null ) {
+
+    super(model)
 
     if ( model ) {
 

@@ -1,74 +1,62 @@
 <!-- Sidebar -->
-<aside id="main-sidebar">
-    <h1>Log In</h1>
-    <h3>Complete form to log in</h3>
-    <mat-form-field>
-      <input matInput placeholder="Email" [errorStateMatcher]="matcher">
-      <!-- <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error> -->
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Password" [errorStateMatcher]="matcher">
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <!-- <mat-error *ngIf="passFormControl.hasError('required')">
-        Password is <strong>required</strong>
-      </mat-error> -->
-    </mat-form-field>
-    <mat-checkbox >Remember me</mat-checkbox>
-    <button mat-button>Log in</button>
-</aside>
+<mat-drawer-container class="main-container" fullscreen>
 
-<!-- Nav -->
-<nav id="main-nav">
-  <a href="#"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
-  <a href="#">List your space</a>
-  <a href="#">Log in</a>
-  <a href="#">Sign up</a>
-</nav>
+  <mat-drawer class="sidenav" [mode]="sidenavMode" [opened]="sidenavOpen" align="end" #sidenav>
+      <router-outlet name="sidenav"></router-outlet>
+  </mat-drawer>
 
+  <mat-drawer-content>
+  
+    <!-- Nav -->
+    <nav id="main-nav">
+      <a routerLink="/" class="logo"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
+      <span><!-- fill space --></span>
+      <a routerLink="/app/listings">List your space</a>
+      <div *ngIf="authUser; then authenticated else guest"></div>
+    </nav>
 
-<router-outlet></router-outlet>
+    <!-- User NOT logged in -->
+    <ng-template #guest>
+      <a [routerLink]="[{ outlets: { sidenav: ['sign-in'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">Log in</a>
+      <a [routerLink]="[{ outlets: { sidenav: ['register'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">Sign up</a>
+    </ng-template>
 
+    <!-- User logged in -->
+    <ng-template #authenticated>
+      <a [routerLink]="[{ outlets: { sidenav: ['user-menu'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">{{authUser.displayName}} <img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a>
+    </ng-template>
 
-<!-- Footer -->
-<footer id="footer">
-  <div class="inner">
+    <router-outlet></router-outlet>
 
-    <!-- <h3>Get in touch</h3> -->
-    <!--  -->
-    <!-- <div class="copyright"> -->
-    <!--   &copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>. -->
-    <!-- </div> -->
+    <!-- Footer -->
+    <footer class="grid">
+      <div class="inner">
+        <img src='assets/images/logo/spacenow-logo.png' width="200px"/>
+        <ul class="help-pages">
+          <li><a href="#">about</a></li>
+          <li><a href="#">news</a></li>
+          <li><a href="#">careers</a></li>
+          <li><a href="#">press</a></li>
+          <li><a href="#">help</a></li>
+        </ul>
+        <div class="menu">
+          <span>spacenow 2017</span>
+          <ul>
+            <li><a href="#">terms of serviec</a></li>
+            <li><a href="#">host terms</a></li>
+            <li><a href="#">privacy policy</a></li>
+            <li><a href="#">refunds policy</a></li>
+            <li><a href="#">cancellation policy</a></li>
+          </ul>
+        </div>
+        <ul class="social-media">
+          <li><a href="#">facebook</a></li>
+          <li><a href="#">linkedin</a></li>
+          <li><a href="#">twitter</a></li>
+        </ul>
+      </div>
+    </footer>
 
-  </div>
-</footer>
+  </mat-drawer-content>
 
-
-<!-- <mat-sidenav-container class="admin-container">
-
-  <mat-sidenav class="quickpanel" [opened]="quickpanelOpen" align="end" mode="over" #quickpanel>
-
-    <gen-quickpanel></gen-quickpanel>
-
-  </mat-sidenav>
-
-  <mat-sidenav class="sidenav" [opened]="sidenavOpen" align="start" [mode]="sidenavMode" msIconSidenav #sidenav>
-
-    <gen-sidenav></gen-sidenav>
-
-  </mat-sidenav>
-
-  <div class="content-container" fxLayout="column">
-    <gen-toolbar [quickpanel]="quickpanel" [sidenav]="sidenav"></gen-toolbar>
-
-    <div class="main-container" #scrollContainer>
-      <router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
-     </div>
-  </div>
-
-</mat-sidenav-container> -->
+</mat-drawer-container>

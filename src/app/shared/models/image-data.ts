@@ -9,13 +9,16 @@
  * `halfsize.jpg` | `quartersize.jpg` | `thumbnail.jpg`
  * 
  *  */
-export class ImageData {
+export class ImageData extends Object {
+
     imageDataID:        string          = ''
     imageFolderPath:    string          = ''               // Path to image files
     imageTitle:         string          = ''               // Image name - used in `<alt>` tag
     imageTags:          Array<string>   = new Array(); 
   
     constructor( model: any = null ) {
+
+        super(model)
 
         if ( model ) {
 

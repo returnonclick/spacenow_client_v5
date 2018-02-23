@@ -46,9 +46,15 @@ export class SignInComponent implements OnInit {
 
   //signin
   onSigninSubmit() {
-    this._store.dispatch(
-      new actions.SignIn(this.signinForm.value)
-    )
+    this._store.dispatch(new actions.SignIn(this.signinForm.value))
+  }
+
+  googleLogin() {
+    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.GoogleAuthProvider))
+  }
+
+  facebookLogin() {
+    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.FacebookAuthProvider))
   }
 
 }

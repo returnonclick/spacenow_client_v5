@@ -9,7 +9,7 @@ export interface State extends EntityState<User> {
 }
 
 export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>({
-    selectId: (obj: User) => obj.userUID,
+    selectId: (obj: User) => obj.uid,
     sortComparer: false,
 })
 
@@ -36,7 +36,7 @@ export function reducer(
                 ...state,
                 loading: true,
                 ...userAdapter.updateOne({
-                    id: action.payload.userUID,
+                    id: action.payload.uid,
                     changes: action.payload
                 }, state)
             }
@@ -46,7 +46,7 @@ export function reducer(
             return {
                 ...state,
                 loading: true,
-                ...userAdapter.removeOne(action.payload.userUID, state)
+                ...userAdapter.removeOne(action.payload.uid, state)
             }
         }
 

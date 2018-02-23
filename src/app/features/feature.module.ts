@@ -10,7 +10,6 @@ import { EffectsModule } from '@ngrx/effects'
 
 import { CoreModule } from '@core/core.module'
 import { SharedModule } from '@shared/shared.module'
-import { ListingModule } from '@features/listings/listings.module'
 
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -26,12 +25,9 @@ import { environment } from '../../environments/environment'
 
 import {
   UserComponent,
-  UserListComponent
+  UserListComponent,
+  UserMenuComponent
 } from '@features/users'
-
-import {
-  HomeComponent
-} from '@features/pages/home/home.component'
 
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
@@ -41,7 +37,7 @@ import { SearchComponent } from '@features/search/search.component'
 const COMPONENTS = [
   UserComponent,
   UserListComponent,
-  HomeComponent,
+  UserMenuComponent,
   MySpacesComponent,
   MyCalendarComponent,
   MyFavoritesComponent,
@@ -49,12 +45,13 @@ const COMPONENTS = [
 ]
 
 const ENTRY_COMPONENTS = [
-  UserComponent
+  UserComponent,
+  UserMenuComponent
 ]
 
 const SERVICES = [
   UserService,
-  SearchService,
+  SearchService
 ]
 
 @NgModule({
@@ -71,7 +68,6 @@ const SERVICES = [
     FlexLayoutModule,
     CoreModule,
     SharedModule,
-    ListingModule,
     EffectsModule.forFeature([
       UserEffects,
       SearchEffects,

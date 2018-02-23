@@ -42,9 +42,7 @@ export class SignUpComponent implements OnInit {
   }
 
   onSignupSubmit() {
-    this._store.dispatch(
-      new actions.SignIn(this.signupForm.value)
-    )
+    this._store.dispatch(new actions.SignUp(this.signupForm.value))
   }
 
 }

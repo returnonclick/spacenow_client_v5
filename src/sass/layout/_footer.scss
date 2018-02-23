@@ -1,0 +1,56 @@
+
+footer {
+
+    --margin: 200px;
+
+    margin-top: var(--margin);
+    border-top: 1px solid $color__mischka;
+
+    .inner {
+
+        align-content: space-evenly;
+        display: grid;
+        grid-column: 2 / span 12;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-gap: calc(var(--margin) / 4);
+        grid-template-areas: 
+        "logo help-pages help-pages"
+        "menu menu social-media";
+        margin: var(--margin) 0;
+
+        img.logo {
+            grid-area: logo;
+        }
+
+        ul.help-pages {
+            grid-area: help-pages;
+            justify-self: end;
+        
+            li {
+                display: inline-block;
+            }
+        }
+
+        div.menu {
+            grid-area: menu;
+
+            ul li {
+                display: inline-block;
+            }
+
+        }
+
+        ul.social-media {
+            grid-area: social-media;
+            justify-self: end;
+
+            li {
+                display: inline-block;
+            }
+
+        }
+
+    }
+
+}

@@ -5,6 +5,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 
+import { ListingsRoutingModule } from '@features/listings/listings-routing.module'
+
 import { MaterialModule } from "@shared/material.module"
 import { SharedModule } from '@shared/shared.module'
 
@@ -60,7 +62,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    RouterModule,
+    ListingsRoutingModule,
     MODULES,
     PerfectScrollbarModule,
     EffectsModule.forFeature([ListingEffects]),
