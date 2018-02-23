@@ -1,14 +1,14 @@
 import {
   Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit, ViewChildren, QueryList,
   ElementRef, OnDestroy
-}                                 from '@angular/core';
-import { Subscription, Subject }  from "rxjs";
-import { MediaChange}             from "@angular/flex-layout";
-import { Router, NavigationEnd }  from "@angular/router";
-import { AngularFireAuth }        from 'angularfire2/auth';
+}                                 from '@angular/core'
+import { Subscription, Subject }  from "rxjs"
+import { MediaChange}             from "@angular/flex-layout"
+import { Router, NavigationEnd }  from "@angular/router"
+import { AngularFireAuth }        from 'angularfire2/auth'
 import { Observable }             from 'rxjs'
 
-import { Store }                  from '@ngrx/store';
+import { Store }                  from '@ngrx/store'
 import { User }                   from '@shared/models/user'
 
 import * as actions               from '@core/store/auth/actions/auth'
@@ -64,6 +64,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   onActivate(e, scrollContainer) {
-    scrollContainer.scrollTop = 0;
+    scrollContainer.scrollTop = 0
   }
 }

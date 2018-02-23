@@ -5,7 +5,8 @@ import { User } from '@shared/models/user';
 import * as actions from '@core/store/users/actions/user';
 
 export interface State extends EntityState<User> {
-    loading: boolean;
+    loading: boolean
+    selectedUserId: string | null
 }
 
 export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>({
@@ -14,7 +15,8 @@ export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>({
 })
 
 export const initialState: State = userAdapter.getInitialState({
-    loading: false
+    loading: false,
+    selectedUserId: null
 });
 
 export function reducer(
@@ -24,30 +26,30 @@ export function reducer(
     switch (action.type) {
 
         case actions.ADDED: {
-            return {
+            return userAdapter.addOne(action.payload, {
                 ...state,
-                loading: true,
-                ...userAdapter.addOne(action.payload, state)
-            }
+                selectedUserId: state.selectedUserId,
+                loading: false
+            })
         }
 
         case actions.MODIFIED: {
-            return { 
+            return userAdapter.updateOne({
+                id: action.payload.uid,
+                changes: action.payload
+            }, {
                 ...state,
-                loading: true,
-                ...userAdapter.updateOne({
-                    id: action.payload.uid,
-                    changes: action.payload
-                }, state)
-            }
+                selectedUserId: state.selectedUserId,
+                loading: false
+            })
         }
 
         case actions.REMOVED: {
-            return {
+            return userAdapter.removeOne(action.payload.uid, { 
                 ...state,
-                loading: true,
-                ...userAdapter.removeOne(action.payload.uid, state)
-            }
+                selectedUserId: state.selectedUserId,
+                loading: false
+            })
         }
 
         default: {
@@ -57,3 +59,4 @@ export function reducer(
 }
 
 export const getLoading = (state: State) => state.loading;
+export const getSelectedId = (state: State) => state.selectedUserId;

@@ -3,16 +3,12 @@ import { RouterModule }  from '@angular/router';
 import { Routes } from '@angular/router';
 
 import {
+  AuthMenuComponent,
   SignInComponent,
   SignUpComponent,
   LayoutComponent,
   ForgotPasswordComponent
 } from '@shared/components'
-
-import { 
-  UserListComponent, 
-  UserMenuComponent 
-} from '@features/users'
 
 import { HomeComponent } from '@features/pages/home/home.component'
 import { GeneralComponent } from '@features/listings/general/general.component'
@@ -28,10 +24,11 @@ const appRoutes: Routes = [
     children: [
       { path: '', loadChildren: '@features/pages/pages.module#PagesModule' },
       { path: 'listings', loadChildren: '@features/listings/listings.module#ListingModule' },
+      { path: 'profile', loadChildren: '@features/users/users.module#UsersModule' },
+      { path: 'auth-menu', component: AuthMenuComponent, outlet: 'sidenav' },
       { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
       { path: 'register', component: SignUpComponent, outlet: 'sidenav' },
-      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' },
-      { path: 'user-menu', component: UserMenuComponent, outlet: 'sidenav' },
+      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }
     ]
   },
   { path: '', redirectTo: '/app', pathMatch: 'full' },
@@ -46,7 +43,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      // { enableTracing: true } // <-- debugging purposes only
     )
   ],
   // providers: [ appRoutingProviders ],

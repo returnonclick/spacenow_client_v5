@@ -6,11 +6,11 @@ import * as actions from '@core/store/auth/actions/auth'
 import * as fromRoot from '@core/store'
 
 @Component({
-  selector: 'sn-user-menu',
-  templateUrl: './user-menu.component.html',
-  styleUrls: [ './user-menu.component.scss' ]
+  selector: 'sn-auth-menu',
+  templateUrl: './auth-menu.component.html',
+  styleUrls: [ './auth-menu.component.scss' ]
 })
-export class UserMenuComponent {
+export class AuthMenuComponent {
 
   constructor(private _store: Store<fromRoot.State>) {}
 

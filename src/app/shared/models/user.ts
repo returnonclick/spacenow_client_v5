@@ -17,7 +17,7 @@ export class User extends Object{
   email:        string          = null
   displayName:  string          = null
   phoneNumber:  string          = null
-  photoURL:     string          = null
+  photoURL:     string          = 'https://pickaface.net/assets/images/slides/slide2.png'
   userData:     Array<UserData> = new Array()
   isVerified:   boolean         = false
   idToken:      string          = null
@@ -30,7 +30,7 @@ export class User extends Object{
     if (model) {
       this.uid           = model.uid
       this.email         = model.email
-      this.displayName   = model.displayName
+      this.displayName   = model.displayName ? model.displayName : model.email
       this.phoneNumber   = model.phoneNumber
       this.photoURL      = model.photoURL
       this.isVerified    = model.isVerified

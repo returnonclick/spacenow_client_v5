@@ -1,0 +1,45 @@
+<!-- Header -->
+<div class="grid">
+
+    <!-- SECTION ONE -->
+    <div id="profile">
+        <div class="header">
+            <h1>My Profile</h1>
+        </div>
+        <section>
+            <div class="required">
+                <form #form="ngForm" (ngSubmit)="onSignupSubmit()" [formGroup]="profileForm" fxLayout="column" class="profileForm">
+                    <h1>Sign up</h1>
+                    <h3>Complete for to log in</h3>
+                    <mat-form-field>
+                        <input matInput placeholder="E-Mail" type="email" name="username" required formControlName="username">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="First Name" type="text" name="firstName" required formControlName="firstName">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Gender" name="gender" required formControlName="gender">
+                            <mat-option value="male">Male</mat-option>
+                            <mat-option value="female">Female</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Gender" name="gender" required formControlName="gender">
+                            <mat-option value="male">Male</mat-option>
+                            <mat-option value="female">Female</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Last Name" type="text" name="lastName" required formControlName="lastName">
+                    </mat-form-field>
+
+                </form>
+            </div>
+            <div class="picture">
+    
+            </div>
+        </section>
+    
+    </div>
+
+</div>

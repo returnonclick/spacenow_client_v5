@@ -88,6 +88,11 @@ export const getAuthEntitiesState = createSelector(
     (state) => state
 )
 
+export const getSelectedAuthId = createSelector(
+    getAuthEntitiesState,
+    fromAuth.getSelectedId
+)
+
 export const {
     selectIds: getAuthIds,
     selectEntities: getAuthEntities,
@@ -105,6 +110,14 @@ export const getIsSignedInState = createSelector(
     fromAuth.isSignedIn
 )
 
+export const getSelectedAuth = createSelector(
+    getAuthEntities,
+    getSelectedAuthId,
+    (entities, selectedId) => {
+      return selectedId && entities[selectedId];
+    }
+)
+
 /**
  * Users Reducer
  */
@@ -116,12 +129,25 @@ export const getUserEntitiesState = createSelector(
     (state) => state
 )
 
+export const getSelectedUserId = createSelector(
+    getUserEntitiesState,
+    fromUsers.getSelectedId
+)
+
 export const {
     selectIds: getUserIds,
     selectEntities: getUserEntities,
     selectAll: getAllUsers,
     selectTotal: getTotalUsers,
-  } = fromUsers.userAdapter.getSelectors(getUserEntitiesState)
+} = fromUsers.userAdapter.getSelectors(getUserEntitiesState)
+
+export const getSelectedUser = createSelector(
+    getUserEntities,
+    getSelectedUserId,
+    (entities, selectedId) => {
+      return selectedId && entities[selectedId];
+    }
+)
 
  /**
  * Listings Reducers
