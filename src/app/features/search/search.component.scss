@@ -31,14 +31,15 @@
   }
 
   .search-results {
+    --hover: #6cde93;
+    --gridSpace: 20px;
     --numColumns: 2;
-    --gridGap: 20px;
     grid-row: 2 / 3;
     grid-column: 1 / 2;
 
     display: grid;
-    grid-template-columns: repeat(var(--numColumns), calc(100% / var(--numColumns) - var(--gridGap)));
-    grid-gap: var(--gridGap);
+    grid-template-columns: repeat(var(--numColumns), calc(100% / var(--numColumns) - var(--gridSpace)));
+    grid-gap: var(--gridSpace);
   }
 
   agm-map {

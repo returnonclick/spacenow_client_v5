@@ -1,3 +1,16 @@
+.space-container {
+  --borderColor: transparent;
+
+  padding: 20px;
+  border: 2px solid var(--borderColor);
+  transition: all 0.5s ease;
+
+  &:hover {
+    --borderColor: var(--hover);
+    box-shadow: 0 20px 40px 0 #dddddd;
+  }
+}
+
 .space-item {
   display: grid;
   grid-template-columns: auto;

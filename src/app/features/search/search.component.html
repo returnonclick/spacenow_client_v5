@@ -1,6 +1,4 @@
 <h3>Search</h3>
-<!-- <form novalidate> -->
-<!-- </form> -->
 <div class="search-container">
   <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
     <mat-form-field>
@@ -19,13 +17,16 @@
   <ng-template #doneLoading>
     <div class="search-results">
       <sn-space-list-item *ngFor="let space of results$ | async"
-      [space]="space"
-      [multipleImages]="!!space.images"
-      [showOptions]="false">
-    </sn-space-list-item>
+        [space]="space"
+        [multipleImages]="!!space.images"
+        [showOptions]="false"
+        (mouseenter)="toggleHover(space, true)"
+        (mouseleave)="toggleHover(space, false)">
+      </sn-space-list-item>
   </div>
   </ng-template>
-  <agm-map [zoom]="zoom"
+  <agm-map
+    [zoom]="zoom"
     [latitude]="lat"
     [longitude]="lng"
     [streetViewControl]="false">

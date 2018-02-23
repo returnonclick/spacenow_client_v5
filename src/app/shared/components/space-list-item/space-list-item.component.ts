@@ -29,7 +29,7 @@ export class SpaceListItemComponent {
         break;
       case 'favorite':
         console.log('favorite', this.space.id)
-        this.space.isFavorite = !this.space.isFavorite
+        // this.space.isFavorite = !this.space.isFavorite
         break;
       default:
         break;

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { FormBuilder,  FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
+import { AgmMap } from '@agm/core'
+import { } from 'googlemaps'
 
 import { Space } from '@shared/models/space'
 
@@ -16,16 +18,20 @@ import * as searchActions from '@core/store/search/actions/search'
 })
 export class SearchComponent {
 
+  @ViewChild(AgmMap) map: AgmMap
+
   zoom:   number = 16
   name:   string = ''
   radius: number = 20
   lat:    number = -33.9108137
-  lng:    number = 151.
+  lng:    number = 151.1960078
 
   results$:   Observable<Space[]>
   isLoading$: Observable<boolean>
 
-  form: FormGroup
+  form:      FormGroup
+  nativeMap: google.maps.Map = null
+  markerMap: { [spaceId: string]: google.maps.Marker }
 
   constructor(
     private _fb:     FormBuilder,
@@ -38,20 +44,44 @@ export class SearchComponent {
   }
 
   ngOnInit() {
-    this._route.queryParams.subscribe(query => {
-      this.name   = decodeURIComponent(query.name) || this.name
-      this.radius = +query.radius || this.radius
-      this.lat    = +query.lat || this.lat
-      this.lng    = +query.lng || this.lng
-      this._store.dispatch(new searchActions.Query(query))
+    Observable.combineLatest(
+      this._route.queryParams,
+      this.map.mapReady,
+    ).subscribe(([queryParams, map]) => {
+      if(queryParams && map) {
+        this.name   = queryParams.name ? decodeURIComponent(queryParams.name) : this.name
+        this.radius = +queryParams.radius || this.radius
+        this.lat    = +queryParams.lat || this.lat
+        this.lng    = +queryParams.lng || this.lng
+        this._store.dispatch(new searchActions.Query(queryParams))
+
+        if(!this.nativeMap)
+          this.nativeMap = <google.maps.Map> map
+
+        this._updateForm()
+      }
     })
 
-    this.form = this._fb.group({
-      name:   [ this.name, Validators.required ],
-      radius: [ this.radius, Validators.required ],
-      lat:    [ this.lat ],
-      lng:    [ this.lng ],
+    Observable.combineLatest(
+      this.results$,
+      this.map.mapReady,
+    ).subscribe(([searchResults, map]) => {
+      if(searchResults && map) {
+        this.markerMap = {}
+        for(let result of searchResults) {
+          let markerLatLng = new google.maps.LatLng(this.lat + result.address.lat, this.lng + result.address.lng);
+          let thisLoc      = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
+            map:       this.nativeMap,
+            position:  markerLatLng,
+            icon:      'assets/icons/spacenow_icon_01.svg',
+          })
+          this.markerMap[result.id] = thisLoc
+        }
+      }
     })
+
+    this._updateForm()
   }
 
   selectedAddress(address) {
@@ -75,6 +105,23 @@ export class SearchComponent {
         lng:    formVal.lng,
       }
     })
+  }
+
+  private _updateForm() {
+    this.form = this._fb.group({
+      name:   [ this.name, Validators.required ],
+      radius: [ this.radius, Validators.required ],
+      lat:    [ this.lat ],
+      lng:    [ this.lng ],
+    })
+  }
+
+  toggleHover(space, enterFlag) {
+    let marker: google.maps.Marker = this.markerMap[space.id]
+    if(enterFlag)
+      marker.setIcon('assets/icons/spacenow_icon_02.svg')
+    else
+      marker.setIcon('assets/icons/spacenow_icon_01.svg')
   }
 
 }
