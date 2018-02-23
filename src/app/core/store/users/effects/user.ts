@@ -30,6 +30,22 @@ export class UserEffects {
     )
 
     @Effect()
+    public queryOne$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.QueryOne>( actions.QUERY_ONE ),
+        switchMap( action  => this.userService.readOne(action.uid) ),
+        mergeMap( actions => actions ),
+        map( action => {
+            return {
+                type: `[User] ${action.type}`,
+                payload: {
+                    id: action.payload.doc.id,
+                    ...action.payload.doc.data()
+                }
+            }
+        } )
+    )
+
+    @Effect()
     public readRoleByUser$: Observable<Action> = this.actions$.pipe(
         ofType<actions.ReadRoleByUser>( actions.READ_ROLE_BY_USER ),
         switchMap( payload  => payload.role),

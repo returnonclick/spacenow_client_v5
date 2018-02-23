@@ -24,7 +24,7 @@ export class UserData extends Object{
 
     if ( model ) {
   
-      this.displayName  = model.displayName
+      this.displayName  = model.displayName ? model.displayName : model.email
       this.email        = model.email
       this.phoneNumber  = model.phoneNumber
       this.photoURL     = model.photoURL

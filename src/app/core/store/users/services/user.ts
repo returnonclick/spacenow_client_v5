@@ -14,6 +14,10 @@ export class UserService {
     return this.afs.collection<User>(this.ref).stateChanges()
   }
 
+  public readOne(uid) {
+    return this.afs.collection<User>(this.ref, ref => ref.where(`uid`, '==', `${uid}`)).stateChanges()
+  }
+
   public readRoleByUser(role: string) {
     return this.afs.collection<User>(this.ref, ref => ref.where(`roles`, '==', `${role}`)).stateChanges()
   }

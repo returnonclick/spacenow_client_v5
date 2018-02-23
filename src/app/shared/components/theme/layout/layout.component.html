@@ -23,7 +23,7 @@
 
     <!-- User logged in -->
     <ng-template #authenticated>
-      <a [routerLink]="[{ outlets: { sidenav: ['user-menu'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">{{authUser.displayName}} <img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a>
+      <a [routerLink]="[{ outlets: { sidenav: ['auth-menu'] } }]" routerLinkActive="active" (click)="sidenav.toggle()">{{authUser.displayName}} <img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a>
     </ng-template>
 
     <router-outlet></router-outlet>

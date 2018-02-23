@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store'
 import { User } from '@shared/models/user'
 
 export const QUERY               = '[User] query'
+export const QUERY_ONE           = '[User] query one'
 
 export const ADDED               = '[User] added'
 export const MODIFIED            = '[User] modified'
@@ -18,6 +19,11 @@ export const READ_ROLE_BY_USER   = '[User] read roleByUser'
 export class Query implements Action {
     readonly type = QUERY
     constructor( ) { }
+}
+
+export class QueryOne implements Action {
+    readonly type = QUERY_ONE
+    constructor( public uid: string ) { }
 }
 
 export class Added implements Action {
@@ -70,6 +76,7 @@ export class ReadRoleByUser implements Action {
     
 export type UserActions = 
     | Query
+    | QueryOne
     | Added
     | Modified
     | Removed

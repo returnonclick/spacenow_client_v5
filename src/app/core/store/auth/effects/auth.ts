@@ -34,6 +34,15 @@ export class AuthEffects {
     )
 
     @Effect()
+    public signUp$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.SignUp>( actions.SIGN_UP ),
+        switchMap(data => this.authService.signUp(data.payload.username, data.payload.password)),
+        tap(() => this.authService.sendEmailVerification()),
+        map((user) => new actions.GetUser(user)),
+        catchError((err) => of(new actions.Fail(err)))
+    )
+
+    @Effect()
     public signInWithProvider$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignInWithProvider>( actions.SIGN_IN_WITH_PROVIDER ),
         switchMap(data => this.authService.signInWithProvider(data.payload)),
@@ -44,7 +53,7 @@ export class AuthEffects {
     @Effect({ dispatch: false })
     success$ = this.actions$.pipe(
         ofType(actions.SUCCESS),
-        tap(() => this.router.navigate(['/'])),
+        tap(() => this.router.navigate([''])),
         catchError((err) => of(new actions.Fail(err)))
     );
 
@@ -52,7 +61,7 @@ export class AuthEffects {
     fail$ = this.actions$.pipe(
         ofType(actions.FAIL, actions.SIGN_OUT),
         map(() => this.authService.signOut()),
-        tap(() => this.router.navigate(['/']))
+        tap(() => this.router.navigate(['']))
     );
 
     constructor(

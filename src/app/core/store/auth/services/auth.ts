@@ -39,42 +39,52 @@ export class AuthService {
 
   signInWithProvider(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then(
+      (auth) => this.updateUserData(auth.user, auth.credential)
+    )
+  }
+
+  signUp(username, password) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(username, password).then(
       (auth) => this.updateUserData(auth)
     )
+  }
+
+  sendEmailVerification() {
+    var user = firebase.auth().currentUser
+    user.sendEmailVerification()
   }
 
   signOut() {
     this.afAuth.auth.signOut()
   }
 
-  private updateUserData(auth: any) {
-    const userRef: AngularFirestoreDocument<User> = this._afs.collection<User>(`users`).doc(`${auth.user.uid}`)
-    const userProfileRef: AngularFirestoreDocument<UserProfile> = this._afs.collection<UserProfile>(`users-profile`).doc(`${auth.user.uid}`)
+  private updateUserData(auth: any, credential?: any) {
+
+    const userRef: AngularFirestoreDocument<User> = this._afs.collection<User>(`users`).doc(`${auth.uid}`)
+    const userProfileRef: AngularFirestoreDocument<UserProfile> = this._afs.collection<UserProfile>(`users-profile`).doc(`${auth.uid}`)
 
     let userData = new UserData()
-    userData.displayName  = auth.user.providerData[0].displayName ? auth.user.providerData[0].displayName : auth.user.providerData[0].email,
-    userData.email        = auth.user.providerData[0].email,
-    userData.phoneNumber  = auth.user.providerData[0].phoneNumber,
-    userData.photoURL     = auth.user.providerData[0].photoURL ? auth.user.providerData[0].photoURL : 'https://pickaface.net/assets/images/slides/slide2.png',
-    userData.providerId   = auth.user.providerData[0].providerId,
-    userData.uid          = auth.user.providerData[0].uid
+    userData.displayName  = auth.providerData[0].displayName ? auth.providerData[0].displayName : auth.providerData[0].email
+    userData.email        = auth.providerData[0].email
+    userData.phoneNumber  = auth.providerData[0].phoneNumber
+    userData.photoURL     = auth.providerData[0].photoURL ? auth.providerData[0].photoURL : 'https://pickaface.net/assets/images/slides/slide2.png'
+    userData.providerId   = auth.providerData[0].providerId
+    userData.uid          = auth.providerData[0].uid
 
     let data: User = new User()
-    data.uid           = auth.user.uid
-    data.email         = auth.user.email
-    data.displayName   = auth.user.displayName
-    data.phoneNumber   = auth.user.phoneNumber
-    data.photoURL      = auth.user.photoURL
-    data.isVerified    = auth.user.emailVerified
-    data.idToken       = auth.credential.idToken
+    data.uid           = auth.uid
+    data.email         = auth.email
+    data.displayName   = auth.displayName ? auth.displayName : auth.email
+    data.phoneNumber   = auth.phoneNumber
+    data.photoURL      = auth.photoURL ? auth.photoURL : 'https://pickaface.net/assets/images/slides/slide2.png'
+    data.isVerified    = auth.emailVerified
+    data.idToken       = credential ? credential.idToken : null
     data.userData.push(userData);
 
     const contact: Contact = new Contact()
     let userProfile: UserProfile = new UserProfile()
     userProfile.userUID = data.uid
     userProfile.contact = contact
-
-    console.log(data)
 
     userRef.set(Object.assign({}, data))
     userProfileRef.set(Object.assign({}, userProfile))

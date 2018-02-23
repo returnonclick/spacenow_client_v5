@@ -4,8 +4,9 @@ import { User } from '@shared/models/user'
 import * as auth from '@core/store/auth/actions/auth'
 
 export interface State extends EntityState<User> {
-    isSignedIn: boolean,
+    isSignedIn: boolean
     user: User
+    selectedId: string | null
 }
 
 export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
@@ -15,7 +16,8 @@ export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
 
 export const initialState: State = authAdapter.getInitialState({
     isSignedIn: false,
-    user: null
+    user: null,
+    selectedId: null
 })
 
 export function reducer(
@@ -30,7 +32,8 @@ export function reducer(
                 { 
                     ...state, 
                     isSignedIn: true, 
-                    user: action.payload
+                    user: action.payload,
+                    selectedUserId: state.selectedId,
                 })
 
         }
@@ -49,3 +52,4 @@ export function reducer(
 
 export const isSignedIn = (state: State) => state.isSignedIn
 export const getAuthUser = (state: State) => state.user 
+export const getSelectedId = (state: State) => state.selectedId;
