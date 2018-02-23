@@ -31,6 +31,8 @@ import * as fromUsers           from '@core/store/users/reducers/users'
 import * as fromListings        from '@core/store/listings/reducers/listings'
 import * as fromCategories      from '@core/store/categories/reducers/categories'
 import * as fromSpace from '@core/store/space/space.reducer'
+import * as fromAmenities       from '@core/store/amenities/reducers/amenities'
+import * as fromListingSpecifications from '@core/store/listing-specifications/reducers/listing-specifications'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -43,6 +45,8 @@ export interface State {
     categories:    fromCategories.State
     routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
     spaces: fromSpace.State
+    amenities:     fromAmenities.State
+    listingSpecifications:    fromListingSpecifications.State
 }
 
 /**
@@ -57,13 +61,15 @@ export const reducers: ActionReducerMap<State> = {
     categories:    fromCategories.reducer,
     routerReducer: fromRouter.routerReducer,
     spaces: fromSpace.reducer,
+    amenities:     fromAmenities.reducer,
+    listingSpecifications:    fromListingSpecifications.reducer,
 }
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
     return function (state: State, action: any): State {
-        console.log('state', state)
-        console.log('action', action)
+        // console.log('state', state)
+        // console.log('action', action)
 
         return reducer(state, action)
     }
@@ -152,7 +158,7 @@ export const {
     selectIds: getListingIds,
     selectEntities: getListingEntities,
     selectAll: getAllListings,
-    selectTotal: getTotalListings,
+    selectTotal: getTotalListings
   } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
 
 /* 
@@ -168,7 +174,6 @@ export const selectCurrentSpace = createSelector(
   selectCurrentSpaceID,
   (spaceEntities, spaceID) => spaceEntities[spaceID]
 )
-
 
 /* *********************End of Space reducers **********************************/
 
@@ -190,3 +195,36 @@ export const {
     selectTotal: getTotalCategories,
   } = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
 
+/**
+* Amenities Reducers
+*/
+export const getAmenitiesState = createFeatureSelector<fromAmenities.State>('amenities')
+
+export const getAmenityEntitiesState = createSelector(
+    getAmenitiesState,
+    (state) => state
+)
+
+export const {
+    selectIds: getAmenityIds,
+    selectEntities: getAmenityEntities,
+    selectAll: getAllAmenities,
+    selectTotal: getTotalAmenities,
+  } = fromAmenities.amenityAdapter.getSelectors(getAmenityEntitiesState)
+
+/**
+* ListingSpecifications Reducers
+*/
+export const getListingSpecificationsState = createFeatureSelector<fromListingSpecifications.State>('listingSpecifications')
+
+export const getListingSpecificationEntitiesState = createSelector(
+    getListingSpecificationsState,
+    (state) => state
+)
+
+export const {
+    selectIds: getListingSpecificationIds,
+    selectEntities: getListingSpecificationEntities,
+    selectAll: getAllListingSpecifications,
+    selectTotal: getTotalListingSpecifications,
+  } = fromListingSpecifications.listingSpecificationAdapter.getSelectors(getListingSpecificationEntitiesState)

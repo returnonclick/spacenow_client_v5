@@ -25,6 +25,11 @@ import { CategoryEffects } from '@core/store/categories/effects/category'
 import { MatStepper } from '@angular/material';
 import { ListingsComponent } from './listings.component';
 
+import { AmenityService } from '@core/store/amenities/services/amenity'
+import { AmenityEffects } from '@core/store/amenities/effects/amenity'
+import { ListingSpecificationService } from '@core/store/listing-specifications/services/listing-specification'
+import { ListingSpecificationEffects } from '@core/store/listing-specifications/effects/listing-specification'
+
 import { ListingsRoutingModule } from './listings-routing.module'
 
 const COMPONENTS = [
@@ -67,6 +72,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     EffectsModule.forFeature([ListingEffects]),
     EffectsModule.forFeature([CategoryEffects]),
+    EffectsModule.forFeature([AmenityEffects]),
+    EffectsModule.forFeature([ListingSpecificationEffects]),
   ],
   declarations: [COMPONENTS, PIPES, ListingsComponent],
   entryComponents: ENTRY_COMPONENTS,
@@ -75,6 +82,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ListingService,
     CategoryService,
     MatStepper,
+    AmenityService,
+    ListingSpecificationService,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ]
 })

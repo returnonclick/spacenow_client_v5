@@ -19,8 +19,8 @@ export class HourlyComponent {
 
   @Output() price = new EventEmitter<Hourly>();
   @Output() priceValid = new EventEmitter<boolean>();
+  @Input() inPrice: Hourly
 
-  hourly: Hourly = new Hourly
   priceForm: FormGroup
 
   terms = [
@@ -37,10 +37,10 @@ export class HourlyComponent {
   sendPrice() {
     // console.log(this.priceForm)
     this.priceForm.updateValueAndValidity()
-    this.hourly = this.priceForm.value
+    this.inPrice = this.priceForm.value
     // Send price values
     this.price.emit(
-       this.hourly
+       this.inPrice
     )
     // Send form status for validation
     this.priceValid.emit(
@@ -49,17 +49,20 @@ export class HourlyComponent {
   }
 
   ngOnInit() {
-    // Initialize
-    this.hourly.incentives = false
+    // Initialize when new price
+    if (typeof this.inPrice === 'undefined') {
+      this.inPrice = new Hourly
+      this.inPrice.incentives = false
+    }
 
     this.priceForm = this._fb.group({
-      price:              [this.hourly.price],
-      minimumTerm:        [this.hourly.minimumTerm],
-      incentives:         [this.hourly.incentives],
-      halfDay:            [this.hourly.halfDay],
-      day:                [this.hourly.day]
+      price:              [this.inPrice.price],
+      minimumTerm:        [this.inPrice.minimumTerm],
+      incentives:         [this.inPrice.incentives],
+      halfDay:            [this.inPrice.halfDay],
+      day:                [this.inPrice.day]
     })
-
+    this.sendPrice()
   }
 
 }

@@ -5,22 +5,22 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError, mergeMap } from 'rxjs/operators';
 
-import { Listing } from '@shared/models/listing'
-import { ListingService } from '@core/store/listings/services/listing'
+import { Amenity } from '@shared/models/amenity'
+import { AmenityService } from '@core/store/amenities/services/amenity'
 
-import * as actions from '@core/store/listings/actions/listing'
+import * as actions from '@core/store/amenities/actions/amenity'
 
 @Injectable()
-export class ListingEffects {
+export class AmenityEffects {
 
     @Effect()
     public query$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Query>( actions.QUERY ),
-        switchMap( action  => this.listingService.readAll() ),
+        switchMap( action  => this.amenityService.readAll() ),
         mergeMap( actions => actions ),
         map( action => {
             return {
-                type: `[Listing] ${action.type}`,
+                type: `[Amenity] ${action.type}`,
                 payload: {
                     id: action.payload.doc.id,
                     ...action.payload.doc.data()
@@ -28,35 +28,18 @@ export class ListingEffects {
             }
         } )
     )
-
-     @Effect()
-    public queryOne$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.QueryOne>( actions.QUERY_ONE ),
-        switchMap( action  => this.listingService.readOne(action.id) ),
-        mergeMap( actions => actions ),
-        map( action => {
-            return {
-                type: `[Listing] ${action.type}`,
-                payload: {
-                    id: action.payload.doc.id,
-                    ...action.payload.doc.data()
-                }
-            }
-        } )
-    )
-
 
     @Effect()
     public create$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Create>( actions.CREATE ),
-        switchMap(data => Observable.fromPromise(this.listingService.create(data.payload))),
-        map((id) => new actions.CreateSuccess(id)),
+        switchMap(data => Observable.fromPromise(this.amenityService.create(data.payload))),
+        map(() => new actions.Success())
     )
 
     @Effect()
     public update$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Update>(actions.UPDATE),
-        switchMap(data => Observable.fromPromise(this.listingService.update(data.id, data.changes))
+        switchMap(data => Observable.fromPromise(this.amenityService.update(data.id, data.changes))
         ),
         map(() => new actions.Success())
     )
@@ -64,14 +47,14 @@ export class ListingEffects {
     @Effect()
     public delete$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Delete>(actions.DELETE),
-        switchMap(data => Observable.fromPromise(this.listingService.delete(data.id))
+        switchMap(data => Observable.fromPromise(this.amenityService.delete(data.id))
         ),
         map(() => new actions.Success())
     )
 
     constructor(
         private actions$: Actions,
-        private listingService: ListingService
+        private amenityService: AmenityService
     ) {
     }
 }

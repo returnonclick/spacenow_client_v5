@@ -1,5 +1,6 @@
-import { Component, Input,Output, EventEmitter, AfterViewInit, OnInit, OnChanges, ViewChild, ComponentFactoryResolver, Type } from '@angular/core'
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, ViewChild, ComponentFactoryResolver, Type } from '@angular/core'
 import { SNPriceDirective } from './price.directive';
+import { Price } from '@shared/models/space'
 
 import {
     HourlyComponent,
@@ -15,10 +16,12 @@ import {
   styleUrls: ['./price.component.scss']
 })
 
-export class PriceComponent implements OnInit, OnChanges, AfterViewInit {
+export class PriceComponent implements OnInit, OnChanges {
 
     @Input() unit: string
-    // @Output() price = new EventEmitter<Monthly>();
+    @Output() price = new EventEmitter<Price>();
+    @Output() priceValid = new EventEmitter<boolean>();
+    @Input() model: any
 
     @ViewChild(SNPriceDirective) snPriceHost: SNPriceDirective;
     
@@ -35,10 +38,6 @@ export class PriceComponent implements OnInit, OnChanges, AfterViewInit {
         this.loadComponent()
     }
 
-    ngAfterViewInit(){
-     
-    }
-
     ngOnChanges() {
         this.loadComponent()
     }
@@ -48,6 +47,13 @@ export class PriceComponent implements OnInit, OnChanges, AfterViewInit {
         let viewContainerRef = this.snPriceHost.viewContainerRef
         viewContainerRef.clear()
         let componentRef = viewContainerRef.createComponent(componentFactory)
+        componentRef.instance.price.subscribe(res => {
+            this.price.emit(res)
+        })
+        componentRef.instance.priceValid.subscribe(priceValid => {
+            this.priceValid.emit(priceValid)
+        })
+        componentRef.instance.inPrice = this.model
     }
 
 }

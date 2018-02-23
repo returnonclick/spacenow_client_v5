@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store'
 import { Listing } from '@shared/models/listing'
 
 export const QUERY      = '[Listing] query'
+export const QUERY_ONE  = '[Listing] query one'
 
 export const ADDED      = '[Listing] added'
 export const MODIFIED   = '[Listing] modified'
@@ -19,6 +20,11 @@ export const SELECT_LISTING = '[Listing] select-listing'
 export class Query implements Action {
     readonly type = QUERY
     constructor( ) { }
+}
+
+export class QueryOne implements Action {
+    readonly type = QUERY_ONE
+    constructor(public id: string ) { }
 }
 
 export class Added implements Action {
@@ -76,6 +82,7 @@ export class SelectListing implements Action {
 
 export type ListingActions = 
     | Query
+    | QueryOne
     | Added
     | Modified
     | Removed

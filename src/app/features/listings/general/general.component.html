@@ -9,90 +9,65 @@
       </mat-form-field>
     </div>
 
-    <!-- Pricing -->
-    <h2>Space Price</h2>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="30%" fxFlex.lt-md="100%">
-        <mat-form-field>
-          <mat-select id="mat-select-test" placeholder="Pricing System" name="unit" formControlName="unit" required>
-            <mat-option *ngFor="let unit of units" [value]="unit.value">
-              {{ unit.display }} 
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxFlex="60%" fxFlex.lt-md="100%">
-        <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
-        <!-- <sn-price [unit]="listingForm.controls.unit.value" -->
-        <!--   (price)=getPrice($event) -->
-        <!--    (priceValid)=getPriceValid($event) -->
-        <!--   ></sn-price> -->
-
-        <ng-container>
-          <sn-hourly-price *ngIf="listingForm.controls.unit.value === 'hourly'"
-            (price)=getPrice($event)
-            (priceValid)=getPriceValid($event)>
-          </sn-hourly-price>
-          <sn-daily-price *ngIf="listingForm.controls.unit.value === 'daily'"
-            (price)=getPrice($event)
-            (priceValid)=getPriceValid($event)>
-          </sn-daily-price>
-          <sn-weekly-price *ngIf="listingForm.controls.unit.value === 'weekly'"
-            (price)=getPrice($event)
-            (priceValid)=getPriceValid($event)>
-          </sn-weekly-price>
-          <sn-monthly-price *ngIf="listingForm.controls.unit.value === 'monthly'"
-            (price)=getPrice($event)
-            (priceValid)=getPriceValid($event)>
-          </sn-monthly-price>
-        </ng-container>
-      </div>
-    </div>
-
-    <!-- Categories section -->
-    <!-- <mat-step> -->
-      <!-- <ng-template matStepLabel>Categories</ng-template> -->
+  <!-- Pricing -->
+  <h2>Space Price</h2>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+    <div fxFlex="30%" fxFlex.lt-md="100%">
       <mat-form-field>
-        <mat-select placeholder="Category" name="category" formControlName="categoryId" required>
-          <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
-            {{ category.name }} 
+        <mat-select placeholder="Pricing System" name="priceUnit" formControlName="priceUnit" required>
+          <mat-option *ngFor="let unit of priceUnits" [value]="unit.value">
+            {{ unit.display }} 
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <!-- <div>
-        <button mat-button matStepperPrevious type="button">Back</button>
-        <button mat-button matStepperNext type="button">Next</button>
-      </div> -->
-    <!-- </mat-step> -->
+    </div>
+    <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
+    <div fxFlex="60%" fxFlex.lt-md="100%" *ngIf="listingForm.controls.priceUnit.value">
+      <sn-price [unit]="listingForm.controls.priceUnit.value" 
+                (price)="getPrice($event)" 
+                (priceValid)="getPriceValid($event)"
+                [model]="listing.price">
+      </sn-price>
+    </div>
+  </div>
+
+    <!-- Categories section -->
+    <h2>Select Category</h2>
+    <mat-form-field>
+      <mat-select placeholder="Category" name="category" formControlName="categoryId" required (change)="loadCategory()">
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select> 
+    </mat-form-field>
 
 
     <!-- Amenities -->
-    <h2>Select amenities</h2>
+    <h2>Select Amenities</h2>
     <!-- Ref. https://stackoverflow.com/questions/46749251/ -->
+    <h4 *ngIf="!categoryAmenities">Please select a Category</h4>
     <ng-container formArrayName="amenities">
-      <div *ngFor="let amenity of amenities; let i = index" >
+      <div *ngFor="let amenity of categoryAmenities; let i = index">
          <mat-checkbox class="checkboxk-list" 
-           [value]="amenity.id"
-           [formControlName]="i">
+           [formControlName]="i"
+           [value]="amenity.id">
            {{amenity.name}}
          </mat-checkbox>
       </div>
     </ng-container>
 
     <!-- Space specification -->
-    <!-- <h2>Space Specifications</h2>
+    <h2>Space Specifications</h2>
+    <h4 *ngIf="!categorySpecs">Please select a Category</h4>
     <div flexLayout="row" fxLayoutAlign="space-between start">
-      <div fxFlex="49%">
-        <mat-form-field class="input-container-full">
-          <input matInput placeholder="Capacity" formControlName="capacity" required>
-        </mat-form-field>
-      </div>
-      <div fxFlex="49%">
-        <mat-form-field class="input-container-full">
-          <input matInput placeholder="Size (in sqm)" formControlName="size" required>
-        </mat-form-field>
-      </div>
-    </div> -->
+      <ng-container formGroupName="specifications">
+        <div fxFlex="49%" *ngFor="let spec of categorySpecs">
+          <mat-form-field class="input-container-full">
+            <input matInput type="number" placeholder="{{spec.name}}" formControlName="{{spec.slug}}" required>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </div>
     
     <!-- Address -->
     <h2>List your space address</h2>
@@ -182,12 +157,11 @@
     <!-- Upload images -->
     <h2>Upload your photos</h2>
     <image-upload></image-upload>
-
+    
     <!-- Booking system -->
     <h2>Booking system</h2>
-    <div id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start">
+    <div id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" formGroupName="booking">
       <div id="booking-general-container" fxFlex="40%">
-        <!-- <h3>General</h3> -->
         <div fxLayout="column" >
           <div fxLayout="row" fxLayoutAlign="space-between start">
             <mat-form-field fxFlex="49%">
@@ -206,21 +180,21 @@
             </mat-form-field>
           </div>
           <div >
-            <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)">Open 24/7</mat-checkbox>
+            <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
           </div>
         </div>
       </div>
 
       <div id="opening-time-container" fxFlex="58%">
         <!-- <h3>Opening time</h3> -->
-        <div *ngIf="!listing.booking.isOpen247">
+        <div *ngIf="!listingForm.controls.booking.value.isOpen247">
           <mat-form-field>
             <mat-select placeholder="Opening time" 
               (selectionChange)="filterClosingHours($event)"
               name="opening-time" 
               formControlName="openingTime" required>
               <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
-                {{ openingHour.value }} 
+                {{ openingHour.value }}  {{listingForm.controls.booking.value.isOpen247.value}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -276,7 +250,6 @@
         </div>
       </div>
     </div>
-
     <!-- Link other spaces -->
     <!-- <h2>Do you want to link any other spaces?</h2> -->
     <!-- <span>You can link other spaces to the one account, click on the related spaces below</span> -->
@@ -309,7 +282,6 @@
         </textarea>
       </mat-form-field>
     </div>
-
 
     <!-- Form Action -->
     <div>

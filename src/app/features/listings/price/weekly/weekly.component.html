@@ -8,7 +8,7 @@
         <input matInput type="number" placeholder="Price per month" formControlName="month" (input)="sendPrice()">
       </mat-form-field>
 
-      <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives</mat-checkbox>
+      <mat-checkbox type="checkbox" formControlName="incentives" (change)="sendPrice()">Add term incentives</mat-checkbox>
     </div>
     <div fxFlex="45%" fxFlex.lt-md="100%">
       <mat-form-field>

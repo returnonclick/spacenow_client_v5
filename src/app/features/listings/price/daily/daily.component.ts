@@ -19,8 +19,8 @@ export class DailyComponent {
 
   @Output() price = new EventEmitter<Daily>();
   @Output() priceValid = new EventEmitter<boolean>();
+  @Input() inPrice: Daily
 
-  daily: Daily = new Daily
   priceForm: FormGroup
 
   terms = [
@@ -35,36 +35,36 @@ export class DailyComponent {
   ) {}
 
   sendPrice() {
-    console.log(this.priceForm)
     this.priceForm.updateValueAndValidity()
-    this.daily = this.priceForm.value
+    this.inPrice = this.priceForm.value
     // Send price values
     this.price.emit(
-       this.daily
+       this.inPrice
     )
     // Send form status for validation
     this.priceValid.emit(
       this.priceForm.valid
     )
-    console.log(this.priceForm.valid)
   }
 
   sendPriceValid() {
-    console.log(this.priceForm.valid)
     this.priceValid.emit(this.priceForm.valid)
   }
 
   ngOnInit() {
-    // Initialize
-    this.daily.incentives = false
+    // Initialize when new price
+    if (typeof this.inPrice === 'undefined') {
+      this.inPrice = new Daily
+      this.inPrice.incentives = false
+    }
 
     this.priceForm = this._fb.group({
-      price:              [this.daily.price],
-      minimumTerm:        [this.daily.minimumTerm],
-      incentives:         [this.daily.incentives],
-      week:               [this.daily.week]
+      price:              [this.inPrice.price],
+      minimumTerm:        [this.inPrice.minimumTerm],
+      incentives:         [this.inPrice.incentives],
+      week:               [this.inPrice.week]
     })
-
+    this.sendPrice()
   }
 
 }

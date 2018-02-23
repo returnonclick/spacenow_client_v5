@@ -11,12 +11,18 @@ export class Space extends Object{
     rules:        string
     tags:         string[]
     images:       ImageData[]
-    price:        Price[]
-    unit:         string
+    price:        {
+      hourly:     Hourly,
+      daily:      Daily,
+      weekly:     Weekly,
+      monthly:    Monthly,
+    }
+    priceUnit:    string
     categoryId:   string
     amenityIds:   string[]
     isApproved:   boolean
     address:      Address = new Address()
+    specifications:  Object[]
     // availability: BookingSlot[]
     booking: Booking = new Booking()
 
@@ -33,14 +39,11 @@ export class Space extends Object{
         this.rules       = model.rules || ''
         this.tags        = model.tags || []
         this.images      = model.images || []
-
-        switch(model.unit) {
-          case 'Hourly':  this.price.push(new Hourly(model))
-          case 'Daily':   this.price.push(new Daily(model))
-          case 'Weekly':  this.price.push(new Weekly(model))
-          case 'monthly': this.price.push(new Monthly(model))
-        }
-        this.unit        = model.unit || 'daily'
+        this.price.hourly = new Hourly(model.price)
+        this.price.daily = new Daily(model.price)
+        this.price.weekly = new Weekly(model.price)
+        this.price.monthly = new Monthly(model.price)
+        this.priceUnit   = model.priceUnit || 'daily'
         this.categoryId  = model.categoryId || null
         this.amenityIds  = model.amenityIds || []
         this.isApproved  = model.isApproved || false
@@ -54,7 +57,6 @@ export class Space extends Object{
     price:       number
     minimumTerm: number
     incentives:  boolean
-    unit: string
 
     constructor( model: any = null ) {
 
@@ -64,7 +66,6 @@ export class Space extends Object{
         this.price        = model.price || 0
         this.minimumTerm  = model.minimumTerm || 0
         this.incentives   = model.incentives || false
-        this.unit = model.unit || 'daily'
       }
     }
   }

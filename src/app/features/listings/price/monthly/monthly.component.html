@@ -5,10 +5,13 @@
         <input matInput type="number" placeholder="Price per month" formControlName="price" (input)="sendPrice()" required>
       </mat-form-field>
       <mat-form-field *ngIf="priceForm.controls.incentives.value">
+        <input matInput type="number" placeholder="Price per six months" formControlName="sixMonths" (input)="sendPrice()">
+      </mat-form-field>
+      <mat-form-field *ngIf="priceForm.controls.incentives.value">
         <input matInput type="number" placeholder="Price per year" formControlName="year" (input)="sendPrice()">
       </mat-form-field>
 
-      <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives</mat-checkbox>
+      <mat-checkbox type="checkbox" formControlName="incentives" (change)="sendPrice()">Add term incentives</mat-checkbox>
     </div>
     <div fxFlex="45%" fxFlex.lt-md="100%">
       <mat-form-field>

@@ -9,7 +9,8 @@ const routes: Routes = [
     path: '', component: ListingsComponent,
 
     children: [
-      { path: '', component: GeneralComponent }
+      { path: '', component: GeneralComponent },
+      { path: ':id', component: GeneralComponent }
     ]
     
   }

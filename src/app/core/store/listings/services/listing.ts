@@ -6,6 +6,7 @@ import { Listing } from '@shared/models/listing';
 export class ListingService {
 
   ref: string = `listings`
+  // ref: string = `listings-camila`
   // ref: string = `tt-listings`
 
   constructor( public afs: AngularFirestore ) {
@@ -13,6 +14,10 @@ export class ListingService {
 
   public readAll() {
     return this.afs.collection<Listing>(this.ref).stateChanges()
+  }
+
+  public readOne(id: string) {
+    return this.afs.collection<Listing>(this.ref, ref => ref.where(`id`, '==', `${id}`)).stateChanges()
   }
 
   public update(id: string, listing: Partial<Listing>) {

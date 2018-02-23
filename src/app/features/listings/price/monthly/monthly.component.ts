@@ -19,8 +19,8 @@ export class MonthlyComponent {
 
   @Output() price = new EventEmitter<Monthly>();
   @Output() priceValid = new EventEmitter<boolean>();
+  @Input() inPrice: Monthly
 
-  monthly: Monthly = new Monthly
   priceForm: FormGroup
 
   terms = [
@@ -37,10 +37,10 @@ export class MonthlyComponent {
   sendPrice() {
     // console.log(this.priceForm.value)
     this.priceForm.updateValueAndValidity()
-    this.monthly = this.priceForm.value
+    this.inPrice = this.priceForm.value
     // Send price values
     this.price.emit(
-       this.monthly
+       this.inPrice
     )
     // Send form status for validation
     this.priceValid.emit(
@@ -49,17 +49,20 @@ export class MonthlyComponent {
   }
 
   ngOnInit() {
-    // Initialize
-    this.monthly.incentives = false
+    // Initialize when new price
+    if (typeof this.inPrice === 'undefined') {
+      this.inPrice = new Monthly
+      this.inPrice.incentives = false
+    }
 
     this.priceForm = this._fb.group({
-      price:              [this.monthly.price],
-      minimumTerm:        [this.monthly.minimumTerm],
-      incentives:         [this.monthly.incentives],
-      sixMonths:          [this.monthly.sixMonths],
-      year:               [this.monthly.year]
+      price:              [this.inPrice.price],
+      minimumTerm:        [this.inPrice.minimumTerm],
+      incentives:         [this.inPrice.incentives],
+      sixMonths:          [this.inPrice.sixMonths],
+      year:               [this.inPrice.year]
     })
-
+    this.sendPrice()
   }
 
 }
