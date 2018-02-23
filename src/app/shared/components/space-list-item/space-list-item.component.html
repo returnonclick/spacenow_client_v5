@@ -1,25 +1,27 @@
-<div class="space-item" (click)="handleClick('view')">
-  <div class="space-image">
-    <img class="featured-image" [src]="multipleImages ? space.images[imageIndex] : space.imageUrl"/>
-    <button mat-icon-button class="over-image space-is-favorite" type="button" (click)="handleClick('favorite'); $event.stopPropagation()">
-      <mat-icon>favorite{{ space.isFavorite ? '' : '_border' }}</mat-icon>
-    </button>
-    <button mat-icon-button class="over-image space-options" type="button" *ngIf="showOptions" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
-      <mat-icon>more_horiz</mat-icon>
-    </button>
-    <button mat-icon-button class="over-image prev-image" type="button" *ngIf="multipleImages" (click)="prevImage(); $event.stopPropagation()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <button mat-icon-button class="over-image next-image" type="button" *ngIf="multipleImages" (click)="nextImage(); $event.stopPropagation()">
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
+<div class="space-container">
+  <div class="space-item" (click)="handleClick('view')">
+    <div class="space-image">
+      <img class="featured-image" [src]="multipleImages ? space.images[imageIndex] : space.imageUrl"/>
+      <button mat-icon-button class="over-image space-is-favorite" type="button" (click)="handleClick('favorite'); $event.stopPropagation()">
+        <mat-icon>favorite{{ space.isFavorite ? '' : '_border' }}</mat-icon>
+      </button>
+      <button mat-icon-button class="over-image space-options" type="button" *ngIf="showOptions" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <button mat-icon-button class="over-image prev-image" type="button" *ngIf="multipleImages" (click)="prevImage(); $event.stopPropagation()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button mat-icon-button class="over-image next-image" type="button" *ngIf="multipleImages" (click)="nextImage(); $event.stopPropagation()">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    <h4 class="space-name">{{ space.name }}</h4>
+    <span class="space-price">From <span class="price">{{ space.price }}</span> a {{ space.priceUnit }}</span>
+    <small class="space-desc">{{ space.details }}</small>
   </div>
-  <h4 class="space-name">{{ space.name }}</h4>
-  <span class="space-price">From <span class="price">{{ space.price }}</span> a {{ space.priceUnit }}</span>
-  <small class="space-desc">{{ space.details }}</small>
+  <mat-menu #menu>
+    <button mat-menu-item type="button" (click)="handleClick('edit')">Edit</button>
+    <button mat-menu-item type="button" (click)="handleClick('delete')">Delete</button>
+    <button mat-menu-item type="button" (click)="handleClick('duplicate')">Duplicate</button>
+  </mat-menu>
 </div>
-<mat-menu #menu>
-  <button mat-menu-item type="button" (click)="handleClick('edit')">Edit</button>
-  <button mat-menu-item type="button" (click)="handleClick('delete')">Delete</button>
-  <button mat-menu-item type="button" (click)="handleClick('duplicate')">Duplicate</button>
-</mat-menu>

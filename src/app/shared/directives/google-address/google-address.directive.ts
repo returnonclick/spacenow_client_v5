@@ -32,7 +32,7 @@ export class GoogleAddressDirective {
           return
 
         let address       = new GoogleAddress()
-        address.full_name = place.name
+        address.full_name = place.formatted_address
         let location      = place.geometry.location
         address.latitude  = location.lat()
         address.longitude = location.lng()

@@ -25,6 +25,10 @@ export class SearchService {
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
+      address: {
+        lat: (Math.random() - 0.5) / 100.0,
+        lng: (Math.random() - 0.5) / 100.0,
+      },
     },
     {
       id: 'DSnaaofV7ai42AFIXiLp',
@@ -33,6 +37,10 @@ export class SearchService {
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
+      address: {
+        lat: (Math.random() - 0.5) / 100.0,
+        lng: (Math.random() - 0.5) / 100.0,
+      },
     },
     {
       id: 'CbqprxXGgdg4Nnib0U5A',
@@ -41,6 +49,10 @@ export class SearchService {
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
+      address: {
+        lat: (Math.random() - 0.5) / 100.0,
+        lng: (Math.random() - 0.5) / 100.0,
+      },
     },
     {
       id: 'IOHN8NV2O13ZYiedoxkk',
@@ -54,6 +66,10 @@ export class SearchService {
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
+      address: {
+        lat: (Math.random() - 0.5) / 100.0,
+        lng: (Math.random() - 0.5) / 100.0,
+      },
     },
     {
       id: '06Eb1dBXlCUhdmHNPLzq',
@@ -62,6 +78,10 @@ export class SearchService {
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
+      address: {
+        lat: (Math.random() - 0.5) / 100.0,
+        lng: (Math.random() - 0.5) / 100.0,
+      },
     },
     {
       id: 'mV6SxkAoMr6JFkcW5Wle',
@@ -75,6 +95,10 @@ export class SearchService {
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
+      address: {
+        lat: (Math.random() - 0.5) / 100.0,
+        lng: (Math.random() - 0.5) / 100.0,
+      },
     },
     {
       id: 'e1tkzwW9BBVyqC3Bpvgr',
@@ -83,6 +107,10 @@ export class SearchService {
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
+      address: {
+        lat: (Math.random() - 0.5) / 100.0,
+        lng: (Math.random() - 0.5) / 100.0,
+      },
     },
   ]
 

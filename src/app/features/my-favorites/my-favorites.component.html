@@ -1,6 +1,4 @@
 <h3>My Favorites</h3>
 <div class="space-list">
-  <div class="space-container" *ngFor="let space of spaces">
-    <sn-space-list-item [space]="space" [multipleImages]="!!space.images"></sn-space-list-item>
-  </div>
+  <sn-space-list-item *ngFor="let space of spaces" [space]="space" [multipleImages]="!!space.images"></sn-space-list-item>
 </div>
