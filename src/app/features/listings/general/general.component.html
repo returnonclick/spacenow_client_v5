@@ -1,249 +1,292 @@
 
-<section>
+<div class="grid sections">
   <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+
     <!-- Title -->
-    <h2>Title of your space</h2>
-    <div fxLayout="row">
-      <mat-form-field fxFlex>
-        <input matInput placeholder="Name your space" formControlName="title" required>
-      </mat-form-field>
+    <div class="space-title">
+      <div class="title">
+        <h2>Title of your space</h2>
+      </div>
+      <div class="content">
+        <mat-form-field class="input-container-full">
+          <input matInput placeholder="Name your space" formControlName="title" required>
+        </mat-form-field>
+      </div>
     </div>
 
-  <!-- Pricing -->
-  <h2>Space Price</h2>
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-    <div fxFlex="30%" fxFlex.lt-md="100%">
-      <mat-form-field>
-        <mat-select placeholder="Pricing System" name="priceUnit" formControlName="priceUnit" required>
-          <mat-option *ngFor="let unit of priceUnits" [value]="unit.value">
-            {{ unit.display }} 
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <!-- Pricing -->
+    <div class="price">
+      <div class="title">
+        <h2>Space Price</h2>
+      </div>
+      <div class="content">
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+            <div fxFlex="40%" fxFlex.lt-md="100%">
+              <mat-form-field fxFlex="100%" >
+                <mat-select placeholder="Pricing System" name="priceUnit" formControlName="priceUnit" required>
+                  <mat-option *ngFor="let unit of priceUnits" [value]="unit.value">
+                    {{ unit.display }} 
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
+            <div fxFlex="60%" fxFlex.lt-md="100%" *ngIf="listingForm.controls.priceUnit.value">
+              <sn-price [unit]="listingForm.controls.priceUnit.value" 
+                        (price)="getPrice($event)" 
+                        (priceValid)="getPriceValid($event)"
+                        [model]="listing.price">
+              </sn-price>
+            </div>
+          </div>
+      </div>
     </div>
-    <!-- Load component according to the unit 'hourly', 'daily', 'weekly', 'monthly' -->
-    <div fxFlex="60%" fxFlex.lt-md="100%" *ngIf="listingForm.controls.priceUnit.value">
-      <sn-price [unit]="listingForm.controls.priceUnit.value" 
-                (price)="getPrice($event)" 
-                (priceValid)="getPriceValid($event)"
-                [model]="listing.price">
-      </sn-price>
+
+    <!-- Categories -->
+    <div class="category">
+      <div class="title">
+        <h2>Select Category</h2>
+      </div>
+      <div class="content">
+        <mat-radio-group flexLayout="column" class="items" formControlName="categoryId" required (change)="loadCategory(); validateAmenity()">
+          <mat-radio-button *ngFor="let category of categories$ | async" [value]="category.id" class="item">
+            {{ category.name }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
-  </div>
-
-    <!-- Categories section -->
-    <h2>Select Category</h2>
-    <mat-form-field>
-      <mat-select placeholder="Category" name="category" formControlName="categoryId" required (change)="loadCategory()">
-        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
-          {{ category.name }}
-        </mat-option>
-      </mat-select> 
-    </mat-form-field>
-
 
     <!-- Amenities -->
-    <h2>Select Amenities</h2>
-    <!-- Ref. https://stackoverflow.com/questions/46749251/ -->
-    <h4 *ngIf="!categoryAmenities">Please select a Category</h4>
-    <ng-container formArrayName="amenities">
-      <div *ngFor="let amenity of categoryAmenities; let i = index">
-         <mat-checkbox class="checkboxk-list" 
-           [formControlName]="i"
-           [value]="amenity.id">
-           {{amenity.name}}
-         </mat-checkbox>
+    <div class="amenity">
+      <div class="title">
+        <h2>Select Amenities</h2>
       </div>
-    </ng-container>
-
-    <!-- Space specification -->
-    <h2>Space Specifications</h2>
-    <h4 *ngIf="!categorySpecs">Please select a Category</h4>
-    <div flexLayout="row" fxLayoutAlign="space-between start">
-      <ng-container formGroupName="specifications">
-        <div fxFlex="49%" *ngFor="let spec of categorySpecs">
-          <mat-form-field class="input-container-full">
-            <input matInput type="number" placeholder="{{spec.name}}" formControlName="{{spec.slug}}" required>
-          </mat-form-field>
+      <!-- Ref. https://stackoverflow.com/questions/46749251/ -->
+      <div class="content">
+        <h4 *ngIf="!categoryAmenities">Please select a Category</h4>
+        <div formArrayName="amenities" class="items">
+          <div *ngFor="let amenity of categoryAmenities; let i = index" class="item">
+              <mat-checkbox 
+                (change)="validateAmenity()"
+                [formControlName]="i"
+                [value]="amenity.id">
+                {{amenity.name}}
+              </mat-checkbox>
+          </div>
         </div>
-      </ng-container>
+      </div>
+    </div>
+    
+    <!-- Space specification -->
+    <div class="specifications">
+      <div class="title">
+        <h2>Space Specifications</h2>
+      </div>
+      <div class="content">
+        <h4 *ngIf="!categorySpecs">Please select a Category</h4>
+          <div formGroupName="specifications" fxLayout="column">
+            <div *ngFor="let spec of categorySpecs">
+              <mat-form-field class="input-container-full">
+                <input matInput type="number" placeholder="{{spec.name}}" formControlName="{{spec.slug}}" required>
+              </mat-form-field>
+            </div>
+          </div>
+      </div>
     </div>
     
     <!-- Address -->
-    <h2>List your space address</h2>
-    <div id="address-search-container" >
-      <div fxFlex="100%" fxFlex.lt-md="100%">
-          <mat-form-field  class="input-container-full">
-            <input sn-google-address matInput (getAddress)="getAddressChange($event)" placeholder="Type to search address...">
-          </mat-form-field>
+    <div class="address">
+      <div class="title">
+        <h2>List your space address</h2>
       </div>
-    </div>
-    <div id="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start" formGroupName="address">
-      <div fxFlex="19%" fxFlex.lt-md="49%">
-          <mat-form-field  class="input-container-full">
-            <input matInput placeholder="Unit/block (optional)"
-              formControlName="unit_number">
-          </mat-form-field>
-      </div>
-      <div fxFlex="19%" fxFlex.lt-md="49%">
-          <mat-form-field  class="input-container-full">
-            <input matInput placeholder="Street number"
-              readonly
-              formControlName="street_number">
-          </mat-form-field>
-      </div>
-      <div fxFlex="60%" fxFlex.lt-md="100%">
-          <mat-form-field  class="input-container-full">
-            <input matInput placeholder="Street name"
-              readonly
-              formControlName="route">
-          </mat-form-field>
-      </div>
-      <div fxFlex="40%" fxFlex.lt-md="49%">
-          <mat-form-field class="input-container-full">
-            <input matInput placeholder="Suburb/district"
-              readonly
-              formControlName="locality">
-          </mat-form-field>
-      </div>
-      <div fxFlex="18%" fxFlex.lt-md="49%">
-          <mat-form-field class="input-container-full">
-            <input matInput placeholder="State/province"
-              readonly
-              formControlName="administrative_area_level_1">
-          </mat-form-field>
-      </div>
-      <div fxFlex="14%" fxFlex.lt-md="49%">
-          <mat-form-field class="input-container-full">
-            <input matInput placeholder="Postal code"
-              readonly
-              formControlName="postal_code">
-          </mat-form-field>
-      </div>
-      <div fxFlex="25%" fxFlex.lt-md="49%">
-          <mat-form-field class="input-container-full">
-            <input matInput placeholder="Country"
-              readonly
-              formControlName="country">
-          </mat-form-field>
-      </div>
-      <div>
-        <input type="hidden" formControlName="lat">
-        <input type="hidden" formControlName="lng">
-      </div>
-
-    </div>
-
-    <!-- Description -->
-    <h2>Describe your space</h2>
-      <mat-form-field class="input-container-full">
-        <textarea matInput placeholder="Space description"
-          required
-          matTextareaAutosize
-          matAutosizeMinRows="8"
-          matAustosizeMaxRows="8"
-          formControlName="description">
-        </textarea>
-      </mat-form-field>
-      <mat-form-field class="input-container-full">
-        <textarea matInput placeholder="Space rules"
-          matTextareaAutosize
-          matAutosizeMinRows="8"
-          matAustosizeMaxRows="8"
-          formControlName="rules">
-        </textarea>
-      </mat-form-field>
-
-    <!-- Upload images -->
-    <h2>Upload your photos</h2>
-    <image-upload></image-upload>
-    
-    <!-- Booking system -->
-    <h2>Booking system</h2>
-    <div id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" formGroupName="booking">
-      <div id="booking-general-container" fxFlex="40%">
-        <div fxLayout="column" >
-          <div fxLayout="row" fxLayoutAlign="space-between start">
-            <mat-form-field fxFlex="49%">
-              <mat-select placeholder="Booking Type" name="booking-type" formControlName="bookingType" required>
-                <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
-                  {{ bookingType }} 
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="49%">
-              <input matInput 
-                type="number"
-                placeholder="Lead time (days)" 
-                formControlName="leadTime" required>
+      <div class="content">
+        <div id="address-search-container">
+          <div fxFlex="100%" fxFlex.lt-md="100%">
+            <mat-form-field class="input-container-full">
+              <input sn-google-address matInput (getAddress)="getAddressChange($event)" placeholder="Type to search address...">
             </mat-form-field>
           </div>
-          <div >
-            <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
+        </div> 
+        <div id="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start" formGroupName="address">
+          <div fxFlex="19%" fxFlex.lt-md="49%">
+              <mat-form-field  class="input-container-full">
+                <input matInput placeholder="Unit/block (optional)"
+                  formControlName="unit_number">
+              </mat-form-field>
+          </div>
+          <div fxFlex="19%" fxFlex.lt-md="49%">
+              <mat-form-field  class="input-container-full">
+                <input matInput placeholder="Street number"
+                  readonly
+                  formControlName="street_number">
+              </mat-form-field>
+          </div>
+          <div fxFlex="60%" fxFlex.lt-md="100%">
+              <mat-form-field  class="input-container-full">
+                <input matInput placeholder="Street name"
+                  readonly
+                  formControlName="route">
+              </mat-form-field>
+          </div>
+          <div fxFlex="40%" fxFlex.lt-md="49%">
+              <mat-form-field class="input-container-full">
+                <input matInput placeholder="Suburb/district"
+                  readonly
+                  formControlName="locality">
+              </mat-form-field>
+          </div>
+          <div fxFlex="18%" fxFlex.lt-md="49%">
+              <mat-form-field class="input-container-full">
+                <input matInput placeholder="State/province"
+                  readonly
+                  formControlName="administrative_area_level_1">
+              </mat-form-field>
+          </div>
+          <div fxFlex="14%" fxFlex.lt-md="49%">
+              <mat-form-field class="input-container-full">
+                <input matInput placeholder="Postal code"
+                  readonly
+                  formControlName="postal_code">
+              </mat-form-field>
+          </div>
+          <div fxFlex="25%" fxFlex.lt-md="49%">
+              <mat-form-field class="input-container-full">
+                <input matInput placeholder="Country"
+                  readonly
+                  formControlName="country">
+              </mat-form-field>
+          </div>
+          <div>
+            <input type="hidden" formControlName="lat">
+            <input type="hidden" formControlName="lng">
           </div>
         </div>
       </div>
+    </div>
 
-      <div id="opening-time-container" fxFlex="58%">
-        <!-- <h3>Opening time</h3> -->
-        <div *ngIf="!listingForm.controls.booking.value.isOpen247">
-          <mat-form-field>
-            <mat-select placeholder="Opening time" 
-              (selectionChange)="filterClosingHours($event)"
-              name="opening-time" 
-              formControlName="openingTime" required>
-              <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
-                {{ openingHour.value }}  {{listingForm.controls.booking.value.isOpen247.value}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select placeholder="Closing time" name="closing-time" formControlName="closingTime" required>
-              <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key">
-                {{ closingHour.value }} 
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+    <!-- Description -->
+    <div class="description">
+      <div class="title">
+        <h2>Describe your space</h2>
+      </div>
+      <div class="content">
+        <mat-form-field class="input-container-full">
+          <textarea matInput placeholder="Space description"
+            required
+            matTextareaAutosize
+            matAutosizeMinRows="3" 
+            matAutosizeMaxRows="8"
+            formControlName="description">
+          </textarea>
+        </mat-form-field>
+        <mat-form-field class="input-container-full">
+          <textarea matInput placeholder="Space rules"
+            matTextareaAutosize
+            matAutosizeMinRows="3" 
+            matAutosizeMaxRows="8" 
+            formControlName="rules">
+          </textarea>
+        </mat-form-field>
+      </div>
+    </div>
 
-          <div id="exception-container">
-            <!-- <span>Exception</span> -->
-            <div id="week-day-container">
-              <h3>Opening days</h3>
-              <div *ngFor="let weekday of weekdays">
-                <mat-slide-toggle (change)="onWeekDayChange( weekday.key, $event)">{{weekday.value}}</mat-slide-toggle>
-              </div>
-              <div>{{closingWeekDays | json}}</div>
+    <!-- Upload images -->
+    <div>
+      <h2>Upload your photos</h2>
+      <image-upload></image-upload>
+    </div>
+    
+    <!-- Booking system -->
+    <div class="booking">
+      <div class="title">
+        <h2>Booking system</h2>
+      </div>
+      <div class="content" id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between" formGroupName="booking">
+        <div id="booking-general-container" fxFlex="49%">
+          <div fxLayout="column" >
+            <div fxLayout="row" fxLayoutAlign="space-between start">
+              <mat-form-field fxFlex="49%">
+                <mat-select placeholder="Booking Type" name="booking-type" formControlName="bookingType" required>
+                  <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
+                    {{ bookingType }} 
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="49%">
+                <input matInput 
+                  type="number"
+                  placeholder="Lead time (days)" 
+                  formControlName="leadTime" required>
+              </mat-form-field>
             </div>
-            <div id="exception-day-container">
-              <h3>Exception days</h3> 
-              <div id="date-picker-container">
-                <mat-form-field class="booking-exception">
-                  <input matInput 
-                    id="date-picker-input"
-                    readonly
-                    placeholder="Choose a date"
-                    [min]="minDate" 
-                    [max]="maxDate" 
-                    [matDatepicker]="picker" 
-                    (dateChange)="addExceptionDate('change', $event)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <span>{{picker.value}}</span>
+            <div >
+              <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
+            </div>
+          </div>
+        </div>
+      
+        <div id="opening-time-container" fxFlex="49%">
+          <!-- <h3>Opening time</h3> -->
+          <div *ngIf="!listingForm.controls.booking.value.isOpen247" fxLayout="column" >
+            <div >
+              <mat-form-field fxFlex="49%">
+                <mat-select placeholder="Opening time" 
+                  (selectionChange)="filterClosingHours($event)"
+                  name="opening-time" 
+                  formControlName="openingTime" required>
+                  <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
+                    {{ openingHour.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field fxFlex="49%">
+                <mat-select placeholder="Closing time" name="closing-time" formControlName="closingTime" required>
+                  <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key">
+                    {{ closingHour.value }} 
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div id="exception-container">
+              <!-- <span>Exception</span> -->
+              <div id="week-day-container" fxFlex="49%">
+                <h3>Opening</h3>
+                <div *ngFor="let weekday of weekdays">
+                  <mat-slide-toggle (change)="onWeekDayChange( weekday.key, $event)">{{weekday.value}}</mat-slide-toggle>
+                </div>
+                <!-- <div>{{closingWeekDays | json}}</div> -->
               </div>
-              <div *ngIf="exceptionDays.length > 0">
-                <span>Current exception dates</span>
-                <ul>
-                  <li *ngFor="let date of exceptionDays">
-                    {{date | date: 'EEEE, d/M/yyyy'}}
-                    <button mat-icon-button
-                      (click)="deleteExceptionDay(date)">
-                      <mat-icon>highlight_off</mat-icon>
-                    </button>
-                  </li>
-                  <div>{{exceptionDays | json}}</div>
-                </ul>
+              <div id="exception-day-container" fxFlex="49%">
+                <h3>Exceptions</h3> 
+                <div id="date-picker-container">
+                  <mat-form-field class="booking-exception">
+                    <input matInput 
+                      id="date-picker-input"
+                      readonly
+                      placeholder="Choose a date"
+                      [min]="minDate" 
+                      [max]="maxDate" 
+                      [matDatepicker]="picker" 
+                      (dateChange)="addExceptionDate('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <span>{{picker.value}}</span>
+                </div>
+                <div *ngIf="exceptionDays.length > 0">
+                  <span>Current exception dates</span>
+                  <ul>
+                    <li *ngFor="let date of exceptionDays">
+                      {{date | date: 'EEEE, d/M/yyyy'}}
+                      <button mat-icon-button
+                        (click)="deleteExceptionDay(date)">
+                        <mat-icon>highlight_off</mat-icon>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -262,39 +305,43 @@
     <!-- </div> -->
 
     <!-- Accept T&C -->
-    <h2>Accept spacenow t+c</h2>
-    <div >
-      <mat-checkbox class="checkbox-list" (change)="onTCChange($event)" #tc>I accept the hosts terms</mat-checkbox>
-      <mat-checkbox class="checkbox-list" (change)="onHTChange($event)" #ht>I accept spacenow t+c</mat-checkbox>
-      <mat-error 
-        id="tc-notification"
-        align="start" 
-        *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error>
+    <div class="terms">
+      <div class="title">
+        <h2>Accept spacenow t+c</h2>
+      </div>
+      <div class="content">
+        <div fxLayout="column">
+          <mat-checkbox class="checkbox-list" (change)="onTCChange($event)" #tc>I accept the hosts terms</mat-checkbox>
+          <mat-checkbox class="checkbox-list" (change)="onHTChange($event)" #ht>I accept spacenow t+c</mat-checkbox>
+          <mat-error 
+            id="tc-notification"
+            align="start" 
+            *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field class="input-container-full">
+            <textarea matInput placeholder="space t+c"
+              matTextareaAutosize
+              matAutosizeMinRows="15"
+              matAustosizeMaxRows="15"
+              readonly
+              > This is the spacenow T&C
+            </textarea>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
-    <div>
-      <mat-form-field class="input-container-full">
-        <textarea matInput placeholder="space t+c"
-          matTextareaAutosize
-          matAutosizeMinRows="15"
-          matAustosizeMaxRows="15"
-          readonly
-          > This is the spacenow T&C
-        </textarea>
-      </mat-form-field>
+    <div class="actions">
+      <div class="save">
+        <button mat-raised-button type="submit" class="input-container-full" 
+                [disabled]="listingForm.invalid || !isHTChecked || !isTCChecked || !priceValid || !amenitiesValid"> 
+                Save 
+        </button>
+      </div>
+      <div class="cancel">
+        <button mat-raised-button [routerLink]="home" type="button" class="input-container-full">Cancel</button> 
+      </div>
     </div>
-
-    <!-- Form Action -->
-    <div>
-      <button mat-raised-button type="button" [routerLink]="['/home']">Cancel</button>
-      <button mat-raised-button type="submit"
-              [disabled]="listingForm.invalid || !priceValid || !isTCChecked || !isHTChecked">
-              Submit
-      </button>
-      <!-- <button mat-raised-button type="submit"> -->
-      <!--         Submit -->
-      <!-- </button> -->
-    </div>
-
   </form>
 
-</section>
+</div>

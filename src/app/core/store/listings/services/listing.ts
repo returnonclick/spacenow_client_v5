@@ -5,8 +5,8 @@ import { Listing } from '@shared/models/listing';
 @Injectable()
 export class ListingService {
 
-  ref: string = `listings`
-  // ref: string = `listings-camila`
+  // ref: string = `listings`
+  ref: string = `listings-camila`
   // ref: string = `tt-listings`
 
   constructor( public afs: AngularFirestore ) {
@@ -27,10 +27,10 @@ export class ListingService {
 
   public create(listing: Listing) {
     var data = Object.assign({}, listing)
-    const cRef = this.afs.firestore.collection(this.ref).doc()
-    data.id = cRef.id
+    // const cRef = this.afs.firestore.collection(this.ref).doc()
+    data.id = listing.id
     // return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
-    return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
+    return this.afs.collection<Listing>(this.ref).doc(listing.id).set(data)
       .then(() =>{
           console.log("new document ID: " + data.id)
           return data.id 

@@ -53,6 +53,7 @@ export class WeeklyComponent {
     if (typeof this.inPrice === 'undefined') {
       this.inPrice = new Weekly
       this.inPrice.incentives = false
+      this.inPrice.minimumTerm = 1
     }
 
     this.priceForm = this._fb.group({
@@ -61,7 +62,6 @@ export class WeeklyComponent {
       incentives:         [this.inPrice.incentives],
       month:              [this.inPrice.month]
     })
-    this.sendPrice()
   }
 
 }

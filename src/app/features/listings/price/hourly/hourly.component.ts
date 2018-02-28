@@ -53,6 +53,7 @@ export class HourlyComponent {
     if (typeof this.inPrice === 'undefined') {
       this.inPrice = new Hourly
       this.inPrice.incentives = false
+      this.inPrice.minimumTerm = 1
     }
 
     this.priceForm = this._fb.group({
@@ -62,7 +63,6 @@ export class HourlyComponent {
       halfDay:            [this.inPrice.halfDay],
       day:                [this.inPrice.day]
     })
-    this.sendPrice()
   }
 
 }

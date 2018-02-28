@@ -53,6 +53,7 @@ export class MonthlyComponent {
     if (typeof this.inPrice === 'undefined') {
       this.inPrice = new Monthly
       this.inPrice.incentives = false
+      this.inPrice.minimumTerm = 1
     }
 
     this.priceForm = this._fb.group({
@@ -62,7 +63,6 @@ export class MonthlyComponent {
       sixMonths:          [this.inPrice.sixMonths],
       year:               [this.inPrice.year]
     })
-    this.sendPrice()
   }
 
 }

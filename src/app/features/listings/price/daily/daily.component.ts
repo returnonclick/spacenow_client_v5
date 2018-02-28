@@ -24,10 +24,10 @@ export class DailyComponent {
   priceForm: FormGroup
 
   terms = [
-    { value: '1', display: '1 day'},
-    { value: '2', display: '2 days'},
-    { value: '3', display: '3 days'},
-    { value: '4', display: '4 days'}
+    { value: 1, display: '1 day'},
+    { value: 2, display: '2 days'},
+    { value: 3, display: '3 days'},
+    { value: 4, display: '4 days'}
   ]
 
   constructor(
@@ -56,6 +56,7 @@ export class DailyComponent {
     if (typeof this.inPrice === 'undefined') {
       this.inPrice = new Daily
       this.inPrice.incentives = false
+      this.inPrice.minimumTerm = 1
     }
 
     this.priceForm = this._fb.group({
@@ -64,7 +65,6 @@ export class DailyComponent {
       incentives:         [this.inPrice.incentives],
       week:               [this.inPrice.week]
     })
-    this.sendPrice()
   }
 
 }

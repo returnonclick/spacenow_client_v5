@@ -47,8 +47,10 @@ export class GeneralComponent {
   priceValid: boolean = false
   isTCChecked: boolean = false // Terms and Conditions flag
   isHTChecked: boolean = false // Host Terms flag
+  section: number = 1
+  amenitiesValid: boolean = false
 
-  listingID: string // To edit new (?)
+  // listingID: string // To edit new (?)
   exceptionDays: Date[] = new Array()
 
   priceUnits = [
@@ -191,29 +193,34 @@ export class GeneralComponent {
       this._store.dispatch(new listingActions.QueryOne(this.listingId))
     })
 
-    this._store.select(fromRoot.selectCurrentListingId).subscribe(id =>{
-      if(id) {
-        this.listingID = id
-      }
-    })
-
   }
 
   ngOnInit() {
-    if (this.listingId) { 
+    if (this.listingId) {
+      // Update listing 
       this.listing$.subscribe(res => {
         if(res) {
           this.listing = res
           this.editCategory = this.listing.categoryId
-          this.loadListingForm()
-          this.loadCategory()
+          this.priceValid = true         // Update means price valid from previous save
+          this.amenitiesValid = true     // Update means amenities valid from previous save (can run validateAmenity())
+          this.loadListingForm()         // Load the form when the listing is ready
+          this.loadCategory()            // Load the amenities and specs acording to category
+          this.filterClosingHours({value: this.listing.booking.openingTime})    // Initialize closingTime with opening incoming value
         }
       })
     } else {
+      // Create new listing
       this.listing = new Listing
+      // Create random listing id
+      var m = 21, s = '', r = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for (var i=0; i < m; i++) { s += r.charAt(Math.floor(Math.random()*r.length)); }
+      this.listing.id = s                   // Random listing id
       this.listing.priceUnit = 'daily'
       this.listing.booking.isOpen247 = false
-      // CREATE NEW LISTING AND QUERY IT TO UPDATE
+      this.listing.booking.openingTime = 8   // Initialize openingTime in 8:00AM
+      this.filterClosingHours({value: 8})    // Initialize closingTime with opening 8:00AM
+      this.listing.booking.closingTime = 17  // Initialize closing hours in 8:00AM
       this._store.dispatch(new listingActions.Create( this.listing ))
       this.loadListingForm()
     }
@@ -222,8 +229,8 @@ export class GeneralComponent {
   loadListingForm() {
     this.listingForm = this._fb.group({
       title:              [this.listing.title, Validators.required],
-      description:        [this.listing.description],
-      rules:              [this.listing.rules, Validators.required],
+      description:        [this.listing.description, Validators.required],
+      rules:              [this.listing.rules],
       priceUnit:          [this.listing.priceUnit, Validators.required],
 
       categoryId:         [this.listing.categoryId, Validators.required],
@@ -247,7 +254,7 @@ export class GeneralComponent {
         leadTime: [this.listing.booking.leadTime, Validators.required],
         isOpen247: [this.listing.booking.isOpen247, Validators.required],
         openingTime: [this.listing.booking.openingTime, Validators.required],
-        closingTime: [this.listing.booking.closingTime, Validators.required],
+        closingTime: [this.listing.booking.closingTime, Validators.required]
       })
     })
   }
@@ -259,7 +266,6 @@ export class GeneralComponent {
   }
 
   // Get price form validation
-  // TODO: CHECK PRICE FORM VALIDATION (CAMILA)
   getPriceValid(valid) {
     this.priceValid = valid
   }
@@ -291,7 +297,6 @@ export class GeneralComponent {
       this.closingWeekDays = []
       this.exceptionDays = []
     }
- 
   }
 
   onWeekDayChange(weekday: number, event) {
@@ -356,10 +361,15 @@ export class GeneralComponent {
     this.categorySpecs.map(spec => formGroupSpec.addControl(spec.slug, new FormControl(this.listing.specifications ? this.listing.specifications[spec.slug] : null)))
   }
 
+  //////// AMENITIES VALIDATION ///////
+  validateAmenity() {
+    this.amenitiesValid = this.listingForm.controls.amenities.value.find(item => item === true)
+  }
+  
   onSubmit() {
     this.toastr.info("submiting now...")
     // Store the array of amenityIds
-    const result = Object.assign({}, 
+    let result = Object.assign({}, 
       this.listingForm.value, { 
         amenityIds: this.categoryAmenities
         .filter((x, i) => !!this.listingForm.value.amenities[i]).map(a =>{
@@ -368,29 +378,17 @@ export class GeneralComponent {
       })
 
     delete result.amenities
-
     this.listingForm.updateValueAndValidity()
+
     if (this.price)
       result.price = this.price
-    
     result.booking.closingWeekDays = this.closingWeekDays
     result.booking.exceptionDays = this.exceptionDays
-    console.log(result)
 
-    // CHECK THIS TWO VALIDATIONS (?) edit old listing (this.listing.id), edit new listing (this.listingID)
+    // Save listing in the DB
     if(this.listing.id) {
       this._store.dispatch(new listingActions.Update( this.listing.id, result ))
 
-      // Listen for `success` action generated from update effect.  
-      this.listingEffects.update$
-        .filter(action => action.type === listingActions.SUCCESS)
-        .subscribe(res =>{
-          this.toastr.success("listing updated successfully.")
-        })
-
-    } else if (this.listingID) {
-      this._store.dispatch(new listingActions.Update( this.listingID, result ))
-      
       // Listen for `success` action generated from update effect.  
       this.listingEffects.update$
         .filter(action => action.type === listingActions.SUCCESS)
