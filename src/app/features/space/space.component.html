@@ -221,9 +221,9 @@
       <div class="booking-form">
         <mat-spinner *ngIf="(isLoadingPage$ | async); else doneLoading"></mat-spinner>
         <ng-template #doneLoading>
-          <sn-general-booking
+          <sn-hourly-booking
             [space]="space$ | async">
-          </sn-general-booking>
+          </sn-hourly-booking>
         </ng-template>
       </div>
     </div>

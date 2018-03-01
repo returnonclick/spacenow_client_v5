@@ -96,9 +96,9 @@ export class GeneralBookingComponent implements OnInit {
   // of `this.space`'s availability exceptions
   exceptions(space: Space) {
     return (d: Date | null): boolean => {
-      return space.availability.exceptionDays.map(
-        date => moment(date).format('YYYY-MM-DD')
-      ).indexOf(moment(d).format('YYYY-MM-DD')) == -1
+      let exceptionDates = space.availability.exceptionDays.map(date => moment(date).format('YYYY-MM-DD'))
+      return exceptionDates.indexOf(moment(d).format('YYYY-MM-DD')) == -1
+        && space.availability.openingDays[moment(d).format('dddd').toLowerCase()]
     }
   }
 
