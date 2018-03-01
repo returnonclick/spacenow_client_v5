@@ -1,0 +1,8 @@
+
+<form [formGroup]="profileForm" class="profileForm" (ngSubmit)="onSubmit()" novalidate>
+    <div formGroupName="contact">
+        <sn-contact [contact]="profile.contact" [parentForm]="profileForm" ></sn-contact>
+    </div>
+    <button type="submit" mat-raised-button [disabled]="profileForm.invalid">update</button>
+</form>
+                    

@@ -27,6 +27,13 @@ gen-layout {
 	display: grid;
 	grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
 	grid-column-gap: 30px;
+
+	.wrapper {
+
+		grid-column: 2 / span 12;
+
+	}
+
 }
 
 a {

@@ -28,6 +28,8 @@ import { storeFreeze } from 'ngrx-store-freeze'
 
 import * as fromAuth            from '@core/store/auth/reducers/auth'
 import * as fromUsers           from '@core/store/users/reducers/users'
+import * as fromUsersProfile    from '@core/store/users-profile/reducers/users-profile'
+import * as fromLayouts         from '@core/store/layouts/reducers/layouts'
 import * as fromListings        from '@core/store/listings/reducers/listings'
 import * as fromCategories      from '@core/store/categories/reducers/categories'
 import * as fromSearch          from '@core/store/search/reducers/search'
@@ -39,6 +41,8 @@ import * as fromSearch          from '@core/store/search/reducers/search'
 export interface State {
     auth:          fromAuth.State
     users:         fromUsers.State
+    usersProfile:  fromUsersProfile.State
+    layouts:       fromLayouts.State
     listings:      fromListings.State
     categories:    fromCategories.State
     search:        fromSearch.State
@@ -53,6 +57,8 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
     auth:          fromAuth.reducer,
     users:         fromUsers.reducer,
+    usersProfile:  fromUsersProfile.reducer,
+    layouts:       fromLayouts.reducer,
     listings:      fromListings.reducer,
     categories:    fromCategories.reducer,
     search:        fromSearch.reducer,
@@ -90,7 +96,7 @@ export const getAuthEntitiesState = createSelector(
 
 export const getSelectedAuthId = createSelector(
     getAuthEntitiesState,
-    fromAuth.getSelectedId
+    (state) => state.selectedId
 )
 
 export const {
@@ -102,12 +108,12 @@ export const {
 
 export const getAuthUserState = createSelector(
     getAuthState,
-    fromAuth.getAuthUser
+    (state) => state.user
 )
 
 export const getIsSignedInState = createSelector(
     getAuthState,
-    fromAuth.isSignedIn
+    (state) => state.isSignedIn
 )
 
 export const getSelectedAuth = createSelector(
@@ -149,6 +155,42 @@ export const getSelectedUser = createSelector(
     }
 )
 
+/**
+ * Users Profile Reducer
+ */
+
+export const getUsersProfileState = createFeatureSelector<fromUsersProfile.State>('usersProfile')
+
+export const getUserProfileEntitiesState = createSelector(
+    getUsersProfileState,
+    (state) => state
+)
+
+export const {
+    selectIds: getUserProfileIds,
+    selectEntities: getUserProfileEntities,
+    selectAll: getAllUsersProfile,
+    selectTotal: getTotalUsersProfile,
+} = fromUsersProfile.userProfileAdapter.getSelectors(getUserProfileEntitiesState)
+
+export const getSelectedUserProfile = createSelector(
+    getUserProfileEntities,
+    getUsersProfileState,
+    (entities, profileState) => {
+      return profileState.selectedId && entities[profileState.selectedId];
+    }
+)
+
+export const getSelectedUserProfileId = createSelector(
+    getUsersProfileState,
+    (state) => state.selectedId
+)
+
+export const getIsLoadingProfile = createSelector(
+    getUsersProfileState,
+    (state) => state.loading
+)
+
  /**
  * Listings Reducers
  */
@@ -172,6 +214,17 @@ export const getSelectedListing = createSelector(
     getListingEntities,
     fromListings.getSelectedListingId,
     (listingEntities, listingId) => listingEntities[listingId]
+)
+
+ /**
+ * Layouts Reducers
+ */
+
+export const getLayoutsState = createFeatureSelector<fromLayouts.State>('layouts')
+
+export const getShowSidenav = createSelector(
+    getLayoutsState,
+    fromLayouts.getShowSidenav
 )
 
 /**

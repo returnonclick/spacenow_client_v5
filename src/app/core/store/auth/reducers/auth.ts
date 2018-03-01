@@ -30,18 +30,20 @@ export function reducer(
 
             return authAdapter.addOne(action.payload, 
                 { 
-                    ...state, 
-                    isSignedIn: true, 
-                    user: action.payload,
-                    selectedUserId: state.selectedId,
+                    ...state,
+                    isSignedIn: true,
+                    selectedId: action.payload.uid
                 })
 
         }
 
         case auth.SIGN_OUT: {
-            return {
-                ...authAdapter.removeAll(state),
-            }
+            return authAdapter.removeAll(
+                {
+                    ...state,
+                    isSignedIn: false,
+                    selectedId: null
+            })
         }
 
         default: {
@@ -49,7 +51,3 @@ export function reducer(
         }
     }
 }
-
-export const isSignedIn = (state: State) => state.isSignedIn
-export const getAuthUser = (state: State) => state.user 
-export const getSelectedId = (state: State) => state.selectedId;

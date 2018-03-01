@@ -1,0 +1,42 @@
+<gen-loading *ngIf="isLoading$ | async; else profileContainer"></gen-loading>
+
+
+<div class="grid">
+    <mat-drawer-container class="wrapper">
+        <mat-drawer mode="side" opened="true">
+            <nav>
+                <a>Edit Profile</a>
+                <a>Settings</a>
+                <a>Logout</a>
+            </nav>
+        </mat-drawer>
+        <mat-drawer-content>
+            <!-- SECTION ONE -->
+            <div id="profile" *ngIf="(authUser$ | async) as user">
+                <div class="header">
+                    <h1>My Profile</h1>
+                    <p class="warning" *ngIf="!user.isVerified">It looks like the email {{user.email}} hasn't been veryfied yet. Please check your inbox for verification email. Resend email verification.</p>
+                </div>
+                <section>
+                    <div class="required">
+                        <h4>Required Information</h4>
+
+                        <!-- CONTACT FORM  -->
+                        <ng-template #profileContainer>
+                            <sn-profile-detail [profile]="userProfile$ | async"></sn-profile-detail>
+                        </ng-template>
+                        <!-- END CONTACT FORM  -->
+
+                    </div>
+                    <div class="picture">
+                        <h4>Current Profile Picture</h4>
+                        <form>
+                            <img [src]="user.photoURL" width="200" height="200" class="profile-picture">
+                            <button mat-raised-button>upload file</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

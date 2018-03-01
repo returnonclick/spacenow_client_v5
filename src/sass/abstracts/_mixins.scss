@@ -60,3 +60,23 @@ $breakpoints: (
   
     #{$property}: $value;
   }
+
+@mixin warning-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .warning {
+        
+      border-radius: 5px;
+      padding: 10px 20px;
+      color: mat-color($primary, 50, 1) !important;
+      background: mat-color($primary, default-contrast, 1);
+    
+    }
+  
+  }
