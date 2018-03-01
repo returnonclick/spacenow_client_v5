@@ -1,0 +1,8 @@
+form {
+  --gridGap: 20px;
+
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(4, auto);
+  grid-gap: var(--gridGap);
+}

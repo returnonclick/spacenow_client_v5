@@ -28,6 +28,11 @@ import { ImageUploadComponent } from './image-upload/image-upload.component'
 import { LoadingComponent } from './loading/loading.component'
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component'
 
+import {
+  GeneralBookingComponent,
+  HourlyBookingComponent,
+} from './booking'
+
 export {
   ForgotPasswordComponent,
   SignInComponent,
@@ -47,7 +52,10 @@ export {
   LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
-  ImageUploadComponent
+  ImageUploadComponent,
+
+  GeneralBookingComponent,
+  HourlyBookingComponent,
 }
 
 export default {
@@ -69,5 +77,8 @@ export default {
   LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
-  ImageUploadComponent
+  ImageUploadComponent,
+
+  GeneralBookingComponent,
+  HourlyBookingComponent,
 }

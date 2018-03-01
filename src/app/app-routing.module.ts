@@ -16,9 +16,10 @@ import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 import { SearchComponent } from '@features/search/search.component'
+import { SpaceComponent } from '@features/space/space.component'
 
 const appRoutes: Routes = [
-  { 
+  {
     path: 'app',
     component: LayoutComponent,
     children: [
@@ -31,10 +32,11 @@ const appRoutes: Routes = [
       { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }
     ]
   },
-  { path: '', redirectTo: '/app', pathMatch: 'full' },
+  { path: 'space/:id', component: SpaceComponent },
   // { path: 'my-spaces', component: MySpacesComponent },
   // { path: 'my-calendar', component: MyCalendarComponent },
- 
+  // { path: 'my-favorites', component: MyFavoritesComponent },
+  { path: '', redirectTo: '/app', pathMatch: 'full' },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}
 ]

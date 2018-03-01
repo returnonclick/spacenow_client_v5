@@ -26,23 +26,27 @@ import { storeFreeze } from 'ngrx-store-freeze'
 /** * The following line about layout is commented, but you can refer to * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts * for detailed implementations
  */
 
-import * as fromAuth            from '@core/store/auth/reducers/auth'
-import * as fromUsers           from '@core/store/users/reducers/users'
-import * as fromListings        from '@core/store/listings/reducers/listings'
-import * as fromCategories      from '@core/store/categories/reducers/categories'
-import * as fromSearch          from '@core/store/search/reducers/search'
+import * as fromAuth       from '@core/store/auth/reducers/auth'
+import * as fromUsers      from '@core/store/users/reducers/users'
+import * as fromListings   from '@core/store/listings/reducers/listings'
+import * as fromCategories from '@core/store/categories/reducers/categories'
+import * as fromSpaces     from '@core/store/spaces/reducers/spaces'
+import * as fromSearch     from '@core/store/search/reducers/search'
+import * as fromCart       from '@core/store/cart/reducers/cart'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-    auth:          fromAuth.State
-    users:         fromUsers.State
-    listings:      fromListings.State
-    categories:    fromCategories.State
-    search:        fromSearch.State
-    routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
+  auth:          fromAuth.State
+  users:         fromUsers.State
+  listings:      fromListings.State
+  categories:    fromCategories.State
+  spaces:        fromSpaces.State
+  search:        fromSearch.State
+  cart:          fromCart.State
+  routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
 }
 
 /**
@@ -51,22 +55,24 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-    auth:          fromAuth.reducer,
-    users:         fromUsers.reducer,
-    listings:      fromListings.reducer,
-    categories:    fromCategories.reducer,
-    search:        fromSearch.reducer,
-    routerReducer: fromRouter.routerReducer,
+  auth:          fromAuth.reducer,
+  users:         fromUsers.reducer,
+  listings:      fromListings.reducer,
+  categories:    fromCategories.reducer,
+  spaces:        fromSpaces.reducer,
+  search:        fromSearch.reducer,
+  cart:          fromCart.reducer,
+  routerReducer: fromRouter.routerReducer,
 }
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-    return function (state: State, action: any): State {
-        console.log('state', state)
-        console.log('action', action)
+  return function (state: State, action: any): State {
+    console.log('state', state)
+    console.log('action', action)
 
-        return reducer(state, action)
-    }
+    return reducer(state, action)
+  }
 }
 
 /**
@@ -75,8 +81,8 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-    ? [logger, storeFreeze]
-    : []
+  ? [logger, storeFreeze]
+  : []
 
 /**
  * Auth Reducers
@@ -84,38 +90,38 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 export const getAuthState = createFeatureSelector<fromAuth.State>('auth')
 
 export const getAuthEntitiesState = createSelector(
-    getAuthState,
-    (state) => state
+  getAuthState,
+  (state) => state
 )
 
 export const getSelectedAuthId = createSelector(
-    getAuthEntitiesState,
-    fromAuth.getSelectedId
+  getAuthEntitiesState,
+  fromAuth.getSelectedId
 )
 
 export const {
-    selectIds: getAuthIds,
-    selectEntities: getAuthEntities,
-    selectAll: getAllAuth,
-    selectTotal: getTotalAuth,
-  } = fromAuth.authAdapter.getSelectors(getAuthEntitiesState)
+  selectIds:      getAuthIds,
+  selectEntities: getAuthEntities,
+  selectAll:      getAllAuth,
+  selectTotal:    getTotalAuth,
+} = fromAuth.authAdapter.getSelectors(getAuthEntitiesState)
 
 export const getAuthUserState = createSelector(
-    getAuthState,
-    fromAuth.getAuthUser
+  getAuthState,
+  fromAuth.getAuthUser
 )
 
 export const getIsSignedInState = createSelector(
-    getAuthState,
-    fromAuth.isSignedIn
+  getAuthState,
+  fromAuth.isSignedIn
 )
 
 export const getSelectedAuth = createSelector(
-    getAuthEntities,
-    getSelectedAuthId,
-    (entities, selectedId) => {
-      return selectedId && entities[selectedId];
-    }
+  getAuthEntities,
+  getSelectedAuthId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
+  }
 )
 
 /**
@@ -125,28 +131,28 @@ export const getSelectedAuth = createSelector(
 export const getUsersState = createFeatureSelector<fromUsers.State>('users')
 
 export const getUserEntitiesState = createSelector(
-    getUsersState,
-    (state) => state
+  getUsersState,
+  (state) => state
 )
 
 export const getSelectedUserId = createSelector(
-    getUserEntitiesState,
-    fromUsers.getSelectedId
+  getUserEntitiesState,
+  fromUsers.getSelectedId
 )
 
 export const {
-    selectIds: getUserIds,
-    selectEntities: getUserEntities,
-    selectAll: getAllUsers,
-    selectTotal: getTotalUsers,
+  selectIds:      getUserIds,
+  selectEntities: getUserEntities,
+  selectAll:      getAllUsers,
+  selectTotal:    getTotalUsers,
 } = fromUsers.userAdapter.getSelectors(getUserEntitiesState)
 
 export const getSelectedUser = createSelector(
-    getUserEntities,
-    getSelectedUserId,
-    (entities, selectedId) => {
-      return selectedId && entities[selectedId];
-    }
+  getUserEntities,
+  getSelectedUserId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
+  }
 )
 
  /**
@@ -156,22 +162,22 @@ export const getSelectedUser = createSelector(
 export const getListingsState = createFeatureSelector<fromListings.State>('listings')
 
 export const getListingEntitiesState = createSelector(
-    getListingsState,
-    (state) => state
+  getListingsState,
+  (state) => state
 )
 
 export const {
-    selectIds: getListingIds,
-    selectEntities: getListingEntities,
-    selectAll: getAllListings,
-    selectTotal: getTotalListings
-  } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
+  selectIds:      getListingIds,
+  selectEntities: getListingEntities,
+  selectAll:      getAllListings,
+  selectTotal:    getTotalListings
+} = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
 
-  
+
 export const getSelectedListing = createSelector(
-    getListingEntities,
-    fromListings.getSelectedListingId,
-    (listingEntities, listingId) => listingEntities[listingId]
+  getListingEntities,
+  fromListings.getSelectedListingId,
+  (listingEntities, listingId) => listingEntities[listingId]
 )
 
 /**
@@ -181,16 +187,16 @@ export const getSelectedListing = createSelector(
 export const getCategoriesState = createFeatureSelector<fromCategories.State>('categories')
 
 export const getCategoryEntitiesState = createSelector(
-    getCategoriesState,
-    (state) => state
+  getCategoriesState,
+  (state) => state
 )
 
 export const {
-    selectIds: getCategoryIds,
-    selectEntities: getCategoryEntities,
-    selectAll: getAllCategories,
-    selectTotal: getTotalCategories,
-  } = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
+  selectIds:      getCategoryIds,
+  selectEntities: getCategoryEntities,
+  selectAll:      getAllCategories,
+  selectTotal:    getTotalCategories,
+} = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
 
 /**
  *  Search Reducers
@@ -209,3 +215,41 @@ export const {
   selectTotal:    getTotalSearches,
 } = fromSearch.searchAdapter.getSelectors(getSearchEntitiesState)
 export const isLoadingSearch = createSelector(getSearchState, fromSearch.isLoading)
+
+
+/**
+ *  Spaces Reducers
+ */
+export const getSpacesState = createFeatureSelector<fromSpaces.State>('spaces')
+
+export const getSpaceEntitiesState = createSelector(
+  getSpacesState,
+  (state) => state
+)
+
+export const {
+  selectIds:      getSpaceIds,
+  selectEntities: getSpaceEntities,
+  selectAll:      getAllSpaces,
+  selectTotal:    getTotalSpaces
+} = fromSpaces.spaceAdapter.getSelectors(getSpaceEntitiesState)
+export const isLoadingSpaces = createSelector(getSpacesState, fromSpaces.isLoading)
+
+
+/**
+ *  Cart Reducer
+ */
+export const getCartState = createFeatureSelector<fromCart.State>('cart')
+
+export const getCartEntitiesState = createSelector(
+  getCartState,
+  (state) => state
+)
+
+export const {
+  selectIds:      getBookingSpaceIds,
+  selectEntities: getBookingSpaceEntities,
+  selectAll:      getAllBookingSpaces,
+  selectTotal:    getTotalBookingSpaces,
+} = fromCart.cartAdapter.getSelectors(getCartEntitiesState)
+export const getCartError = createSelector(getCartState, fromCart.getError)

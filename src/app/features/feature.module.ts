@@ -18,25 +18,31 @@ import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { SearchService } from '@core/store/search/services/search'
 import { SearchEffects } from '@core/store/search/effects/search'
 
+import { SpaceService } from '@core/store/spaces/services/space'
+import { SpaceEffects } from '@core/store/spaces/effects/space'
+
 import { environment } from '../../environments/environment'
 
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 import { SearchComponent } from '@features/search/search.component'
+import { SpaceComponent } from '@features/space/space.component'
 
 const COMPONENTS = [
   MySpacesComponent,
   MyCalendarComponent,
   MyFavoritesComponent,
   SearchComponent,
+  SpaceComponent,
 ]
 
 const ENTRY_COMPONENTS = [
 ]
 
 const SERVICES = [
-  SearchService
+  SearchService,
+  SpaceService,
 ]
 
 @NgModule({
@@ -55,6 +61,7 @@ const SERVICES = [
     SharedModule,
     EffectsModule.forFeature([
       SearchEffects,
+      SpaceEffects,
     ]),
   ],
   declarations: COMPONENTS,
