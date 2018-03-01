@@ -36,12 +36,12 @@ export class ContactComponent {
 
   ngOnChanges() {
     this.parentForm.reset({
-      username: [this.contact.email, Validators.required],
-      firstName: [this.contact.firstName, Validators.required],
-      lastName: [this.contact.lastName, Validators.required],
-      gender: [this.contact.gender, Validators.required],
-      dob: [this.contact.dob, Validators.required],
-      phoneNumber: [this.contact.phone, Validators.required]
+      username: this.contact.email,
+      firstName: this.contact.firstName,
+      lastName: this.contact.lastName,
+      gender: this.contact.gender,
+      dob: this.contact.dob,
+      phoneNumber: this.contact.phone
     });
   }
 
