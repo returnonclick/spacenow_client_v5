@@ -17,19 +17,20 @@ export class ContactComponent {
 
   constructor(
     private _fb: FormBuilder
-  ){
-    this.createForm();
+  ){}
+
+  ngOnInit() {
+    this.createForm()
   }
 
   createForm() {
     this.parentForm = this._fb.group({
-      username: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      gender: ['', Validators.required],
-      dob: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      addresses: this._fb.array([])
+      username: [this.contact.email, Validators.required],
+      firstName: [this.contact.firstName, Validators.required],
+      lastName: [this.contact.lastName, Validators.required],
+      gender: [this.contact.gender, Validators.required],
+      dob: [this.contact.dob, Validators.required],
+      phoneNumber: [this.contact.phone, Validators.required]
     });
   }
 
@@ -40,7 +41,7 @@ export class ContactComponent {
       lastName: [this.contact.lastName, Validators.required],
       gender: [this.contact.gender, Validators.required],
       dob: [this.contact.dob, Validators.required],
-      phoneNumber: [this.contact.phone, Validators.required],
+      phoneNumber: [this.contact.phone, Validators.required]
     });
   }
 

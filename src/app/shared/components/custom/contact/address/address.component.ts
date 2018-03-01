@@ -17,14 +17,16 @@ export class AddressComponent {
 
   constructor(
     private _fb: FormBuilder
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.createForm()
   }
 
   createForm() {
-    this.parentForm = this._fb.group({
-      addresses: this._fb.array([])
-    })
+    this.parentForm.addControl(
+      'addresses', this._fb.array([])
+    )
   }
 
   ngOnChanges() {

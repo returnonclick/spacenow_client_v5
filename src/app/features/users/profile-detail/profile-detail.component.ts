@@ -19,7 +19,7 @@ import * as fromRoot from '@core/store'
   templateUrl: './profile-detail.component.html',
   styleUrls: ['./profile-detail.component.scss']
 })
-export class ProfileDetailComponent implements OnInit {
+export class ProfileDetailComponent implements OnChanges {
 
   @Input('profile')
   public profile: Profile
@@ -29,24 +29,22 @@ export class ProfileDetailComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _store: Store<fromRoot.State>
-  ) { 
+  ) {
     this.createForm()
   }
 
-  ngOnInit() {
-    console.log(this.profile)
+  createForm() {
+    this.profileForm = this._fb.group({})
   }
 
-  createForm() {
-   
-    this.profileForm = this._fb.group({})
-
+  ngOnChanges() {
+    // this.profileForm = this._fb.group({
+    //   contact: [this.profile.contact]
+    // })
   }
 
 }
 
-
-// revert() { this.ngOnChanges() }
 
 //   onSubmit() {
 

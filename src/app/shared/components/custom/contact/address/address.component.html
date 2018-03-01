@@ -1,38 +1,40 @@
-<div formArrayName="addresses">
-  <div *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i" >
-    <!-- The repeated address template -->
-    <h4>Address #{{i + 1}}</h4>
-    <mat-form-field>
-        <input matInput placeholder="Unit" type="text" name="unit" formControlName="unit">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Street Number" type="text" name="streetNumber" formControlName="streetNumber">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Street" type="text" name="street" formControlName="street">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="City" type="text" name="city" formControlName="city">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="State" type="text" name="state" formControlName="state">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Postal Code" type="text" name="postalCode" formControlName="postalCode">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Country Code" type="text" name="countryCode" formControlName="countryCode">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Country Name" type="text" name="countryName" formControlName="countryName">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Latitude" type="text" name="lat" formControlName="lat">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Longitute" type="text" name="lng" formControlName="lng">
-    </mat-form-field>
-    <!-- End of the repeated address template -->
-  </div>
-  <button (click)="addAddress()" type="button">Add address</button>
+<div [formGroup]="parentForm">
+    <div formArrayName="addresses">
+        <div *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i" >
+            <!-- The repeated address template -->
+            <h4>Address #{{i + 1}}</h4>
+            <mat-form-field>
+                <input matInput placeholder="Unit" type="text" name="unit" formControlName="unit">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Street Number" type="text" name="streetNumber" formControlName="streetNumber">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Street" type="text" name="street" formControlName="street">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="City" type="text" name="city" formControlName="city">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="State" type="text" name="state" formControlName="state">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Postal Code" type="text" name="postalCode" formControlName="postalCode">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Country Code" type="text" name="countryCode" formControlName="countryCode">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Country Name" type="text" name="countryName" formControlName="countryName">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Latitude" type="text" name="lat" formControlName="lat">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Longitute" type="text" name="lng" formControlName="lng">
+            </mat-form-field>
+            <!-- End of the repeated address template -->
+        </div>
+        <button (click)="addAddress()" type="button">Add address</button>
+    </div>
 </div>
