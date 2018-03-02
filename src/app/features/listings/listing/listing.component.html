@@ -49,7 +49,7 @@
       </div>
       <div class="content">
         <mat-radio-group flexLayout="column" class="items" formControlName="categoryId" required (change)="loadCategory(); validateAmenity()">
-          <mat-radio-button *ngFor="let category of categories$ | async" [value]="category.id" class="item">
+          <mat-radio-button *ngFor="let category of categories" [value]="category.id" class="item">
             {{ category.name }}
           </mat-radio-button>
         </mat-radio-group>
@@ -57,25 +57,27 @@
     </div>
 
     <!-- Amenities -->
-    <div class="amenity">
-      <div class="title">
-        <h2>Select Amenities</h2>
-      </div>
-      <!-- Ref. https://stackoverflow.com/questions/46749251/ -->
-      <div class="content">
-        <h4 *ngIf="!categoryAmenities">Please select a Category</h4>
-        <div formArrayName="amenities" class="items">
-          <div *ngFor="let amenity of categoryAmenities; let i = index" class="item">
-              <mat-checkbox 
-                (change)="validateAmenity()"
-                [formControlName]="i"
-                [value]="amenity.id">
-                {{amenity.name}}
-              </mat-checkbox>
-          </div>
+      <div class="amenity">
+        <div class="title">
+          <h2>Select Amenities</h2>
         </div>
+        <ng-container *ngIf="isLoadingAmenity$ | async as isLoading; else amenity"></ng-container>
+        <ng-template #amenity>
+          <!-- Ref. https://stackoverflow.com/questions/46749251/ -->
+          <div class="content">
+            <h4 *ngIf="listingForm.controls.categoryId.invalid">Please select a Category</h4>
+            <div formArrayName="amenities" class="items">
+              <div *ngFor="let amenity of categoryAmenities; let i = index" class="item">
+                  <mat-checkbox 
+                    (change)="validateAmenity()"
+                    [formControlName]="i">
+                    {{amenity.name}}
+                  </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </ng-template>
       </div>
-    </div>
     
     <!-- Space specification -->
     <div class="specifications">
@@ -83,7 +85,7 @@
         <h2>Space Specifications</h2>
       </div>
       <div class="content">
-        <h4 *ngIf="!categorySpecs">Please select a Category</h4>
+        <h4 *ngIf="listingForm.controls.categoryId.invalid">Please select a Category</h4>
           <div formGroupName="specifications" fxLayout="column">
             <div *ngFor="let spec of categorySpecs">
               <mat-form-field class="input-container-full">
@@ -201,92 +203,90 @@
       <div class="title">
         <h2>Booking system</h2>
       </div>
-      <div class="content" id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between" formGroupName="booking">
+      <div class="content" id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between" formGroupName="availability">
         <div id="booking-general-container" fxFlex="49%">
-          <div fxLayout="column" >
-            <div fxLayout="row" fxLayoutAlign="space-between start">
-              <mat-form-field fxFlex="49%">
-                <mat-select placeholder="Booking Type" name="booking-type" formControlName="bookingType" required>
-                  <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
-                    {{ bookingType }} 
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="space-between start">
+            <mat-form-field fxFlex="49%">
+              <mat-select placeholder="Booking Type" name="booking-type" formControlName="bookingType" required>
+                <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
+                  {{ bookingType }} 
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-              <mat-form-field fxFlex="49%">
-                <input matInput 
-                  type="number"
-                  placeholder="Lead time (days)" 
-                  formControlName="leadTime" required>
-              </mat-form-field>
-            </div>
-            <div >
-              <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
-            </div>
+            <mat-form-field fxFlex="49%">
+              <input matInput 
+                type="number"
+                placeholder="Lead time (days)" 
+                formControlName="leadTime" required>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
           </div>
         </div>
       
-        <div id="opening-time-container" fxFlex="49%">
-          <!-- <h3>Opening time</h3> -->
-          <div *ngIf="!listingForm.controls.booking.value.isOpen247" fxLayout="column" >
-            <div >
-              <mat-form-field fxFlex="49%">
-                <mat-select placeholder="Opening time" 
-                  (selectionChange)="filterClosingHours($event)"
-                  name="opening-time" 
-                  formControlName="openingTime" required>
-                  <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
-                    {{ openingHour.value }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field fxFlex="49%">
-                <mat-select placeholder="Closing time" name="closing-time" formControlName="closingTime" required>
-                  <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key">
-                    {{ closingHour.value }} 
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div id="exception-container">
-              <!-- <span>Exception</span> -->
-              <div id="week-day-container" fxFlex="49%">
-                <h3>Opening</h3>
-                <div *ngFor="let weekday of weekdays">
-                  <mat-slide-toggle (change)="onWeekDayChange( weekday.key, $event)">{{weekday.value}}</mat-slide-toggle>
-                </div>
-                <!-- <div>{{closingWeekDays | json}}</div> -->
+        <div id="opening-time-container" fxFlex="49%" fxLayout="column">
+          <div *ngIf="!listingForm.controls.availability.value.isOpen247">
+            <mat-form-field fxFlex="49%">
+              <mat-select placeholder="Opening time" 
+                (selectionChange)="filterClosingHours($event)"
+                name="opening-time" 
+                formControlName="openingTime" required>
+                <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
+                  {{ openingHour.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="49%">
+              <mat-select placeholder="Closing time" name="closing-time" formControlName="closingTime" required>
+                <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key">
+                  {{ closingHour.value }} 
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <div id="week-day-container" fxFlex="49%" fxLayout="column" *ngIf="!listingForm.controls.availability.value.isOpen247">
+              <h3>Opening</h3>
+              <div formGroupName="openingDays" fxLayout="column">
+                <mat-slide-toggle formControlName="monday">Monday</mat-slide-toggle>
+                <mat-slide-toggle formControlName="tuesday">Tuesday</mat-slide-toggle>
+                <mat-slide-toggle formControlName="wednesday">Wednesday</mat-slide-toggle>
+                <mat-slide-toggle formControlName="thursday">Thursday</mat-slide-toggle>
+                <mat-slide-toggle formControlName="friday">Friday</mat-slide-toggle>
+                <mat-slide-toggle formControlName="saturday">Saturday</mat-slide-toggle>
+                <mat-slide-toggle formControlName="sunday">Sunday</mat-slide-toggle>
               </div>
-              <div id="exception-day-container" fxFlex="49%">
-                <h3>Exceptions</h3> 
-                <div id="date-picker-container">
-                  <mat-form-field class="booking-exception">
-                    <input matInput 
-                      id="date-picker-input"
-                      readonly
-                      placeholder="Choose a date"
-                      [min]="minDate" 
-                      [max]="maxDate" 
-                      [matDatepicker]="picker" 
-                      (dateChange)="addExceptionDate('change', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                  <span>{{picker.value}}</span>
-                </div>
-                <div *ngIf="exceptionDays.length > 0">
-                  <span>Current exception dates</span>
-                  <ul>
-                    <li *ngFor="let date of exceptionDays">
-                      {{date | date: 'EEEE, d/M/yyyy'}}
-                      <button mat-icon-button
-                        (click)="deleteExceptionDay(date)">
-                        <mat-icon>highlight_off</mat-icon>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+            </div>
+              
+            <div id="exception-day-container" fxFlex="49%">
+              <h3>Exceptions</h3> 
+              <div id="date-picker-container">
+                <mat-form-field class="booking-exception">
+                  <input matInput 
+                    id="date-picker-input"
+                    readonly
+                    placeholder="Choose a date"
+                    [min]="minDate" 
+                    [max]="maxDate" 
+                    [matDatepicker]="picker" 
+                    (dateChange)="addExceptionDate('change', $event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <span>{{picker.value}}</span>
+              </div>
+              <div *ngIf="exceptionDays.length > 0">
+                <ul>
+                  <li *ngFor="let date of exceptionDays">
+                    {{date | date: 'EEEE, d/M/yyyy'}}
+                    <button mat-icon-button
+                      (click)="deleteExceptionDay(date)">
+                      <mat-icon>highlight_off</mat-icon>
+                    </button>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

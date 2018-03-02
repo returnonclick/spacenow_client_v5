@@ -1,0 +1,10 @@
+<gen-loading *ngIf="isLoadingListing$ | async as isLoading; else listing"></gen-loading>
+
+<ng-template #listing>
+  <sn-listing
+    [listing]="listing$ | async"
+    [categories]="categories$ | async"
+    [amenities]="amenities$ | async"
+    [specifications]="specifications$ | async">
+  </sn-listing>
+</ng-template>

@@ -1,18 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ListingsComponent } from './listings.component'
-import { GeneralComponent } from './general/general.component';
+import { ContainerComponent } from './container/container.component'
  
 const routes: Routes = [
   {
-    path: '', component: ListingsComponent,
-
-    children: [
-      { path: '', component: GeneralComponent },
-      { path: ':id', component: GeneralComponent }
-    ]
-    
+    path: '', component: ContainerComponent
+  },
+  {
+    path: ':id', component: ContainerComponent
   }
 ];
 

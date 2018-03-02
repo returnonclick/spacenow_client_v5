@@ -13,7 +13,6 @@ import { LayoutComponent } from '@shared/components/theme/layout/layout.componen
 
 import { UserListComponent } from '@features/users'
 import { HomeComponent } from '@features/pages/home/home.component'
-import { GeneralComponent } from '@features/listings/general/general.component'
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 // import { SpaceComponent } from '@features/spaces/space/space.component'
@@ -26,7 +25,6 @@ const appRoutes: Routes = [
     // canActivate: [AuthGuard, AuthGuardVerified],
     children: [
       { path: 'home', component: HomeComponent },
-      // { path: 'listings', component: GeneralComponent },
       // { path: 'my-spaces', component: MySpacesComponent },
       // { path: 'my-calendar', component: MyCalendarComponent },
       // { path: 'my-calendar', component: MyCalendarComponent },

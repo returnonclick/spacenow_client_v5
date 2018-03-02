@@ -79,7 +79,6 @@ export class ImageUploadComponent implements OnInit {
 
     this.listingId.subscribe(id =>{
       if(id) {
-        console.log(id)
         this.spaceID = id
       }
     })

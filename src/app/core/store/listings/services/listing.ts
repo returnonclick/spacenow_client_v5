@@ -32,7 +32,6 @@ export class ListingService {
     // return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
     return this.afs.collection<Listing>(this.ref).doc(listing.id).set(data)
       .then(() =>{
-          console.log("new document ID: " + data.id)
           return data.id 
       })
       .catch(error =>{

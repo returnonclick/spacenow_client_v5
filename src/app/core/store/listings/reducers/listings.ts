@@ -16,7 +16,7 @@ export const listingAdapter: EntityAdapter<Listing> = createEntityAdapter<Listin
 });
 
 export const initialState: State = listingAdapter.getInitialState({
-    loading: false,
+    loading: true,
     selectedListingId: null
 });
 
@@ -27,28 +27,18 @@ export function reducer(
     action: actions.ListingActions
 ): State {
     switch (action.type) {
-        case actions.CREATE: {
-            return {
-                ...state,
-                loading: true,
-                ...listingAdapter.addOne(action.payload, state),
-                selectedListingId: action.payload.id
-            };
-        }
-
         case actions.ADDED: {
-            return {
+            return listingAdapter.addOne(action.payload, {
                 ...state,
-                loading: true,
-                ...listingAdapter.addOne(action.payload, state),
+                loading: false,
                 selectedListingId: action.payload.id
-            };
+            })
         }
 
         case actions.MODIFIED: {
             return { 
                 ...state,
-                loading: true,
+                loading: false,
                 ...listingAdapter.updateOne({
                     id: action.payload.id,
                     changes: action.payload
@@ -59,24 +49,10 @@ export function reducer(
         case actions.REMOVED: {
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 ...listingAdapter.removeOne(action.payload.id, state),
                 selectedListingId: null
             }
-        }
-    
-        case actions.SELECT_LISTING: {
-          return Object.assign({ 
-              ...state, 
-              selectedListingId: action.payload.listingId 
-            })
-        }   
-
-        case actions.CREATE_SUCCESS: {
-          return {
-            ...state, 
-            selectedListingId: action.listingId
-          }
         }
 
         default: {

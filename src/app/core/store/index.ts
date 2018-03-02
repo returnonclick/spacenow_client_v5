@@ -68,8 +68,8 @@ export const reducers: ActionReducerMap<State> = {
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
     return function (state: State, action: any): State {
-        // console.log('state', state)
-        // console.log('action', action)
+        console.log('state', state)
+        console.log('action', action)
 
         return reducer(state, action)
     }
@@ -145,7 +145,7 @@ export const getListingEntitiesState = createSelector(
  * selectors to select specfic `listing` slices from store
  *  */
 export const getSelectedListingId = (state: fromListings.State) => state.selectedListingId
-export const selectCurrentListingId = createSelector(getListingsState, getSelectedListingId)
+export const selectCurrentListingId = createSelector(getListingsState, getSelectedListingId) 
 
 export const selectListingEntities = createSelector(getListingsState, (listingsState) => listingsState.entities)
 export const selectCurrentListing = createSelector(
@@ -160,6 +160,11 @@ export const {
     selectAll: getAllListings,
     selectTotal: getTotalListings
   } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
+
+export const getIsListingLoading = createSelector(
+    getListingsState,
+    fromListings.getLoading
+)
 
 /* 
  * SPACE REDUCERS
@@ -194,6 +199,11 @@ export const {
     selectAll: getAllCategories,
     selectTotal: getTotalCategories,
   } = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
+
+export const getIsCategoryLoading = createSelector(
+    getCategoriesState,
+    fromCategories.getLoading
+)
 
 /**
 * Amenities Reducers

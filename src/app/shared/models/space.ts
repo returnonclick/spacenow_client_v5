@@ -1,5 +1,5 @@
 import { Address } from '@models/address'
-import { Booking } from '@models/booking'
+import { Availability } from '@models/availability'
 
 export class Space extends Object{
 
@@ -24,7 +24,7 @@ export class Space extends Object{
     address:      Address = new Address()
     specifications:  Object[]
     // availability: BookingSlot[]
-    booking: Booking = new Booking()
+    availability: Availability = new Availability()
 
     constructor( model: any = null ) {
 
@@ -48,7 +48,7 @@ export class Space extends Object{
         this.amenityIds  = model.amenityIds || []
         this.isApproved  = model.isApproved || false
         this.address = model.address || new Address()
-        this.booking = model.booking || new Booking()
+        this.availability = model.availability || new Availability()
       }
     }
   }

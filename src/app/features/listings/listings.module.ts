@@ -9,7 +9,8 @@ import { SharedModule } from '@shared/shared.module'
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
 
-import { GeneralComponent } from '@features/listings/general/general.component'
+import { ContainerComponent } from '@features/listings/container/container.component';
+import { ListingComponent } from '@features/listings/listing/listing.component'
 import { DailyComponent } from '@features/listings/price/daily/daily.component'
 import { HourlyComponent } from '@features/listings/price/hourly/hourly.component'
 import { WeeklyComponent } from '@features/listings/price/weekly/weekly.component'
@@ -19,12 +20,8 @@ import { SNPriceDirective } from '@features/listings/price/price.directive'
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
-
 import { CategoryService } from '@core/store/categories/services/category'
 import { CategoryEffects } from '@core/store/categories/effects/category'
-import { MatStepper } from '@angular/material';
-import { ListingsComponent } from './listings.component';
-
 import { AmenityService } from '@core/store/amenities/services/amenity'
 import { AmenityEffects } from '@core/store/amenities/effects/amenity'
 import { ListingSpecificationService } from '@core/store/listing-specifications/services/listing-specification'
@@ -33,7 +30,8 @@ import { ListingSpecificationEffects } from '@core/store/listing-specifications/
 import { ListingsRoutingModule } from './listings-routing.module'
 
 const COMPONENTS = [
-  GeneralComponent,
+  ContainerComponent,
+  ListingComponent,
   DailyComponent,
   HourlyComponent,
   WeeklyComponent,
@@ -75,13 +73,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EffectsModule.forFeature([AmenityEffects]),
     EffectsModule.forFeature([ListingSpecificationEffects]),
   ],
-  declarations: [COMPONENTS, PIPES, ListingsComponent],
+  declarations: [COMPONENTS, PIPES],
   entryComponents: ENTRY_COMPONENTS,
   exports: [COMPONENTS, MODULES, PIPES],
   providers: [
     ListingService,
     CategoryService,
-    MatStepper,
     AmenityService,
     ListingSpecificationService,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }

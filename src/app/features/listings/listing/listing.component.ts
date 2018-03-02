@@ -1,57 +1,49 @@
-import { Component, Inject, ViewContainerRef } from '@angular/core'
+import { Component, Inject, Input, ViewContainerRef, OnInit, OnChanges, AfterContentInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms'
 import { Router, ActivatedRoute } from "@angular/router"
 
 import {MatDatepickerInputEvent} from '@angular/material/datepicker' 
 import { Store } from '@ngrx/store'
-import { Observable } from 'rxjs'
+import { Observable, BehaviorSubject } from 'rxjs'
 import { ToastsManager } from 'ng2-toastr'
 
 import * as listingActions from '@core/store/listings/actions/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 
-import * as categoryActions from '@core/store/categories/actions/category'
-import * as amenityActions from '@core/store/amenities/actions/amenity'
-import * as listingSpecificationActions from '@core/store/listing-specifications/actions/listing-specification'
 import * as fromRoot from '@core/store'
 
 import { ConfirmDeleteComponent, ConfirmSaveComponent } from '@shared/components'
-import { Listing } from '@shared/models/listing'
+import { Space } from '@shared/models/space'
 import { Category } from '@shared/models/category'
 import { Amenity } from '@shared/models/amenity'
 import { ListingSpecification } from '@shared/models/listing-specification'
-import { Booking } from '@models/booking'
+import { Availability } from '@models/availability'
 
 
 @Component({
-  selector: 'sn-listing-general',
-  templateUrl: './general.component.html',
-  styleUrls: ['./general.component.scss']
+  selector: 'sn-listing',
+  templateUrl: './listing.component.html',
+  styleUrls: ['./listing.component.scss']
 })
-export class GeneralComponent {
+export class ListingComponent implements OnInit {
 
-  listing$: Observable<Listing>
-  listing: Listing
-  categories$: Observable<Category[]>
-  categories: Category[]
-  amenities$: Observable<Amenity[]>
-  amenities: Amenity[]
-  specifications$: Observable<ListingSpecification[]>
-  specifications: ListingSpecification[]
+  @Input() listing: Space
+  @Input() categories: Category[]
+  @Input() amenities: Amenity[]
+  @Input() specifications: ListingSpecification[]
+
+  listingForm: FormGroup
 
   categoryAmenities: Amenity[]
   categorySpecs: ListingSpecification[]
   editCategory: string = ''
-  listingId: string // To edit existing
   price: any
   priceValid: boolean = false
-  isTCChecked: boolean = false // Terms and Conditions flag
-  isHTChecked: boolean = false // Host Terms flag
-  section: number = 1
+  isTCChecked: boolean = false         // Terms and Conditions flag
+  isHTChecked: boolean = false         // Host Terms flag
   amenitiesValid: boolean = false
-
-  // listingID: string // To edit new (?)
   exceptionDays: Date[] = new Array()
+  isLoadingAmenity$: BehaviorSubject<boolean> = new BehaviorSubject(true)
 
   priceUnits = [
     { value: 'hourly', display: 'Price per hour' },
@@ -59,34 +51,6 @@ export class GeneralComponent {
     { value: 'weekly', display: 'Price per week' },
     { value: 'monthly', display: 'Price per month' }
   ]
-
-  listingForm: FormGroup = this._fb.group({
-    title:              [''],
-    description:        [''],
-    rules:              [''],
-    priceUnit:          [''],
-    categoryId:         [''],
-    address: this._fb.group({ 
-      unit_number:                  [''],
-      street_number:                [''],
-      route:                        [''],
-      locality:                     [''],
-      administrative_area_level_1:  [''],
-      country:                      [''],
-      postal_code:                  [''],
-      lat:                  [''],
-      lng:                  ['']
-    }),
-    amenities: this._fb.array([]),
-    specifications: this._fb.group({}),
-    booking: this._fb.group({
-      bookingType: [''],
-      leadTime: [''],
-      isOpen247: [''],
-      openingTime: [''],
-      closingTime: [''],
-    })
-  })
 
   bookingTypes = [
     "Instant booking",
@@ -158,7 +122,7 @@ export class GeneralComponent {
     {key: 0, value: "Sunday"}
   ]
 
-  closingWeekDays: number[] = [1, 2, 3, 4, 5, 6, 0]
+  // closingWeekDays: number[] = [1, 2, 3, 4, 5, 6, 0]
   exceptionDates: Observable<number[]>
 
   constructor(
@@ -173,60 +137,17 @@ export class GeneralComponent {
 
     // Set root view for toastr notification
     this.toastr.setRootViewContainerRef(vcr)
-    // Get the list of categories
-    this._store.dispatch(new categoryActions.Query)
-    // Get the list of amenities
-    this._store.dispatch(new amenityActions.Query)
-    // Get the list of specifications
-    this._store.dispatch(new listingSpecificationActions.Query)
-
-    this.categories$ = this._store.select( fromRoot.getAllCategories )
-    this.categories$.subscribe( res => this.categories = res )
-    this.amenities$ = this._store.select( fromRoot.getAllAmenities )
-    this.amenities$.subscribe( res => this.amenities = res )
-    this.specifications$ = this._store.select( fromRoot.getAllListingSpecifications )
-    this.specifications$.subscribe( res => this.specifications = res )
-    this.listing$ = this._store.select( fromRoot.selectCurrentListing )
-    
-    this.route.params.subscribe(params => {
-      this.listingId = params['id']
-      this._store.dispatch(new listingActions.QueryOne(this.listingId))
-    })
 
   }
 
   ngOnInit() {
-    if (this.listingId) {
-      // Update listing 
-      this.listing$.subscribe(res => {
-        if(res) {
-          this.listing = res
-          this.editCategory = this.listing.categoryId
-          this.priceValid = true         // Update means price valid from previous save
-          this.amenitiesValid = true     // Update means amenities valid from previous save (can run validateAmenity())
-          this.loadListingForm()         // Load the form when the listing is ready
-          this.loadCategory()            // Load the amenities and specs acording to category
-          this.filterClosingHours({value: this.listing.booking.openingTime})    // Initialize closingTime with opening incoming value
-        }
-      })
-    } else {
-      // Create new listing
-      this.listing = new Listing
-      // Create random listing id
-      var m = 21, s = '', r = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (var i=0; i < m; i++) { s += r.charAt(Math.floor(Math.random()*r.length)); }
-      this.listing.id = s                   // Random listing id
-      this.listing.priceUnit = 'daily'
-      this.listing.booking.isOpen247 = false
-      this.listing.booking.openingTime = 8   // Initialize openingTime in 8:00AM
-      this.filterClosingHours({value: 8})    // Initialize closingTime with opening 8:00AM
-      this.listing.booking.closingTime = 17  // Initialize closing hours in 8:00AM
-      this._store.dispatch(new listingActions.Create( this.listing ))
-      this.loadListingForm()
-    }
-  }
 
-  loadListingForm() {
+    this.editCategory = this.listing.categoryId ? this.listing.categoryId : null              // Backup of category id
+    this.listing.price ? this.priceValid = true : this.priceValid                             // Initialize price validation
+    this.listing.amenityIds ? this.amenitiesValid = true : this.amenitiesValid                // Initialize amenities validation
+
+    this.filterClosingHours({value: this.listing.availability.openingTime})
+
     this.listingForm = this._fb.group({
       title:              [this.listing.title, Validators.required],
       description:        [this.listing.description, Validators.required],
@@ -249,14 +170,25 @@ export class GeneralComponent {
 
       amenities: this._fb.array([]),
       specifications: this._fb.group({}),
-      booking: this._fb.group({
-        bookingType: [this.listing.booking.bookingType, Validators.required],
-        leadTime: [this.listing.booking.leadTime, Validators.required],
-        isOpen247: [this.listing.booking.isOpen247, Validators.required],
-        openingTime: [this.listing.booking.openingTime, Validators.required],
-        closingTime: [this.listing.booking.closingTime, Validators.required]
-      })
+      availability: this._fb.group({
+        bookingType: [this.listing.availability.bookingType, Validators.required],
+        leadTime: [this.listing.availability.leadTime, Validators.required],
+        isOpen247: [this.listing.availability.isOpen247, Validators.required],
+        openingTime: [this.listing.availability.openingTime, Validators.required],
+        closingTime: [this.listing.availability.closingTime, Validators.required],
+        openingDays: this._fb.group({
+          monday: [true],
+          tuesday: [true],
+          wednesday: [true],
+          thursday: [true],
+          friday: [true],
+          saturday: [true],
+          sunday: [true],
+        })
+      }),
     })
+    this.loadCategory()
+
   }
 
   ////////////// PRICE //////////////
@@ -289,28 +221,32 @@ export class GeneralComponent {
   onOpen247Change(event) {
     // Auto-reset other fields
     if(event.checked) {
-      const formBooking = this.listingForm.get('booking') as FormGroup
+      this.exceptionDays = []
+
+      // Set opening and closing times 24 hours
+      const formBooking = this.listingForm.get('availability') as FormGroup
       const open = formBooking.get("openingTime") as FormControl
       const close = formBooking.get("closingTime") as FormControl
       open.setValue(0.0)
       close.setValue(23.5)
-      this.closingWeekDays = []
-      this.exceptionDays = []
-    }
-  }
 
-  onWeekDayChange(weekday: number, event) {
-    // opening date
-    if(event.checked) {
-      // filter that out if exists
-      this.closingWeekDays = this.closingWeekDays.filter(d =>{
-        return d !== weekday
-      })
-    } else { // closing date
-      // If not existing, append to the array
-      if(this.closingWeekDays.indexOf(weekday) <= -1) {
-       this.closingWeekDays.push(weekday) 
-      }
+      // Set availability 7 days
+      const formAvailability = formBooking.get('openingDays') as FormGroup
+      const mon = formAvailability.get("monday") as FormControl
+      const tue = formAvailability.get("tuesday") as FormControl
+      const wed = formAvailability.get("wednesday") as FormControl
+      const thu = formAvailability.get("thursday") as FormControl
+      const fri = formAvailability.get("friday") as FormControl
+      const sat = formAvailability.get("saturday") as FormControl
+      const sun = formAvailability.get("sunday") as FormControl
+      mon.setValue(true)
+      tue.setValue(true)
+      wed.setValue(true)
+      thu.setValue(true)
+      fri.setValue(true)
+      sat.setValue(true)
+      sun.setValue(true)
+
     }
   }
 
@@ -331,7 +267,8 @@ export class GeneralComponent {
   }
   
   //////////// CATEGORY SPECS & AMENS ////////////
-  loadCategory() {  
+  loadCategory() { 
+    this.isLoadingAmenity$.next(true)
     // Load amenities and specifications according to category
     var category = this.categories.find(x => x.id === this.listingForm.value.categoryId)
     this.categoryAmenities = this.amenities.filter(amenity => {
@@ -345,13 +282,14 @@ export class GeneralComponent {
     this.listingForm.removeControl('amenities')
     this.listingForm.addControl('amenities', this._fb.array([]))
     const formAmenities = this.listingForm.get('amenities') as FormArray;
-    this.categoryAmenities.forEach(x => {
-      let value: boolean = false
+    this.categoryAmenities.forEach((amenity) => {
 
       // Load listing amenities when listing update
-      if (this.listingId && (this.listingForm.value.categoryId === this.editCategory))
-        this.listing.amenityIds.find(y => { return y === x.id ? value = true : value = false })
-      formAmenities.push(new FormControl(value))
+      if (this.listingForm.value.categoryId === this.editCategory)
+        formAmenities.push(new FormControl(this.listing.amenityIds.indexOf(amenity.id) !== -1))
+      else 
+        formAmenities.push(new FormControl(false))
+
     });
 
     // Load categories specifications 
@@ -359,6 +297,9 @@ export class GeneralComponent {
     this.listingForm.addControl('specifications', this._fb.group({}))
     let formGroupSpec = this.listingForm.get('specifications') as FormGroup;
     this.categorySpecs.map(spec => formGroupSpec.addControl(spec.slug, new FormControl(this.listing.specifications ? this.listing.specifications[spec.slug] : null)))
+    setTimeout(() => { // hacks
+      this.isLoadingAmenity$.next(false)
+    }, 0)
   }
 
   //////// AMENITIES VALIDATION ///////
@@ -382,8 +323,8 @@ export class GeneralComponent {
 
     if (this.price)
       result.price = this.price
-    result.booking.closingWeekDays = this.closingWeekDays
-    result.booking.exceptionDays = this.exceptionDays
+    // result.availability.closingWeekDays = this.closingWeekDays
+    result.availability.exceptionDays = this.exceptionDays
 
     // Save listing in the DB
     if(this.listing.id) {
