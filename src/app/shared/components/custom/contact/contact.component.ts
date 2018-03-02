@@ -10,39 +10,50 @@ import { Contact } from '@shared/models/contact'
 export class ContactComponent {
 
   @Input('contact')
-  public contact: Contact;
+  public contactI: Contact
 
   @Input('parentForm')
-  public parentForm: FormGroup;
+  public parentForm: FormGroup
 
   constructor(
     private _fb: FormBuilder
   ){}
 
   ngOnInit() {
-    this.createForm()
+    //this.createForm()
+    this.setContact(this.contactI)
   }
 
   createForm() {
-    this.parentForm = this._fb.group({
-      username: [this.contact.email, Validators.required],
-      firstName: [this.contact.firstName, Validators.required],
-      lastName: [this.contact.lastName, Validators.required],
-      gender: [this.contact.gender, Validators.required],
-      dob: [this.contact.dob, Validators.required],
-      phoneNumber: [this.contact.phone, Validators.required]
-    });
+    // const contactFG = this._fb.group({
+    //   username: ['', Validators.required],
+    //   firstName: ['', Validators.required],
+    //   lastName: ['', Validators.required],
+    //   gender: ['', Validators.required],
+    //   dob: ['', Validators.required],
+    //   phone: ['', Validators.required]
+    // })
+    //this.parentForm.addControl('contact', contactFG)
   }
 
   ngOnChanges() {
-    this.parentForm.reset({
-      username: this.contact.email,
-      firstName: this.contact.firstName,
-      lastName: this.contact.lastName,
-      gender: this.contact.gender,
-      dob: this.contact.dob,
-      phoneNumber: this.contact.phone
-    });
+    this.setContact(this.contactI)
+  }
+
+  get contact(): FormGroup {
+    return this.parentForm.get('contact') as FormGroup
+  }
+
+  setContact(contact: Contact) {
+    const contactFG = this._fb.group({
+      username: contact.email,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      gender: contact.gender,
+      dob: contact.dob,
+      phone: contact.phone
+    })
+    this.parentForm.setControl('contact', contactFG)
   }
 
 }

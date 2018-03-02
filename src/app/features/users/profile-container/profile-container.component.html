@@ -28,6 +28,7 @@
                         </div>
                         <div class="picture">
                             <h4>Current Profile Picture</h4>
+                            <image-data [path]="profile" (imagesList)="getImages($event)"></image-data>
                             <form>
                                 <img [src]="user.photoURL" width="200" height="200" class="profile-picture">
                                 <button mat-raised-button>upload file</button>

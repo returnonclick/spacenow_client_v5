@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs/Observable';
-import { tap } from "rxjs/operators";
+import { tap, map } from "rxjs/operators";
+import { ImageData } from "@shared/models//image-data"
 
 @Component({
   selector: 'image-data',
   templateUrl: './image-data.component.html',
   styleUrls: ['./image-data.component.scss']
 })
+
+
 export class ImageDataComponent {
+
+  // The storage path
+  @Input('path')
+  public path: string
+
+  @Output('imagesList') 
+  public imagesList = new EventEmitter<ImageData[]>();
+
+  images: Array<ImageData> = new Array()
+  image: ImageData
+
   // Main task 
   task: AngularFireUploadTask;
   // Progress monitoring
@@ -19,7 +33,9 @@ export class ImageDataComponent {
   downloadURL: Observable<string>;
   // State for dropzone CSS toggling
   isHovering: boolean;
-  constructor(private storage: AngularFireStorage, private db: AngularFirestore) {}
+  constructor(
+    private storage: AngularFireStorage, 
+    private db: AngularFirestore) {}
   
   toggleHover(event: boolean) {
     this.isHovering = event;
@@ -33,8 +49,8 @@ export class ImageDataComponent {
       console.error('unsupported file type :( ')
       return;
     }
-    // The storage path
-    const path = `test/${new Date().getTime()}_${file.name}`;
+    const path = `${this.path}/${new Date().getTime()}_${file.name}`
+    //const path = `test/${new Date().getTime()}_${file.name}`;
     // Totally optional metadata
     const customMetadata = { app: 'My AngularFire-powered PWA!' };
     // The main task
@@ -43,13 +59,15 @@ export class ImageDataComponent {
     this.percentage = this.task.percentageChanges();
     this.snapshot   = this.task.snapshotChanges()
     // The file's download URL
-    this.downloadURL = this.task.downloadURL(); 
-
+    this.downloadURL = this.task.downloadURL()
     this.snapshot = this.task.snapshotChanges().pipe(
       tap(snap => {
         if (snap.bytesTransferred === snap.totalBytes) {
-          // Update firestore on completion
-          this.db.collection('photos').add( { path, size: snap.totalBytes })
+
+        //   this.image.imageFolderPath = snap.totalBytes
+        //   this.images.push(this.image)
+        //   this.imagesList.emit(this.images)
+         
         }
       })
     )
@@ -62,49 +80,3 @@ export class ImageDataComponent {
   }
   
 }
-
-// import { Component, Inject } from '@angular/core';
-// import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-// import { Store } from '@ngrx/store';
-
-// import { ImageData } from '@shared/models/image-data';
-
-// // import * as imageDataActions from '@core/store/images-data/actions/imageData';
-// // import * as fromImageData from '@core/store/images-data/reducers';
-
-// @Component({
-//   selector: './gen-image-data',
-//   templateUrl: './image-data.component.html',
-//   styleUrls: ['./image-data.component.scss'],
-// })
-// export class ImageDataComponent {
-
-//   imageData: ImageData;
-//   selectedFiles: FileList;
-
-//   constructor(
-//     private _dialogRef: MatDialogRef<ImageDataComponent>,
-//     // private _store: Store<fromImageData.State>,
-//     @Inject(MAT_DIALOG_DATA) public data: any
-//   ) { }
-
-//   detectFiles(event) {
-//     this.selectedFiles = event.target.files;
-//   }
-
-//   send() {
-//     this._dialogRef.close('Your message has been sent.');
-//   }
-
-//   uploadImageData() {
-//     let file = this.selectedFiles.item(0);
-//     this.imageData = new ImageData();
-
-//     // this._store.dispatch(
-//     //   new imageDataActions.uploadImageData({
-//     //     image: this.imageData
-//     //   })
-//     // );
-//   }
-
-// }

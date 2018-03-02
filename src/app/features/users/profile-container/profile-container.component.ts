@@ -41,4 +41,8 @@ export class ProfileContainerComponent implements OnInit {
 
   }
 
+  getImages(event) {
+    console.log(event)
+  }
+
 }

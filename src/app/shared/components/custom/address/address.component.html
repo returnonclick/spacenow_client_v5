@@ -35,6 +35,6 @@
             </mat-form-field>
             <!-- End of the repeated address template -->
         </div>
-        <button (click)="addAddress()" type="button">Add address</button>
+        <button *ngIf="multi" (click)="addAddress()" type="button">Add address</button>
     </div>
 </div>

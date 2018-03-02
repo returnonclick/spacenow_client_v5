@@ -1,4 +1,4 @@
-import { AddressComponent } from './contact/address/address.component'
+import { AddressComponent } from './address/address.component'
 import { CardComponent, FeaturedCardComponent } from "./cards"
 import { ConfirmDeleteComponent } from "./confirm-delete/confirm-delete.component"
 import { ConfirmSaveComponent } from "./confirm-save/confirm-save.component"

@@ -13,20 +13,18 @@ export class AddressComponent {
   public addressesI: Address[]
 
   @Input('parentForm')
-  public parentForm: FormGroup;
+  public parentForm: FormGroup
+
+  @Input('multi')
+  public multi: boolean
 
   constructor(
     private _fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.createForm()
-  }
 
-  createForm() {
-    this.parentForm.addControl(
-      'addresses', this._fb.array([])
-    )
+  ngOnInit() {
+    this.setAddresses(this.addressesI)
   }
 
   ngOnChanges() {

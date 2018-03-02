@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core'
+import { Component, OnInit, OnChanges, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormArray, FormControl, ValidatorFn } from '@angular/forms'
 import { Router, ActivatedRoute, Params } from '@angular/router'
 
@@ -8,7 +8,7 @@ import { map, combineLatest } from 'rxjs/operators'
 import { User } from '@shared/models/user'
 import { Profile } from '@shared/models/profile'
 import { Contact } from '@shared/models/contact'
-import { Address } from '@shared/models/address'
+import { Card } from '@shared/models/card'
 
 import * as actions from '@core/store/auth/actions/auth'
 import * as profileActions from '@core/store/users-profile/actions/user-profile'
@@ -19,42 +19,56 @@ import * as fromRoot from '@core/store'
   templateUrl: './profile-detail.component.html',
   styleUrls: ['./profile-detail.component.scss']
 })
-export class ProfileDetailComponent implements OnChanges {
+export class ProfileDetailComponent {
 
   @Input('profile')
   public profile: Profile
 
-  profileForm: FormGroup
+  public profileForm: FormGroup
 
   constructor(
     private _fb: FormBuilder,
-    private _store: Store<fromRoot.State>
+    private _store: Store<fromRoot.State>,
+    private cdRef: ChangeDetectorRef
   ) {
     this.createForm()
   }
 
   createForm() {
-    this.profileForm = this._fb.group({})
+    this.profileForm = this._fb.group({
+      cards: this._fb.array([])
+    })
   }
 
-  ngOnChanges() {
-    // this.profileForm = this._fb.group({
-    //   contact: [this.profile.contact]
-    // })
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
+
+  ngOnChanges(){
+    this.setCards(this.profile.cards)
+  }
+
+  get cards(): FormArray {
+    return this.profileForm.get('cards') as FormArray
+  }
+
+  setCards(cards: Card[]) {
+    const cardFGs = cards.map(card => this._fb.group(card))
+    const acardFA = this._fb.array(cardFGs)
+    this.profileForm.setControl('cards', acardFA)
+  }
+
+  addCard() {
+    this.cards.push(this._fb.group(new Card()))
+  }
+
+  onSubmit() {
+    console.log(this.profileForm)
+    // this.profileForm.updateValueAndValidity()
+    // if(this.profileForm.invalid)
+    //   return
+    // this.profile = Object.assign(this.profile, this.profileForm.value)
+    // this._store.dispatch(new profileActions.Update( this.profile.uid, this.profile ))
   }
 
 }
-
-
-//   onSubmit() {
-
-//     console.log(this.userProfile)
-//     console.log(this.profileForm.value)
-
-//       this.profileForm.updateValueAndValidity()
-//       if(this.profileForm.invalid)
-//         return
-//       this.userProfile = Object.assign(this.userProfile, this.profileForm.value)
-//       this._store.dispatch(new profileActions.Update( this.userProfile.uid, this.userProfile ))
-  
-//   }
