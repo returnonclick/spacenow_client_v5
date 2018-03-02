@@ -16,7 +16,7 @@ import { FirebaseApp } from 'angularfire2';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 // Models
-import { ImageDataModel } from '@models/image-data.model'
+import { ImageData } from '@models/image-data'
 import { Image } from '@shared/directives/image-resize-upload/interfaces'
 
 export class StorageFileModel {
@@ -48,7 +48,7 @@ export class ImageUploadService {
     * @param { string } imageItemName field in document that contains image meta data
     * @returns { ImageDataModel[] }
     * *************************************************************************    */
-  getImageList(collectionName: string, documentID: string, imageItemName: string): Observable<ImageDataModel[]> {  
+  getImageList(collectionName: string, documentID: string, imageItemName: string): Observable<ImageData[]> {  
     return new Observable(observer =>{
       let docRef = collectionName + '/' + documentID
       // Check whether doc exists
@@ -139,7 +139,7 @@ export class ImageUploadService {
    * @param { ImageDataModel[] } imageList - Array of Image meta data
    * @return { Promise<boolean> } outcome
    * **************************************************************************  */
-  private updateImageList(docPath: string, imageItemName: string, imageList: ImageDataModel[]): Promise<boolean> {
+  private updateImageList(docPath: string, imageItemName: string, imageList: ImageData[]): Promise<boolean> {
     return new Promise((resolve) =>{
       const docRef = this.afs.doc<any>(docPath)
         /* For ES6 only. ES5 should create object first
@@ -191,11 +191,11 @@ export class ImageUploadService {
     * @param { string } imageURL path to image file
     * @returns { ImageDataModel }
     * *************************************************************************    */
-  getUploadedImageData(collectionName: string, documentID: string, imageItemName: string, imageURL: string): Promise<ImageDataModel> {  
+  getUploadedImageData(collectionName: string, documentID: string, imageItemName: string, imageURL: string): Promise<ImageData> {  
     return new Promise((resolve) =>{
     const docPath = `${collectionName}/${documentID}`
     const docRef = this.afs.doc<any>(docPath)
-      let imageList: ImageDataModel[]
+      let imageList: ImageData[]
 
       // Get imageList. Then filter that list
       docRef.snapshotChanges().subscribe(d =>{
@@ -208,13 +208,13 @@ export class ImageUploadService {
             resolve(imageList[0])
           } else {
             // not found, just return a blank
-            resolve(new ImageDataModel())
+            resolve(new ImageData())
           }
           
         } else {
           // not found, just return a blank
           // or maybe a null
-          resolve(new ImageDataModel())
+          resolve(new ImageData())
         }
       })
     })
@@ -233,6 +233,7 @@ export class ImageUploadService {
     * @returns { Promise<boolean> } outcome of uploading - sucess or failure
     * ************************************************************************* */
   uploadImage(collectionName: string, documentID: string, imageItemName: string, imageFile: Image, imageTitle: string): Promise<{imageURL: string, isSuccess: boolean}> {
+    this.toastr.info(documentID)
     return new Promise((resolve) => {
       // TODO(TT): develop to validate image formats and size
       if (imageFile.file.type.split('/')[0] !== 'image') { 
@@ -261,7 +262,7 @@ export class ImageUploadService {
           // Then save metadata to firestore
           
           // image meta data
-          let imageMetaData = new ImageDataModel()
+          let imageMetaData = new ImageData()
           imageMetaData.imageURL = snapshot.downloadURL
           imageMetaData.storageRef = imagePath
           imageMetaData.imageTitle = imageTitle
@@ -269,59 +270,63 @@ export class ImageUploadService {
 
           // get existing imageData list
           this.getImageList(collectionName, documentID, imageItemName).subscribe(imageDataList =>{
-            let newImageList: ImageDataModel[] = new Array()
+            let newImageList: ImageData[] = new Array()
             // No data exist, just create a new document with image data
+            if(typeof imageDataList !== undefined) {
+              
+              // console.log(imageDataList)
+              if(imageDataList !== null) {
+                // console.log(imageDataList)
+                // add new imageData to the list
+                // if imageData exist, filter it out first
+                newImageList = imageDataList.filter((imageData: ImageData) =>{
+                  if (imageData.storageRef == imagePath) {
+                    this.toastr.info("Image already exists in our database!!!. We will update it now...")  
+                  }
+                  return imageData.storageRef !== imagePath 
+                })
+                // add new imageData to the list
+                newImageList.push(imageMetaData)
+                // then update the document
+                dataRef.update({
+                  [imageItemName]: newImageList
+                })
+                .then(() =>{
+                  resolve({
+                    imageURL: imageMetaData.imageURL,
+                    isSuccess: true
+                  })
+                })
+                .catch((error) =>{
+                  console.log(error)
+                  resolve({
+                    imageURL: "",
+                    isSuccess: false
+                  })
+                })
+              } else {
+                console.log("doc not exist. Creating one with image data")
+                newImageList.push(imageMetaData)
+                dataRef.set({ // create new document
+                  id: documentID,
+                  [imageItemName]: newImageList
+                })
+                .then(() =>{
+                  resolve({
+                    imageURL: imageMetaData.imageURL,
+                    isSuccess: true
+                  })
+                })
+                .catch((error) =>{
+                  console.log(error)
+                  resolve({
+                    imageURL: "",
+                    isSuccess: false
+                  })
+                })
+              }// End if else
 
-            if(imageDataList.length >= 0) {
-              console.log(imageDataList)
-              // add new imageData to the list
-              // if imageData exist, filter it out first
-              newImageList = imageDataList.filter((imageData: ImageDataModel) =>{
-                if (imageData.storageRef == imagePath) {
-                  this.toastr.info("Image already exists in our database!!!. We will update it now...")  
-                }
-                return imageData.storageRef !== imagePath 
-              })
-              // add new imageData to the list
-              newImageList.push(imageMetaData)
-              // then update the document
-              dataRef.update({
-                [imageItemName]: newImageList
-              })
-              .then(() =>{
-                resolve({
-                  imageURL: imageMetaData.imageURL,
-                  isSuccess: true
-                })
-              })
-              .catch((error) =>{
-                console.log(error)
-                resolve({
-                  imageURL: "",
-                  isSuccess: false
-                })
-              })
-            } else {
-              console.log("doc not exist. Creating one with image data")
-              newImageList.push(imageMetaData)
-              dataRef.set({ // create new document
-                id: documentID,
-                [imageItemName]: newImageList
-              })
-              .then(() =>{
-                resolve({
-                  imageURL: imageMetaData.imageURL,
-                  isSuccess: true
-                })
-              })
-              .catch((error) =>{
-                console.log(error)
-                resolve({
-                  imageURL: "",
-                  isSuccess: false
-                })
-              })
-            }// End if else
+            }
 
           }) 
 
@@ -346,7 +351,7 @@ export class ImageUploadService {
     * @param { string } imageTitle name of the image
     * @returns { Promise<boolean> } outcome of uploading - sucess or failure
     * ************************************************************************* */
-  updateImageData(collectionName: string, documentID: string, imageItemName: string, imageData: ImageDataModel): Promise<boolean> {
+  updateImageData(collectionName: string, documentID: string, imageItemName: string, imageData: ImageData): Promise<boolean> {
     return new Promise((resolve) => {
 
       // the firestore path
@@ -355,14 +360,14 @@ export class ImageUploadService {
 
         dataRef.snapshotChanges().subscribe(d =>{
           if(d.payload.exists) { // document exists
-            let newImageList: ImageDataModel[] = new Array()
+            let newImageList: ImageData[] = new Array()
             // get existing imageData list
             this.getImageList(collectionName, documentID, imageItemName).subscribe(imageDataList =>{
               if(imageDataList) {
                 // add new imageData to the list
                 // if imageData exist, filter it out first
-                newImageList = imageDataList.filter((imageData: ImageDataModel) =>{
-                  return imageData.storageRef !== imageData.storageRef 
+                newImageList = imageDataList.filter((image: ImageData) =>{
+                  return image.storageRef !== imageData.storageRef 
                 })
                 // add new imageData to the list
                 setTimeout(() =>{

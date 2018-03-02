@@ -2,7 +2,7 @@ import { Component, Inject, Input, ViewContainerRef, OnInit, OnChanges, AfterCon
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms'
 import { Router, ActivatedRoute } from "@angular/router"
 
-import {MatDatepickerInputEvent} from '@angular/material/datepicker' 
+import { MatDatepickerInputEvent } from '@angular/material/datepicker' 
 import { Store } from '@ngrx/store'
 import { Observable, BehaviorSubject } from 'rxjs'
 import { ToastsManager } from 'ng2-toastr'
@@ -18,6 +18,9 @@ import { Category } from '@shared/models/category'
 import { Amenity } from '@shared/models/amenity'
 import { ListingSpecification } from '@shared/models/listing-specification'
 import { Availability } from '@models/availability'
+import { ImageData } from '@models/image-data'
+
+// import { ImageUploadService } from '@core/services/image-upload/image-upload.service'
 
 
 @Component({
@@ -132,7 +135,7 @@ export class ListingComponent implements OnInit {
     private listingEffects: ListingEffects,
     private toastr: ToastsManager,
     vcr: ViewContainerRef,
-    private router: Router
+    private router: Router,
   ) {
 
     // Set root view for toastr notification
@@ -141,6 +144,8 @@ export class ListingComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // console.log(this.listing)
 
     this.editCategory = this.listing.categoryId ? this.listing.categoryId : null              // Backup of category id
     this.listing.price ? this.priceValid = true : this.priceValid                             // Initialize price validation

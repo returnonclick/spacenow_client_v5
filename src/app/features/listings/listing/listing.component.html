@@ -195,7 +195,10 @@
     <!-- Upload images -->
     <div>
       <h2>Upload your photos</h2>
-      <image-upload></image-upload>
+      <image-upload 
+        [uploadedImageDataList]="listing.images"
+        [spaceID] = "listing.id">
+      </image-upload>
     </div>
     
     <!-- Booking system -->

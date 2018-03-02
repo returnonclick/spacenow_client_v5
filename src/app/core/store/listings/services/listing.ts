@@ -5,8 +5,8 @@ import { Listing } from '@shared/models/listing';
 @Injectable()
 export class ListingService {
 
-  // ref: string = `listings`
-  ref: string = `listings-camila`
+  ref: string = `listings`
+  // ref: string = `listings-camila`
   // ref: string = `tt-listings`
 
   constructor( public afs: AngularFirestore ) {

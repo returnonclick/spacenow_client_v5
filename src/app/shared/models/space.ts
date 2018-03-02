@@ -1,5 +1,6 @@
 import { Address } from '@models/address'
 import { Availability } from '@models/availability'
+import { ImageData } from '@models/image-data'
 
 export class Space extends Object{
 

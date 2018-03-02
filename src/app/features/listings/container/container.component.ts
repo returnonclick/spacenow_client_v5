@@ -57,6 +57,7 @@ export class ContainerComponent {
 
     // Get listing id from route params
     this.listingId = this.route.snapshot.params.id
+    console.log(this.listingId)
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 
 import { Store } from '@ngrx/store'
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage'
@@ -15,7 +15,7 @@ import * as fromRoot from '@core/store'
 
 import { Listing } from '@shared/models/listing'
 import { Image, ResizeOptions } from '@shared/directives/image-resize-upload/interfaces'
-import { ImageDataModel } from '@models/image-data.model'
+import { ImageData } from '@models/image-data'
 
 import { ImageUploadService } from '@core/services/image-upload/image-upload.service'
 
@@ -36,13 +36,17 @@ export class StorageFileModel {
 
 export class ImageUploadComponent implements OnInit {
 
+  @Input() spaceID: string
+  @Input() uploadedImageDataList: ImageData[]
+  // @Input() uploadedImageDataList: Observable<ImageData[]>
+
   subfolderPath: string = "listings"
 
   listings: Observable<Listing[]>
   //mockup spaceID
-  spaceID = "jdeDFNJooBPhIkpRcY9I"
+  // spaceID = "jdeDFNJooBPhIkpRcY9I"
 
-  listingId: Observable<string>
+  // listingId: Observable<string>
   listing: Observable<Listing>
 
   uploadStatus: Observable<string>
@@ -52,13 +56,14 @@ export class ImageUploadComponent implements OnInit {
   imageTitleToEdit: Observable<string>
 
   toUploadImage: Image
-  uploadedImageData: ImageDataModel
-  uploadedImageDataList: ImageDataModel[] = []
-  imageDataListObservable: Observable<ImageDataModel[]>
+  uploadedImageData: ImageData
+  // uploadedImageDataList: ImageDataModel[] = []
+  imageDataListObservable: Observable<ImageData[]>
 
   // TT. Need to modify depending on how large and high resolution
   // E.g. Do we intend to serve for `retinal` screen?
   desktopSize: ResizeOptions = { resizeMaxWidth: 800 }
+  allowedExtensions: string[] = ["jpg", "jpeg"]
 
   constructor(
     private storage: AngularFireStorage, 
@@ -75,14 +80,16 @@ export class ImageUploadComponent implements OnInit {
 
   ngOnInit() {
     // use selector to get entity by Id
-    this.listingId = this.store.select(fromRoot.selectCurrentListingId)
+    // this.listingId = this.store.select(fromRoot.selectCurrentListingId)
 
-    this.listingId.subscribe(id =>{
-      if(id) {
-        this.spaceID = id
-      }
-    })
+    // this.listingId.subscribe(id =>{
+    //   if(id) {
+    //     this.spaceID = id
+    //   }
+    // })
     // this.listing = this.store.select(fromRoot.selectCurrentListing)
+    this.toastr.info(this.spaceID)
+    this.imageDataListObservable = Observable.of(this.uploadedImageDataList)
   }
 
   /** 
@@ -95,8 +102,13 @@ export class ImageUploadComponent implements OnInit {
    * @returns void
    *  */
   getResizedImage(image: Image): void {
-    this.toUploadImage = image;
-    this.uploadStatus = Observable.of('engaged')
+    if(image.error) {
+      console.log(image.error)
+      this.toastr.error(image.error)
+    } else {
+      this.toUploadImage = image;
+      this.uploadStatus = Observable.of('engaged')
+    }
   }
 
   /**
@@ -117,8 +129,8 @@ export class ImageUploadComponent implements OnInit {
           .then(imageData =>{
             this.uploadedImageData = imageData
             // Make sure we don't have duplicated images
-            console.log(this.uploadedImageData)
-            this.uploadedImageDataList = this.uploadedImageDataList.filter((image: ImageDataModel) =>{
+            // console.log(this.uploadedImageData)
+            this.uploadedImageDataList = this.uploadedImageDataList.filter((image: ImageData) =>{
               return image.storageRef !== imageData.storageRef 
             })
             this.uploadedImageDataList.push(imageData)
@@ -142,6 +154,11 @@ export class ImageUploadComponent implements OnInit {
 
   }
 
+  cancelUpload() {
+    this.toUploadImage = null
+    this.uploadStatus = Observable.of(null)
+  }
+
   /** 
    * Delete image from storage and update its metadata at firebase /images node
    *
@@ -152,7 +169,7 @@ export class ImageUploadComponent implements OnInit {
    * @param { string } imageURL URL
    * @returns void
    *  */
-  deleteImageFile(collectionName: string, documentID: string, imageItemName: string, imageData: ImageDataModel): void {
+  deleteImageFile(collectionName: string, documentID: string, imageItemName: string, imageData: ImageData): void {
     let storageRef = imageData.storageRef
     let imageURL = imageData.imageURL
 
@@ -163,7 +180,7 @@ export class ImageUploadComponent implements OnInit {
     .then(res =>{        
       if(res) { 
         this.uploadedImageData = null
-        this.uploadedImageDataList = this.uploadedImageDataList.filter((image: ImageDataModel) =>{
+        this.uploadedImageDataList = this.uploadedImageDataList.filter((image: ImageData) =>{
           return image.storageRef !== imageData.storageRef
         })
         this.uploadStatus = Observable.of(null)
@@ -189,17 +206,19 @@ export class ImageUploadComponent implements OnInit {
    * @param { string } 
    * @returns void
    *  */
-  updateImageData(collectionName: string, documentID: string, imageItemName: string, imageData: ImageDataModel, imageTitle: string): void {
+  updateImageData(collectionName: string, documentID: string, imageItemName: string, imageData: ImageData, imageTitle: string): void {
     // Show loading...
-    let newImageData: ImageDataModel = imageData
+    let newImageData: ImageData = imageData
     newImageData.imageTitle = imageTitle
     this.imageUploadService.updateImageData(collectionName, documentID, imageItemName, newImageData)
     .then(res =>{
       if(res) {
         //Update local ImageDataList
-        let tmpImageDataList = this.uploadedImageDataList.filter(imageData =>{
-          return imageData.storageRef !== imageData.storageRef
+        // console.log(this.uploadedImageDataList)
+        let tmpImageDataList = this.uploadedImageDataList.filter(data =>{
+          return data.storageRef !== imageData.storageRef
         }) 
+        // console.log(tmpImageDataList)
 
         tmpImageDataList.push(newImageData)
         this.uploadedImageDataList = tmpImageDataList
