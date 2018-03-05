@@ -28,6 +28,15 @@ export function reducer(
 ): State {
   switch(action.type) {
 
+    case actions.ALL: {
+      return spaceAdapter.removeAll({
+        ...state,
+        isLoading: true,
+        selectedSpaceId: null,
+        error: null,
+      })
+    }
+
     case actions.SELECT: {
       return spaceAdapter.removeAll({
         ...state,
@@ -35,6 +44,21 @@ export function reducer(
         selectedSpaceId: action.id,
         error: null,
       })
+    }
+
+    case actions.ADDED: {
+      return spaceAdapter.addOne(action.payload, state)
+    }
+
+    case actions.MODIFIED: {
+      return spaceAdapter.updateOne({
+        id: action.payload.id,
+        changes: action.payload,
+      }, state)
+    }
+
+    case actions.REMOVED: {
+      return spaceAdapter.removeOne(action.payload.id, state)
     }
 
     case actions.SUCCESS: {

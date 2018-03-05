@@ -21,6 +21,9 @@ import { SearchEffects } from '@core/store/search/effects/search'
 import { SpaceService } from '@core/store/spaces/services/space'
 import { SpaceEffects } from '@core/store/spaces/effects/space'
 
+import { CategoryService } from '@core/store/categories/services/category'
+import { CategoryEffects } from '@core/store/categories/effects/category'
+
 import { environment } from '../../environments/environment'
 
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
@@ -28,6 +31,7 @@ import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component
 import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 import { SearchComponent } from '@features/search/search.component'
 import { SpaceComponent } from '@features/space/space.component'
+import { CheckoutComponent } from '@features/checkout/checkout.component'
 
 const COMPONENTS = [
   MySpacesComponent,
@@ -35,12 +39,14 @@ const COMPONENTS = [
   MyFavoritesComponent,
   SearchComponent,
   SpaceComponent,
+  CheckoutComponent,
 ]
 
 const ENTRY_COMPONENTS = [
 ]
 
 const SERVICES = [
+  CategoryService,
   SearchService,
   SpaceService,
 ]
@@ -60,6 +66,7 @@ const SERVICES = [
     CoreModule,
     SharedModule,
     EffectsModule.forFeature([
+      CategoryEffects,
       SearchEffects,
       SpaceEffects,
     ]),

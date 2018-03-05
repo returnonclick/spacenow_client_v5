@@ -14,6 +14,19 @@ import * as actions from '@core/store/spaces/actions/space'
 export class SpaceEffects {
 
   @Effect()
+  all$ = this._actions$.pipe(
+    ofType<actions.All>(actions.ALL),
+    switchMap(action => this._service.readAll()),
+    mergeMap(actions => actions),
+    map(action => {
+      return {
+        type: `[Spaces] ${action.type}`,
+        payload: action.payload.doc.data()
+      }
+    })
+  )
+
+  @Effect()
   select$ = this._actions$.pipe(
     ofType<actions.Select>(actions.SELECT),
     switchMap(action => this._service.readOne(action.id)),

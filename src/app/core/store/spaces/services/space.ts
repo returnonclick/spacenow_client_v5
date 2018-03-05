@@ -11,7 +11,11 @@ export class SpaceService {
 
   constructor(private afs: AngularFirestore) { }
 
-  readOne(id: string): Observable<Space> {
+  readAll() {
+    return this.afs.collection<Space>(this.ref).stateChanges()
+  }
+
+  readOne(id: string) {
     return this.afs.doc<Space>(`${this.ref}/${id}`).valueChanges()
   }
 

@@ -7,6 +7,7 @@ import {
 } from '@ngrx/store'
 import { environment } from '../../../environments/environment'
 import { RouterStateUrl } from './utils'
+import { localStorageSync } from 'ngrx-store-localstorage'
 import * as fromRouter from '@ngrx/router-store'
 
 /**
@@ -75,14 +76,24 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   }
 }
 
+export function saveToCache(reducer: ActionReducer<State>): ActionReducer<State> {
+  return localStorageSync({
+    keys: [
+      'cart',
+    ],
+    rehydrate: true,
+    removeOnUndefined: true,
+  })(reducer)
+}
+
 /**
  * By default, @ngrx/store uses combineReducers with the reducer map to compose
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, storeFreeze]
-  : []
+  ? [logger, storeFreeze, saveToCache]
+  : [saveToCache,]
 
 /**
  * Auth Reducers

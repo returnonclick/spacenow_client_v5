@@ -17,6 +17,7 @@ import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component
 import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 import { SearchComponent } from '@features/search/search.component'
 import { SpaceComponent } from '@features/space/space.component'
+import { CheckoutComponent } from '@features/checkout/checkout.component'
 
 const appRoutes: Routes = [
   {
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'space/:id', component: SpaceComponent },
+  { path: 'checkout', component: CheckoutComponent },
   // { path: 'my-spaces', component: MySpacesComponent },
   // { path: 'my-calendar', component: MyCalendarComponent },
   // { path: 'my-favorites', component: MyFavoritesComponent },
