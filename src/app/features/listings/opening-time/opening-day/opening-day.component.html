@@ -9,7 +9,7 @@
         >
         {{weekday}}
       </mat-slide-toggle>
-      <mat-form-field fxFlex="30%" *ngIf="openingDay.isOpen">
+      <mat-form-field fxFlex="30%" *ngIf="isOpenObservable | async">
         <mat-select placeholder="Opening time" 
           formControlName = "startHour"
           (selectionChange)="filterClosingHours($event); openingDayChange()"
@@ -19,7 +19,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field fxFlex="30%" *ngIf="openingDay.isOpen">
+      <mat-form-field fxFlex="30%" *ngIf="isOpenObservable | async">
         <mat-select placeholder="Closing time" 
           formControlName = "closeHour"
           (selectionChange)="openingDayChange()"

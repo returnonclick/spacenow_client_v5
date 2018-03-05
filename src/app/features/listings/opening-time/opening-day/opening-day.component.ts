@@ -71,11 +71,13 @@ export class OpeningDayComponent implements OnInit {
   openingDayForm: FormGroup
   closingHours: Observable<any[]> 
   isValid: boolean
+  isOpenObservable: Observable<boolean>
 
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
+    this.isOpenObservable = Observable.of(this.openingDay.isOpen)
     this.filterClosingHours({value: this.openingDay.startHour})
     
     this.openingDayForm = this.fb.group({
@@ -98,6 +100,9 @@ export class OpeningDayComponent implements OnInit {
       this.openingDay.startHour = 0
       this.openingDay.closeHour = 0
     }
+
+    
+    this.isOpenObservable = Observable.of(this.openingDayForm.get('isOpen').value)
 
     this.onOpeningDayChange.emit({ time: this.openingDayForm.value, weekday: this.weekday, valid: this.openingDayForm.valid })
   }
