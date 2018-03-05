@@ -20,6 +20,8 @@ import { ListingSpecification } from '@shared/models/listing-specification'
 import { Availability } from '@models/availability'
 import { ImageData } from '@models/image-data'
 
+import { OpeningTime } from '@models/opening-time'
+
 // import { ImageUploadService } from '@core/services/image-upload/image-upload.service'
 
 
@@ -47,6 +49,8 @@ export class ListingComponent implements OnInit {
   amenitiesValid: boolean = false
   exceptionDays: Date[] = new Array()
   isLoadingAmenity$: BehaviorSubject<boolean> = new BehaviorSubject(true)
+  openingTime: OpeningTime
+  isOpeningTimeValid: boolean
 
   priceUnits = [
     { value: 'hourly', display: 'Price per hour' },
@@ -145,7 +149,7 @@ export class ListingComponent implements OnInit {
 
   ngOnInit() {
 
-    // console.log(this.listing)
+    console.log(this.listing)
 
     this.editCategory = this.listing.categoryId ? this.listing.categoryId : null              // Backup of category id
     this.listing.price ? this.priceValid = true : this.priceValid                             // Initialize price validation
@@ -179,20 +183,25 @@ export class ListingComponent implements OnInit {
         bookingType: [this.listing.availability.bookingType, Validators.required],
         leadTime: [this.listing.availability.leadTime, Validators.required],
         isOpen247: [this.listing.availability.isOpen247, Validators.required],
-        openingTime: [this.listing.availability.openingTime, Validators.required],
-        closingTime: [this.listing.availability.closingTime, Validators.required],
-        openingDays: this._fb.group({
-          monday: [true],
-          tuesday: [true],
-          wednesday: [true],
-          thursday: [true],
-          friday: [true],
-          saturday: [true],
-          sunday: [true],
-        })
+        // openingTime: [this.listing.availability.openingTime, Validators.required],
+        // closingTime: [this.listing.availability.closingTime, Validators.required],
+        // openingDays: this._fb.group({
+        //   monday: [true],
+        //   tuesday: [true],
+        //   wednesday: [true],
+        //   thursday: [true],
+        //   friday: [true],
+        //   saturday: [true],
+        //   sunday: [true],
+        // })
       }),
     })
     this.loadCategory()
+
+    // console.log(this.listing.availability.exceptionDays)
+    if (typeof this.listing.availability.exceptionDays !== 'undefined') {
+      this.exceptionDays = this.listing.availability.exceptionDays
+    }
 
   }
 
@@ -311,6 +320,12 @@ export class ListingComponent implements OnInit {
   validateAmenity() {
     this.amenitiesValid = this.listingForm.controls.amenities.value.find(item => item === true)
   }
+
+  updateOpeningTime(event) {
+    console.log(event.openingTime)
+    this.openingTime = event.openingTime
+    this.isOpeningTimeValid = event.valid
+  }
   
   onSubmit() {
     this.toastr.info("submiting now...")
@@ -330,6 +345,9 @@ export class ListingComponent implements OnInit {
       result.price = this.price
     // result.availability.closingWeekDays = this.closingWeekDays
     result.availability.exceptionDays = this.exceptionDays
+    result.availability.openingTime = this.openingTime
+
+    // console.log(result)
 
     // Save listing in the DB
     if(this.listing.id) {

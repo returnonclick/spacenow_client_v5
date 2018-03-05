@@ -1,6 +1,8 @@
 export class OpeningDay extends Object {
     startHour: number = 0
     closeHour: number = 0
+    open: number = 0
+    close: number = 0
     startMinute: number = 0 // not gonna be used yet
     closeMinute: number = 0 // not gonna be used yet
     isOpen: boolean = true
@@ -15,5 +17,5 @@ export class OpeningDay extends Object {
       this.isOpen = model.isOpen || true
     }
   }
-}
 
+}

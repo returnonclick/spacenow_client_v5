@@ -15,6 +15,7 @@ import { Space } from '@shared/models/space'
 import { Category } from '@shared/models/category'
 import { Amenity } from '@shared/models/amenity'
 import { ListingSpecification } from '@shared/models/listing-specification'
+import { OpeningTime } from '@models/opening-time'
 
 @Component({
   selector: 'sn-listing-container',
@@ -68,8 +69,8 @@ export class ContainerComponent {
       this.listing = new Space
 
       // Initialize listing
-      this.listing.availability.openingTime ? this.listing.availability.openingTime : this.listing.availability.openingTime = 8
-      this.listing.availability.closingTime ? this.listing.availability.closingTime : this.listing.availability.closingTime = 17
+      this.listing.availability.openingTime ? this.listing.availability.openingTime : this.listing.availability.openingTime = new OpeningTime()
+      // this.listing.availability.closingTime ? this.listing.availability.closingTime : this.listing.availability.closingTime = 17
       this.listing.priceUnit ? this.listing.priceUnit : this.listing.priceUnit = 'daily'
       this.listing.availability.isOpen247 ? this.listing.availability.isOpen247 : this.listing.availability.isOpen247 = false
 

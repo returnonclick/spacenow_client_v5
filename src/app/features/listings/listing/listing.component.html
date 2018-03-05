@@ -1,13 +1,10 @@
-
 <div class="grid sections">
   <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
 
     <!-- Title -->
     <div class="space-title">
       <div class="title">
-        <h2>Title of your space</h2>
-      </div>
-      <div class="content">
+        <h2>Title of your space</h2> </div> <div class="content">
         <mat-form-field class="input-container-full">
           <input matInput placeholder="Name your space" formControlName="title" required>
         </mat-form-field>
@@ -206,10 +203,10 @@
       <div class="title">
         <h2>Booking system</h2>
       </div>
-      <div class="content" id="booking-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between" formGroupName="availability">
-        <div id="booking-general-container" fxFlex="49%">
-          <div fxLayout="row" fxLayoutAlign="space-between start">
-            <mat-form-field fxFlex="49%">
+      <div class="content" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" formGroupName="availability" fxLayoutGap.lt-md="30px">
+        <div id="booking-general-container" fxFlex="25%">
+          <div fxLayout="column">
+            <mat-form-field>
               <mat-select placeholder="Booking Type" name="booking-type" formControlName="bookingType" required>
                 <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
                   {{ bookingType }} 
@@ -217,7 +214,7 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field fxFlex="49%">
+            <mat-form-field>
               <input matInput 
                 type="number"
                 placeholder="Lead time (days)" 
@@ -229,72 +226,84 @@
           </div>
         </div>
       
-        <div id="opening-time-container" fxFlex="49%" fxLayout="column">
-          <div *ngIf="!listingForm.controls.availability.value.isOpen247">
-            <mat-form-field fxFlex="49%">
-              <mat-select placeholder="Opening time" 
-                (selectionChange)="filterClosingHours($event)"
-                name="opening-time" 
-                formControlName="openingTime" required>
-                <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
-                  {{ openingHour.value }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field fxFlex="49%">
-              <mat-select placeholder="Closing time" name="closing-time" formControlName="closingTime" required>
-                <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key">
-                  {{ closingHour.value }} 
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div>
-            <div id="week-day-container" fxFlex="49%" fxLayout="column" *ngIf="!listingForm.controls.availability.value.isOpen247">
-              <h3>Opening</h3>
-              <div formGroupName="openingDays" fxLayout="column">
-                <mat-slide-toggle formControlName="monday">Monday</mat-slide-toggle>
-                <mat-slide-toggle formControlName="tuesday">Tuesday</mat-slide-toggle>
-                <mat-slide-toggle formControlName="wednesday">Wednesday</mat-slide-toggle>
-                <mat-slide-toggle formControlName="thursday">Thursday</mat-slide-toggle>
-                <mat-slide-toggle formControlName="friday">Friday</mat-slide-toggle>
-                <mat-slide-toggle formControlName="saturday">Saturday</mat-slide-toggle>
-                <mat-slide-toggle formControlName="sunday">Sunday</mat-slide-toggle>
-              </div>
-            </div>
-              
-            <div id="exception-day-container" fxFlex="49%">
-              <h3>Exceptions</h3> 
-              <div id="date-picker-container">
-                <mat-form-field class="booking-exception">
-                  <input matInput 
-                    id="date-picker-input"
-                    readonly
-                    placeholder="Choose a date"
-                    [min]="minDate" 
-                    [max]="maxDate" 
-                    [matDatepicker]="picker" 
-                    (dateChange)="addExceptionDate('change', $event)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <span>{{picker.value}}</span>
-              </div>
-              <div *ngIf="exceptionDays.length > 0">
-                <ul>
-                  <li *ngFor="let date of exceptionDays">
-                    {{date | date: 'EEEE, d/M/yyyy'}}
-                    <button mat-icon-button
-                      (click)="deleteExceptionDay(date)">
-                      <mat-icon>highlight_off</mat-icon>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div id="opening-time-container" 
+          *ngIf="!listingForm.controls.availability.value.isOpen247"
+          fxFlex="70%" fxLayout="column">
+          <sn-opening-time 
+            [openingTime]="listing.availability.openingTime"
+            (onOpeningTimeChange)="updateOpeningTime($event)">
+          </sn-opening-time>
+
+          <!--  -->
+          <!-- <div *ngIf="!listingForm.controls.availability.value.isOpen247"> -->
+          <!--   <mat-form-field fxFlex="49%"> -->
+          <!--     <mat-select placeholder="Opening time"  -->
+          <!--       (selectionChange)="filterClosingHours($event)" -->
+          <!--       name="opening-time"  -->
+          <!--       formControlName="openingTime" required> -->
+          <!--       <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key"> -->
+          <!--         {{ openingHour.value }} -->
+          <!--       </mat-option> -->
+          <!--     </mat-select> -->
+          <!--   </mat-form-field> -->
+          <!--   <mat-form-field fxFlex="49%"> -->
+          <!--     <mat-select placeholder="Closing time" name="closing-time" formControlName="closingTime" required> -->
+          <!--       <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key"> -->
+          <!--         {{ closingHour.value }}  -->
+          <!--       </mat-option> -->
+          <!--     </mat-select> -->
+          <!--   </mat-form-field> -->
+          <!-- </div> -->
+          <!--  -->
+          <!-- <div> -->
+          <!--   <div id="week-day-container" fxFlex="49%" fxLayout="column" *ngIf="!listingForm.controls.availability.value.isOpen247"> -->
+          <!--     <h3>Opening</h3> -->
+          <!--     <div formGroupName="openingDays" fxLayout="column"> -->
+          <!--       <mat-slide-toggle formControlName="monday">Monday</mat-slide-toggle> -->
+          <!--       <mat-slide-toggle formControlName="tuesday">Tuesday</mat-slide-toggle> -->
+          <!--       <mat-slide-toggle formControlName="wednesday">Wednesday</mat-slide-toggle> -->
+          <!--       <mat-slide-toggle formControlName="thursday">Thursday</mat-slide-toggle> -->
+          <!--       <mat-slide-toggle formControlName="friday">Friday</mat-slide-toggle> -->
+          <!--       <mat-slide-toggle formControlName="saturday">Saturday</mat-slide-toggle> -->
+          <!--       <mat-slide-toggle formControlName="sunday">Sunday</mat-slide-toggle> -->
+          <!--     </div> -->
+          <!--   </div> -->
+          <!-- </div> -->
+
         </div>
       </div>
+
+      <div id="exception-day-container" 
+        *ngIf="!listingForm.controls.availability.value.isOpen247" >
+        <h3>Exceptions</h3> 
+        <div id="date-picker-container">
+          <mat-form-field class="booking-exception">
+            <input matInput 
+              id="date-picker-input"
+              readonly
+              placeholder="Choose a date"
+              [min]="minDate" 
+              [max]="maxDate" 
+              [matDatepicker]="picker" 
+              (dateChange)="addExceptionDate('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <span>{{picker.value}}</span>
+        </div>
+        <div *ngIf="exceptionDays.length > 0">
+          <ul>
+            <li *ngFor="let date of exceptionDays">
+              {{date | date: 'EEEE, d/M/yyyy'}}
+              <button mat-icon-button
+                (click)="deleteExceptionDay(date)">
+                <mat-icon>highlight_off</mat-icon>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </div>
     <!-- Link other spaces -->
     <!-- <h2>Do you want to link any other spaces?</h2> -->
@@ -337,7 +346,7 @@
     <div class="actions">
       <div class="save">
         <button mat-raised-button type="submit" class="input-container-full" 
-                [disabled]="listingForm.invalid || !isHTChecked || !isTCChecked || !priceValid || !amenitiesValid"> 
+                [disabled]="listingForm.invalid || !isHTChecked || !isTCChecked || !priceValid || !amenitiesValid || !isOpeningTimeValid"> 
                 Save 
         </button>
       </div>

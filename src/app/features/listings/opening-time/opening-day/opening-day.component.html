@@ -1,0 +1,35 @@
+<form [formGroup]="openingDayForm">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <mat-slide-toggle fxFlex="25%%" 
+        formControlName = "isOpen"
+        labelPosition="before"
+        (change)="openingDayChange()"
+        [(ngModel)] ="openingDay.isOpen"
+        >
+        {{weekday}}
+      </mat-slide-toggle>
+      <mat-form-field fxFlex="30%" *ngIf="openingDay.isOpen">
+        <mat-select placeholder="Opening time" 
+          formControlName = "startHour"
+          (selectionChange)="filterClosingHours($event); openingDayChange()"
+           required>
+          <mat-option *ngFor="let openingHour of openingHours" [value]="openingHour.key">
+            {{ openingHour.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="30%" *ngIf="openingDay.isOpen">
+        <mat-select placeholder="Closing time" 
+          formControlName = "closeHour"
+          (selectionChange)="openingDayChange()"
+          required>
+          <mat-option *ngFor="let closingHour of closingHours | async" [value]="closingHour.key">
+            {{ closingHour.value }} 
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlexFill></div>
+  </div>
+</form>

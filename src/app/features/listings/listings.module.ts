@@ -18,6 +18,9 @@ import { MonthlyComponent } from '@features/listings/price/monthly/monthly.compo
 import { PriceComponent } from '@features/listings/price/price.component'
 import { SNPriceDirective } from '@features/listings/price/price.directive'
 
+import { OpeningTimeComponent } from './opening-time/opening-time.component';
+import { OpeningDayComponent } from './opening-time/opening-day/opening-day.component'
+
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 import { CategoryService } from '@core/store/categories/services/category'
@@ -27,7 +30,7 @@ import { AmenityEffects } from '@core/store/amenities/effects/amenity'
 import { ListingSpecificationService } from '@core/store/listing-specifications/services/listing-specification'
 import { ListingSpecificationEffects } from '@core/store/listing-specifications/effects/listing-specification'
 
-import { ListingsRoutingModule } from './listings-routing.module'
+import { ListingsRoutingModule } from './listings-routing.module';
 
 const COMPONENTS = [
   ContainerComponent,
@@ -37,7 +40,10 @@ const COMPONENTS = [
   WeeklyComponent,
   MonthlyComponent,
   PriceComponent,
-  SNPriceDirective
+  SNPriceDirective,
+
+  OpeningDayComponent,
+  OpeningTimeComponent
 ]
 
 const ENTRY_COMPONENTS = [
@@ -45,6 +51,7 @@ const ENTRY_COMPONENTS = [
   HourlyComponent,
   WeeklyComponent,
   MonthlyComponent
+
 ]
 
 const MODULES = [

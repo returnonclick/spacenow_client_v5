@@ -1,5 +1,4 @@
 :host {
-
   overflow: hidden;
   display: block
 
@@ -116,13 +115,13 @@ div.sections {
   "content";
 }
 
-.booking {
-  display: grid;
-  grid-template-rows: 1fr 2fr;
-  grid-template-areas: 
-  "title"
-  "content";
-}
+// .booking {
+//   display: grid;
+//   grid-template-rows: 1fr 2fr;
+//   grid-template-areas:
+//   "title"
+//   "content";
+// }
 
 .terms {
   display: grid;
@@ -157,3 +156,9 @@ h2, h3 {
 .input-container-full {
     width: 100%;
 }
+
+// @media screen and (max-width: 1279px) {
+//   .booking {
+//     grid-template-rows: 1fr 3fr;
+//   }
+// }
