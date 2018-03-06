@@ -237,29 +237,31 @@ export class ListingComponent implements OnInit {
     if(event.checked) {
       this.exceptionDays = []
 
+      this.openingTime = new OpeningTime()
+
       // Set opening and closing times 24 hours
-      const formBooking = this.listingForm.get('availability') as FormGroup
-      const open = formBooking.get("openingTime") as FormControl
-      const close = formBooking.get("closingTime") as FormControl
-      open.setValue(0.0)
-      close.setValue(23.5)
+      // const formBooking = this.listingForm.get('availability') as FormGroup
+      // const open = formBooking.get("openingTime") as FormControl
+      // const close = formBooking.get("closingTime") as FormControl
+      // open.setValue(0.0)
+      // close.setValue(23.5)
 
       // Set availability 7 days
-      const formAvailability = formBooking.get('openingDays') as FormGroup
-      const mon = formAvailability.get("monday") as FormControl
-      const tue = formAvailability.get("tuesday") as FormControl
-      const wed = formAvailability.get("wednesday") as FormControl
-      const thu = formAvailability.get("thursday") as FormControl
-      const fri = formAvailability.get("friday") as FormControl
-      const sat = formAvailability.get("saturday") as FormControl
-      const sun = formAvailability.get("sunday") as FormControl
-      mon.setValue(true)
-      tue.setValue(true)
-      wed.setValue(true)
-      thu.setValue(true)
-      fri.setValue(true)
-      sat.setValue(true)
-      sun.setValue(true)
+      // const formAvailability = formBooking.get('openingDays') as FormGroup
+      // const mon = formAvailability.get("monday") as FormControl
+      // const tue = formAvailability.get("tuesday") as FormControl
+      // const wed = formAvailability.get("wednesday") as FormControl
+      // const thu = formAvailability.get("thursday") as FormControl
+      // const fri = formAvailability.get("friday") as FormControl
+      // const sat = formAvailability.get("saturday") as FormControl
+      // const sun = formAvailability.get("sunday") as FormControl
+      // mon.setValue(true)
+      // tue.setValue(true)
+      // wed.setValue(true)
+      // thu.setValue(true)
+      // fri.setValue(true)
+      // sat.setValue(true)
+      // sun.setValue(true)
 
     }
   }
@@ -322,7 +324,7 @@ export class ListingComponent implements OnInit {
   }
 
   updateOpeningTime(event) {
-    console.log(event.openingTime)
+    // console.log(event.openingTime)
     this.openingTime = event.openingTime
     this.isOpeningTimeValid = event.valid
   }
@@ -346,6 +348,8 @@ export class ListingComponent implements OnInit {
     // result.availability.closingWeekDays = this.closingWeekDays
     result.availability.exceptionDays = this.exceptionDays
     result.availability.openingTime = this.openingTime
+    // reset opening time when open 24/7
+    if(result.availability.isOpen247) { this.openingTime = new OpeningTime() }
 
     // console.log(result)
 

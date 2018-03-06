@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-// import { ControlValueAccessor, SelectControlValueAccessor } from '@angular/forms'
 
 import { Observable } from 'rxjs/Observable'
 
@@ -60,7 +59,8 @@ export class OpeningDayComponent implements OnInit {
     {key: 21.0, value: "09:00 PM"},
     {key: 21.5, value: "09:30 PM"},
     {key: 22.0, value: "10:00 PM"},
-    {key: 22.5, value: "10:30 PM"}, {key: 23.0, value: "11:00 PM"},
+    {key: 22.5, value: "10:30 PM"}, 
+    {key: 23.0, value: "11:00 PM"},
     {key: 23.5, value: "11:30 PM"},
   ]
 
@@ -71,13 +71,11 @@ export class OpeningDayComponent implements OnInit {
   openingDayForm: FormGroup
   closingHours: Observable<any[]> 
   isValid: boolean
-  isOpenObservable: Observable<boolean>
-
+  isSlideOpened: boolean = true
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.isOpenObservable = Observable.of(this.openingDay.isOpen)
     this.filterClosingHours({value: this.openingDay.startHour})
     
     this.openingDayForm = this.fb.group({
@@ -85,8 +83,21 @@ export class OpeningDayComponent implements OnInit {
       startHour: [this.openingDay.startHour],
       closeHour: [this.openingDay.closeHour]
     })
+
+    if(this.openingDay.startHour === 0) {
+      this.openingDayForm.controls['startHour'].setValue(8.0)
+    }
+
+    if(this.openingDay.closeHour === 0) {
+      this.openingDayForm.controls['closeHour'].setValue(18.0)
+    }
+
+    this.isSlideOpened = this.openingDayForm.controls['isOpen'].value
+
+    this.openingDayChange()
     
   }
+
 
   filterClosingHours(event) {
     this.closingHours = Observable.of(this.openingHours.filter(hour =>{
@@ -96,15 +107,21 @@ export class OpeningDayComponent implements OnInit {
 
   openingDayChange() {
     // reset if being a closed day
-    if(!this.openingDay.isOpen) {
-      this.openingDay.startHour = 0
-      this.openingDay.closeHour = 0
+    // console.log(this.openingDayForm.controls['isOpen'].value)
+    if(!(this.openingDayForm.controls['isOpen'].value)) {
+      this.openingDayForm.controls['startHour'].setValue(0)
+      this.openingDayForm.controls['closeHour'].setValue(0)
+      this.isSlideOpened = false  
+    } else {
+      if(!this.isSlideOpened) {
+        this.openingDayForm.controls['startHour'].setValue(8.0)
+        this.openingDayForm.controls['closeHour'].setValue(18.0)
+        this.isSlideOpened = true
+      }
     }
-
-    
-    this.isOpenObservable = Observable.of(this.openingDayForm.get('isOpen').value)
 
     this.onOpeningDayChange.emit({ time: this.openingDayForm.value, weekday: this.weekday, valid: this.openingDayForm.valid })
   }
+
 
 }

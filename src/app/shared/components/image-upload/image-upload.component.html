@@ -38,7 +38,9 @@
         </mat-menu>
       </div>
       <!-- <img mat-card-image [src]="imageURL" class="uploaded-image"> -->
-      <img [src]="imageData.imageURL" class="uploaded-image">
+      <div class="uploaded-image-container">
+        <img [src]="imageData.imageURL" class="uploaded-image">
+      </div>
 
       <mat-card-title class="image-title">
         <div *ngIf="!(isShowImageTitleInput | async)">
