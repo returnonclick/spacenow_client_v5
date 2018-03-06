@@ -88,7 +88,7 @@ export class ImageUploadComponent implements OnInit {
     //   }
     // })
     // this.listing = this.store.select(fromRoot.selectCurrentListing)
-    this.toastr.info(this.spaceID)
+    // this.toastr.info(this.spaceID)
     this.imageDataListObservable = Observable.of(this.uploadedImageDataList)
   }
 

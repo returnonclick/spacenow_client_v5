@@ -26,7 +26,8 @@
       "@directives/*": ["app/shared/directives/*"],
       "@components/*": ["app/shared/components/*"],
       "@utils/*": ["app/shared/utils/*"],
-      "@environments/*": ["environments/*"]
+      "@environments/*": ["environments/*"],
+      "@node_modules/*": ["../node_modules/*"]
     }
   }
 }

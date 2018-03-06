@@ -30,7 +30,7 @@ const appRoutes: Routes = [
       // { path: 'my-calendar', component: MyCalendarComponent },
       // { path: 'space', component: SpaceComponent },
       { path: 'spaces', loadChildren: 'app/features/spaces/spaces.module#SpacesModule'},
-      { path: 'listings', loadChildren: 'app/features/listings/listings.module#ListingModule'},
+      { path: 'listing', loadChildren: 'app/features/listings/listings.module#ListingModule'},
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ]
   },

@@ -9,7 +9,8 @@ import { SharedModule } from '@shared/shared.module'
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
 
-import { ContainerComponent } from '@features/listings/container/container.component';
+import { ContainerComponent } from '@features/listings/container/container.component'
+import { TitleComponent } from '@features/listings/title/title.component';
 import { ListingComponent } from '@features/listings/listing/listing.component'
 import { DailyComponent } from '@features/listings/price/daily/daily.component'
 import { HourlyComponent } from '@features/listings/price/hourly/hourly.component'
@@ -34,6 +35,7 @@ import { ListingsRoutingModule } from './listings-routing.module';
 
 const COMPONENTS = [
   ContainerComponent,
+  TitleComponent,
   ListingComponent,
   DailyComponent,
   HourlyComponent,
@@ -57,7 +59,7 @@ const ENTRY_COMPONENTS = [
 const MODULES = [
   MaterialModule,
   SharedModule,
-  ListingsRoutingModule,
+  ListingsRoutingModule
 ]
 
 const PIPES = [

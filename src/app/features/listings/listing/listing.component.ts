@@ -1,11 +1,13 @@
-import { Component, Inject, Input, ViewContainerRef, OnInit, OnChanges, AfterContentInit } from '@angular/core'
+import { Component, Inject, Input, ViewContainerRef, OnInit, OnChanges, AfterContentInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms'
 import { Router, ActivatedRoute } from "@angular/router"
 
-import { MatDatepickerInputEvent } from '@angular/material/datepicker' 
+import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material/datepicker' 
 import { Store } from '@ngrx/store'
 import { Observable, BehaviorSubject } from 'rxjs'
 import { ToastsManager } from 'ng2-toastr'
+
+import * as moment from 'moment/moment';  // Delete?
 
 import * as listingActions from '@core/store/listings/actions/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
@@ -235,7 +237,6 @@ export class ListingComponent implements OnInit {
   onOpen247Change(event) {
     // Auto-reset other fields
     if(event.checked) {
-      this.exceptionDays = []
 
       // Set opening and closing times 24 hours
       const formBooking = this.listingForm.get('availability') as FormGroup

@@ -25,6 +25,7 @@ import { OpeningTime } from '@models/opening-time'
 export class ContainerComponent {
 
   listing$: Observable<Space>
+
   categories$: Observable<Category[]>
   amenities$: Observable<Amenity[]>
   specifications$: Observable<ListingSpecification[]>
@@ -58,7 +59,7 @@ export class ContainerComponent {
 
     // Get listing id from route params
     this.listingId = this.route.snapshot.params.id
-    console.log(this.listingId)
+    // console.log(this.listingId)
 
   }
 
@@ -80,6 +81,7 @@ export class ContainerComponent {
       this.listingId = this.listing.id = s
 
       // Create new listing
+      // console.log(this.listing)
       this._store.dispatch(new listingActions.Create( this.listing ))
 
     }
