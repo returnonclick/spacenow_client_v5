@@ -240,6 +240,8 @@ export class ListingComponent implements OnInit {
 
       this.openingTime = new OpeningTime()
 
+      this.openingTime = new OpeningTime()
+
       // Set opening and closing times 24 hours
       // const formBooking = this.listingForm.get('availability') as FormGroup
       // const open = formBooking.get("openingTime") as FormControl
