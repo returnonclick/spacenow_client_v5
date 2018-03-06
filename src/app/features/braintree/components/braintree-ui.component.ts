@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { BraintreeService } from '@features/braintree/store/services/braintree.service';
-declare var braintree: any;
+import { Component, Input, Output, EventEmitter } from '@angular/core'
 
+import * as dropin from 'braintree-web-drop-in'
+
+import { BraintreeService } from '@features/braintree/store/services/braintree.service'
 import { PaymentCustomer } from '@features/braintree/models/payment-customer'
 
 @Component({
@@ -81,27 +82,25 @@ export class BraintreeUIComponent {
       }
     }
 
-    if (typeof braintree !== 'undefined') {
-      braintree.dropin.create(dropinConfig, (createErr, instance) => {
-        if (createErr) {
-          console.error(createErr)
-          return
-        }
-        this.instance = instance
+    dropin.create(dropinConfig, (createErr, instance) => {
+      if (createErr) {
+        console.error(createErr)
+        return
+      }
+      this.instance = instance
 
-        // Check whether a saved credit card is avablable
-        console.log(this.instance.isPaymentMethodRequestable())
+      // Check whether a saved credit card is avablable
+      console.log(this.instance.isPaymentMethodRequestable())
 
-        // Listen to Dropin UI event
-        instance.on('paymentMethodRequestable', function(event){
-          console.log(event.type)
-          console.log(event.paymentMethodIsSelected)
-        })
-
+      // Listen to Dropin UI event
+      instance.on('paymentMethodRequestable', function(event){
+        console.log(event.type)
+        console.log(event.paymentMethodIsSelected)
       })
-      clearInterval(this.interval)
-      this.showPayButton = true
-    }
+
+    })
+    clearInterval(this.interval)
+    this.showPayButton = true
 
 
   }
@@ -117,16 +116,12 @@ export class BraintreeUIComponent {
           this.nonce = payload.nonce
           this.showDropinUI = false
           this.confirmUpdate()
-        } else { // dont process immediately. Give user a chance to change his payment details.
-          if (!this.nonce) { // previous nonce doesn't exist
-            this.nonce = payload.nonce
-          } else { // a nonce exists already
-            if (this.nonce === payload.nonce) { // go ahead with payment
-              this.confirmUpdate()
-            } else {
-              this.nonce = payload.nonce
-            }
-          }
+        } else if (!this.nonce) { // dont process immediately. Give user a chance to change his payment details.
+          this.nonce = payload.nonce // previous nonce doesn't exist
+        } else if (this.nonce === payload.nonce) { // a nonce exists already
+          this.confirmUpdate() // go ahead with payment
+        } else {
+          this.nonce = payload.nonce
         }
       })
     }

@@ -1,5 +1,5 @@
 <div class="error" *ngIf="errorMessage">Error! {{ errorMessage }}</div>
-<div *ngIf="showDropinUI && clientToken" cardUIDirective>
+<div *ngIf="showDropinUI && clientToken">
   <div id="dropin-container"></div>
   <button *ngIf="showPayButton" (click)="update()">{{ buttonText }}</button>
 </div>
