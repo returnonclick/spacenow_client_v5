@@ -32,6 +32,9 @@ import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.compon
 import { SearchComponent } from '@features/search/search.component'
 import { SpaceComponent } from '@features/space/space.component'
 import { CheckoutComponent } from '@features/checkout/checkout.component'
+import { PaymentComponent } from '@features/checkout/payment/payment.component'
+
+import { BraintreeModule } from '@features/braintree/braintree.module'
 
 const COMPONENTS = [
   MySpacesComponent,
@@ -40,6 +43,7 @@ const COMPONENTS = [
   SearchComponent,
   SpaceComponent,
   CheckoutComponent,
+  PaymentComponent,
 ]
 
 const ENTRY_COMPONENTS = [
@@ -59,6 +63,7 @@ const SERVICES = [
         'places'
       ]
     }),
+    BraintreeModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

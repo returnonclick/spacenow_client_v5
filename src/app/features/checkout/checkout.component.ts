@@ -23,13 +23,15 @@ export class CheckoutComponent {
 
   @ViewChild(MatTabGroup) matTabs: MatTabGroup
 
-  cart$:       Observable<BookingSpace[]>
-  categories$: Observable<Dictionary<Category>>
-  spaces$:     Observable<Dictionary<Space>>
+  cart$:         Observable<BookingSpace[]>
+  categories$:   Observable<Dictionary<Category>>
+  spaces$:       Observable<Dictionary<Space>>
+  pLoadPayments: Promise<boolean>
 
   categories: Dictionary<Category>
   spaces:     Dictionary<Space>
 
+  loadPayments:        any
   hasAgreed:           boolean      = false
   hasConfirmedDetails: boolean      = false
   lastDeleted:         BookingSpace = null
@@ -48,6 +50,9 @@ export class CheckoutComponent {
     })
     this.spaces$.subscribe(spaces => {
       this.spaces = spaces
+    })
+    this.pLoadPayments = new Promise((resolve, reject) => {
+      this.loadPayments = resolve
     })
   }
 
@@ -90,6 +95,7 @@ export class CheckoutComponent {
   confirmDetails() {
     this.hasConfirmedDetails = true
     this.matTabs.selectedIndex = 2
+    this.loadPayments(true)
   }
 
 }
