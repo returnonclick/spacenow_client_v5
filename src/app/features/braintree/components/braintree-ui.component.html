@@ -3,7 +3,8 @@
   <div id="dropin-container"></div>
   <button *ngIf="showPayButton" (click)="update()">{{ buttonText }}</button>
 </div>
-<div *ngIf="clientTokenNotReceived"> <div class="error">Error! Client token not received.</div>
+<div *ngIf="clientTokenNotReceived">
+  <div class="error">Error! Client token not received.</div>
   Make sure your clientTokenURL's JSON response is as shown below:
-  <pre>{{ '{' }}"token":"braintree_client_token_generated_on_your_server"{{'}'}}</pre>
+  <pre>{{ '{' }} "token":"braintree_client_token_generated_on_your_server" {{ '}' }}</pre>
 </div>
