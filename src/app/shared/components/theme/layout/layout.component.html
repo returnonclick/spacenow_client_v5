@@ -12,7 +12,7 @@
   
     <!-- Nav -->
     <nav id="main-nav">
-      <a routerLink="/" class="logo"><img src="assets/images/logo/spacenow-logo-white.png" width="250px"></a>
+      <a routerLink="/" class="logo" [ngClass]="logo$ | async"></a>
       <span><!-- fill space --></span>
       <a routerLink="/app/listings">List your space</a>
       <div *ngIf="isSignedIn$ | async; then authenticated else guest"></div>
@@ -26,7 +26,24 @@
 
     <!-- User logged in -->
     <ng-template #authenticated>
-      <a *ngIf="(authUser$ | async) as authUser" [routerLink]="[{ outlets: { sidenav: ['auth-menu'] } }]" routerLinkActive="active" (click)="openSidenav()"><img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a>
+      <!-- <a *ngIf="(authUser$ | async) as authUser" [routerLink]="[{ outlets: { sidenav: ['auth-menu'] } }]" routerLinkActive="active" (click)="openSidenav()"><img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a> -->
+      <button *ngIf="(authUser$ | async) as authUser" mat-icon-button [matMenuTriggerFor]="menu">
+        <img [src]="authUser.photoURL" class="userProfilePicture" width="50px" height="50px">
+      </button>
+      <mat-menu #menu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
+        <button mat-menu-item routerLink="/app/listings">List a space</button>
+        <button mat-menu-item>My spaces</button>
+        <button mat-menu-item routerLink="/app/profile">Profile</button>
+        <button mat-menu-item>Favorites</button>
+        <button mat-menu-item>Manage Bookings</button>
+        <!-- <button mat-menu-item>Bank details</button>
+        <button mat-menu-item>Payout preferences</button>
+        <button mat-menu-item>Transaction history</button> -->
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="signOut()">Logout</button>
+      </mat-menu> 
+    
+    
     </ng-template>
 
     <router-outlet></router-outlet>
@@ -34,17 +51,19 @@
     <!-- Footer -->
     <footer class="grid">
       <div class="inner">
-        <img src='assets/images/logo/spacenow-logo.png' width="200px"/>
-        <ul class="help-pages">
-          <li><a href="#">about</a></li>
-          <li><a href="#">news</a></li>
-          <li><a href="#">careers</a></li>
-          <li><a href="#">press</a></li>
-          <li><a href="#">help</a></li>
-        </ul>
+        <img src='assets/images/logo/spacenow-logo.svg' width="200px"/>
+        <div class="help-pages">
+          <ul fxLayout="row" fxLayoutAlign="space-between stretch">
+            <li><a href="#">about</a></li>
+            <li><a href="#">news</a></li>
+            <li><a href="#">careers</a></li>
+            <li><a href="#">press</a></li>
+            <li><a href="#">help</a></li>
+          </ul>
+        </div>
         <div class="menu">
           <span>spacenow 2017</span>
-          <ul>
+          <ul fxLayout="row" fxLayoutAlign="space-between stretch">
             <li><a href="#">terms of serviec</a></li>
             <li><a href="#">host terms</a></li>
             <li><a href="#">privacy policy</a></li>
@@ -53,7 +72,7 @@
           </ul>
         </div>
         <ul class="social-media">
-          <li><a href="#">facebook</a></li>
+          <li><a href="#"></a></li>
           <li><a href="#">linkedin</a></li>
           <li><a href="#">twitter</a></li>
         </ul>

@@ -2,9 +2,9 @@
     
     <sn-contact [contact]="profile.contact" [parentForm]="profileForm"></sn-contact>
 
-    <div formArrayName="cards">
+    <!-- <div formArrayName="cards">
         <div *ngFor="let card of cards.controls; let i=index" [formGroupName]="i" >
-            <!-- The repeated address template -->
+
             <h4>Card #{{i + 1}}</h4>
             <mat-form-field>
                 <input matInput placeholder="Name" type="text" name="name" formControlName="name">
@@ -21,10 +21,10 @@
             <mat-form-field>
                 <input matInput placeholder="CVN" type="text" name="cvn" formControlName="cvn">
             </mat-form-field>
-            <!-- End of the repeated card template -->
+
         </div>
         <button (click)="addCard()" type="button">Add card</button>
-    </div>
+    </div> -->
 
     <button type="submit" mat-raised-button [disabled]="!profileForm.valid">update</button>
 </form>

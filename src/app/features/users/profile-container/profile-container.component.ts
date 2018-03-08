@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute, Params } from '@angular/router'
 
 import { Store, select } from '@ngrx/store'
@@ -6,7 +6,10 @@ import { Observable } from 'rxjs/Observable'
 import { Profile } from '@shared/models/profile'
 import { User } from '@shared/models/user'
 
+import * as userActions from '@core/store/users/actions/user'
 import * as actions from '@core/store/users-profile/actions/user-profile'
+import * as authActions from '@core/store/auth/actions/auth'
+import * as layoutActions from '@core/store/layouts/actions/layout'
 import * as fromRoot from '@core/store'
 
 @Component({
@@ -18,12 +21,13 @@ export class ProfileContainerComponent implements OnInit {
 
   isLoading$: Observable<boolean>
   authId$: Observable<string>
+  authId: string
   authUser$: Observable<User>
   userProfile$: Observable<Profile>
+  storagePath: string = `/images/users-profile/{$usersProfileID}/{$imageID}/{IMAGE_SIZE.JPG}`
 
   constructor(
-    private _store: Store<fromRoot.State>,
-    private route: ActivatedRoute
+    private _store: Store<fromRoot.State>
   ) {
 
     this.isLoading$ = this._store.pipe(select(fromRoot.getIsLoadingProfile))
@@ -34,15 +38,18 @@ export class ProfileContainerComponent implements OnInit {
    }
 
   ngOnInit() {
-
+    this._store.dispatch(new layoutActions.SetLogoGreen())
     this.authId$.subscribe(
-      id => this._store.dispatch(new actions.Query(id))
-    )
-
+      id => {
+        this.authId = id
+        this.storagePath = `/images/users-profile/${id}`
+        return this._store.dispatch(new actions.Query(id))
+      })
   }
 
-  getImages(event) {
-    console.log(event)
+  getImage(event) {
+    this._store.dispatch(new userActions.Update(this.authId, {photoURL: event.path}))
+    this._store.dispatch(new authActions.GetUser(this.authId))
   }
 
 }

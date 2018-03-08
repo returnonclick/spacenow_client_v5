@@ -20,20 +20,7 @@ export class ContactComponent {
   ){}
 
   ngOnInit() {
-    //this.createForm()
     this.setContact(this.contactI)
-  }
-
-  createForm() {
-    // const contactFG = this._fb.group({
-    //   username: ['', Validators.required],
-    //   firstName: ['', Validators.required],
-    //   lastName: ['', Validators.required],
-    //   gender: ['', Validators.required],
-    //   dob: ['', Validators.required],
-    //   phone: ['', Validators.required]
-    // })
-    //this.parentForm.addControl('contact', contactFG)
   }
 
   ngOnChanges() {

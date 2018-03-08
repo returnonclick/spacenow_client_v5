@@ -1,11 +1,26 @@
-.signupForm {
 
-    width: 60%;
+:host {
 
-    > * {
+    --gap: 30px;
 
-        margin: 15px;
+    .signupForm {
 
+        width: 60%;
+
+        > * {
+
+            margin: calc(var(--gap) / 2);
+
+        }
+
+    }
+
+    .btn-container {
+        display: grid;
+        grid-gap: var(--gap);
+        grid-template-columns: repeat(3, 1fr);
+        padding: calc(var(--gap) / 2);
+        width: 60%;
     }
 
 }

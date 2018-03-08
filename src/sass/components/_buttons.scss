@@ -15,7 +15,33 @@ $button-radius: 2 * $button-padding-lr;
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 
-    .mat-raised-button, .mat-fab, .mat-mini-fab {
+    .mat-mini-fab {
+
+        color: mat-color($primary, 50, 1) !important;
+        background: mat-color($primary, default-contrast, 1);
+        border: 1px solid mat-color($primary, default-contrast, 1) !important;
+
+        &:hover {
+            background: transparent;
+            color: mat-color($primary, 50, 1) !important;
+        }
+
+
+        &.primary {
+            color: mat-color($primary, default-contrast, 1) !important;
+            background: mat-color($primary, 50, 1);
+            border: 1px solid mat-color($primary, 50, 1) !important;
+
+            &:hover {
+                background: transparent;
+                color: mat-color($primary, 50, 1) !important;
+            }
+
+        }
+
+    }
+
+    .mat-raised-button, .mat-fab {
         
         border-radius: $button-radius !important;
         padding: $button-padding-tb $button-padding-lr !important;

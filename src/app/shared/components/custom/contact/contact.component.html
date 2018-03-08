@@ -1,5 +1,6 @@
 <ng-container [formGroup]="parentForm">
-    <div formGroupName="contact">
+    <div formGroupName="contact" class="frmContact">
+        <h4>Required Information</h4>
         <mat-form-field>
             <input matInput placeholder="E-Mail" type="email" name="username" required formControlName="username">
         </mat-form-field>
@@ -23,6 +24,7 @@
         <mat-form-field>
             <input matInput placeholder="Phone Number" type="text" name="phone" formControlName="phone">
         </mat-form-field>
-        <sn-address [parentForm]="parentForm.controls.contact" [addresses]="contactI.addresses" [multi]="true"></sn-address>
     </div>
+
+    <sn-address [parentForm]="parentForm.controls.contact" [addresses]="contactI.addresses" [multi]="true"></sn-address>
 </ng-container>

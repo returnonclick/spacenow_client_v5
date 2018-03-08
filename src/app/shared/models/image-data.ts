@@ -11,10 +11,10 @@
  *  */
 export class ImageData extends Object {
 
-    imageDataID:        string          = ''
-    imageFolderPath:    string          = ''               // Path to image files
-    imageTitle:         string          = ''               // Image name - used in `<alt>` tag
-    imageTags:          Array<string>   = new Array(); 
+    id:      string          = ''
+    path:    string          = ''               // Path to image files
+    title:   string          = ''               // Image name - used in `<alt>` tag
+    tags:    Array<string>   = new Array(); 
   
     constructor( model: any = null ) {
 
@@ -22,10 +22,10 @@ export class ImageData extends Object {
 
         if ( model ) {
 
-            this.imageDataID     = model.imageDataID
-            this.imageFolderPath = model.imageFolderPath
-            this.imageTitle      = model.imageTitle
-            this.imageTags       = model.imageTags
+            this.id     = model.id
+            this.path   = model.path
+            this.title  = model.title
+            this.tags   = model.tags
 
         }
 

@@ -45,4 +45,8 @@ export class AddressComponent {
     this.addresses.push(this._fb.group(new Address()))
   }
 
+  removeAddress(index) {
+    this.addresses.removeAt(index)
+  }
+
 }

@@ -1,8 +1,12 @@
 <div [formGroup]="parentForm">
     <div formArrayName="addresses">
-        <div *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i" >
+        <div *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i" class="frmAddress">
             <!-- The repeated address template -->
-            <h4>Address #{{i + 1}}</h4>
+            <h4>Address {{i + 1}} 
+                <button mat-icon-button class="primary" type="button" *ngIf="multi" (click)="removeAddress(i)" style="float: right">
+                    <mat-icon aria-label="Remove address">delete</mat-icon>
+                </button>
+            </h4>
             <mat-form-field>
                 <input matInput placeholder="Unit" type="text" name="unit" formControlName="unit">
             </mat-form-field>
@@ -13,6 +17,9 @@
                 <input matInput placeholder="Street" type="text" name="street" formControlName="street">
             </mat-form-field>
             <mat-form-field>
+                <input matInput placeholder="Country Name" type="text" name="countryName" formControlName="countryName">
+            </mat-form-field>
+            <mat-form-field>
                 <input matInput placeholder="City" type="text" name="city" formControlName="city">
             </mat-form-field>
             <mat-form-field>
@@ -21,20 +28,11 @@
             <mat-form-field>
                 <input matInput placeholder="Postal Code" type="text" name="postalCode" formControlName="postalCode">
             </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Country Code" type="text" name="countryCode" formControlName="countryCode">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Country Name" type="text" name="countryName" formControlName="countryName">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Latitude" type="text" name="lat" formControlName="lat">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Longitute" type="text" name="lng" formControlName="lng">
-            </mat-form-field>
             <!-- End of the repeated address template -->
         </div>
-        <button *ngIf="multi" (click)="addAddress()" type="button">Add address</button>
+        <button mat-icon-button class="primary" type="button" *ngIf="multi" (click)="addAddress()">
+            <mat-icon aria-label="Add new address">add</mat-icon>
+            Add new address
+        </button>
     </div>
 </div>

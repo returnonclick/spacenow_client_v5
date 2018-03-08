@@ -21,7 +21,7 @@ export class AuthEffects {
     @Effect()
     public getUser$: Observable<Action> = this.actions$.pipe(
         ofType<actions.GetUser>( actions.GET_USER ),
-        exhaustMap(payload => this.authService.getUser(payload.user.uid)),
+        exhaustMap(payload => this.authService.getUser(payload.uid)),
         map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )

@@ -13,7 +13,7 @@ export const FAIL = '[Auth] Fail';
 export class GetUser implements Action {
     public readonly type = GET_USER;
 
-    constructor(public user: any) {}
+    constructor(public uid: string) {}
 }
 
 export class SignIn implements Action {

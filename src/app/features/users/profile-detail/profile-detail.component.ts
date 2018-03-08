@@ -36,7 +36,7 @@ export class ProfileDetailComponent {
 
   createForm() {
     this.profileForm = this._fb.group({
-      cards: this._fb.array([])
+      //cards: this._fb.array([])
     })
   }
 
@@ -45,22 +45,22 @@ export class ProfileDetailComponent {
   }
 
   ngOnChanges(){
-    this.setCards(this.profile.cards)
+    //this.setCards(this.profile.cards)
   }
 
-  get cards(): FormArray {
-    return this.profileForm.get('cards') as FormArray
-  }
+  // get cards(): FormArray {
+  //   return this.profileForm.get('cards') as FormArray
+  // }
 
-  setCards(cards: Card[]) {
-    const cardFGs = cards.map(card => this._fb.group(card))
-    const acardFA = this._fb.array(cardFGs)
-    this.profileForm.setControl('cards', acardFA)
-  }
+  // setCards(cards: Card[]) {
+  //   const cardFGs = cards.map(card => this._fb.group(card))
+  //   const acardFA = this._fb.array(cardFGs)
+  //   this.profileForm.setControl('cards', acardFA)
+  // }
 
-  addCard() {
-    this.cards.push(this._fb.group(new Card()))
-  }
+  // addCard() {
+  //   this.cards.push(this._fb.group(new Card()))
+  // }
 
   onSubmit() {
     console.log(this.profileForm)

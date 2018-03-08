@@ -12,6 +12,8 @@ import { environment } from '../environments/environment';
 // @ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 
 // 3rd party packages
 import { ToastModule } from 'ng2-toastr/ng2-toastr'; // For notification
@@ -26,7 +28,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { reducers, metaReducers } from '@core/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 @NgModule({
@@ -41,18 +42,21 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     FeatureModule.forRoot(),
     RouterModule,
 
-    EffectsModule.forRoot([]),
-
+    
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
-
+    
     ToastModule.forRoot(),
-
+    
     AppRoutingModule,
-
+    
+    
     StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot([]),
+    // StoreRouterConnectingModule,
+    
 
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 
