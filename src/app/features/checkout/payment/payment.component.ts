@@ -14,18 +14,13 @@ export class PaymentComponent {
   createCustomerURL   = this.paymentServerDomain + '/new-customer' // used by the host to input his card so spacenow can pay him
 
   customerId:         string         = "userUID12345678"
-  requestType:        string         = "booking-payment"
   requestData:        PaymentBooking = new PaymentBooking()
-  buttonText:         string         = 'Pay'
-  allowChoose:        boolean        = false
-  showCardholderName: boolean        = true
-  showPaypal:         boolean        = true
 
   constructor() {
     this.requestData.customerID = "test-customer123456"
     this.requestData.bookingID  = "test-booking123456"
     this.requestData.spaceID    = "test-space123456"
-    this.requestData.amount     = 12.5
+    this.requestData.amount     = 1000
     this.requestData.currency   = "USD"
 
     // this.requestData.customer.id = "testUserID123456"
@@ -33,7 +28,7 @@ export class PaymentComponent {
     this.requestData.billing.lastName          = "Shorten"
     this.requestData.billing.company           = "CON Pty Ltd"
     this.requestData.billing.extendedAddress   = "Unit 123 Nice Building"
-    this.requestData.billing.streetAddress     = "100 Burke Street"
+    this.requestData.billing.streetAddress     = "100 Bourke Rd"
     this.requestData.billing.locality          = "Alexandria"
     this.requestData.billing.region            = "NSW"
     this.requestData.billing.postalCode        = "2015"

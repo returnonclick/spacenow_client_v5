@@ -1,10 +1,10 @@
-<div class="error" *ngIf="errorMessage">Error! {{ errorMessage }}</div>
-<div *ngIf="showDropinUI && clientToken">
-  <div id="dropin-container"></div>
-  <button *ngIf="showPayButton" (click)="update()">{{ buttonText }}</button>
+<div class="mat-spinner-container" *ngIf="isLoading$ | async">
+  <mat-spinner></mat-spinner>
 </div>
-<div *ngIf="clientTokenNotReceived">
-  <div class="error">Error! Client token not received.</div>
-  Make sure your clientTokenURL's JSON response is as shown below:
-  <pre>{{ '{' }} "token":"braintree_client_token_generated_on_your_server" {{ '}' }}</pre>
+<div class="dropin-container">
+  <div class="dropin-error" *ngIf="error$ | async">
+    {{ error$ | async | json }}
+  </div>
+  <div id="dropin"></div>
+  <button mat-raised-button (click)="doAction()">{{ buttonText }}</button>
 </div>
