@@ -22,11 +22,9 @@ import { ImageData } from '@shared/models/image-data'
 
 export class Profile extends Object {
 
-  userUID:      string    = ''          
+  uid:          string    = ''          
   contact:      Contact   = new Contact()
   cards:        Card[]    = new Array()
-  DOB:          Date      = null
-  coverUrl:     ImageData = new ImageData()
 
   constructor( model: any = null ) {
 
@@ -34,11 +32,9 @@ export class Profile extends Object {
 
     if ( model ) {
 
-      this.userUID  = model.userUID
+      this.uid      = model.uid
       this.contact  = model.contact
       this.cards    = model.cards
-      this.DOB      = model.DOB
-      this.coverUrl = model.coverUrl
     
     }
 

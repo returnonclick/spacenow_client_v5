@@ -86,8 +86,8 @@ export class AuthService {
     userProfile.userUID = data.uid
     userProfile.contact = contact
 
-    userRef.set(Object.assign({}, data))
-    userProfileRef.set(Object.assign({}, userProfile))
+    //userRef.set(Object.assign({}, data))
+    //userProfileRef.set(Object.assign({}, userProfile))
     return Promise.resolve(data)
   }
 

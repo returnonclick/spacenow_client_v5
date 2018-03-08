@@ -1,12 +1,12 @@
 $breakpoints: (
-    "phone":        (min-width: 400px),
-    "phone-wide":   (min-width: 480px),
-    "phablet":      (min-width: 560px),
-    "tablet-small": (min-width: 640px),
-    "tablet":       (min-width: 768px),
-    "tablet-wide":  (min-width: 1024px),
-    "desktop":      (min-width: 1248px),
-    "desktop-wide": (min-width: 1440px)
+    "phone":        (max-width: 400px),
+    "phone-wide":   (max-width: 480px),
+    "phablet":      (max-width: 560px),
+    "tablet-small": (max-width: 640px),
+    "tablet":       (max-width: 768px),
+    "tablet-wide":  (max-width: 1024px),
+    "desktop":      (max-width: 1248px),
+    "desktop-wide": (max-width: 1440px)
 );
 
 /// Responsive breakpoint manager
@@ -59,4 +59,24 @@ $breakpoints: (
     }
   
     #{$property}: $value;
+  }
+
+@mixin warning-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .warning {
+        
+      border-radius: 5px;
+      padding: 10px 20px;
+      color: mat-color($primary, 50, 1) !important;
+      background: mat-color($primary, default-contrast, 1);
+    
+    }
+  
   }

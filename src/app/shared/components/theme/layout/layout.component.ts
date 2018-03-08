@@ -1,69 +1,60 @@
-import {
-  Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit, ViewChildren, QueryList,
-  ElementRef, OnDestroy
-}                                 from '@angular/core'
-import { Subscription, Subject }  from "rxjs"
-import { MediaChange}             from "@angular/flex-layout"
-import { Router, NavigationEnd }  from "@angular/router"
+import { Component, 
+  OnInit, ChangeDetectorRef }     from '@angular/core'
+import { Store, select }          from '@ngrx/store'
 import { AngularFireAuth }        from 'angularfire2/auth'
 import { Observable }             from 'rxjs'
 
-import { Store }                  from '@ngrx/store'
 import { User }                   from '@shared/models/user'
 
 import * as actions               from '@core/store/auth/actions/auth'
+import * as layoutActions         from '@core/store/layouts/actions/layout'
 import * as fromRoot              from '@core/store'
+
+import { RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'gen-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit, OnDestroy {
+export class LayoutComponent implements OnInit {
 
-  @ViewChild('sidenav') sidenav;
-
-  authUser$: Observable<User[]>
-  authUser: User
-  isLoggedIn$: Observable<boolean>
-
-  private _mediaSubscription: Subscription;
-  private _routerEventsSubscription: Subscription;
-  private _ngUnsubscribe: Subject<void> = new Subject<void>()
-
-  sidenavOpen: boolean = false;
-  sidenavMode: string = 'over';
-  isMobile: boolean = false;
-
-  buyNowToolbarVisible = true;
+  authUser$: Observable<User>
+  isSignedIn$: Observable<boolean>
+  showSidenav$: Observable<boolean>
+  logo$: Observable<string>
+  router$: Observable<RouterStateSnapshot>
 
   constructor(
-    private router: Router,
     private _store: Store<fromRoot.State>,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private cdRef: ChangeDetectorRef
   ) {
-    this.authUser$ = this._store.select(fromRoot.getAllAuth)
-    this.isLoggedIn$ = this._store.select(fromRoot.getIsSignedInState)
+    this.authUser$ = this._store.select(fromRoot.getSelectedAuth)
+    this.isSignedIn$ = this._store.select(fromRoot.getIsSignedInState)
+    this.showSidenav$ = this._store.pipe(select(fromRoot.getShowSidenav));
+    this.logo$ = this._store.pipe(select(fromRoot.getLogo));
+    //this.router$ = this._store.pipe(select(fromRoot.getRouter));
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
   }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe((userData) => this._store.dispatch(new actions.GetUser(userData)))
-    this.authUser$.subscribe( user => this.authUser = user[0] )
-
-    this._routerEventsSubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd && this.isMobile) {
-        this.sidenav.close();
-      }
-    });
+    this.afAuth.authState.subscribe((userData) => userData ? this._store.dispatch(new actions.GetUser(userData.uid)) : null)
+    //this.router$.subscribe(router => console.log(router))
   }
 
-  ngOnDestroy() {
-    this._ngUnsubscribe.next()
-    this._ngUnsubscribe.complete()
+  closeSidenav() {
+    this._store.dispatch(new layoutActions.CloseSidenav());
   }
 
-  onActivate(e, scrollContainer) {
-    scrollContainer.scrollTop = 0
+  openSidenav() {
+    this._store.dispatch(new layoutActions.OpenSidenav());
+  }
+
+  signOut() {
+    this._store.dispatch(new actions.SignOut);
   }
 }

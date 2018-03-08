@@ -18,14 +18,18 @@
 
   </form>
 
-  <button mat-raised-button (click)="googleLogin()">
-    Google
-  </button>
-  <button mat-raised-button (click)="facebookLogin()">
-    Facebook
-  </button>
-  <button mat-raised-button (click)="linkedinLogin()">
-    Linkedin
-  </button>
+  <div class="btn-container">
+      <button mat-raised-button class="secondary" (click)="googleLogin()">
+          Google
+        </button>
+        <button mat-raised-button class="secondary" (click)="facebookLogin()">
+          Facebook
+        </button>
+        <button mat-raised-button class="secondary" (click)="linkedinLogin()">
+          Linkedin
+        </button>
+  </div>
+
+  
 
 </div>

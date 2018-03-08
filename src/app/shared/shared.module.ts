@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router'
 import { CoreModule } from '@core/core.module'
 import { AuthService } from '@core/store/auth/services/auth'
 import { FileSizePipe } from "@shared/pipes/file-size.pipe"
+import { DropZoneDirective } from "@shared/directives/drop-zone.directive"
 import { MaterialModule } from "@shared/material.module"
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
@@ -21,10 +22,12 @@ import {
   SignInComponent,
   SignUpComponent,
   AuthMenuComponent,
+  AddressComponent,
   CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
+  ContactComponent,
   FilterComponent,
   ImageDataComponent,
   InputCardComponent,
@@ -46,10 +49,12 @@ const COMPONENTS = [
   SignInComponent,
   SignUpComponent,
   AuthMenuComponent,
+  AddressComponent,
   CardComponent,
   FeaturedCardComponent,
   ConfirmDeleteComponent,
   ConfirmSaveComponent,
+  ContactComponent,
   FilterComponent,
   ImageDataComponent,
   InputCardComponent,
@@ -76,7 +81,8 @@ const MODULES = [
 ]
 
 const PIPES = [
-  FileSizePipe
+  FileSizePipe,
+  DropZoneDirective
 ]
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -99,14 +105,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     })
   ],
   declarations: [
-    COMPONENTS,
-    DIRECTIVES,
+    ...COMPONENTS,
+    ...DIRECTIVES,
     PIPES,
   ],
   entryComponents: COMPONENTS,
   exports: [
-    COMPONENTS,
-    DIRECTIVES,
+    ...COMPONENTS,
+    ...DIRECTIVES,
     MODULES,
     PIPES,
   ],

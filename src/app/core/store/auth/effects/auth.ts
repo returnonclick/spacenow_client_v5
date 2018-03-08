@@ -13,6 +13,7 @@ import { User } from '@shared/models/user';
 import { AngularFireAuth } from 'angularfire2/auth'
 
 import * as actions from '../actions/auth';
+import * as layoutActions from '@core/store/layouts/actions/layout';
 
 @Injectable()
 export class AuthEffects {
@@ -20,7 +21,7 @@ export class AuthEffects {
     @Effect()
     public getUser$: Observable<Action> = this.actions$.pipe(
         ofType<actions.GetUser>( actions.GET_USER ),
-        exhaustMap(payload => this.authService.getUser(payload.user.uid)),
+        exhaustMap(payload => this.authService.getUser(payload.uid)),
         map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
@@ -29,7 +30,8 @@ export class AuthEffects {
     public signIn$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignIn>( actions.SIGN_IN ),
         switchMap(data => this.authService.signIn(data.payload.username, data.payload.password)),
-        map((user) => new actions.GetUser(user)),
+        //map((user) => new actions.GetUser(user)),
+        map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
 
@@ -38,7 +40,8 @@ export class AuthEffects {
         ofType<actions.SignUp>( actions.SIGN_UP ),
         switchMap(data => this.authService.signUp(data.payload.username, data.payload.password)),
         tap(() => this.authService.sendEmailVerification()),
-        map((user) => new actions.GetUser(user)),
+        //map((user) => new actions.GetUser(user)),
+        map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
 
@@ -46,14 +49,16 @@ export class AuthEffects {
     public signInWithProvider$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignInWithProvider>( actions.SIGN_IN_WITH_PROVIDER ),
         switchMap(data => this.authService.signInWithProvider(data.payload)),
-        map((user) => new actions.GetUser(user)),
+        //map((user) => new actions.GetUser(user)),
+        map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
 
     @Effect({ dispatch: false })
     success$ = this.actions$.pipe(
         ofType(actions.SUCCESS),
-        tap(() => this.router.navigate([''])),
+        tap(() => new layoutActions.CloseSidenav),
+        //tap(() => this.router.navigate([''])),
         catchError((err) => of(new actions.Fail(err)))
     );
 
@@ -61,6 +66,7 @@ export class AuthEffects {
     fail$ = this.actions$.pipe(
         ofType(actions.FAIL, actions.SIGN_OUT),
         map(() => this.authService.signOut()),
+        tap(() => new layoutActions.CloseSidenav()),
         tap(() => this.router.navigate(['']))
     );
 

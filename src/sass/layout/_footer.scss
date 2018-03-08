@@ -5,6 +5,7 @@ footer {
 
     margin-top: var(--margin);
     border-top: 1px solid $color__mischka;
+    text-transform: uppercase;
 
     .inner {
 
@@ -13,9 +14,10 @@ footer {
         grid-column: 2 / span 12;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        grid-gap: calc(var(--margin) / 4);
+        grid-row-gap: calc(var(--margin) / 4);
+        grid-column-gap: calc(var(--margin) / 8);
         grid-template-areas: 
-        "logo help-pages help-pages"
+        "logo . help-pages"
         "menu menu social-media";
         margin: var(--margin) 0;
 
@@ -23,13 +25,20 @@ footer {
             grid-area: logo;
         }
 
-        ul.help-pages {
+        div.help-pages {
             grid-area: help-pages;
-            justify-self: end;
+            justify-content: end;
         
-            li {
+
+            ul li {
                 display: inline-block;
+
+                a {
+                    font-size: 18px;
+                }
+
             }
+
         }
 
         div.menu {
@@ -37,6 +46,10 @@ footer {
 
             ul li {
                 display: inline-block;
+
+                a {
+                    font-size: 14px;
+                }
             }
 
         }
@@ -47,6 +60,7 @@ footer {
 
             li {
                 display: inline-block;
+                margin-left: var(--gap);
             }
 
         }

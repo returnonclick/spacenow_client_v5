@@ -1,42 +1,96 @@
-#main-nav {
 
-    display: flex;
-    align-items: center;
-    text-align: right;
-    padding: 30px;
+    #main-nav {
 
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    z-index: 2;
+        --gap: 30px;
+        --color__pastel_green: $color__pastel_green;
 
-    span {
-        margin-left: auto;
-        margin-right: auto;
-    }
+        display: flex;
+        align-items: center;
+        text-align: right;
+        padding: var(--gap);
 
-    a {
-        font-size: 20px;
-        font-weight: 400;
-        text-transform: uppercase;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        z-index: 2;
 
-        &:not(.logo) {
-            padding-left: 30px;
-            display: flex;
-            align-items: center;
+        span {
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        img.userProfilePicture {
-            border-radius: 50%;
-            margin-left: 10px;
+        a.logo {
+            background-size: contain;
+            height: 50px;
+            width: 200px;
+
+            &.logo-white {
+                background: url('/assets/images/logo/spacenow-logo-white.svg') no-repeat;
+            }
+
+            &.logo-green {
+                background: url('/assets/images/logo/spacenow-logo.svg') no-repeat;
+            }
         }
+
+        a {
+            font-size: 20px;
+            font-weight: 400;
+            text-transform: uppercase;
+
+            &:not(.logo) {
+                padding-left: var(--gap);
+                display: flex;
+                align-items: center;
+            }
+
+        }
+
+        .mat-icon-button {
+
+            height: auto;
+            margin: 0 var(--gap);
+            width: auto;
+
+            img.userProfilePicture {
+                border-radius: 50%;
+                margin-left: 10px;
+            }
+
+        }
+
+
 
     }
 
-}
 
-.mat-drawer.mat-drawer-end {
-    -webkit-transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
-    transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
-}
+    .mat-drawer.mat-drawer-end {
+        -webkit-transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+        transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+    }
+
+    .mat-menu-panel {
+
+        border: 1px solid $color__pastel_green !important;
+        // padding: 10px 15px;
+        @include mat-elevation(3);
+
+        .mat-menu-content {
+
+            padding: 5px;
+
+            .mat-menu-item {
+                
+                font-size: 20px;
+                color: $color__pastel_green;
+                
+            }
+
+            .mat-divider {
+                margin: 5px;
+            }
+
+        }
+
+    }
