@@ -73,7 +73,7 @@ export class BraintreeUIComponent {
     })
   }
 
-  doAction(): void {
+  initiatePayment(): void {
     if(!this.dropInInstance)
       return
 

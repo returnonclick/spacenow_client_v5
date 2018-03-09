@@ -11,15 +11,15 @@ class Booking {
 
   constructor(model: any = null) {
     if(model) {
-      this.id            = model.id                                                      || ''
-      this.userId        = model.userId                                                  || ''
-      this.createdOn     = model.createdOn                                               || null
-      this.finalPrice    = model.finalPrice                                              || 0
-      this.currency      = model.currency                                                || ''
-      this.paymentStatus = model.paymentStatus                                           || ''
-      this.bookingStatus = model.bookingStatus                                           || ''
-      this.cancellation  = new Cancellation(model.cancellation)                          || null
-      this.spaceBookings = model.spaceBookings.map(booking => new BookingSpace(booking)) || []
+      this.id            = model.id                             || ''
+      this.userId        = model.userId                         || ''
+      this.createdOn     = model.createdOn                      || null
+      this.finalPrice    = model.finalPrice                     || 0
+      this.currency      = model.currency                       || ''
+      this.paymentStatus = model.paymentStatus                  || ''
+      this.bookingStatus = model.bookingStatus                  || ''
+      this.cancellation  = new Cancellation(model.cancellation) || null
+      this.spaceBookings = (model.spaceBookings || []).map(booking => new BookingSpace(booking))
     }
   }
 }

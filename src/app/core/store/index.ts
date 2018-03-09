@@ -36,6 +36,7 @@ import * as fromCategories   from '@core/store/categories/reducers/categories'
 import * as fromSearch       from '@core/store/search/reducers/search'
 import * as fromSpaces       from '@core/store/spaces/reducers/spaces'
 import * as fromCart         from '@core/store/cart/reducers/cart'
+import * as fromCheckout     from '@core/store/checkout/reducers/checkout'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -51,6 +52,7 @@ export interface State {
   search:        fromSearch.State
   spaces:        fromSpaces.State
   cart:          fromCart.State
+  checkout:      fromCheckout.State
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
 }
 
@@ -69,6 +71,7 @@ export const reducers: ActionReducerMap<State> = {
   spaces:        fromSpaces.reducer,
   search:        fromSearch.reducer,
   cart:          fromCart.reducer,
+  checkout:      fromCheckout.reducer,
   routerReducer: fromRouter.routerReducer,
 }
 
@@ -332,3 +335,12 @@ export const {
   selectTotal:    getTotalBookingSpaces,
 } = fromCart.cartAdapter.getSelectors(getCartEntitiesState)
 export const getCartError = createSelector(getCartState, fromCart.getError)
+
+/**
+ *  Checkout State
+ */
+export const getCheckoutState = createFeatureSelector<fromCheckout.State>('checkout')
+
+export const checkoutIsLoading = createSelector(getCheckoutState, fromCheckout.getIsLoading)
+export const getBookingId      = createSelector(getCheckoutState, fromCheckout.getBookingId)
+export const getCheckoutError  = createSelector(getCheckoutState, fromCheckout.getError)

@@ -1,6 +1,12 @@
-import { Component } from '@angular/core'
+import { Component, Input, ViewChild } from '@angular/core'
+import { Store } from '@ngrx/store'
 
+import { Booking, BookingSpace } from '@models/booking'
 import { PaymentBooking } from '@features/braintree/models/payment-booking'
+import { BraintreeUIComponent } from '@features/braintree/components/braintree-ui.component'
+
+import * as fromRoot from '@core/store'
+import * as checkoutActions from '@core/store/checkout/actions/checkout'
 
 @Component({
   selector: 'sn-payment',
@@ -9,38 +15,70 @@ import { PaymentBooking } from '@features/braintree/models/payment-booking'
 })
 export class PaymentComponent {
 
+  @ViewChild(BraintreeUIComponent) braintree: BraintreeUIComponent
+  @Input() cart: BookingSpace[]
+
   paymentServerDomain = "https://glacial-ocean-69657.herokuapp.com/api"
   clientTokenURL      = this.paymentServerDomain + '/get-client-token'
-  createCustomerURL   = this.paymentServerDomain + '/new-customer' // used by the host to input his card so spacenow can pay him
+  // createCustomerURL   = this.paymentServerDomain + '/new-customer' // used by the host to input his card so spacenow can pay him
+
+  firestoreBooking:        Booking        = new Booking()
+  braintreeBooking:        PaymentBooking = new PaymentBooking()
 
   customerId:         string         = "userUID12345678"
-  requestData:        PaymentBooking = new PaymentBooking()
+  amount:   number = 11211
+  currency: string = 'USD'
 
-  constructor() {
-    this.requestData.customerID = "test-customer123456"
-    this.requestData.bookingID  = "test-booking123456"
-    this.requestData.spaceID    = "test-space123456"
-    this.requestData.amount     = 1000
-    this.requestData.currency   = "USD"
+  constructor(private _store: Store<fromRoot.State>) { }
 
-    // this.requestData.customer.id = "testUserID123456"
-    this.requestData.billing.firstName         = "Billy"
-    this.requestData.billing.lastName          = "Shorten"
-    this.requestData.billing.company           = "CON Pty Ltd"
-    this.requestData.billing.extendedAddress   = "Unit 123 Nice Building"
-    this.requestData.billing.streetAddress     = "100 Bourke Rd"
-    this.requestData.billing.locality          = "Alexandria"
-    this.requestData.billing.region            = "NSW"
-    this.requestData.billing.postalCode        = "2015"
-    this.requestData.billing.countryCodeAlpha2 = "AU"
+  ngOnInit() {
+    this.prepareFireStore()
+    this._store.select(fromRoot.getCheckoutState).subscribe(state => {
+      if(!state.isLoading && state.bookingId) {
+        this.prepareBraintree(state.bookingId)
+        this.braintree.initiatePayment()
+      }
+    })
+  }
 
-    this.requestData.customer.firstName = "Bill"
-    this.requestData.customer.lastName  = "Shorten"
-    this.requestData.customer.company   = "CON Pty Ltd"
-    this.requestData.customer.phone     = "0123456789"
-    this.requestData.customer.website   = "wwww.fakesite.com"
-    this.requestData.customer.email     = "bill.shorten@conmen.com"
-    this.requestData.customer.fax       = "0001112223333"
+  prepareFireStore() {
+    this.firestoreBooking.userId        = this.customerId
+    this.firestoreBooking.createdOn     = new Date()
+    this.firestoreBooking.finalPrice    = this.amount
+    this.firestoreBooking.currency      = this.currency
+    this.firestoreBooking.paymentStatus = 'PAID'
+    this.firestoreBooking.spaceBookings = this.cart
+  }
+
+  prepareBraintree(bookingId: string) {
+    this.braintreeBooking.customerID = this.customerId
+    this.braintreeBooking.bookingID  = bookingId
+    // this.braintreeBooking.spaceID    = "test-space123456"
+    this.braintreeBooking.amount     = this.amount
+    this.braintreeBooking.currency   = this.currency
+
+    // this.braintreeBooking.customer.id = "testUserID123456"
+    this.braintreeBooking.billing.firstName         = "Billy"
+    this.braintreeBooking.billing.lastName          = "Shorten"
+    this.braintreeBooking.billing.company           = "CON Pty Ltd"
+    this.braintreeBooking.billing.extendedAddress   = "Unit 123 Nice Building"
+    this.braintreeBooking.billing.streetAddress     = "100 Bourke Rd"
+    this.braintreeBooking.billing.locality          = "Alexandria"
+    this.braintreeBooking.billing.region            = "NSW"
+    this.braintreeBooking.billing.postalCode        = "2015"
+    this.braintreeBooking.billing.countryCodeAlpha2 = "AU"
+
+    this.braintreeBooking.customer.firstName = "Bill"
+    this.braintreeBooking.customer.lastName  = "Shorten"
+    this.braintreeBooking.customer.company   = "CON Pty Ltd"
+    this.braintreeBooking.customer.phone     = "0123456789"
+    this.braintreeBooking.customer.website   = "wwww.fakesite.com"
+    this.braintreeBooking.customer.email     = "bill.shorten@conmen.com"
+    this.braintreeBooking.customer.fax       = "0001112223333"
+  }
+
+  checkout() {
+    this._store.dispatch(new checkoutActions.Checkout(this.firestoreBooking))
   }
 
 }
