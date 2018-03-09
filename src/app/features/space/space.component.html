@@ -222,8 +222,13 @@
         <mat-spinner *ngIf="(isLoadingPage$ | async); else doneLoading"></mat-spinner>
         <ng-template #doneLoading>
           <sn-hourly-booking
+            *ngIf="(space$ | async).priceUnit == 'hourly'"
             [space]="space$ | async">
           </sn-hourly-booking>
+          <sn-general-booking
+            *ngIf="(space$ | async).priceUnit != 'hourly'"
+            [space]="space$ | async">
+          </sn-general-booking>
         </ng-template>
       </div>
     </div>

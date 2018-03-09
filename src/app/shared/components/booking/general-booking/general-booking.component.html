@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form" *ngIf="space">
   <mat-form-field class="from-date">
-    <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions(space)" placeholder="From date" formControlName="date">
+    <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="From date" formControlName="date">
     <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
     <mat-datepicker #fromDate></mat-datepicker>
   </mat-form-field>

@@ -71,9 +71,8 @@
               {{ spaces[cartItem.spaceId].title }}
             </mat-expansion-panel-header>
 
-            <!-- {{ cartItem | json }} -->
-            <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre>
-
+            <!-- <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre> -->
+            <!-- <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre> -->
 
             <mat-action-row>
               <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>

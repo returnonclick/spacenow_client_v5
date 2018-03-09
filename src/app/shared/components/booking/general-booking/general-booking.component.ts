@@ -20,9 +20,8 @@ export class GeneralBookingComponent implements OnInit {
 
   @Input() space: Space
 
-  form: FormGroup
-  isLoadingPage$: Observable<boolean>
-
+  form:    FormGroup
+  minDate: Date = new Date()
 
   constructor(
     private _fb:    FormBuilder,
@@ -65,41 +64,60 @@ export class GeneralBookingComponent implements OnInit {
     bookingSpace.spaceId   = this.space.id
     bookingSpace.numGuests = formVal.numGuests
 
-    var offsets = Array.apply(null, Array(formVal.duration)).map((item, index) => index)
-    bookingSpace.bookingDates = offsets.map(offset => {
-      let momentDate = moment(formVal.date)
+    let isAvailable = this.exceptions()
+    let dateMoment  = moment(formVal.date)
+    while(bookingSpace.bookingDates.length < formVal.duration) {
+      let offsetDate = dateMoment.toDate()
+      if(this.space.priceUnit != 'daily' || isAvailable(offsetDate)) { // explanation below (1)
+        let day              = dateMoment.format('ddd').toLowerCase()
+        let bookingDate      = new BookingDate()
+        bookingDate.date     = offsetDate
+        bookingDate.fromHour = this.space.availability.openingTime[day].startHour
+        bookingDate.toHour   = this.space.availability.openingTime[day].closeHour
+
+        bookingSpace.bookingDates.push(bookingDate)
+      }
 
       switch(this.space.priceUnit) {
         case 'daily':
-          momentDate.add(offset, 'days')
+          dateMoment.add(1, 'days')
           break
         case 'weekly':
-          momentDate.add(offset, 'weeks')
+          dateMoment.add(1, 'weeks')
           break
         case 'monthly':
-          momentDate.add(offset, 'months')
+          dateMoment.add(1, 'months')
           break
       }
-
-      let bookingDate      = new BookingDate()
-      bookingDate.date     = momentDate.toDate()
-      bookingDate.fromHour = this.space.availability.openingTime
-      bookingDate.toHour   = this.space.availability.closingTime
-
-      return bookingDate
-    })
+    }
 
     this._store.dispatch(new cartActions.Add(bookingSpace))
   }
 
   // this one is a closure: a function that returns a function with the context
   // of `this.space`'s availability exceptions
-  exceptions(space: Space) {
+  exceptions() {
     return (d: Date | null): boolean => {
-      let exceptionDates = space.availability.exceptionDays.map(date => moment(date).format('YYYY-MM-DD'))
-      return exceptionDates.indexOf(moment(d).format('YYYY-MM-DD')) == -1
-        && space.availability.openingDays[moment(d).format('dddd').toLowerCase()]
+      let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.date).format('YYYY-MM-DD'))
+      let dayMoment      = moment(d)
+      let day            = dayMoment.format('ddd').toLowerCase()
+
+      return exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
+        && this.space.availability.openingTime[day].isOpen
     }
   }
 
 }
+
+/**
+ *  NOTE:
+ *  (1) We want to add the BookingDate if the space's priceUnit is NOT daily (~daily) OR
+ *  if it's priceUnit is daily AND the date is available (daily && available). By boolean logic:
+ *
+ *  >>> ~daily || (daily && available)
+ *  >>> (~daily || daily) && (~daily || available)
+ *  >>> TRUE && (~daily || available)
+ *  >>> ~daily || available
+ *
+ *  Simply put, we add the BookingDate if the priceUnit is not daily or if it's available
+ */

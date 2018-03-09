@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store'
 
 import * as moment from 'moment'
 
+import { OpeningDay } from '@models/availability'
 import { BookingSpace, BookingDate } from '@models/booking'
 import { Space } from '@models/space'
 
@@ -19,7 +20,10 @@ export class HourlyBookingComponent {
 
   @Input() space: Space
 
-  form: FormGroup
+  form:         FormGroup
+  fromHourList: any[]
+  toHourList:   any[]
+  minDate:      Date = new Date()
 
   constructor(
     private _fb:    FormBuilder,
@@ -37,6 +41,13 @@ export class HourlyBookingComponent {
       ]) ]
     }, {
       validator: timeValidator
+    })
+
+    this.form.get('date').valueChanges.subscribe(date => {
+      let day           = moment(date).format('ddd').toLowerCase()
+      let daySched      = this.space.availability.openingTime[day] as OpeningDay
+      this.fromHourList = this.generateHours(daySched.startHour, daySched.closeHour - 1)
+      this.toHourList   = this.generateHours(daySched.startHour + 1, daySched.closeHour)
     })
   }
 
@@ -70,11 +81,14 @@ export class HourlyBookingComponent {
 
   // this one is a closure: a function that returns a function with the context
   // of `this.space`'s availability exceptions
-  exceptions(space: Space) {
+  exceptions() {
     return (d: Date | null): boolean => {
-      let exceptionDates = space.availability.exceptionDays.map(date => moment(date).format('YYYY-MM-DD'))
-      return exceptionDates.indexOf(moment(d).format('YYYY-MM-DD')) == -1
-        && space.availability.openingDays[moment(d).format('dddd').toLowerCase()]
+      let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.date).format('YYYY-MM-DD'))
+      let dayMoment      = moment(d)
+      let day            = dayMoment.format('ddd').toLowerCase()
+
+      return exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
+        && this.space.availability.openingTime[day].isOpen
     }
   }
 
