@@ -42,10 +42,7 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe((userData) => { 
-      console.log(userData)
-      return userData ? this._store.dispatch(new actions.GetUser(userData.uid)) : null })
-    //this.router$.subscribe(router => console.log(router))
+    this.afAuth.authState.subscribe((userData) => userData ? this._store.dispatch(new actions.GetUser(userData.uid)) : null )
   }
 
   closeSidenav() {

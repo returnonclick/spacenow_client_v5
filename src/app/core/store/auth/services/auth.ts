@@ -83,11 +83,11 @@ export class AuthService {
 
     const contact: Contact = new Contact()
     let userProfile: UserProfile = new UserProfile()
-    userProfile.userUID = data.uid
+    userProfile.uid = data.uid
     userProfile.contact = contact
 
-    //userRef.set(Object.assign({}, data))
-    //userProfileRef.set(Object.assign({}, userProfile))
+    userRef.set(Object.assign({}, data))
+    userProfileRef.set(Object.assign({}, userProfile))
     return Promise.resolve(data)
   }
 

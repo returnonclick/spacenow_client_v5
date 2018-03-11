@@ -31,9 +31,9 @@ export class AuthEffects {
                     ...action.payload.doc.data()
                 }
             }
-        })
+        }),
         // map((user) => new actions.Success(user)),
-        // catchError((err) => of(new actions.Fail(err)))
+        catchError((err) => of(new actions.Fail(err)))
     )
 
     @Effect()
