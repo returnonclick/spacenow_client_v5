@@ -24,6 +24,9 @@ import { SpaceEffects } from '@core/store/spaces/effects/space'
 import { CategoryService } from '@core/store/categories/services/category'
 import { CategoryEffects } from '@core/store/categories/effects/category'
 
+import { CheckoutService } from '@core/store/checkout/services/checkout'
+import { CheckoutEffects } from '@core/store/checkout/effects/checkout'
+
 import { environment } from '../../environments/environment'
 
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
@@ -51,6 +54,7 @@ const ENTRY_COMPONENTS = [
 
 const SERVICES = [
   CategoryService,
+  CheckoutService,
   SearchService,
   SpaceService,
 ]
@@ -72,6 +76,7 @@ const SERVICES = [
     SharedModule,
     EffectsModule.forFeature([
       CategoryEffects,
+      CheckoutEffects,
       SearchEffects,
       SpaceEffects,
     ]),
