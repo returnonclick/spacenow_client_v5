@@ -28,7 +28,7 @@ export class AuthService {
   ) {}
 
   getUser(id) {
-     return this._afs.collection(`users`).doc(`${id}`).valueChanges()
+     return this._afs.collection(`users`, ref => ref.where(`uid`, "==", `${id}`)).stateChanges()
   }
 
   signIn(username, password) {

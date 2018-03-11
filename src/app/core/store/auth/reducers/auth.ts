@@ -26,16 +26,43 @@ export function reducer(
 ): State {
     switch (action.type) {
 
-        case auth.SUCCESS: {
-
-            return authAdapter.addOne(action.payload, 
-                { 
-                    ...state,
-                    isSignedIn: true,
-                    selectedId: action.payload.uid
-                })
-
+        case auth.ADDED: {
+            return authAdapter.addOne(action.payload, {
+                ...state,
+                isSignedIn: true,
+                selectedId: action.payload.uid
+            })
         }
+
+        case auth.MODIFIED: {
+            return authAdapter.updateOne({
+                id: action.payload.uid,
+                changes: action.payload
+            }, {
+                ...state,
+                isSignedIn: true,
+                selectedUserId: action.payload.uid,
+            })
+        }
+
+        case auth.REMOVED: {
+            return authAdapter.removeOne(action.payload.uid, { 
+                ...state,
+                isSignedIn: true,
+                selectedUserId: action.payload.uid,
+            })
+        }
+
+        // case auth.SUCCESS: {
+
+        //     return authAdapter.addOne(action.payload, 
+        //         { 
+        //             ...state,
+        //             isSignedIn: true,
+        //             selectedId: action.payload.uid
+        //         })
+
+        // }
 
         case auth.SIGN_OUT: {
             return authAdapter.removeAll(

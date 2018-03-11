@@ -24,7 +24,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     public afAuth: AngularFireAuth
   ) {
     this.afAuth.authState.subscribe(
-      (user) => this._store.dispatch(new actions.GetUser(user.uid))
+      (user) => { 
+        console.log(user)
+        this._store.dispatch(new actions.GetUser(user.uid))
+      }
     )
   }
 

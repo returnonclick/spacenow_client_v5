@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable'
 import { Profile } from '@shared/models/profile'
 import { User } from '@shared/models/user'
 
-import * as userActions from '@core/store/users/actions/user'
 import * as actions from '@core/store/users-profile/actions/user-profile'
+import * as userActions from '@core/store/users/actions/user'
 import * as authActions from '@core/store/auth/actions/auth'
 import * as layoutActions from '@core/store/layouts/actions/layout'
 import * as fromRoot from '@core/store'
@@ -48,8 +48,8 @@ export class ProfileContainerComponent implements OnInit {
   }
 
   getImage(event) {
-    this._store.dispatch(new userActions.Update(this.authId, {photoURL: event.path}))
-    this._store.dispatch(new authActions.GetUser(this.authId))
+    this._store.dispatch(new userActions.Update(this.authId, { photoURL: event.path }))
+    // this._store.dispatch(new authActions.GetUser(this.authId))
   }
 
 }

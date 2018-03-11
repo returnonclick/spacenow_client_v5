@@ -4,7 +4,7 @@ import { Store, select }          from '@ngrx/store'
 import { AngularFireAuth }        from 'angularfire2/auth'
 import { Observable }             from 'rxjs'
 
-import { User }                   from '@shared/models/user'
+import user, { User }                   from '@shared/models/user'
 
 import * as actions               from '@core/store/auth/actions/auth'
 import * as layoutActions         from '@core/store/layouts/actions/layout'
@@ -42,7 +42,9 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe((userData) => userData ? this._store.dispatch(new actions.GetUser(userData.uid)) : null)
+    this.afAuth.authState.subscribe((userData) => { 
+      console.log(userData)
+      return userData ? this._store.dispatch(new actions.GetUser(userData.uid)) : null })
     //this.router$.subscribe(router => console.log(router))
   }
 
