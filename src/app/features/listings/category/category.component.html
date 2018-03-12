@@ -1,0 +1,23 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="category">
+    <div class="title">
+      <h2>Select Category</h2>
+    </div>
+    <div class="content">
+      <mat-radio-group flexLayout="column" class="items" formControlName="categoryId" required>
+        <mat-radio-button *ngFor="let category of categories$ | async" [value]="category.id"  style="padding:5px">
+          {{ category.name }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="actions">
+      <button mat-raised-button type="submit" class="next-button" 
+              [disabled]="categoryForm.invalid"> 
+              Next 
+      </button>
+      <button mat-button type="button" class="back-button" (click)="back()"> 
+            Back 
+      </button>
+    </div>
+  </div>
+</form>

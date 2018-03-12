@@ -1,0 +1,38 @@
+<form [formGroup]="termForm" (ngSubmit)="onSubmit()" novalidate>
+<div class="terms">
+  <div class="title">
+    <h2>Accept spacenow t+c</h2>
+  </div>
+
+  <div class="content">
+    <div fxLayout="column">
+      <mat-checkbox class="checkbox-list" (change)="onTCChange($event)" #tc>I accept the hosts terms</mat-checkbox>
+      <mat-checkbox class="checkbox-list" (change)="onHTChange($event)" #ht>I accept spacenow t+c</mat-checkbox>
+      <mat-error 
+        id="tc-notification"
+        align="start" 
+        *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error>
+    </div>
+    <div fxLayout="column">
+      <mat-form-field class="input-container-full">
+        <textarea matInput placeholder="space t+c"
+          matTextareaAutosize
+          matAutosizeMinRows="15"
+          matAustosizeMaxRows="15"
+          readonly
+          > This is the spacenow T&C
+        </textarea>
+      </mat-form-field>
+    </div>
+  </div>
+      
+  <div class="actions">
+    <button mat-raised-button type="submit" class="next-button" [disabled]="!isHTChecked || !isTCChecked"> 
+            Next 
+    </button>
+    <button mat-button type="button" class="back-button" (click)="back()"> 
+          Back 
+    </button>
+  </div>
+</div>
+</form>

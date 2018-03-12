@@ -1,0 +1,81 @@
+// GRID AREAS 
+.title {
+  grid-area: title;
+}
+
+.content {
+  grid-area: content;
+}
+
+.actions {
+  grid-area: actions;
+}
+
+.next-button {
+  margin: 60px 0;
+  grid-area: next-button;
+}
+
+.back-button {
+  margin: 60px 0;
+  grid-area: back-button;
+}
+
+/* GRID CSS specification */
+.specification {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows:2fr 8fr 1fr;
+  height: calc(100vh - 125px);
+  grid-template-areas: 
+    ". title ."
+    ". content ."
+    ". actions .";
+  align-items: between;
+}
+
+.specification .content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+.specification .content .items {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+.specification .actions {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "back-button . next-button";
+}
+
+// Responsive classes
+@media screen and (max-width:1024px) {
+
+  .specification {
+      grid-template-columns:  1fr 9fr 1fr;
+      height: calc(90vh - 125px);
+  }
+
+  .specification .actions {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+}
+
+@media screen and (max-width:768px) {
+
+  .specification .actions {
+    grid-template-columns: 3fr 2fr 3fr;
+  }
+
+}
+
+@media screen and (max-width:425px) {
+}
+/* END GRID CSS specification */

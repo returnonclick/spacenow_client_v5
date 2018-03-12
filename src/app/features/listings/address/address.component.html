@@ -1,0 +1,82 @@
+<!-- Title -->
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()" novalidate>
+
+  <div class="address">
+    <div class="title">
+      <h2>List your space address</h2>
+    </div>
+    <div class="content">
+      <div id="address-search-container">
+        <div fxFlex="100%" fxFlex.lt-md="100%">
+          <mat-form-field class="input-container-full">
+            <input sn-google-address matInput (getAddress)="getAddressChange($event)" placeholder="Type to search address...">
+          </mat-form-field>
+        </div>
+      </div> 
+      <div class="address-container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start" formGroupName="address">
+        <div fxFlex="19%" fxFlex.lt-md="49%">
+            <mat-form-field  class="input-container-full">
+              <input matInput placeholder="Unit/block (optional)"
+                formControlName="unit_number">
+            </mat-form-field>
+        </div>
+        <div fxFlex="19%" fxFlex.lt-md="49%">
+            <mat-form-field  class="input-container-full">
+              <input matInput placeholder="Street number"
+                readonly
+                formControlName="street_number">
+            </mat-form-field>
+        </div>
+        <div fxFlex="60%" fxFlex.lt-md="100%">
+            <mat-form-field  class="input-container-full">
+              <input matInput placeholder="Street name"
+                readonly
+                formControlName="route">
+            </mat-form-field>
+        </div>
+        <div fxFlex="40%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+              <input matInput placeholder="Suburb/district"
+                readonly
+                formControlName="locality">
+            </mat-form-field>
+        </div>
+        <div fxFlex="18%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+              <input matInput placeholder="State/province"
+                readonly
+                formControlName="administrative_area_level_1">
+            </mat-form-field>
+        </div>
+        <div fxFlex="14%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+              <input matInput placeholder="Postal code"
+                readonly
+                formControlName="postal_code">
+            </mat-form-field>
+        </div>
+        <div fxFlex="25%" fxFlex.lt-md="49%">
+            <mat-form-field class="input-container-full">
+              <input matInput placeholder="Country"
+                readonly
+                formControlName="country">
+            </mat-form-field>
+        </div>
+        <div>
+          <input type="hidden" formControlName="lat">
+          <input type="hidden" formControlName="lng">
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button mat-raised-button type="submit" class="next-button" 
+              [disabled]="addressForm.invalid"> 
+              Next 
+      </button>
+      <button mat-button type="button" class="back-button" (click)="back()"> 
+            Back 
+      </button>
+    </div>
+  </div>
+  
+</form>

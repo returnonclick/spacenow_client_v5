@@ -1,0 +1,36 @@
+
+<form [formGroup]="amenityForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="amenity">
+    <div class="title">
+      <h2>Select Amenities</h2>
+    </div>
+
+    <!-- <ng-container *ngIf="isLoadingAmenity$ | async as isLoading; else amenity"></ng-container> -->
+    <!-- <ng-template #amenity> -->
+      <!-- Ref. https://stackoverflow.com/questions/46749251/ -->
+      <div class="content">
+
+        <div formArrayName="amenities" class="items">
+          <div *ngFor="let amenity of categoryAmenities; let i = index" class="item" style="padding:5px">
+              <mat-checkbox 
+                (change)="validateAmenity()"
+                [formControlName]="i">
+                {{amenity.name}}
+              </mat-checkbox>
+          </div>
+        </div>
+      </div>
+    <!-- </ng-template> -->
+
+    <div class="actions">
+      <button mat-raised-button type="submit" class="next-button" 
+              [disabled]="!amenitiesValid"> 
+              Next 
+      </button>
+      <button mat-button type="button" class="back-button" (click)="back()"> 
+            Back 
+      </button>
+    </div>
+  </div>
+  
+</form>

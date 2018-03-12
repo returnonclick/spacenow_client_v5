@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore'
 import { Category } from '@shared/models/category';
+import { ListingSpecification } from '@shared/models/listing-specification';
 
 @Injectable()
 export class CategoryService {

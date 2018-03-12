@@ -1,0 +1,90 @@
+// GENERAL GRID CLASSES FOR CHILD COMPONENTS
+.title {
+  grid-area: title;
+}
+
+.content {
+  grid-area: content;
+}
+
+.actions {
+  grid-area: actions;
+}
+
+.next-button {
+  margin: 60px 0;
+  grid-area: next-button;
+}
+
+.back-button {
+  margin: 60px 0;
+  grid-area: back-button;
+}
+
+// END GENERAL GRID CLASSES FOR CHILD COMPONENTS
+/* GRID CSS TITLE */
+.category {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 2fr 8fr 1fr;
+  height: calc(100vh - 125px);
+  grid-template-areas: 
+    ". title ."
+    ". content ."
+    ". actions .";
+  align-items: space-between;
+}
+
+// .category .content {
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   grid-template-rows: auto;
+// }
+
+.category .content .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+.category .actions {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "back-button . next-button";
+}
+
+// Responsive classes
+@media screen and (max-width:1024px) {
+
+  .category {
+      grid-template-columns: 1fr 9fr 1fr;
+      height: calc(90vh - 125px);
+  }
+    
+  .category .content .items {
+      grid-template-columns: 1fr 1fr;
+  }
+
+  .category .actions {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+}
+
+@media screen and (max-width:768px) {
+
+  .category .actions {
+    grid-template-columns: 3fr 2fr 3fr;
+  }
+
+}
+
+@media screen and (max-width:425px) {
+  .category .content .items {
+      grid-template-columns: 1fr;
+  }
+}
+
+/* END GRID CSS TITLE */

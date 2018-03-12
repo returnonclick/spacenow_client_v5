@@ -54,7 +54,7 @@ export class GoogleAddressDirective {
                 // console.log(this.address)
               }
             }
-           console.log(this.address)
+          //  console.log(this.address)
            this.getAddress.emit(this.address)
           }
         });
