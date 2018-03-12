@@ -3,7 +3,7 @@
 </div>
 <div class="dropin-container">
   <div class="dropin-error" *ngIf="error$ | async">
-    {{ error$ | async | json }}
+    <pre style="overflow: scroll;">{{ error$ | async | json }}</pre>
   </div>
   <div id="dropin"></div>
 </div>

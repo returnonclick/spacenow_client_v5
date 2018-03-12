@@ -25,6 +25,8 @@ export class SpaceComponent {
   isLoadingPage$: Observable<boolean>
 
   spaceId:        string = ''
+  latitude:       number = 0
+  longitude:      number = 0
 
   // @HostListener('window:scroll', ['$event'])
   // stopMoving(event) {
@@ -52,8 +54,13 @@ export class SpaceComponent {
   ) {
     this.isLoadingPage$ = this._store.select(fromRoot.isLoadingSpaces)
     this.space$         = this._store.select(fromRoot.getSpaceEntities).map(spaces => {
-      if(spaces[this.spaceId])
-        return spaces[this.spaceId]
+      if(spaces[this.spaceId]) {
+        let space      = spaces[this.spaceId]
+        this.latitude  = +space.address.lat
+        this.longitude = +space.address.lng
+
+        return space
+      }
       return null
     })
   }

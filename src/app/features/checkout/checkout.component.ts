@@ -7,6 +7,7 @@ import { Observable } from 'rxjs'
 import { BookingSpace } from '@models/booking'
 import { Category } from '@models/category'
 import { Space } from '@models/space'
+import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
 import * as cartActions from '@core/store/cart/actions/cart'
@@ -26,6 +27,7 @@ export class CheckoutComponent {
   cart$:         Observable<BookingSpace[]>
   categories$:   Observable<Dictionary<Category>>
   spaces$:       Observable<Dictionary<Space>>
+  user$:         Observable<User>
   pLoadPayments: Promise<boolean>
 
   categories: Dictionary<Category>
@@ -41,18 +43,19 @@ export class CheckoutComponent {
     private _store: Store<fromRoot.State>,
     private _snackbar: MatSnackBar,
   ) {
-    this.cart$       = this._store.select(fromRoot.getAllBookingSpaces)
-    this.categories$ = this._store.select(fromRoot.getCategoryEntities)
-    this.spaces$     = this._store.select(fromRoot.getSpaceEntities)
+    this.cart$         = this._store.select(fromRoot.getAllBookingSpaces)
+    this.categories$   = this._store.select(fromRoot.getCategoryEntities)
+    this.spaces$       = this._store.select(fromRoot.getSpaceEntities)
+    this.user$         = this._store.select(fromRoot.getSelectedAuth)
+    this.pLoadPayments = new Promise((resolve, reject) => {
+      this.loadPayments = resolve
+    })
 
     this.categories$.subscribe(categories => {
       this.categories = categories
     })
     this.spaces$.subscribe(spaces => {
       this.spaces = spaces
-    })
-    this.pLoadPayments = new Promise((resolve, reject) => {
-      this.loadPayments = resolve
     })
   }
 

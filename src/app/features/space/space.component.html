@@ -236,8 +236,11 @@
 </section>
 <section id="map-section">
   <agm-map
-    [zoom]="1"
-    [streetViewControl]="false">
+    [zoom]="12"
+    [streetViewControl]="false"
+    gestureHandling="cooperative"
+    [latitude]="latitude"
+    [longitude]="longitude">
   </agm-map>
 </section>
 <section id="related-space-section">

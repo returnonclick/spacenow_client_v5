@@ -58,7 +58,11 @@
         <button mat-raised-button (click)="confirmDetails()">Confirm and Continue</button>
       </mat-tab>
       <mat-tab label="confirm and pay">
-        <sn-payment *ngIf="pLoadPayments | async" [cart]="(cart$ | async)"></sn-payment>
+        <sn-payment
+          *ngIf="pLoadPayments | async"
+          [cart]="(cart$ | async)"
+          [customerId]="(user$ | async).uid">
+        </sn-payment>
       </mat-tab>
     </mat-tab-group>
   </div>
@@ -71,8 +75,8 @@
               {{ spaces[cartItem.spaceId].title }}
             </mat-expansion-panel-header>
 
-            <!-- <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre> -->
-            <!-- <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre> -->
+            <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre>
+            <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre>
 
             <mat-action-row>
               <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>

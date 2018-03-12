@@ -30,14 +30,14 @@ const appRoutes: Routes = [
       { path: 'auth-menu', component: AuthMenuComponent, outlet: 'sidenav' },
       { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
       { path: 'register', component: SignUpComponent, outlet: 'sidenav' },
-      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }
+      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' },
+      { path: 'space/:id', component: SpaceComponent },
+      { path: 'checkout', component: CheckoutComponent },
+      { path: 'my-spaces', component: MySpacesComponent },
+      { path: 'my-calendar', component: MyCalendarComponent },
+      { path: 'my-favorites', component: MyFavoritesComponent },
     ]
   },
-  { path: 'space/:id', component: SpaceComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'my-spaces', component: MySpacesComponent },
-  { path: 'my-calendar', component: MyCalendarComponent },
-  { path: 'my-favorites', component: MyFavoritesComponent },
   { path: '', redirectTo: '/app', pathMatch: 'full' },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}

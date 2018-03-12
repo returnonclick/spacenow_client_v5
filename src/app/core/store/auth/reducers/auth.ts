@@ -28,8 +28,8 @@ export function reducer(
 
         case auth.SUCCESS: {
 
-            return authAdapter.addOne(action.payload, 
-                { 
+            return authAdapter.addOne(action.payload,
+                {
                     ...state,
                     isSignedIn: true,
                     selectedId: action.payload.uid

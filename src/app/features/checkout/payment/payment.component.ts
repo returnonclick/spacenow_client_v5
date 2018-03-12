@@ -17,6 +17,7 @@ export class PaymentComponent {
 
   @ViewChild(BraintreeUIComponent) braintree: BraintreeUIComponent
   @Input() cart: BookingSpace[]
+  @Input() customerId: string
 
   paymentServerDomain = "https://glacial-ocean-69657.herokuapp.com/api"
   clientTokenURL      = this.paymentServerDomain + '/get-client-token'
@@ -25,7 +26,6 @@ export class PaymentComponent {
   firestoreBooking:        Booking        = new Booking()
   braintreeBooking:        PaymentBooking = new PaymentBooking()
 
-  customerId:         string         = "userUID12345678"
   amount:   number = 11211
   currency: string = 'USD'
 

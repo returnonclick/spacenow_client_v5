@@ -3,8 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/map'
-import 'rxjs/observable/throw'
-
 import * as dropin from 'braintree-web-drop-in'
 
 import { PaymentBooking } from '@features/braintree/models/payment-booking'
@@ -32,8 +30,6 @@ export class BraintreeService {
       { 'headers': headers }
     )
     .map((response: any) => response.token)
-    // .delay(3000)
-    .catch(error => Observable.throw(error))
   }
 
   requestNonce(instance: any) {
