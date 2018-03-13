@@ -122,7 +122,7 @@ export class AmenityComponent {
 
     // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
     back() {
-      this.router.navigate(['listing', this.listing.id, 'category'])
+      this.router.navigate(['listing', this.listing.id, 'address'])
     }
  
 }

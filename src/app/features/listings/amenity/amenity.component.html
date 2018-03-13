@@ -2,7 +2,7 @@
 <form [formGroup]="amenityForm" (ngSubmit)="onSubmit()" novalidate>
   <div class="amenity">
     <div class="title">
-      <h2>Select Amenities</h2>
+      <span style="font-size: 48px">Select amenities</span>
     </div>
 
     <!-- <ng-container *ngIf="isLoadingAmenity$ | async as isLoading; else amenity"></ng-container> -->
@@ -25,7 +25,7 @@
     <div class="actions">
       <button mat-raised-button type="submit" class="next-button" 
               [disabled]="!amenitiesValid"> 
-              Next 
+              Continue 
       </button>
       <button mat-button type="button" class="back-button" (click)="back()"> 
             Back 

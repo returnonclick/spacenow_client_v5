@@ -65,13 +65,8 @@ export class CategoryComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.categoryForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'amenity'])
+    this.router.navigate(['listing', this.listing.id, 'address'])
   }
 
-  // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
-  back() {
-    this.router.navigate(['listing', this.listing.id, 'price'])
-  }
-  
 }
    

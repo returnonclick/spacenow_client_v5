@@ -21,17 +21,17 @@ const routes: Routes = [
     path: '',
     component: ContainerComponent,
     children: [
-        { path: 'title', component: TitleComponent },
-        { path: '', redirectTo: '/title', pathMatch: 'full' }
+        { path: 'category', component: CategoryComponent },
+        { path: '', redirectTo: '/category', pathMatch: 'full' }
     ]
   },
   {
     path: ':id',
     component: ContainerComponent,
     children: [
+        { path: 'category', component: CategoryComponent },
         { path: 'title', component: TitleComponent },
         { path: 'price', component: PriceComponent },
-        { path: 'category', component: CategoryComponent },
         { path: 'amenity', component: AmenityComponent },
         { path: 'specification', component: SpecificationComponent },
         { path: 'address', component: AddressComponent },

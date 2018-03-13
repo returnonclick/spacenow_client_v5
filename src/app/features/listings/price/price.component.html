@@ -13,14 +13,16 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div class="children">
+
+      <div class="child">
         <ng-template d-sn-price></ng-template>
       </div>
+
     </div>
     <div class="actions">
       <button mat-raised-button type="submit" class="next-button" 
               [disabled]="priceForm.invalid"> 
-              Next 
+              Continue 
       </button>
       <button mat-button type="button" class="back-button" (click)="back()"> 
             Back 

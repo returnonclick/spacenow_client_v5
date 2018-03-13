@@ -1,5 +1,6 @@
 // GRID AREAS 
 .title {
+  margin: 40px 0;
   grid-area: title;
 }
 
@@ -12,21 +13,21 @@
 }
 
 .next-button {
-  margin: 60px 0;
+  margin: 80px 0;
   grid-area: next-button;
 }
 
 .back-button {
-  margin: 60px 0;
+  margin: 80px 0;
   grid-area: back-button;
 }
 
 /* GRID CSS TITLE */
 .space-title {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 2fr 8fr 1fr;
-  height: calc(100vh - 125px);
+  grid-template-columns: 1fr 2fr 1fr;
+  // grid-template-rows: 2fr 8fr 1fr;
+  // height: calc(100vh - 125px);
   grid-template-areas: 
     ". title ."
     ". content ."
@@ -42,17 +43,17 @@
 
 .space-title .actions {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 2fr 5fr;
   grid-template-rows: auto;
   grid-template-areas: 
-      "back-button . next-button";
+      "next-button .";
 }
 
 @media screen and (max-width:1024px) {
 
   .space-title {
       grid-template-columns:  1fr 9fr 1fr;
-      height: calc(90vh - 125px);
+      // height: calc(90vh - 125px);
   }
 
   .space-title .actions {

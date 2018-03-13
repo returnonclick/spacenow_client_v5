@@ -12,7 +12,7 @@ export class CategoryService {
   }
 
   public readAll() {
-    return this.afs.collection<Category>(this.ref).stateChanges()
+    return this.afs.collection<Category>(this.ref, ref => ref.orderBy('order')).stateChanges()
   }
 
   public update(id: string, category: Partial<Category>) {

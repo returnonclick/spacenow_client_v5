@@ -38,8 +38,9 @@ export class AddressComponent {
         administrative_area_level_1:  [''],
         country:                      [''],
         postal_code:                  [''],
-        lat:                          [''],
-        lng:                          ['']
+        latitude:                          [''],
+        longitude:                          [''],
+        full_name:                    ['']
       })
     })
 
@@ -63,8 +64,9 @@ export class AddressComponent {
         administrative_area_level_1:  [this.listing.address.administrative_area_level_1, Validators.required],
         country:                      [this.listing.address.country, Validators.required],
         postal_code:                  [this.listing.address.postal_code, Validators.required],
-        lat:                          [this.listing.address.lat],
-        lng:                          [this.listing.address.lng]
+        latitude:                          [this.listing.address.latitude],
+        longitude:                          [this.listing.address.longitude],
+        full_name:                    [this.listing.address.full_name]
       })
     })
   }
@@ -72,6 +74,7 @@ export class AddressComponent {
   getAddressChange(event) {
     const address = this.addressForm.get('address')
     address.setValue(event)
+    address.updateValueAndValidity()
   }
 
   onSubmit() {
@@ -82,12 +85,12 @@ export class AddressComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.addressForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'description'])
+    this.router.navigate(['listing', this.listing.id, 'amenity'])
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'specification'])
+    this.router.navigate(['listing', this.listing.id, 'category'])
   }
  
 }

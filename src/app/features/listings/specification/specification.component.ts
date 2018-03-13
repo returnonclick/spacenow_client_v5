@@ -95,7 +95,7 @@ export class SpecificationComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.specificationForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'address'])
+    this.router.navigate(['listing', this.listing.id, 'price'])
   }
 
     // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html

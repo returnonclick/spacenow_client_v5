@@ -9,17 +9,11 @@
       <mat-form-field class="input-container-full">
         <textarea matInput placeholder="Space description"
           required
-          matTextareaAutosize
-          matAutosizeMinRows="3" 
-          matAutosizeMaxRows="8"
           formControlName="description">
         </textarea>
       </mat-form-field>
       <mat-form-field class="input-container-full">
         <textarea matInput placeholder="Space rules"
-          matTextareaAutosize
-          matAutosizeMinRows="3" 
-          matAutosizeMaxRows="8" 
           formControlName="rules">
         </textarea>
       </mat-form-field>
@@ -28,11 +22,11 @@
     <div class="actions">
       <button mat-raised-button type="submit" class="next-button" 
               [disabled]="descriptionForm.invalid"> 
-              Next 
+              Continue 
       </button>
-      <button mat-button type="button" class="back-button" (click)="back()"> 
+      <a class="back-button" (click)="back()"> 
             Back 
-      </button>
+      </a>
     </div>
   </div>
   

@@ -3,7 +3,7 @@
 
   <div class="address">
     <div class="title">
-      <h2>List your space address</h2>
+      <span style="font-size: 48px">List your space address</span>
     </div>
     <div class="content">
       <div id="address-search-container">
@@ -63,15 +63,16 @@
             </mat-form-field>
         </div>
         <div>
-          <input type="hidden" formControlName="lat">
-          <input type="hidden" formControlName="lng">
+          <input type="hidden" formControlName="longitude">
+          <input type="hidden" formControlName="latitude">
+          <input type="hidden" formControlName="full_name">
         </div>
       </div>
     </div>
     <div class="actions">
       <button mat-raised-button type="submit" class="next-button" 
               [disabled]="addressForm.invalid"> 
-              Next 
+              Continue 
       </button>
       <button mat-button type="button" class="back-button" (click)="back()"> 
             Back 

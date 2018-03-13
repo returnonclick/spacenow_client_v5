@@ -1,5 +1,6 @@
 // GRID AREAS 
 .title {
+  margin: 40px 0;
   grid-area: title;
 }
 
@@ -8,16 +9,15 @@
 }
 
 .actions {
+  margin: 80px 0;
   grid-area: actions;
 }
 
 .next-button {
-  margin: 60px 0;
   grid-area: next-button;
 }
 
 .back-button {
-  margin: 60px 0;
   grid-area: back-button;
 }
 
@@ -26,16 +26,16 @@
   padding-right: 5%;
 }
 
-.children {
-  grid-area: children;
+.child {
+  grid-area: child;
 }
 
 /* GRID CSS TITLE */
 .price {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 2fr 8fr 1fr;
-  height: calc(100vh - 125px);
+  grid-template-rows:  1fr 2fr 1fr;
+  grid-template-rows: auto;
   grid-template-areas: 
     ". title ."
     ". content ."
@@ -48,15 +48,15 @@
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto;
   grid-template-areas: 
-    "unit children";
+    "unit child";
 }
 
 .price .actions {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 2fr 5fr;
   grid-template-rows: auto;
   grid-template-areas: 
-      "back-button . next-button";
+      "back-button next-button .";
 }
 
 @media screen and (max-width:1024px) {
@@ -65,20 +65,19 @@
     grid-area: unit;
   }
   
-  .children {
-    grid-area: children;
+  .child {
+    grid-area: child;
   }
 
   .price {
       grid-template-columns:  1fr 9fr 1fr;
-      height: calc(90vh - 125px);
   }
 
   .price .content {
     grid-template-columns: 1fr;
     grid-template-areas: 
       "unit"
-      "children";
+      "child";
   }
 
   .price .actions {
@@ -93,7 +92,7 @@
 
 @media screen and (max-width:768px) {
   .price .actions {
-    grid-template-columns: 3fr 2fr 3fr;
+    grid-template-columns: 1fr 2fr 3fr;
   }
 }
 
