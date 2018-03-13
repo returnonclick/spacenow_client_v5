@@ -26,8 +26,8 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -38,8 +38,8 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -50,8 +50,8 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -67,8 +67,8 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -79,8 +79,8 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -96,8 +96,8 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -108,8 +108,8 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
   ]

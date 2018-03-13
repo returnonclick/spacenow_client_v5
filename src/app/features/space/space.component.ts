@@ -58,8 +58,8 @@ export class SpaceComponent {
     this.space$         = this._store.select(fromRoot.getSpaceEntities).map(spaces => {
       if(spaces[this.spaceId]) {
         let space      = spaces[this.spaceId]
-        this.latitude  = +space.address.lat
-        this.longitude = +space.address.lng
+        this.latitude  = +space.address.latitude
+        this.longitude = +space.address.longitude
 
         return space
       }

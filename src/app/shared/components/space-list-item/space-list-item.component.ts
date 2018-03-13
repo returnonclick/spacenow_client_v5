@@ -1,5 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core'
 
+import { Space } from '@models/space'
+
 @Component({
   selector: 'sn-space-list-item',
   templateUrl: './space-list-item.component.html',
@@ -8,7 +10,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core'
 })
 export class SpaceListItemComponent {
 
-  @Input() space:          any     = null
+  @Input() space:          Space   = null
   @Input() multipleImages: boolean = true
   @Input() showOptions:    boolean = true
   imageIndex:              number  = 0
