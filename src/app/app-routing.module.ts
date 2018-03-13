@@ -16,9 +16,11 @@ import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
 import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 import { SearchComponent } from '@features/search/search.component'
+import { SpaceComponent } from '@features/space/space.component'
+import { CheckoutComponent } from '@features/checkout/checkout.component'
 
 const appRoutes: Routes = [
-  { 
+  {
     path: 'app',
     component: LayoutComponent,
     children: [
@@ -28,14 +30,16 @@ const appRoutes: Routes = [
       { path: 'auth-menu', component: AuthMenuComponent, outlet: 'sidenav' },
       { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
       { path: 'register', component: SignUpComponent, outlet: 'sidenav' },
-      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }
+      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' },
+      { path: 'space/:id', component: SpaceComponent },
+      { path: 'checkout', component: CheckoutComponent },
+      { path: 'my-spaces', component: MySpacesComponent },
+      { path: 'my-calendar', component: MyCalendarComponent },
+      { path: 'my-favorites', component: MyFavoritesComponent },
     ]
   },
-  //{ path: 'profile', loadChildren: '@features/users/users.module#UsersModule' },
+  { path: 'search', component: SearchComponent },
   { path: '', redirectTo: '/app', pathMatch: 'full' },
-  // { path: 'my-spaces', component: MySpacesComponent },
-  // { path: 'my-calendar', component: MyCalendarComponent },
- 
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}
 ]

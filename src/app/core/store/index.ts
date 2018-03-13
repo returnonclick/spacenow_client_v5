@@ -7,6 +7,7 @@ import {
 } from '@ngrx/store'
 import { environment } from '../../../environments/environment'
 import { RouterStateUrl } from './utils'
+import { localStorageSync } from 'ngrx-store-localstorage'
 
 /**
  * storeFreeze prevents state from being mutated. When mutation occurs, an
@@ -25,28 +26,34 @@ import { storeFreeze } from 'ngrx-store-freeze'
 /** * The following line about layout is commented, but you can refer to * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts * for detailed implementations
  */
 
-import * as fromRouter          from '@ngrx/router-store'
-import * as fromAuth            from '@core/store/auth/reducers/auth'
-import * as fromUsers           from '@core/store/users/reducers/users'
-import * as fromUsersProfile    from '@core/store/users-profile/reducers/users-profile'
-import * as fromLayouts         from '@core/store/layouts/reducers/layouts'
-import * as fromListings        from '@core/store/listings/reducers/listings'
-import * as fromCategories      from '@core/store/categories/reducers/categories'
-import * as fromSearch          from '@core/store/search/reducers/search'
+import * as fromRouter       from '@ngrx/router-store'
+import * as fromAuth         from '@core/store/auth/reducers/auth'
+import * as fromUsers        from '@core/store/users/reducers/users'
+import * as fromUsersProfile from '@core/store/users-profile/reducers/users-profile'
+import * as fromLayouts      from '@core/store/layouts/reducers/layouts'
+import * as fromListings     from '@core/store/listings/reducers/listings'
+import * as fromCategories   from '@core/store/categories/reducers/categories'
+import * as fromSearch       from '@core/store/search/reducers/search'
+import * as fromSpaces       from '@core/store/spaces/reducers/spaces'
+import * as fromCart         from '@core/store/cart/reducers/cart'
+import * as fromCheckout     from '@core/store/checkout/reducers/checkout'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-    auth:          fromAuth.State
-    users:         fromUsers.State
-    usersProfile:  fromUsersProfile.State
-    layouts:       fromLayouts.State
-    listings:      fromListings.State
-    categories:    fromCategories.State
-    search:        fromSearch.State
-    routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
+  auth:          fromAuth.State
+  users:         fromUsers.State
+  usersProfile:  fromUsersProfile.State
+  layouts:       fromLayouts.State
+  listings:      fromListings.State
+  categories:    fromCategories.State
+  search:        fromSearch.State
+  spaces:        fromSpaces.State
+  cart:          fromCart.State
+  checkout:      fromCheckout.State
+  routerReducer: fromRouter.RouterReducerState<RouterStateUrl>
 }
 
 /**
@@ -55,24 +62,37 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-    auth:          fromAuth.reducer,
-    users:         fromUsers.reducer,
-    usersProfile:  fromUsersProfile.reducer,
-    layouts:       fromLayouts.reducer,
-    listings:      fromListings.reducer,
-    categories:    fromCategories.reducer,
-    search:        fromSearch.reducer,
-    routerReducer: fromRouter.routerReducer,
+  auth:          fromAuth.reducer,
+  users:         fromUsers.reducer,
+  usersProfile:  fromUsersProfile.reducer,
+  layouts:       fromLayouts.reducer,
+  listings:      fromListings.reducer,
+  categories:    fromCategories.reducer,
+  spaces:        fromSpaces.reducer,
+  search:        fromSearch.reducer,
+  cart:          fromCart.reducer,
+  checkout:      fromCheckout.reducer,
+  routerReducer: fromRouter.routerReducer,
 }
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-    return function (state: State, action: any): State {
-        console.log('state', state)
-        console.log('action', action)
+  return function (state: State, action: any): State {
+    console.log('state', state)
+    console.log('action', action)
 
-        return reducer(state, action)
-    }
+    return reducer(state, action)
+  }
+}
+
+export function saveToCache(reducer: ActionReducer<State>): ActionReducer<State> {
+  return localStorageSync({
+    keys: [
+      'cart',
+    ],
+    rehydrate: true,
+    removeOnUndefined: true,
+  })(reducer)
 }
 
 /**
@@ -81,9 +101,8 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-    //? [logger, storeFreeze]
-    ? [logger]
-    : []
+  ? [logger, storeFreeze, saveToCache]
+  : [saveToCache,]
 
 /**
  * Router Reducers
@@ -101,30 +120,30 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 export const getAuthState = createFeatureSelector<fromAuth.State>('auth')
 
 export const getAuthEntitiesState = createSelector(
-    getAuthState,
-    (state) => state
+  getAuthState,
+  (state) => state
 )
 
 export const getSelectedAuthId = createSelector(
-    getAuthEntitiesState,
-    (state) => state.selectedId
+  getAuthEntitiesState,
+  (state) => state.selectedId
 )
 
 export const {
-    selectIds: getAuthIds,
-    selectEntities: getAuthEntities,
-    selectAll: getAllAuth,
-    selectTotal: getTotalAuth,
-  } = fromAuth.authAdapter.getSelectors(getAuthEntitiesState)
+  selectIds:      getAuthIds,
+  selectEntities: getAuthEntities,
+  selectAll:      getAllAuth,
+  selectTotal:    getTotalAuth,
+} = fromAuth.authAdapter.getSelectors(getAuthEntitiesState)
 
 export const getAuthUserState = createSelector(
-    getAuthState,
-    (state) => state.user
+  getAuthState,
+  (state) => state.user
 )
 
 export const getIsSignedInState = createSelector(
-    getAuthState,
-    (state) => state.isSignedIn
+  getAuthState,
+  (state) => state.isSignedIn
 )
 
 export const getAuthError = createSelector(
@@ -138,11 +157,11 @@ export const getAuthSuccess = createSelector(
 )
 
 export const getSelectedAuth = createSelector(
-    getAuthEntities,
-    getSelectedAuthId,
-    (entities, selectedId) => {
-      return selectedId && entities[selectedId];
-    }
+  getAuthEntities,
+  getSelectedAuthId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
+  }
 )
 
 /**
@@ -152,28 +171,28 @@ export const getSelectedAuth = createSelector(
 export const getUsersState = createFeatureSelector<fromUsers.State>('users')
 
 export const getUserEntitiesState = createSelector(
-    getUsersState,
-    (state) => state
+  getUsersState,
+  (state) => state
 )
 
 export const getSelectedUserId = createSelector(
-    getUserEntitiesState,
-    fromUsers.getSelectedId
+  getUserEntitiesState,
+  fromUsers.getSelectedId
 )
 
 export const {
-    selectIds: getUserIds,
-    selectEntities: getUserEntities,
-    selectAll: getAllUsers,
-    selectTotal: getTotalUsers,
+  selectIds:      getUserIds,
+  selectEntities: getUserEntities,
+  selectAll:      getAllUsers,
+  selectTotal:    getTotalUsers,
 } = fromUsers.userAdapter.getSelectors(getUserEntitiesState)
 
 export const getSelectedUser = createSelector(
-    getUserEntities,
-    getSelectedUserId,
-    (entities, selectedId) => {
-      return selectedId && entities[selectedId];
-    }
+  getUserEntities,
+  getSelectedUserId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
+  }
 )
 
 /**
@@ -183,33 +202,33 @@ export const getSelectedUser = createSelector(
 export const getUsersProfileState = createFeatureSelector<fromUsersProfile.State>('usersProfile')
 
 export const getUserProfileEntitiesState = createSelector(
-    getUsersProfileState,
-    (state) => state
+  getUsersProfileState,
+  (state) => state
 )
 
 export const {
-    selectIds: getUserProfileIds,
-    selectEntities: getUserProfileEntities,
-    selectAll: getAllUsersProfile,
-    selectTotal: getTotalUsersProfile,
+  selectIds:      getUserProfileIds,
+  selectEntities: getUserProfileEntities,
+  selectAll:      getAllUsersProfile,
+  selectTotal:    getTotalUsersProfile,
 } = fromUsersProfile.userProfileAdapter.getSelectors(getUserProfileEntitiesState)
 
 export const getSelectedUserProfile = createSelector(
-    getUserProfileEntities,
-    getUsersProfileState,
-    (entities, profileState) => {
-      return profileState.selectedId && entities[profileState.selectedId];
-    }
+  getUserProfileEntities,
+  getUsersProfileState,
+  (entities, profileState) => {
+    return profileState.selectedId && entities[profileState.selectedId];
+  }
 )
 
 export const getSelectedUserProfileId = createSelector(
-    getUsersProfileState,
-    (state) => state.selectedId
+  getUsersProfileState,
+  (state) => state.selectedId
 )
 
 export const getIsLoadingProfile = createSelector(
-    getUsersProfileState,
-    (state) => state.loading
+  getUsersProfileState,
+  (state) => state.loading
 )
 
  /**
@@ -219,22 +238,22 @@ export const getIsLoadingProfile = createSelector(
 export const getListingsState = createFeatureSelector<fromListings.State>('listings')
 
 export const getListingEntitiesState = createSelector(
-    getListingsState,
-    (state) => state
+  getListingsState,
+  (state) => state
 )
 
 export const {
-    selectIds: getListingIds,
-    selectEntities: getListingEntities,
-    selectAll: getAllListings,
-    selectTotal: getTotalListings
-  } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
+  selectIds:      getListingIds,
+  selectEntities: getListingEntities,
+  selectAll:      getAllListings,
+  selectTotal:    getTotalListings
+} = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
 
-  
+
 export const getSelectedListing = createSelector(
-    getListingEntities,
-    fromListings.getSelectedListingId,
-    (listingEntities, listingId) => listingEntities[listingId]
+  getListingEntities,
+  fromListings.getSelectedListingId,
+  (listingEntities, listingId) => listingEntities[listingId]
 )
 
  /**
@@ -244,13 +263,13 @@ export const getSelectedListing = createSelector(
 export const getLayoutsState = createFeatureSelector<fromLayouts.State>('layouts')
 
 export const getShowSidenav = createSelector(
-    getLayoutsState,
-    (state) => state.showSidenav
+  getLayoutsState,
+  (state) => state.showSidenav
 )
 
 export const getLogo = createSelector(
-    getLayoutsState,
-    (state) => state.logo
+  getLayoutsState,
+  (state) => state.logo
 )
 
 /**
@@ -260,16 +279,16 @@ export const getLogo = createSelector(
 export const getCategoriesState = createFeatureSelector<fromCategories.State>('categories')
 
 export const getCategoryEntitiesState = createSelector(
-    getCategoriesState,
-    (state) => state
+  getCategoriesState,
+  (state) => state
 )
 
 export const {
-    selectIds: getCategoryIds,
-    selectEntities: getCategoryEntities,
-    selectAll: getAllCategories,
-    selectTotal: getTotalCategories,
-  } = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
+  selectIds:      getCategoryIds,
+  selectEntities: getCategoryEntities,
+  selectAll:      getAllCategories,
+  selectTotal:    getTotalCategories,
+} = fromCategories.categoryAdapter.getSelectors(getCategoryEntitiesState)
 
 /**
  *  Search Reducers
@@ -288,3 +307,50 @@ export const {
   selectTotal:    getTotalSearches,
 } = fromSearch.searchAdapter.getSelectors(getSearchEntitiesState)
 export const isLoadingSearch = createSelector(getSearchState, fromSearch.isLoading)
+
+
+/**
+ *  Spaces Reducers
+ */
+export const getSpacesState = createFeatureSelector<fromSpaces.State>('spaces')
+
+export const getSpaceEntitiesState = createSelector(
+  getSpacesState,
+  (state) => state
+)
+
+export const {
+  selectIds:      getSpaceIds,
+  selectEntities: getSpaceEntities,
+  selectAll:      getAllSpaces,
+  selectTotal:    getTotalSpaces
+} = fromSpaces.spaceAdapter.getSelectors(getSpaceEntitiesState)
+export const isLoadingSpaces = createSelector(getSpacesState, fromSpaces.isLoading)
+
+
+/**
+ *  Cart Reducer
+ */
+export const getCartState = createFeatureSelector<fromCart.State>('cart')
+
+export const getCartEntitiesState = createSelector(
+  getCartState,
+  (state) => state
+)
+
+export const {
+  selectIds:      getBookingSpaceIds,
+  selectEntities: getBookingSpaceEntities,
+  selectAll:      getAllBookingSpaces,
+  selectTotal:    getTotalBookingSpaces,
+} = fromCart.cartAdapter.getSelectors(getCartEntitiesState)
+export const getCartError = createSelector(getCartState, fromCart.getError)
+
+/**
+ *  Checkout State
+ */
+export const getCheckoutState = createFeatureSelector<fromCheckout.State>('checkout')
+
+export const checkoutIsLoading = createSelector(getCheckoutState, fromCheckout.getIsLoading)
+export const getBookingId      = createSelector(getCheckoutState, fromCheckout.getBookingId)
+export const getCheckoutError  = createSelector(getCheckoutState, fromCheckout.getError)

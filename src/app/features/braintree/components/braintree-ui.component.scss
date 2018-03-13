@@ -1,0 +1,45 @@
+:host {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
+  justify-items: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  > * {
+    width: 100%;
+  }
+}
+
+.mat-spinner-container {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: rgba(48, 48, 48, 0.85);
+  padding: 20px;
+}
+
+.dropin-container {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  z-index: 1;
+  padding: 20px;
+
+  > * {
+    margin: 12px 0;
+  }
+}
+
+.dropin-error {
+  background-color: rgba(207, 15, 0, 0.85);
+  color: white;
+  border-radius: 8px;
+  word-wrap: break-word;
+  padding: 12px;
+}

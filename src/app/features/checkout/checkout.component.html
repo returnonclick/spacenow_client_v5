@@ -1,0 +1,114 @@
+<section id="checkout">
+  <div id="main">
+    <!-- <pre style="width: 100%; height: 250px; overflow: scroll; padding: 16px; border: 1px solid gray;">{{ (cart$ | async) | json }}</pre> -->
+    <mat-tab-group>
+      <mat-tab label="review license">
+        <h2>Review Contract</h2>
+        <section>
+          <h4>General Rules</h4>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+            enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
+            <a>more</a>
+          </p>
+        </section>
+        <section>
+          <h4>The License</h4>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+            enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
+            <a>more</a>
+          </p>
+        </section>
+        <button mat-raised-button (click)="agreeToContract()">Agree and Continue</button>
+      </mat-tab>
+      <mat-tab label="about you">
+        <h2>Almost there...</h2>
+        <section>
+          <mat-form-field>
+            <input matInput [matDatepicker]="birthday" placeholder="Birthday">
+            <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
+            <mat-datepicker #birthday></mat-datepicker>
+          </mat-form-field>
+          <h3>Add any notes for this business expense</h3>
+          <mat-form-field [floatLabel]="false">
+            <textarea matInput placeholder="Type here..."></textarea>
+          </mat-form-field>
+          <h3>Say hi to your host, and your reason for the stay</h3>
+          <mat-form-field [floatLabel]="false">
+            <textarea matInput placeholder="Hi! Nice to meet you..."></textarea>
+          </mat-form-field>
+        </section>
+        <button mat-raised-button (click)="confirmDetails()">Confirm and Continue</button>
+      </mat-tab>
+      <mat-tab label="confirm and pay">
+        <sn-payment
+          *ngIf="pLoadPayments | async"
+          [cart]="(cart$ | async)"
+          [customerId]="(user$ | async).uid">
+        </sn-payment>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <aside>
+    <div class="booking-cart">
+      <mat-accordion displayMode="flat">
+        <ng-container *ngFor="let cartItem of (cart$ | async)">
+          <mat-expansion-panel *ngIf="spaces[cartItem.spaceId]">
+            <mat-expansion-panel-header>
+              {{ spaces[cartItem.spaceId].title }}
+            </mat-expansion-panel-header>
+
+            <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre>
+            <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre>
+
+            <mat-action-row>
+              <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </ng-container>
+      </mat-accordion>
+
+      <table class="price-breakdown">
+        <tbody>
+          <tr>
+            <td>Accomodation</td>
+            <td>$5,571</td>
+          </tr>
+          <tr>
+            <td>15% monthly price discount</td>
+            <td>-$836</td>
+          </tr>
+          <tr>
+            <td>Cleaning fee</td>
+            <td>$82</td>
+          </tr>
+          <tr>
+            <td>Service fee</td>
+            <td>$302</td>
+          </tr>
+          <tr>
+            <td><strong>Total</strong> AUD</td>
+            <td><strong>$5,119</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </aside>
+</section>

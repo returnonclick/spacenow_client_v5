@@ -1,0 +1,21 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <mat-form-field class="from-date">
+    <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="From date" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+    <mat-datepicker #fromDate></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="form-hour">
+    <mat-select placeholder="From hour" formControlName="fromHour">
+      <mat-option *ngFor="let hour of fromHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="to-hour">
+    <mat-select placeholder="To hour"formControlName="toHour">
+      <mat-option *ngFor="let hour of toHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="num-guests">
+    <input matInput type="number" placeholder="Guests" formControlName="numGuests">
+  </mat-form-field>
+  <button mat-raised-button [disabled]="form.invalid || form.pristine">Book</button>
+</form>

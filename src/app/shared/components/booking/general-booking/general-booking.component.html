@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" *ngIf="space">
+  <mat-form-field class="from-date">
+    <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="From date" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+    <mat-datepicker #fromDate></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="num-guests">
+    <input matInput type="number" placeholder="# of guests" formControlName="numGuests">
+  </mat-form-field>
+  <mat-form-field class="duration">
+    <input matInput type="number" placeholder="# of {{ mapPriceUnit() }}" formControlName="duration">
+  </mat-form-field>
+  <button mat-raised-button type="submit" [disabled]="form.invalid || form.pristine">Book</button>
+</form>

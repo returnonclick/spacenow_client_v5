@@ -1,0 +1,9 @@
+<div class="mat-spinner-container" *ngIf="isLoading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="dropin-container">
+  <div class="dropin-error" *ngIf="error$ | async">
+    <pre style="overflow: scroll;">{{ error$ | async | json }}</pre>
+  </div>
+  <div id="dropin"></div>
+</div>

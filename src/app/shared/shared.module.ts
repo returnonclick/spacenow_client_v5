@@ -38,7 +38,10 @@ import {
   LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
-  ImageUploadComponent
+  ImageUploadComponent,
+
+  GeneralBookingComponent,
+  HourlyBookingComponent,
 } from './components'
 
 const COMPONENTS = [
@@ -62,11 +65,15 @@ const COMPONENTS = [
   LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
-  ImageUploadComponent
+  ImageUploadComponent,
+
+  GeneralBookingComponent,
+  HourlyBookingComponent,
 ]
 
 const DIRECTIVES = [
-  ImageUploadDirective
+  ImageUploadDirective,
+  GoogleAddressDirective,
 ]
 
 const MODULES = [
@@ -101,14 +108,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ...COMPONENTS,
     ...DIRECTIVES,
     PIPES,
-    GoogleAddressDirective],
+  ],
   entryComponents: COMPONENTS,
   exports: [
     ...COMPONENTS,
     ...DIRECTIVES,
     MODULES,
     PIPES,
-    GoogleAddressDirective
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
