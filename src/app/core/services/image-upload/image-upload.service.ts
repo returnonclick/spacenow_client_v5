@@ -229,10 +229,10 @@ export class ImageUploadService {
     * @param { string } imageItemName name of item in the document that contains
     *                   image data. Assuming that image data keep in an array
     * @param { Image } imageFile file data to upload
-    * @param { string } imageTitle name of the image
+    * @param { string } title name of the image
     * @returns { Promise<boolean> } outcome of uploading - sucess or failure
     * ************************************************************************* */
-  uploadImage(collectionName: string, documentID: string, imageItemName: string, imageFile: Image, imageTitle: string): Promise<{imageURL: string, isSuccess: boolean}> {
+  uploadImage(collectionName: string, documentID: string, imageItemName: string, imageFile: Image, title: string): Promise<{imageURL: string, isSuccess: boolean}> {
     this.toastr.info(documentID)
     return new Promise((resolve) => {
       // TODO(TT): develop to validate image formats and size
@@ -265,8 +265,8 @@ export class ImageUploadService {
           let imageMetaData = new ImageData()
           imageMetaData.imageURL = snapshot.downloadURL
           imageMetaData.storageRef = imagePath
-          imageMetaData.imageTitle = imageTitle
-          imageMetaData.imageTags.push(filename)
+          imageMetaData.title = title
+          imageMetaData.tags.push(filename)
 
           // get existing imageData list
           this.getImageList(collectionName, documentID, imageItemName).subscribe(imageDataList =>{
@@ -348,7 +348,7 @@ export class ImageUploadService {
     * @param { string } documentID ID of the document that contains imageData
     * @param { string } imageItemName name of item in the document that contains
     *                   image data. Assuming that image data keep in an array
-    * @param { string } imageTitle name of the image
+    * @param { string } title name of the image
     * @returns { Promise<boolean> } outcome of uploading - sucess or failure
     * ************************************************************************* */
   updateImageData(collectionName: string, documentID: string, imageItemName: string, imageData: ImageData): Promise<boolean> {

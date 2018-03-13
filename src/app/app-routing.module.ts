@@ -6,19 +6,11 @@ import {
   AuthMenuComponent,
   SignInComponent,
   SignUpComponent,
-  // LayoutComponent,
+  LayoutComponent,
   ForgotPasswordComponent
 } from '@shared/components'
 
-import { LayoutComponent } from '@shared/components/theme/layout/layout.component'
-
-import { HomeComponent } from '@features/pages/home/home.component'
-import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
-import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
-import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
-import { SearchComponent } from '@features/search/search.component'
-import { SpaceComponent } from '@features/space/space.component'
-import { CheckoutComponent } from '@features/checkout/checkout.component'
+import { AuthGuard } from '@core/store/auth/services';
 
 const appRoutes: Routes = [
   {
@@ -26,21 +18,26 @@ const appRoutes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', loadChildren: '@features/pages/pages.module#PagesModule' },
-      { path: 'listings', loadChildren: '@features/listings/listings.module#ListingModule' },
-      { path: 'profile', loadChildren: '@features/users/users.module#UsersModule' },
+      { 
+        path: 'listings', 
+        loadChildren: '@features/listings/listings.module#ListingModule',
+        canActivate: [AuthGuard]
+      },
+      { 
+        path: 'profile', 
+        loadChildren: '@features/users/users.module#UsersModule' ,
+        canActivate: [AuthGuard]
+      },
       { path: 'auth-menu', component: AuthMenuComponent, outlet: 'sidenav' },
       { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
       { path: 'register', component: SignUpComponent, outlet: 'sidenav' },
-      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' },
-      { path: 'space/:id', component: SpaceComponent },
-      { path: 'checkout', component: CheckoutComponent },
-      { path: 'my-spaces', component: MySpacesComponent },
-      { path: 'my-calendar', component: MyCalendarComponent },
-      { path: 'my-favorites', component: MyFavoritesComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }
     ]
   },
-  { path: 'search', component: SearchComponent },
   { path: '', redirectTo: '/app', pathMatch: 'full' },
+  { path: 'sign-in', component: SignInComponent },
+  { path: 'register', component: SignUpComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}
 ]
@@ -49,7 +46,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      // { enableTracing: true } // <-- debugging purposes only
+      //{ enableTracing: true } // <-- debugging purposes only
     )
   ],
   // providers: [ appRoutingProviders ],

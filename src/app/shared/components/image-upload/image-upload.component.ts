@@ -209,7 +209,7 @@ export class ImageUploadComponent implements OnInit {
   updateImageData(collectionName: string, documentID: string, imageItemName: string, imageData: ImageData, imageTitle: string): void {
     // Show loading...
     let newImageData: ImageData = imageData
-    newImageData.imageTitle = imageTitle
+    newImageData.title = imageTitle
     this.imageUploadService.updateImageData(collectionName, documentID, imageItemName, newImageData)
     .then(res =>{
       if(res) {

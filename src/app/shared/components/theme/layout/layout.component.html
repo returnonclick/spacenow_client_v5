@@ -14,7 +14,7 @@
     <nav id="main-nav">
       <a routerLink="/" class="logo" [ngClass]="logo$ | async"></a>
       <span><!-- fill space --></span>
-      <a routerLink="/app/listings">List your space</a>
+      <a routerLink="/app/listings/category">List your space</a>
       <div *ngIf="isSignedIn$ | async; then authenticated else guest"></div>
     </nav>
 

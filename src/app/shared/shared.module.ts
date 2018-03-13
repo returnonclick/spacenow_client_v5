@@ -35,11 +35,10 @@ import {
   SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
-  // LayoutComponent,
+  LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent,
-
   GeneralBookingComponent,
   HourlyBookingComponent,
 } from './components'
@@ -62,11 +61,10 @@ const COMPONENTS = [
   SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
-  // LayoutComponent,
+  LayoutComponent,
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent,
-
   GeneralBookingComponent,
   HourlyBookingComponent,
 ]

@@ -98,9 +98,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EffectsModule.forFeature([AmenityEffects]),
     EffectsModule.forFeature([ListingSpecificationEffects]),
   ],
-  declarations: [COMPONENTS, PIPES],
+  declarations: [...COMPONENTS, ...PIPES],
   entryComponents: ENTRY_COMPONENTS,
-  exports: [COMPONENTS, MODULES, PIPES],
+  exports: [...COMPONENTS, ...MODULES, ...PIPES],
   providers: [
     ListingService,
     CategoryService,

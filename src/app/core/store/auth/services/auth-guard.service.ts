@@ -24,7 +24,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     public afAuth: AngularFireAuth
   ) {
     this.afAuth.authState.subscribe(
-      (user) => this._store.dispatch(new actions.GetUser(user.uid))
+      (user) => {
+        if (user)
+          return this._store.dispatch(new actions.GetUser(user.uid))
+        return null
+      }
     )
   }
 
@@ -36,7 +40,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         select(fromRoot.getIsSignedInState),
         map(isSinedIn => {
           if (!isSinedIn) {
-            this._store.dispatch(new actions.SignOut)
+            //this._store.dispatch(new actions.SignOut)
+            this.router.navigate(['sign-in'])
             return false
           }
           return true

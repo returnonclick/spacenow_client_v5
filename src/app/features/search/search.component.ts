@@ -69,7 +69,7 @@ export class SearchComponent {
       if(searchResults && map) {
         this.markerMap = {}
         for(let result of searchResults) {
-          let markerLatLng = new google.maps.LatLng(this.lat + result.address.lat, this.lng + result.address.lng);
+          let markerLatLng = new google.maps.LatLng(this.lat + result.address.latitude, this.lng + result.address.longitude);
           let thisLoc      = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map:       this.nativeMap,
