@@ -38,6 +38,7 @@ const appRoutes: Routes = [
       { path: 'my-favorites', component: MyFavoritesComponent },
     ]
   },
+  { path: 'search', component: SearchComponent },
   { path: '', redirectTo: '/app', pathMatch: 'full' },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}
