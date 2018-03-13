@@ -51,7 +51,6 @@
 
   .terms {
       grid-template-columns:  1fr 9fr 1fr;
-      height: calc(90vh - 125px);
   }
 
 }
@@ -84,6 +83,14 @@
 /* END GRID CSS TITLE */
 textarea {  
   font-family: inherit;
-  font-size: 100%;   
-  // overflow: auto
+  font-size: 90%;   
+  color: grey;
+  overflow-y: scroll;
+  height: 300px;
+  resize: none;
+  padding: 0 20px;
+}
+
+.checkbox-list {
+  font-size: 18px;
 }

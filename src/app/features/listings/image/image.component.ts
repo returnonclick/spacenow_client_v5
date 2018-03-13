@@ -46,13 +46,13 @@ export class ImageComponent {
 
   onSubmit() {
 
-    this.router.navigate(['listing', this.listing.id, 'description'])
+    this.router.navigate(['listing', this.listing.id, 'terms'])
 
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'terms'])
+    this.router.navigate(['listing', this.listing.id, 'description'])
   }
   
 }
