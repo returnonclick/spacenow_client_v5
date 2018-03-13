@@ -127,6 +127,16 @@ export const getIsSignedInState = createSelector(
     (state) => state.isSignedIn
 )
 
+export const getAuthError = createSelector(
+    getAuthState,
+    (state) => state.error
+)
+
+export const getAuthSuccess = createSelector(
+    getAuthState,
+    (state) => state.success
+)
+
 export const getSelectedAuth = createSelector(
     getAuthEntities,
     getSelectedAuthId,

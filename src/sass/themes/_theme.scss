@@ -2,7 +2,6 @@
 
 	--gap: 30px;
 
-
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -55,4 +54,12 @@ a {
 		color: $color__pastel_green;
 	}
 
+}
+
+.error {
+	color: red;
+}
+
+.success {
+	color: $color__eucalyptus;
 }

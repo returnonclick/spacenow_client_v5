@@ -17,7 +17,7 @@ import { RouterStateSnapshot } from '@angular/router';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
 
   authUser$: Observable<User>
   isSignedIn$: Observable<boolean>
@@ -41,10 +41,6 @@ export class LayoutComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
-  ngOnInit() {
-    this.afAuth.authState.subscribe((userData) => userData ? this._store.dispatch(new actions.GetUser(userData.uid)) : null )
-  }
-
   closeSidenav() {
     this._store.dispatch(new layoutActions.CloseSidenav());
   }
@@ -54,6 +50,6 @@ export class LayoutComponent implements OnInit {
   }
 
   signOut() {
-    this._store.dispatch(new actions.SignOut);
+    this._store.dispatch(new actions.SignOut());
   }
 }

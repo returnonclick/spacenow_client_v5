@@ -11,8 +11,10 @@ import { tap, map, exhaustMap, catchError, switchMap, mergeMap } from 'rxjs/oper
 import { AuthService } from '@core/store/auth/services/auth';
 import { User } from '@shared/models/user';
 import { AngularFireAuth } from 'angularfire2/auth'
+import { Store, State } from '@ngrx/store'
 
-import * as actions from '../actions/auth';
+import * as fromRoot from '@core/store'
+import * as actions from '@core/store/auth/actions/auth';
 import * as layoutActions from '@core/store/layouts/actions/layout';
 
 @Injectable()
@@ -21,7 +23,10 @@ export class AuthEffects {
     @Effect()
     public getUser$: Observable<Action> = this.actions$.pipe(
         ofType<actions.GetUser>( actions.GET_USER ),
-        exhaustMap(payload => this.authService.getUser(payload.uid)),
+        exhaustMap(payload => {
+            console.log('GETUSER',payload)
+            return this.authService.getUser(payload.uid)
+        }),
         mergeMap( actions => actions ),
         map( action => {
             return {
@@ -32,7 +37,6 @@ export class AuthEffects {
                 }
             }
         }),
-        // map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
 
@@ -40,9 +44,8 @@ export class AuthEffects {
     public signIn$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignIn>( actions.SIGN_IN ),
         switchMap(data => this.authService.signIn(data.payload.username, data.payload.password)),
-        //map((user) => new actions.Success(user)),
-        map((user) => new actions.GetUser(user.uid))
-        //catchError((err) => of(new actions.Fail(err)))
+        map((res) => new actions.GetUser(res.uid)),
+        catchError((err) => of(new actions.Fail(err)))
     )
 
     @Effect()
@@ -50,36 +53,45 @@ export class AuthEffects {
         ofType<actions.SignUp>( actions.SIGN_UP ),
         switchMap(data => this.authService.signUp(data.payload.username, data.payload.password)),
         tap(() => this.authService.sendEmailVerification()),
-        map((user) => new actions.GetUser(user.uid))
-        //map((user) => new actions.Success(user)),
-        //catchError((err) => of(new actions.Fail(err)))
+        map((user) => new actions.GetUser(user.uid)),
+        catchError((err) => of(new actions.Fail(err)))
+    )
+
+    @Effect()
+    public forgotPassword$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.ForgotPassword>( actions.FORGOT_PASSWORD ),
+        switchMap(data => this.authService.sendPasswordResetEmail(data.payload.email).then(
+            (msg) => 'Password Reset Email sent successfuly'
+        )),
+        map((msg) => new actions.Success(msg)),
+        catchError((err) => of(new actions.Fail(err)))
     )
 
     @Effect()
     public signInWithProvider$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignInWithProvider>( actions.SIGN_IN_WITH_PROVIDER ),
         switchMap(data => this.authService.signInWithProvider(data.payload)),
-        map((user) => new actions.GetUser(user.uid))
-        //map((user) => new actions.Success(user)),
-        //catchError((err) => of(new actions.Fail(err)))
+        map((user) => new actions.GetUser(user.uid)),
+        catchError((err) => of(new actions.Fail(err)))
     )
 
     @Effect({ dispatch: false })
-    success$ = this.actions$.pipe(
-        ofType(actions.SUCCESS),
-        tap(() => new layoutActions.CloseSidenav),
+    public success$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.Success>( actions.SUCCESS ),
+        tap(() => new layoutActions.CloseSidenav()),
         catchError((err) => of(new actions.Fail(err)))
     );
 
     @Effect({ dispatch: false })
-    fail$ = this.actions$.pipe(
-        ofType(actions.FAIL, actions.SIGN_OUT),
-        map(() => this.authService.signOut()),
+    public signout$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.SignOut>( actions.SIGN_OUT ),
+        tap(() => this.authService.signOut()),
         tap(() => new layoutActions.CloseSidenav()),
         tap(() => this.router.navigate(['']))
     );
 
     constructor(
+        private _store: Store<fromRoot.State>,
         private actions$: Actions,
         private authService: AuthService,
         private router: Router,

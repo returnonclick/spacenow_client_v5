@@ -1,3 +1,5 @@
+@import
+  '~sass/abstracts/mixins';
 
 .mat-drawer-content {
 
@@ -5,3 +7,10 @@
 
 }
 
+.sm-facebook {
+    @include sn-icon(1, 10, 35);
+}
+
+.sm-linkedin {
+    @include sn-icon(2, 10, 35);
+}

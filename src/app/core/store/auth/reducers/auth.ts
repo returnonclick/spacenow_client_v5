@@ -7,6 +7,8 @@ export interface State extends EntityState<User> {
     isSignedIn: boolean
     user: User
     selectedId: string | null
+    error: string | null
+    success: string | null
 }
 
 export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
@@ -17,7 +19,9 @@ export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
 export const initialState: State = authAdapter.getInitialState({
     isSignedIn: false,
     user: null,
-    selectedId: null
+    selectedId: null,
+    error: null,
+    success: null
 })
 
 export function reducer(
@@ -41,7 +45,7 @@ export function reducer(
             }, {
                 ...state,
                 isSignedIn: true,
-                selectedUserId: action.payload.uid,
+                selectedId: action.payload.uid,
             })
         }
 
@@ -49,27 +53,33 @@ export function reducer(
             return authAdapter.removeOne(action.payload.uid, { 
                 ...state,
                 isSignedIn: true,
-                selectedUserId: action.payload.uid,
+                selectedId: action.payload.uid,
             })
         }
 
-        // case auth.SUCCESS: {
+        case auth.FAIL: {
+            return {
+                ...state,
+                error: action.payload
+            }
+            
+        }
 
-        //     return authAdapter.addOne(action.payload, 
-        //         { 
-        //             ...state,
-        //             isSignedIn: true,
-        //             selectedId: action.payload.uid
-        //         })
-
-        // }
+        case auth.SUCCESS: {
+            return {
+                ...state,
+                success: action.payload
+            }
+            
+        }
 
         case auth.SIGN_OUT: {
-            return authAdapter.removeAll(
-                {
-                    ...state,
-                    isSignedIn: false,
-                    selectedId: null
+            return authAdapter.removeAll({
+                ...state,
+                isSignedIn: false,
+                user: null,
+                selectedId: null,
+                error: null
             })
         }
 

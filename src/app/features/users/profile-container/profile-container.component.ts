@@ -38,9 +38,6 @@ export class ProfileContainerComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.isLoading$.subscribe( isLoading => console.log(isLoading) )
-
-
     this._store.dispatch(new layoutActions.SetLogoGreen())
     this.authId$.subscribe(
       id => {
@@ -52,7 +49,6 @@ export class ProfileContainerComponent implements OnInit {
 
   getImage(event) {
     this._store.dispatch(new userActions.Update(this.authId, { photoURL: event.path }))
-    // this._store.dispatch(new authActions.GetUser(this.authId))
   }
 
 }
