@@ -1,0 +1,33 @@
+
+<form [formGroup]="descriptionForm" (ngSubmit)="onSubmit()" novalidate>
+
+  <div class="description">
+    <div class="title">
+      <h2>Describe your space</h2>
+    </div>
+    <div class="content">
+      <mat-form-field class="input-container-full">
+        <textarea matInput placeholder="Space description"
+          required
+          formControlName="description">
+        </textarea>
+      </mat-form-field>
+      <mat-form-field class="input-container-full">
+        <textarea matInput placeholder="Space rules"
+          formControlName="rules">
+        </textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button type="submit" class="next-button" 
+              [disabled]="descriptionForm.invalid"> 
+              Continue 
+      </button>
+      <a class="back-button" (click)="back()"> 
+            Back 
+      </a>
+    </div>
+  </div>
+  
+</form>

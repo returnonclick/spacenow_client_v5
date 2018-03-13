@@ -1,0 +1,22 @@
+
+<div class="image">
+  <div class="title">
+      <h2>Upload your photos</h2>
+  </div> 
+  <div class="content" *ngIf="listing">
+      <image-upload 
+        (change)="isValid()"
+        [uploadedImageDataList]="listing.images"
+        [spaceID] = "listing.id">
+      </image-upload>
+  </div>
+  <div class="actions">
+    <button mat-raised-button type="button" class="next-button" (click)="onSubmit()" [disabled]="!valid"> 
+        Continue 
+    </button>
+    <button mat-button type="button" class="back-button" (click)="back()"> 
+          Back 
+    </button>
+  </div>
+</div>
+

@@ -6,12 +6,18 @@ import { Listing } from '@shared/models/listing';
 export class ListingService {
 
   ref: string = `listings`
+  // ref: string = `listings-camila`
+  // ref: string = `tt-listings`
 
   constructor( public afs: AngularFirestore ) {
   }
 
   public readAll() {
     return this.afs.collection<Listing>(this.ref).stateChanges()
+  }
+
+  public readOne(id: string) {
+    return this.afs.collection<Listing>(this.ref, ref => ref.where(`id`, '==', `${id}`)).stateChanges()
   }
 
   public update(id: string, listing: Partial<Listing>) {
@@ -21,9 +27,17 @@ export class ListingService {
 
   public create(listing: Listing) {
     var data = Object.assign({}, listing)
-    const cRef = this.afs.firestore.collection(this.ref).doc()
-    data.id = cRef.id
-    return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
+    // const cRef = this.afs.firestore.collection(this.ref).doc()
+    data.id = listing.id
+    // return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
+    return this.afs.collection<Listing>(this.ref).doc(listing.id).set(data)
+      .then(() =>{
+          return data.id 
+      })
+      .catch(error =>{
+        console.log(error)
+      })
+
   }
 
   public delete(id: string) {

@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects'
 
 import { CoreModule } from '@core/core.module'
 import { SharedModule } from '@shared/shared.module'
+import { SpacesModule } from '@features/spaces/spaces.module'
 
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -76,6 +77,7 @@ const SERVICES = [
     CoreModule,
     SharedModule,
     RouterModule,
+    SpacesModule,
     EffectsModule.forFeature([
       CategoryEffects,
       CheckoutEffects,

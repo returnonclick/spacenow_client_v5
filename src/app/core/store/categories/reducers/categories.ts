@@ -14,7 +14,7 @@ export const categoryAdapter: EntityAdapter<Category> = createEntityAdapter<Cate
 });
 
 export const initialState: State = categoryAdapter.getInitialState({
-    loading: false,
+    loading: true,
 });
 
 export function reducer(
@@ -24,11 +24,10 @@ export function reducer(
     switch (action.type) {
 
         case actions.ADDED: {
-            return {
+            return categoryAdapter.addOne(action.payload, {
                 ...state,
-                loading: true,
-                ...categoryAdapter.addOne(action.payload, state)
-            };
+                loading: false
+            })
         }
 
         case actions.MODIFIED: {

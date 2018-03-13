@@ -9,56 +9,55 @@ import * as fromRoot from '@core/store'
 
 import { ConfirmDeleteComponent, ConfirmSaveComponent } from '@shared/components'
 import { Monthly } from '@shared/models/space'
+import { AddPriceComponent } from '../add-price.component'
 
 @Component({
   selector: 'sn-monthly-price',
   templateUrl: './monthly.component.html',
   styleUrls: ['./monthly.component.scss']
 })
-export class MonthlyComponent {
+export class MonthlyComponent implements AddPriceComponent {
 
-  @Output() price = new EventEmitter<Monthly>();
-  @Output() priceValid = new EventEmitter<boolean>();
-
-  monthly: Monthly = new Monthly
-  priceForm: FormGroup
+  @Input() inPriceI: Monthly
+  @Input() parentForm: FormGroup
 
   terms = [
-    { value: '1', display: '1 month'},
-    { value: '2', display: '2 months'},
-    { value: '3', display: '3 months'},
-    { value: '4', display: '4 months'}
+    { value: 1, display: '1 month'},
+    { value: 2, display: '2 months'},
+    { value: 3, display: '3 months'},
+    { value: 4, display: '4 months'}
   ]
 
   constructor(
     private _fb: FormBuilder
   ) {}
 
-  sendPrice() {
-    this.priceForm.updateValueAndValidity()
-    this.monthly = this.priceForm.value
-    // Send price values
-    this.price.emit(
-       this.monthly
-    )
-    // Send form status for validation
-    this.priceValid.emit(
-      this.priceForm.valid
-    )
+  ngOnInit() {
+    this.setInPrice(this.inPriceI)
   }
 
-  ngOnInit() {
-    // Initialize
-    this.monthly.incentives = false
+  setInPrice( inPrice: Monthly ) {
 
-    this.priceForm = this._fb.group({
-      price:              [this.monthly.price],
-      minimumTerm:        [this.monthly.minimumTerm],
-      incentives:         [this.monthly.incentives],
-      sixMonths:          [this.monthly.sixMonths],
-      year:               [this.monthly.year]
+    if (typeof inPrice === 'undefined') {
+      inPrice = new Monthly
+      inPrice.incentives = false
+      inPrice.minimumTerm = 1
+    }
+    
+    const priceFG = this._fb.group({
+      price:              inPrice.price,
+      minimumTerm:        inPrice.minimumTerm,
+      incentives:         inPrice.incentives,
+      sixMonths:          inPrice.sixMonths,
+      year:               inPrice.year
     })
 
+    this.parentForm.setControl('price', priceFG);
+
+  }
+
+  get inPrice() {
+    return this.parentForm.get('price') as FormGroup
   }
 
 }

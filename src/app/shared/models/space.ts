@@ -1,50 +1,64 @@
 import { Address } from '@models/address'
+import { Availability } from '@models/availability'
+import { ImageData } from '@models/image-data'
 
 export class Space extends Object{
 
-    id:           string
-    ref:          string
-    ownerUid:     string
-    title:        string
-    description:  string
-    rules:        string
-    tags:         string[]
-    images:       ImageData[]
-    price:        Price[]
-    unit:         string
-    categoryId:   string
-    amenityIds:   string[]
-    isApproved:   boolean
-    address:      Address = new Address()
-    // availability: BookingSlot[]
+    id:              string = null
+    ref:             string = null
+    ownerUid:        string = null
+    title:           string = ''
+    description:     string = ''
+    rules:           string = ''
+    tags:            string[] = []
+    images:          ImageData[] = []
+    price: {
+      hourly:         Hourly,
+      daily:          Daily,
+      weekly:         Weekly,
+      monthly:        Monthly,
+    }
+    priceUnit:       string = 'daily'
+    categoryId:      string = null 
+    amenityIds:      string[] = []
+    address:         Address = new Address()
+    specifications:  Object[]
+    availability:    Availability = new Availability()
+    status:          ListingStatus = ListingStatus.DRAFT
 
     constructor( model: any = null ) {
 
       super(model)
 
       if ( model ) {
-        this.id          = model.id || null
-        this.ref         = model.ref || null
-        this.ownerUid    = model.ownerUid || null
-        this.title       = model.title || ''
-        this.description = model.description || ''
-        this.rules       = model.rules || ''
-        this.tags        = model.tags || []
-        this.images      = model.images || []
-
-        switch(model.unit) {
-          case 'Hourly':  this.price.push(new Hourly(model))
-          case 'Daily':   this.price.push(new Daily(model))
-          case 'Weekly':  this.price.push(new Weekly(model))
-          case 'monthly': this.price.push(new Monthly(model))
-        }
-        this.unit        = model.unit || 'daily'
-        this.categoryId  = model.categoryId || null
-        this.amenityIds  = model.amenityIds || []
-        this.isApproved  = model.isApproved || false
-        this.address = model.address || new Address()
+        this.id             = model.id || null
+        this.ref            = model.ref || null
+        this.ownerUid       = model.ownerUid || null
+        this.title          = model.title || ''
+        this.description    = model.description || ''
+        this.rules          = model.rules || ''
+        this.tags           = model.tags || []
+        this.images         = model.images || []
+        this.price.hourly   = new Hourly(model.price)
+        this.price.daily    = new Daily(model.price)
+        this.price.weekly   = new Weekly(model.price)
+        this.price.monthly  = new Monthly(model.price)
+        this.priceUnit      = model.priceUnit || 'daily'
+        this.categoryId     = model.categoryId || null
+        this.amenityIds     = model.amenityIds || []
+        this.address        = model.address || new Address()
+        this.availability   = model.availability || new Availability()
+        this.status         = model.status || ListingStatus.DRAFT
       }
     }
+  }
+
+  export enum ListingStatus {
+    DRAFT   = 'draft',
+    PENDING = 'pending',
+    ACTIVE  = 'active',
+    HIDDEN  = 'hidden',
+    DELETED = 'deleted'
   }
 
   export class Price extends Object {

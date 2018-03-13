@@ -9,6 +9,7 @@
  * `halfsize.jpg` | `quartersize.jpg` | `thumbnail.jpg`
  * 
  *  */
+
 export class ImageData extends Object {
 
     id:      string          = ''
@@ -31,4 +32,4 @@ export class ImageData extends Object {
 
     }
 
-  }
+}

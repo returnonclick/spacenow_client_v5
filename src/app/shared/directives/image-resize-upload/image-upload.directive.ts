@@ -28,6 +28,7 @@ export class ImageUploadDirective {
             };
             let ext: string = file.name.split('.').pop()
             if (this.allowedExtensions && this.allowedExtensions.length && this.allowedExtensions.indexOf(ext) === -1) {
+                console.log("invalid file")
                 result.error = 'Extension Not Allowed'
                 this.resizedImage.emit(result)
             } else {

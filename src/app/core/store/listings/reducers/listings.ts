@@ -2,11 +2,12 @@ import { createSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { Listing } from '@shared/models/listing';
+
 import * as actions from '@core/store/listings/actions/listing';
 
 export interface State extends EntityState<Listing> {
-    loading: boolean;
-    selectedListingId: string | null;
+    loading: boolean
+    selectedListingId: string | null
 }
 
 export const listingAdapter: EntityAdapter<Listing> = createEntityAdapter<Listing>({
@@ -15,28 +16,29 @@ export const listingAdapter: EntityAdapter<Listing> = createEntityAdapter<Listin
 });
 
 export const initialState: State = listingAdapter.getInitialState({
-    loading: false,
+    loading: true,
     selectedListingId: null
 });
+
+
 
 export function reducer(
     state = initialState,
     action: actions.ListingActions
 ): State {
     switch (action.type) {
-
         case actions.ADDED: {
-            return {
+            return listingAdapter.addOne(action.payload, {
                 ...state,
-                loading: true,
-                ...listingAdapter.addOne(action.payload, state)
-            };
+                loading: false,
+                selectedListingId: action.payload.id
+            })
         }
 
         case actions.MODIFIED: {
             return { 
                 ...state,
-                loading: true,
+                loading: false,
                 ...listingAdapter.updateOne({
                     id: action.payload.id,
                     changes: action.payload
@@ -47,8 +49,9 @@ export function reducer(
         case actions.REMOVED: {
             return {
                 ...state,
-                loading: true,
-                ...listingAdapter.removeOne(action.payload.id, state)
+                loading: false,
+                ...listingAdapter.removeOne(action.payload.id, state),
+                selectedListingId: null
             }
         }
 
@@ -57,6 +60,3 @@ export function reducer(
         }
     }
 }
-
-export const getLoading = (state: State) => state.loading;
-export const getSelectedListingId = (state: State) => state.selectedListingId;

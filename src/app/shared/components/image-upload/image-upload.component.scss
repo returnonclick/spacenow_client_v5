@@ -22,11 +22,17 @@
   border: 0.5 solid #6cde93;
 }
 
-.uploaded-image {
+.uploaded-image-container {
   width: 260px;
-  border-radius: 10px;
+  height: 80%;
   display: block;
   margin: auto;
+}
+
+.uploaded-image-container .uploaded-image {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
 }
 
 .card-action-container {

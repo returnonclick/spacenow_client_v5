@@ -27,7 +27,7 @@
           <!-- </button> -->
           <button mat-menu-item 
             class="card-action-menu-item"
-            (click)="deleteImageFile('listings', spaceID, 'spaceImages', imageData)">
+            (click)="deleteImageFile('listings', spaceID, 'images', imageData)">
             <span>Remove photo</span>
           </button>
           <button mat-menu-item 
@@ -38,7 +38,9 @@
         </mat-menu>
       </div>
       <!-- <img mat-card-image [src]="imageURL" class="uploaded-image"> -->
-      <img [src]="imageData.imageURL" class="uploaded-image">
+      <div class="uploaded-image-container">
+        <img [src]="imageData.imageURL" class="uploaded-image">
+      </div>
 
       <mat-card-title class="image-title">
         <div *ngIf="!(isShowImageTitleInput | async)">
@@ -58,7 +60,7 @@
             fxFlex="10%"
             mat-icon-button
             class="sn-button-small"
-            color="primary" (click)="updateImageData('listings', spaceID, 'spaceImages', imageData, imageTitle)">
+            color="primary" (click)="updateImageData('listings', spaceID, 'images', imageData, imageTitle)">
             <mat-icon>done</mat-icon>
           </button>
         </div>
@@ -69,19 +71,13 @@
   <div id="image-input-container" *ngIf="(uploadStatus | async) == 'complete' || (uploadStatus | async) == null">
     <input class="inputfile" type="file" image-upload name="file" id="file"
         (resizedImage)="getResizedImage($event)"
+        [allowedExtensions]="allowedExtensions"
         [resizeOptions]="desktopSize">
     <label for="file">Upload more photo's</label>
   </div>
 
-  <!-- <div id="image-input-container"> -->
-  <!--   <input class="inputfile" type='file' -->
-  <!--     name="file" id="file" -->
-  <!--     (change)="startUpload($event.target.files)"/> -->
-  <!--   <label for="file">Upload more photo's</label> -->
-  <!-- </div> -->
-
   <div *ngIf="(uploadStatus | async) == 'loading'" class="image-loading">
-    <gen-loading></gen-loading>
+    <mat-spinner></mat-spinner>
     <span>Loading...</span>
   </div>
 
@@ -91,21 +87,26 @@
 
           <!-- Image to upload -->
           <div id="upload-image-container">
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-              <div fxFlex="100px">
-                <img [src]="toUploadImage?.resized.dataURL" width="100" [hidden]="!toUploadImage">
+            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center" >
+              <div fxFlex="49%" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                <div fxFlex="100px">
+                  <img [src]="toUploadImage?.resized.dataURL" width="100" [hidden]="!toUploadImage">
+                </div>
+                <mat-form-field class="full-width" fxFlex>
+                    <input matInput placeholder="Title" value="" 
+                      matTextareaAutosize
+                      [(ngModel)]="imageTitle" 
+                      [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
               </div>
-              <mat-form-field class="full-width" fxFlex="200px">
-                  <input matInput placeholder="Title" value="" 
-                    matTextareaAutosize
-                    [(ngModel)]="imageTitle" 
-                    [ngModelOptions]="{standalone: true}">
-              </mat-form-field>
-              <!-- <pre>{{imageTitle}}</pre> -->
-              <div fxFlex="50px">
-                <button [disabled]="!toUploadImage || (imageTitle.length < 5)" mat-raised-button
+              <div fxFlex="49%" fxLayout="row" fxLayoutAlign="space-between center">
+                <button [disabled]="!toUploadImage || (imageTitle.length < 5)" mat-raised-button fxFlex="49%"
                    class="sn-button"
-                  color="primary" (click)="uploadImageFile('listings', spaceID, 'spaceImages', toUploadImage, imageTitle)">Upload
+                  color="primary" (click)="uploadImageFile('listings', spaceID, 'images', toUploadImage, imageTitle)">Upload
+                </button>
+                <button  mat-raised-button fxFlex="49%"
+                   class="sn-button"
+                  color="primary" (click)="cancelUpload()">Cancel
                 </button>
               </div>
             </div>

@@ -9,57 +9,55 @@ import * as fromRoot from '@core/store'
 
 import { ConfirmDeleteComponent, ConfirmSaveComponent } from '@shared/components'
 import { Hourly } from '@shared/models/space'
+import { AddPriceComponent } from '../add-price.component'
 
 @Component({
   selector: 'sn-hourly-price',
   templateUrl: './hourly.component.html',
   styleUrls: ['./hourly.component.scss']
 })
-export class HourlyComponent {
+export class HourlyComponent implements AddPriceComponent {
 
-  @Output() price = new EventEmitter<Hourly>();
-  @Output() priceValid = new EventEmitter<boolean>();
-
-  hourly: Hourly = new Hourly
-  priceForm: FormGroup
+  @Input() inPriceI: Hourly
+  @Input() parentForm: FormGroup
 
   terms = [
-    { value: '1', display: '1 hour'},
-    { value: '2', display: '2 hours'},
-    { value: '3', display: '3 hours'},
-    { value: '4', display: '4 hours'}
+    { value: 1, display: '1 hour'},
+    { value: 2, display: '2 hours'},
+    { value: 3, display: '3 hours'},
+    { value: 4, display: '4 hours'}
   ]
 
   constructor(
     private _fb: FormBuilder
   ) {}
 
-  sendPrice() {
-    console.log(this.priceForm)
-    this.priceForm.updateValueAndValidity()
-    this.hourly = this.priceForm.value
-    // Send price values
-    this.price.emit(
-       this.hourly
-    )
-    // Send form status for validation
-    this.priceValid.emit(
-      this.priceForm.valid
-    )
+  ngOnInit() {
+    this.setInPrice(this.inPriceI)
   }
 
-  ngOnInit() {
-    // Initialize
-    this.hourly.incentives = false
+  setInPrice( inPrice: Hourly ) {
 
-    this.priceForm = this._fb.group({
-      price:              [this.hourly.price],
-      minimumTerm:        [this.hourly.minimumTerm],
-      incentives:         [this.hourly.incentives],
-      halfDay:            [this.hourly.halfDay],
-      day:                [this.hourly.day]
+    if (typeof inPrice === 'undefined') {
+      inPrice = new Hourly
+      inPrice.incentives = false
+      inPrice.minimumTerm = 1
+    }
+    
+    const priceFG = this._fb.group({
+      price:              inPrice.price,
+      minimumTerm:        inPrice.minimumTerm,
+      incentives:         inPrice.incentives,
+      halfDay:            inPrice.halfDay,
+      day:                inPrice.day
     })
 
+    this.parentForm.setControl('price', priceFG);
+
+  }
+
+  get inPrice() {
+    return this.parentForm.get('price') as FormGroup
   }
 
 }

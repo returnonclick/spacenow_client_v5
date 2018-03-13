@@ -1,0 +1,54 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="category">
+    <div class="title">
+      <span style="font-size: 48px">Select a category</span>
+    </div>
+    <div class="content">
+      <div id="select-one"><span>Select ONE category only</span></div>
+      <mat-radio-group flexLayout="column" class="items" formControlName="categoryId" required>
+        <mat-radio-button *ngFor="let category of categories$ | async" [value]="category.id" style="padding:5px">
+          <ul [ngSwitch]="category.slug">
+        
+            <li *ngSwitchCase="'office-space'" matTooltip="Dedicated office space for lease." matTooltipPosition="right">
+              {{category.name}} 
+              <mat-icon style="font-size: 13px">info</mat-icon>
+            </li>
+            <li *ngSwitchCase="'co-working-space'" matTooltip="Spaces that offer creative & collaborative environments for people to work together." matTooltipPosition="right">
+              {{category.name}} 
+              <mat-icon style="font-size: 13px">info</mat-icon>
+            </li>
+            <li *ngSwitchCase="'desk_only'" matTooltip="Single or multiple desks within an office. Not a coworking environment." matTooltipPosition="right">
+              {{category.name}} 
+              <mat-icon style="font-size: 13px">info</mat-icon>
+            </li>
+            <li *ngSwitchCase="'meeting-room'" matTooltip="Private rooms for holding meetings." matTooltipPosition="right">
+              {{category.name}} 
+              <mat-icon style="font-size: 13px">info</mat-icon>
+            </li>
+            <li *ngSwitchCase="'event-space'" matTooltip="General purpose event space." matTooltipPosition="right">
+              {{category.name}} 
+            </li>
+            <li *ngSwitchCase="'function-space'" matTooltip="Dedicated function spaces catered towards receptions, dinners, etc." matTooltipPosition="right">
+              {{category.name}} 
+              <mat-icon style="font-size: 13px">info</mat-icon>
+            </li>
+            <li *ngSwitchCase="'unique-spaces'" matTooltip="Spaces that don’t really fit into any of the other categories." matTooltipPosition="right">
+              {{category.name}} 
+              <mat-icon style="font-size: 13px">info</mat-icon>
+            </li>
+            <li *ngSwitchDefault>{{category.name}}</li>
+    
+          </ul>
+
+        </mat-radio-button>
+      </mat-radio-group>
+   
+    </div>
+    <div class="actions">
+      <button mat-raised-button type="submit" class="next-button" 
+              [disabled]="categoryForm.invalid"> 
+              Continue 
+      </button>
+    </div>
+  </div>
+</form>
