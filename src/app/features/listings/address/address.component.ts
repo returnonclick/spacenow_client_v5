@@ -23,6 +23,8 @@ export class AddressComponent {
   listing: Space
   addressForm: FormGroup
 
+  closeHelp: boolean = false
+
   constructor(private _store: Store<fromRoot.State>,
               private _fb: FormBuilder,
               private listingEffects: ListingEffects,

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ContainerComponent } from './container/container.component'
-import { TitleComponent } from './title/title.component'
 import { PriceComponent } from './price/price.component'
 import { CategoryComponent } from './category/category.component'
 import { AmenityComponent } from './amenity/amenity.component'
@@ -30,7 +29,6 @@ const routes: Routes = [
     component: ContainerComponent,
     children: [
         { path: 'category', component: CategoryComponent },
-        { path: 'title', component: TitleComponent },
         { path: 'price', component: PriceComponent },
         { path: 'amenity', component: AmenityComponent },
         { path: 'specification', component: SpecificationComponent },

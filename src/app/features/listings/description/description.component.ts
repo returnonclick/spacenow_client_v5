@@ -30,6 +30,7 @@ export class DescriptionComponent {
   ) {
 
     this.descriptionForm = this._fb.group({
+      title: ['', Validators.required ],
       description: ['', Validators.required ],
       rules: ['']
     })
@@ -46,6 +47,7 @@ export class DescriptionComponent {
 
   createForm() {
     this.descriptionForm = this._fb.group({
+      title:       this.listing.title,
       description: this.listing.description,
       rules:       this.listing.rules
     })
@@ -64,7 +66,7 @@ export class DescriptionComponent {
  
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'address'])
+    this.router.navigate(['listing', this.listing.id, 'booking'])
   }
 
 }
