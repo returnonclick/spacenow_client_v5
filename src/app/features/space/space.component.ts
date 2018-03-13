@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
@@ -24,6 +24,7 @@ export class SpaceComponent {
   space$:         Observable<Space>
   isLoadingPage$: Observable<boolean>
 
+  fragment:       string = ''
   spaceId:        string = ''
   latitude:       number = 0
   longitude:      number = 0
@@ -49,8 +50,9 @@ export class SpaceComponent {
   // }
 
   constructor(
-    private _store: Store<fromRoot.State>,
-    private _route: ActivatedRoute,
+    private _store:  Store<fromRoot.State>,
+    private _route:  ActivatedRoute,
+    private _router: Router,
   ) {
     this.isLoadingPage$ = this._store.select(fromRoot.isLoadingSpaces)
     this.space$         = this._store.select(fromRoot.getSpaceEntities).map(spaces => {
@@ -70,6 +72,30 @@ export class SpaceComponent {
       this.spaceId = params.id
       this._store.dispatch(new spaceActions.Select(this.spaceId))
     })
+    this._route.fragment.subscribe(fragment => {
+      this.fragment = fragment
+      this.jumpToSection()
+    })
+  }
+
+  ngAfterViewInit() {
+    this.jumpToSection()
+  }
+
+  jumpToSection() {
+    try {
+      document.querySelector('#' + this.fragment).scrollIntoView();
+    }
+    catch(e) { }
+  }
+
+  navigateTo(fragment: string) {
+    this._router.navigate(
+      [ '.' ], {
+        relativeTo: this._route,
+        fragment: fragment,
+      }
+    )
   }
 
   // private hasScrolled(st: number) {
