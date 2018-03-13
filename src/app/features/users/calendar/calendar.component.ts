@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
 
 @Component({
-  selector: 'sn-my-calendar',
-  templateUrl: './my-calendar.component.html',
-  styleUrls: [ './my-calendar.component.scss' ]
+  selector: 'sn-calendar',
+  templateUrl: './calendar.component.html',
+  styleUrls: [ './calendar.component.scss' ]
 })
-export class MyCalendarComponent {
+export class CalendarComponent {
 
   calendar: any[] = [
     {

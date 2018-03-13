@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { HomeComponent } from './home/home.component'
+import { HomeComponent } from "@features/pages/home/home.component"
+import { SpaceComponent } from '@features/pages/space/space.component'
+import { SearchComponent } from '@features/pages/search/search.component'
  
 const routes: Routes = [
-  { path: '', component: HomeComponent }
+  { path: '', component: HomeComponent },
+  { path: 'space', component: SpaceComponent },
+  { path: 'search', component: SearchComponent }
 ];
 
 @NgModule({

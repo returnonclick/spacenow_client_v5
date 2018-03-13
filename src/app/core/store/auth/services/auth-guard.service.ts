@@ -25,6 +25,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   ) {
     this.afAuth.authState.subscribe(
       (user) => {
+        console.log(user)
         if (user)
           return this._store.dispatch(new actions.GetUser(user.uid))
         return null

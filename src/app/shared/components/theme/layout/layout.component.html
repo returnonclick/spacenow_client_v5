@@ -31,11 +31,11 @@
         <img [src]="authUser.photoURL" class="userProfilePicture" width="50px" height="50px">
       </button>
       <mat-menu #menu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
-        <button mat-menu-item routerLink="/app/listings">List a space</button>
-        <button mat-menu-item>My spaces</button>
-        <button mat-menu-item routerLink="/app/profile">Profile</button>
-        <button mat-menu-item>Favorites</button>
-        <button mat-menu-item>Manage Bookings</button>
+        <button mat-menu-item routerLink="/app/listings/category">List a space</button>
+        <button mat-menu-item routerLink="/app/users/my-spaces">My spaces</button>
+        <button mat-menu-item routerLink="/app/users/my-profile">Profile</button>
+        <button mat-menu-item routerLink="/app/users/my-favorites">Favorites</button>
+        <button mat-menu-item routerLink="/app/users/my-spaces">Manage Bookings</button>
         <!-- <button mat-menu-item>Bank details</button>
         <button mat-menu-item>Payout preferences</button>
         <button mat-menu-item>Transaction history</button> -->

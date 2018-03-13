@@ -31,12 +31,10 @@ export class AuthService {
   }
 
   getUser(id) {
-    console.log('SERVICE', id)
      return this._afs.collection(`users`, ref => ref.where(`uid`, "==", `${id}`)).stateChanges()
   }
 
   signIn(username, password) {
-    console.log('SERVICE', username)
     return this.afAuth.auth.signInWithEmailAndPassword(username, password).then(
       (auth) => this.updateUserData(auth)
     )

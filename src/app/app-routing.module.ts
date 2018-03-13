@@ -3,7 +3,6 @@ import { RouterModule }  from '@angular/router';
 import { Routes } from '@angular/router';
 
 import {
-  AuthMenuComponent,
   SignInComponent,
   SignUpComponent,
   LayoutComponent,
@@ -24,11 +23,10 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
       },
       { 
-        path: 'profile', 
+        path: 'users', 
         loadChildren: '@features/users/users.module#UsersModule' ,
         canActivate: [AuthGuard]
       },
-      { path: 'auth-menu', component: AuthMenuComponent, outlet: 'sidenav' },
       { path: 'sign-in', component: SignInComponent, outlet: 'sidenav' },
       { path: 'register', component: SignUpComponent, outlet: 'sidenav' },
       { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }

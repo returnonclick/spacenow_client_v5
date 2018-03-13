@@ -23,11 +23,9 @@ export class AuthEffects {
     @Effect()
     public getUser$: Observable<Action> = this.actions$.pipe(
         ofType<actions.GetUser>( actions.GET_USER ),
-        exhaustMap(payload => {
-            console.log('GETUSER',payload)
-            return this.authService.getUser(payload.uid)
-        }),
+        exhaustMap(payload => this.authService.getUser(payload.uid)),
         mergeMap( actions => actions ),
+        tap(() => new layoutActions.CloseSidenav()),
         map( action => {
             return {
                 type: `[Auth] ${action.type}`,

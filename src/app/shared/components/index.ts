@@ -1,8 +1,7 @@
 import {
   ForgotPasswordComponent,
   SignInComponent,
-  SignUpComponent,
-  AuthMenuComponent
+  SignUpComponent
 } from './authentication'
 
 import {
@@ -39,7 +38,6 @@ export {
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  AuthMenuComponent,
   AddressComponent,
   CardComponent,
   FeaturedCardComponent,
@@ -66,7 +64,6 @@ export default {
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  AuthMenuComponent,
   AddressComponent,
   CardComponent,
   FeaturedCardComponent,

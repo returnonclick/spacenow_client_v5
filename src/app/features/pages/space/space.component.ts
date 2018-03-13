@@ -8,6 +8,7 @@ import { Space } from '@models/space'
 
 import * as fromRoot from '@core/store'
 import * as spaceActions from '@core/store/spaces/actions/space'
+
 @Component({
   selector: 'sn-space',
   templateUrl: './space.component.html',

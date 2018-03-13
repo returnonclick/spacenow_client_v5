@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
 
 @Component({
-  selector: 'sn-my-favorites',
-  templateUrl: './my-favorites.component.html',
-  styleUrls: [ './my-favorites.component.scss' ]
+  selector: 'sn-spaces',
+  templateUrl: './spaces.component.html',
+  styleUrls: [ './spaces.component.scss'],
 })
-export class MyFavoritesComponent {
+export class SpacesComponent {
 
   spaces: any[] = [
     {

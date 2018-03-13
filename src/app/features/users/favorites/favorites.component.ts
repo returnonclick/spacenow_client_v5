@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
 
 @Component({
-  selector: 'spc-my-spaces',
-  templateUrl: './my-spaces.component.html',
-  styleUrls: [ './my-spaces.component.scss'],
+  selector: 'sn-favorites',
+  templateUrl: './favorites.component.html',
+  styleUrls: [ './favorites.component.scss' ]
 })
-export class MySpacesComponent {
+export class FavoritesComponent {
 
   spaces: any[] = [
     {
