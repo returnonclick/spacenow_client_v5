@@ -31,6 +31,7 @@ const appRoutes: Routes = [
       { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }
     ]
   },
+  //{ path: 'profile', loadChildren: '@features/users/users.module#UsersModule' },
   { path: '', redirectTo: '/app', pathMatch: 'full' },
   // { path: 'my-spaces', component: MySpacesComponent },
   // { path: 'my-calendar', component: MyCalendarComponent },

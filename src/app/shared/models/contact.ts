@@ -7,6 +7,7 @@ export class Contact extends Object{
   title:          string          = ''                // (5)  The customer's title empty string allowed
   firstName:      string          = ''                // (50) The user's first name
   lastName:       string          = ''                // (50) The user's last name
+  gender:         string          = ''                // (50) The user's gender Male, Female, Other
   dob:            Date            = null              // The user's date of birthday
   mobile:         string          = ''                // (32) The customer's mobile phone number
   phone:          string          = ''                // (32) The customer's phone number
@@ -23,6 +24,7 @@ export class Contact extends Object{
       this.title      = model.title
       this.firstName  = model.firstName
       this.lastName   = model.lastName
+      this.gender     = model.gender
       this.dob        = model.dob
       this.mobile     = model.mobile
       this.phone      = model.phone

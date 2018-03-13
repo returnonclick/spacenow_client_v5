@@ -7,6 +7,8 @@ export interface State extends EntityState<User> {
     isSignedIn: boolean
     user: User
     selectedId: string | null
+    error: string | null
+    success: string | null
 }
 
 export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
@@ -17,7 +19,9 @@ export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
 export const initialState: State = authAdapter.getInitialState({
     isSignedIn: false,
     user: null,
-    selectedId: null
+    selectedId: null,
+    error: null,
+    success: null
 })
 
 export function reducer(
@@ -26,22 +30,57 @@ export function reducer(
 ): State {
     switch (action.type) {
 
+        case auth.ADDED: {
+            return authAdapter.addOne(action.payload, {
+                ...state,
+                isSignedIn: true,
+                selectedId: action.payload.uid
+            })
+        }
+
+        case auth.MODIFIED: {
+            return authAdapter.updateOne({
+                id: action.payload.uid,
+                changes: action.payload
+            }, {
+                ...state,
+                isSignedIn: true,
+                selectedId: action.payload.uid,
+            })
+        }
+
+        case auth.REMOVED: {
+            return authAdapter.removeOne(action.payload.uid, { 
+                ...state,
+                isSignedIn: true,
+                selectedId: action.payload.uid,
+            })
+        }
+
+        case auth.FAIL: {
+            return {
+                ...state,
+                error: action.payload
+            }
+            
+        }
+
         case auth.SUCCESS: {
-
-            return authAdapter.addOne(action.payload, 
-                { 
-                    ...state, 
-                    isSignedIn: true, 
-                    user: action.payload,
-                    selectedUserId: state.selectedId,
-                })
-
+            return {
+                ...state,
+                success: action.payload
+            }
+            
         }
 
         case auth.SIGN_OUT: {
-            return {
-                ...authAdapter.removeAll(state),
-            }
+            return authAdapter.removeAll({
+                ...state,
+                isSignedIn: false,
+                user: null,
+                selectedId: null,
+                error: null
+            })
         }
 
         default: {
@@ -49,7 +88,3 @@ export function reducer(
         }
     }
 }
-
-export const isSignedIn = (state: State) => state.isSignedIn
-export const getAuthUser = (state: State) => state.user 
-export const getSelectedId = (state: State) => state.selectedId;

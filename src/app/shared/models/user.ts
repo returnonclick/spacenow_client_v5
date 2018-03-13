@@ -5,7 +5,7 @@
  * IMPORTED MODELS
  * UserData
  * 
- * Path to firebase: `/users/{$userUID}`
+ * Path to firebase: `/users/{$uid}`
  * 
  *  */
 

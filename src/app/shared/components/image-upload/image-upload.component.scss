@@ -19,7 +19,7 @@
   box-shadow: 0px 20px 40px 0 #dddddd;
 }
 #image-card-container > .image-card:hover {
-  border: 0.5 solid #29a554;
+  border: 0.5 solid #6cde93;
 }
 
 .uploaded-image {
@@ -41,7 +41,7 @@
 }
 
 ::ng-deep .card-action-menu {
-  border: 0.5px solid #29a554;
+  border: 0.5px solid #6cde93;
 }
 
 .card-action-menu-item {
@@ -53,7 +53,7 @@
 }
 
 .card-action-icon {
-  color: #29a554;
+  color: #6cde93;
   font-size: 30pt;
   margin-left: -12px;
   margin-top: -5px;
@@ -86,7 +86,7 @@
 
 .inputfile + label {
     font-family: "Monserrat-Light", sans-serif;
-    color: #29a554;
+    color: #6cde93;
     display: inline-block;
 }
 

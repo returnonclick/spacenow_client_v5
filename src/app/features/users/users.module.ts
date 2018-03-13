@@ -1,30 +1,44 @@
-import { NgModule } from '@angular/core'
-import { StoreModule } from '@ngrx/store'
-import { EffectsModule } from '@ngrx/effects'
+import { NgModule }           from '@angular/core'
+import { CommonModule }       from '@angular/common';
+import { FlexLayoutModule }   from '@angular/flex-layout'
+import { ReactiveFormsModule, 
+         FormsModule }        from '@angular/forms'
+
+import { StoreModule }        from '@ngrx/store'
+import { EffectsModule }      from '@ngrx/effects'
+
+
+import { UserService }        from '@core/store/users/services/user'
+import { UserEffects }        from '@core/store/users/effects/user'
+import { UserProfileService } from '@core/store/users-profile/services/user-profile'
+import { UserProfileEffects } from '@core/store/users-profile/effects/user-profile'
+
+import { SharedModule }       from '@shared/shared.module'
 
 import { UsersRoutingModule } from '@features/users/users-routing.module'
-
-import { UserService } from '@core/store/users/services/user'
-import { UserEffects } from '@core/store/users/effects/user'
-
-import { SharedModule } from '@shared/shared.module'
-
-import { ProfileComponent } from "@features/users/profile/profile.component"
+import { ProfileDetailComponent }   from "@features/users/profile-detail/profile-detail.component"
+import { ProfileContainerComponent } from '@features/users/profile-container/profile-container.component'
 
 const COMPONENTS = [
-  ProfileComponent
+  ProfileDetailComponent,
+  ProfileContainerComponent
 ]
 
 const MODULES = [
+  CommonModule,
   SharedModule,
+  FlexLayoutModule,
+  ReactiveFormsModule,
+  FormsModule,
   UsersRoutingModule,
   EffectsModule.forFeature([
-    UserEffects,
+    UserEffects, UserProfileEffects
   ]),
 ]
 
 const SERVICES = [
-  UserService
+  UserService,
+  UserProfileService
 ]
 
 @NgModule({

@@ -1,8 +1,29 @@
 .sidenav {
+
+    --color: $color__pastel_green;
+
     position: fixed; /* or choose `absolute` depending on desired behavior*/
     top: 0;
     bottom: 0;
     width: $sidebar__max-width;
     right: -$sidebar__max-width;
     transition: transform .3s ease-in-out;
+
+    .closeMenu {
+
+        background-color: transparent;
+        height: 60px;
+        margin: 10px 0 0 10px;
+        width: 60px;
+
+        .mat-icon {
+
+            color: var(--color);
+            font-size: 40px;
+            width: auto;
+
+        }
+
+    }
+
 }

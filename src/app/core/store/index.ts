@@ -7,7 +7,6 @@ import {
 } from '@ngrx/store'
 import { environment } from '../../../environments/environment'
 import { RouterStateUrl } from './utils'
-import * as fromRouter from '@ngrx/router-store'
 
 /**
  * storeFreeze prevents state from being mutated. When mutation occurs, an
@@ -26,8 +25,11 @@ import { storeFreeze } from 'ngrx-store-freeze'
 /** * The following line about layout is commented, but you can refer to * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts * for detailed implementations
  */
 
+import * as fromRouter          from '@ngrx/router-store'
 import * as fromAuth            from '@core/store/auth/reducers/auth'
 import * as fromUsers           from '@core/store/users/reducers/users'
+import * as fromUsersProfile    from '@core/store/users-profile/reducers/users-profile'
+import * as fromLayouts         from '@core/store/layouts/reducers/layouts'
 import * as fromListings        from '@core/store/listings/reducers/listings'
 import * as fromCategories      from '@core/store/categories/reducers/categories'
 import * as fromSearch          from '@core/store/search/reducers/search'
@@ -39,6 +41,8 @@ import * as fromSearch          from '@core/store/search/reducers/search'
 export interface State {
     auth:          fromAuth.State
     users:         fromUsers.State
+    usersProfile:  fromUsersProfile.State
+    layouts:       fromLayouts.State
     listings:      fromListings.State
     categories:    fromCategories.State
     search:        fromSearch.State
@@ -53,6 +57,8 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
     auth:          fromAuth.reducer,
     users:         fromUsers.reducer,
+    usersProfile:  fromUsersProfile.reducer,
+    layouts:       fromLayouts.reducer,
     listings:      fromListings.reducer,
     categories:    fromCategories.reducer,
     search:        fromSearch.reducer,
@@ -75,8 +81,19 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-    ? [logger, storeFreeze]
+    //? [logger, storeFreeze]
+    ? [logger]
     : []
+
+/**
+ * Router Reducers
+ */
+
+// export const getRouterState = createFeatureSelector<fromRouter.RouterReducerState>('routerReducer')
+// export const getRouter = createSelector(
+//     getRouterState,
+//     (state) => state.navigationId
+// )
 
 /**
  * Auth Reducers
@@ -90,7 +107,7 @@ export const getAuthEntitiesState = createSelector(
 
 export const getSelectedAuthId = createSelector(
     getAuthEntitiesState,
-    fromAuth.getSelectedId
+    (state) => state.selectedId
 )
 
 export const {
@@ -102,12 +119,22 @@ export const {
 
 export const getAuthUserState = createSelector(
     getAuthState,
-    fromAuth.getAuthUser
+    (state) => state.user
 )
 
 export const getIsSignedInState = createSelector(
     getAuthState,
-    fromAuth.isSignedIn
+    (state) => state.isSignedIn
+)
+
+export const getAuthError = createSelector(
+    getAuthState,
+    (state) => state.error
+)
+
+export const getAuthSuccess = createSelector(
+    getAuthState,
+    (state) => state.success
 )
 
 export const getSelectedAuth = createSelector(
@@ -149,6 +176,42 @@ export const getSelectedUser = createSelector(
     }
 )
 
+/**
+ * Users Profile Reducer
+ */
+
+export const getUsersProfileState = createFeatureSelector<fromUsersProfile.State>('usersProfile')
+
+export const getUserProfileEntitiesState = createSelector(
+    getUsersProfileState,
+    (state) => state
+)
+
+export const {
+    selectIds: getUserProfileIds,
+    selectEntities: getUserProfileEntities,
+    selectAll: getAllUsersProfile,
+    selectTotal: getTotalUsersProfile,
+} = fromUsersProfile.userProfileAdapter.getSelectors(getUserProfileEntitiesState)
+
+export const getSelectedUserProfile = createSelector(
+    getUserProfileEntities,
+    getUsersProfileState,
+    (entities, profileState) => {
+      return profileState.selectedId && entities[profileState.selectedId];
+    }
+)
+
+export const getSelectedUserProfileId = createSelector(
+    getUsersProfileState,
+    (state) => state.selectedId
+)
+
+export const getIsLoadingProfile = createSelector(
+    getUsersProfileState,
+    (state) => state.loading
+)
+
  /**
  * Listings Reducers
  */
@@ -172,6 +235,22 @@ export const getSelectedListing = createSelector(
     getListingEntities,
     fromListings.getSelectedListingId,
     (listingEntities, listingId) => listingEntities[listingId]
+)
+
+ /**
+ * Layouts Reducers
+ */
+
+export const getLayoutsState = createFeatureSelector<fromLayouts.State>('layouts')
+
+export const getShowSidenav = createSelector(
+    getLayoutsState,
+    (state) => state.showSidenav
+)
+
+export const getLogo = createSelector(
+    getLayoutsState,
+    (state) => state.logo
 )
 
 /**

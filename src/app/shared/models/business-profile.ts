@@ -31,7 +31,7 @@ import { Address } from "@shared/models/address";
 export class BusinessProfile extends Object {
 
   businessProfilesID:     string            = "";
-  userUID:                string            = "";               // connect to user who represents the business. 
+  uid:                string            = "";               // connect to user who represents the business. 
 
   businessName:           string            = ""; 
   registeredCountry:      string            = "";               // country where business is registered. 
@@ -54,7 +54,7 @@ export class BusinessProfile extends Object {
     if ( model ) {
 
       this.businessProfilesID   = model.businessProfilesID  
-      this.userUID              = model.userUID                          
+      this.uid                  = model.uid                          
       this.businessName         = model.businessName         
       this.registeredCountry    = model.registeredCountry                
       this.registerNumber       = model.registerNumber                   

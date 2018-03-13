@@ -2,11 +2,12 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormArray, FormControl, ValidatorFn } from '@angular/forms' 
 import { AngularFireAuth } from 'angularfire2/auth'
 
-import { Store, State } from '@ngrx/store'
+import { Store, State, select } from '@ngrx/store'
 
 import { fadeInAnimation } from "@shared/animations/animations"
 import * as actions from '@core/store/auth/actions/auth'
 import * as fromRoot from '@core/store'
+import { Observable } from 'rxjs/Observable';
 
 const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -22,13 +23,16 @@ const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 
 export class SignUpComponent implements OnInit {
 
+  error$: Observable<string>
   signupForm: FormGroup
 
   constructor(
     private fb: FormBuilder,
     private afAuth: AngularFireAuth,
     private _store: Store<fromRoot.State>
-  ) { }
+  ) {
+    this.error$ = this._store.pipe(select(fromRoot.getAuthError))
+  }
 
   ngOnInit() {
     this.signupForm = this.fb.group({
@@ -41,6 +45,12 @@ export class SignUpComponent implements OnInit {
 
   onSignupSubmit() {
     this._store.dispatch(new actions.SignUp(this.signupForm.value))
+  }
+
+  getErrorMessage() {
+    return this.signupForm.controls.username.hasError('required') ? 'You must enter a value' :
+    this.signupForm.controls.username.hasError('email') ? 'Not a valid email' :
+    '';
   }
 
 }

@@ -1,4 +1,7 @@
 * {
+
+	--gap: 30px;
+
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -15,6 +18,7 @@ body,
 .mat-drawer-container {
 	background-color: $color__white;
 	color: $color__gable_green;
+	text-rendering: optimizeLegibility;
 }
 
 gen-layout {
@@ -27,6 +31,19 @@ gen-layout {
 	display: grid;
 	grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
 	grid-column-gap: 30px;
+
+	@include respond-to('phone') {
+		grid-template-columns: 1fr repeat(12, minmax(auto, 30px)) 1fr;
+		grid-column-gap: 5px;
+	}
+
+	.wrapper {
+		
+		display: grid !important;
+		grid-column: 2 / span 12;
+
+	}
+
 }
 
 a {
@@ -37,4 +54,12 @@ a {
 		color: $color__pastel_green;
 	}
 
+}
+
+.error {
+	color: red;
+}
+
+.success {
+	color: $color__eucalyptus;
 }

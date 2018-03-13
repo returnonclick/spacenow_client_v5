@@ -1,0 +1,30 @@
+<form [formGroup]="profileForm" class="profileForm" (ngSubmit)="onSubmit()" novalidate>
+    
+    <sn-contact [contact]="profile.contact" [parentForm]="profileForm"></sn-contact>
+
+    <!-- <div formArrayName="cards">
+        <div *ngFor="let card of cards.controls; let i=index" [formGroupName]="i" >
+
+            <h4>Card #{{i + 1}}</h4>
+            <mat-form-field>
+                <input matInput placeholder="Name" type="text" name="name" formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Number" type="text" name="number" formControlName="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Expiry Month" type="text" name="expiryMonth" formControlName="expiryMonth">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Expiry Year" type="text" name="expiryYear" formControlName="expiryYear">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="CVN" type="text" name="cvn" formControlName="cvn">
+            </mat-form-field>
+
+        </div>
+        <button (click)="addCard()" type="button">Add card</button>
+    </div> -->
+
+    <button type="submit" mat-raised-button [disabled]="!profileForm.valid">update</button>
+</form>
