@@ -46,7 +46,7 @@ export class ImageComponent {
 
   onSubmit() {
 
-    this.router.navigate(['listing', this.listing.id, 'booking'])
+    this.router.navigate(['listing', this.listing.id, 'terms'])
 
   }
 
