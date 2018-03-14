@@ -107,7 +107,7 @@ export function saveToCache(reducer: ActionReducer<State>): ActionReducer<State>
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, storeFreeze, saveToCache]
+  ? [logger, saveToCache] //[logger, storeFreeze, saveToCache]
   : [saveToCache,]
 
 /**

@@ -1,3 +1,6 @@
+@import
+  '~sass/abstracts/mixins';
+
 :host {
     --gap: 20px;
     --color__pastel_green: #6cde93;
@@ -21,12 +24,17 @@
         margin-bottom: var(--gap)
     }
 
-    progress::-webkit-progress-value {
-        transition: width 0.1s ease;
+    h4 {
+        text-align: center;
+        text-transform: uppercase;
     }
 
-    h4, h5 {
+    caption {
         text-align: center;
+    }
+
+    .sn-icon {
+        @include sn-icon(1, 1, 70);
     }
 
 }

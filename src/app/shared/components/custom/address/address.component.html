@@ -8,26 +8,28 @@
                 </button>
             </h4>
             <mat-form-field>
-                <input matInput placeholder="Unit" type="text" name="unit" formControlName="unit">
+                <input matInput placeholder="Unit" type="text" name="unit" formControlName="unit_number">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Street Number" type="text" name="streetNumber" formControlName="streetNumber">
+                <input matInput placeholder="Street Number" type="text" name="streetNumber" formControlName="street_number">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Street" type="text" name="street" formControlName="street">
+                <input matInput placeholder="Street" type="text" name="street" formControlName="route">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Country Name" type="text" name="countryName" formControlName="countryName">
+                <input matInput placeholder="Country Name" type="text" name="countryName" formControlName="country">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="City" type="text" name="city" formControlName="city">
+                <input matInput placeholder="City" type="text" name="city" formControlName="locality">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="State" type="text" name="state" formControlName="state">
+                <input matInput placeholder="State" type="text" name="state" formControlName="administrative_area_level_1">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Postal Code" type="text" name="postalCode" formControlName="postalCode">
+                <input matInput placeholder="Postal Code" type="text" name="postalCode" formControlName="postal_code">
             </mat-form-field>
+            <input type="hidden" name="longitude" formControlName="longitude">
+            <input type="hidden" name="latitude" formControlName="latitude">
             <!-- End of the repeated address template -->
         </div>
         <button mat-icon-button class="primary" type="button" *ngIf="multi" (click)="addAddress()">

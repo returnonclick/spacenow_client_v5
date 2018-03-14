@@ -57,4 +57,8 @@ export class SignInComponent implements OnInit {
     this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.FacebookAuthProvider()))
   }
 
+  // linkedinLogin() {
+  //   this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.()))
+  // }
+
 }

@@ -42,7 +42,7 @@ export class AuthEffects {
     public signIn$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignIn>( actions.SIGN_IN ),
         switchMap(data => this.authService.signIn(data.payload.username, data.payload.password)),
-        map((res) => new actions.GetUser(res.uid)),
+        map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
 
@@ -51,7 +51,7 @@ export class AuthEffects {
         ofType<actions.SignUp>( actions.SIGN_UP ),
         switchMap(data => this.authService.signUp(data.payload.username, data.payload.password)),
         tap(() => this.authService.sendEmailVerification()),
-        map((user) => new actions.GetUser(user.uid)),
+        map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
 
@@ -69,7 +69,7 @@ export class AuthEffects {
     public signInWithProvider$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignInWithProvider>( actions.SIGN_IN_WITH_PROVIDER ),
         switchMap(data => this.authService.signInWithProvider(data.payload)),
-        map((user) => new actions.GetUser(user.uid)),
+        map((user) => new actions.Success(user)),
         catchError((err) => of(new actions.Fail(err)))
     )
 

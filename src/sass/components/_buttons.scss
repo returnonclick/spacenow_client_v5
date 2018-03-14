@@ -70,7 +70,8 @@ $button-radius: 2 * $button-padding-lr;
         &[disabled] {
 
             border: 1px solid rgba(0,0,0,.12) !important;
-
+            color: mat-color($primary, 50, 1) !important;
+            
         }
 
     }

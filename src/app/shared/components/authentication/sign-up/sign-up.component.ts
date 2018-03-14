@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormArray, FormControl, ValidatorFn } from '@angular/forms' 
 import { AngularFireAuth } from 'angularfire2/auth'
+import * as firebase from 'firebase/app'
 
 import { Store, State, select } from '@ngrx/store'
 
@@ -51,6 +52,14 @@ export class SignUpComponent implements OnInit {
     return this.signupForm.controls.username.hasError('required') ? 'You must enter a value' :
     this.signupForm.controls.username.hasError('email') ? 'Not a valid email' :
     '';
+  }
+
+  googleLogin() {
+    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.GoogleAuthProvider()))
+  }
+
+  facebookLogin() {
+    this._store.dispatch(new actions.SignInWithProvider(new firebase.auth.FacebookAuthProvider()))
   }
 
 }

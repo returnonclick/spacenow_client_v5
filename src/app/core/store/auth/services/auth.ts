@@ -35,21 +35,15 @@ export class AuthService {
   }
 
   signIn(username, password) {
-    return this.afAuth.auth.signInWithEmailAndPassword(username, password).then(
-      (auth) => this.updateUserData(auth)
-    )
+    return this.afAuth.auth.signInWithEmailAndPassword(username, password)
   }
 
   signInWithProvider(provider) {
-    return this.afAuth.auth.signInWithPopup(provider).then(
-      (auth) => this.updateUserData(auth.user, auth.credential)
-    )
+    return this.afAuth.auth.signInWithPopup(provider)
   }
 
   signUp(username, password) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(username, password).then(
-      (auth) => this.updateUserData(auth)
-    )
+    return this.afAuth.auth.createUserWithEmailAndPassword(username, password)
   }
 
   sendEmailVerification() {
