@@ -38,10 +38,10 @@ export class AddressComponent {
         route:                        [''],
         locality:                     [''],
         administrative_area_level_1:  [''],
-        country:                      [''],
+        country:                      ['', Validators.required],
         postal_code:                  [''],
-        latitude:                          [''],
-        longitude:                          [''],
+        latitude:                     [''],
+        longitude:                    [''],
         full_name:                    ['']
       })
     })
@@ -61,13 +61,13 @@ export class AddressComponent {
       address: this._fb.group({
         unit_number:                  [this.listing.address.unit_number],
         street_number:                [this.listing.address.street_number],
-        route:                        [this.listing.address.route, Validators.required],
-        locality:                     [this.listing.address.locality, Validators.required],
-        administrative_area_level_1:  [this.listing.address.administrative_area_level_1, Validators.required],
-        country:                      [this.listing.address.country, Validators.required],
-        postal_code:                  [this.listing.address.postal_code, Validators.required],
-        latitude:                          [this.listing.address.latitude],
-        longitude:                          [this.listing.address.longitude],
+        route:                        [this.listing.address.route],
+        locality:                     [this.listing.address.locality],
+        administrative_area_level_1:  [this.listing.address.administrative_area_level_1],
+        country:                      [this.listing.address.country],
+        postal_code:                  [this.listing.address.postal_code],
+        latitude:                     [this.listing.address.latitude],
+        longitude:                    [this.listing.address.longitude],
         full_name:                    [this.listing.address.full_name]
       })
     })
@@ -87,12 +87,12 @@ export class AddressComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.addressForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'amenity'])
+    this.router.navigate(['app/listings', this.listing.id, 'amenity'])
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'category'])
+    this.router.navigate(['app/listings', this.listing.id, 'category'])
   }
  
 }

@@ -24,6 +24,7 @@ export class ContainerComponent {
   listingId: string
   listing: Space 
   user$: Observable<User>
+  user: User
 
   constructor(private _store: Store<fromRoot.State>,
               private route: ActivatedRoute
@@ -32,12 +33,14 @@ export class ContainerComponent {
     this.listingId = this.route.snapshot.params.id
 
     // this._store.dispatch(new authActions.GetUser())
-    this.user$ = this._store.select( fromRoot.getAuthUserState )
-    this.user$.subscribe(user => {
-      // TODO: Change this when login module merged
-      // if (user)
-      //   this.create()
-    })
+    // this.user$ = this._store.select( fromRoot.getAuthUserState )
+    // this.user$.subscribe(user => {
+
+    //   if (user) {
+    //     this.user = user;
+    //   }
+        
+    // })
 
   }
 
@@ -46,6 +49,7 @@ export class ContainerComponent {
     if (typeof this.listingId === 'undefined') {
 
       this.listing = new Space()
+      // this.listing.ownerUid = this.user.uid
 
       // Generate random alphanumeric listing ID 
       var m = 21, s = '', r = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

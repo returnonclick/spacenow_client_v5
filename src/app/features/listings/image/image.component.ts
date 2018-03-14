@@ -5,8 +5,10 @@ import { Observable } from 'rxjs'
 import { Router, ActivatedRoute } from "@angular/router"
 
 import * as fromRoot from '@core/store'
+import * as listingActions from '@core/store/listings/actions/listing'
 
 import { Space } from '@shared/models/space'
+import { ImageData } from '@shared/models/image-data'
 
 
 @Component({
@@ -20,6 +22,8 @@ export class ImageComponent {
   listing$: Observable<Space>
   listing: Space
   valid: boolean
+  storagePath: string = `/images/listings/{$listingID}/{$imageID}/{IMAGE_SIZE.JPG}`
+  images: Array<ImageData> = new Array()
 
   constructor(private _store: Store<fromRoot.State>,
               private router: Router
@@ -30,15 +34,29 @@ export class ImageComponent {
     this.listing$.subscribe(listing => {
       if (listing) {
         this.listing = listing
-        if (this.listing.images.length >= 3)
+        this.storagePath = `/images/listings/${this.listing.id}`
+
+        if (this.listing.images.length > 0)
+          this.images = this.listing.images
+
+        if (this.images.length >= 3)
           this.valid = true
       }
     })
 
   }
 
-  isValid() {
-    if (this.listing.images.length >= 3)
+  getImage(event) {
+    this.images.push(event.path)
+    if (this.images.length >= 3)
+      this.valid = true
+    else
+      this.valid = false
+  }
+
+  remove(image) {
+    this.images = this.images.filter(res => res !== image)
+    if (this.images.length >= 3)
       this.valid = true
     else
       this.valid = false
@@ -46,13 +64,17 @@ export class ImageComponent {
 
   onSubmit() {
 
-    this.router.navigate(['listing', this.listing.id, 'terms'])
+    if(this.listing.id) {
+      this._store.dispatch(new listingActions.Update( this.listing.id, { images: this.images } ))
+    }
+
+    this.router.navigate(['app/listings', this.listing.id, 'terms'])
 
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'description'])
+    this.router.navigate(['app/listings', this.listing.id, 'description'])
   }
   
 }

@@ -65,7 +65,7 @@ export class CategoryComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.categoryForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'address'])
+    this.router.navigate(['app/listings', this.listing.id, 'address'])
   }
 
 }

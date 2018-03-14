@@ -3,7 +3,7 @@
 
   <div class="description">
     <div class="title">
-      <span style="font-size: 48px">Describe your space</span>
+      <span style="font-size: 60px">Describe your space</span>
     </div>
     <div class="content">
       <mat-form-field>
@@ -14,8 +14,11 @@
         <span>Description *</span>
       </div>
       <textarea 
+        (blur)="redBox()"
+        (input)="redBox()"
+        [ngClass]="{'textarea-required': textareaStatus}"
         placeholder="Description"
-        rows="8"
+        rows="7"
         required
         formControlName="description">
       </textarea>
@@ -25,9 +28,8 @@
         <mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="Set the rules for your home, this helps to make sure it is suitable for your guests." matTooltipPosition="after">info</mat-icon>
       </div>
       <textarea
-        style="padding: 10px;"
         placeholder="Space rules"
-        rows="8"
+        rows="7"
         formControlName="rules">
       </textarea>
 
