@@ -22,6 +22,7 @@ export class DescriptionComponent {
   listing$: Observable<Space>
   listing: Space
   descriptionForm: FormGroup
+  textareaStatus: Boolean = false
 
   constructor(private _store: Store<fromRoot.State>,
               private _fb: FormBuilder,
@@ -30,6 +31,7 @@ export class DescriptionComponent {
   ) {
 
     this.descriptionForm = this._fb.group({
+      title: ['', Validators.required ],
       description: ['', Validators.required ],
       rules: ['']
     })
@@ -46,6 +48,7 @@ export class DescriptionComponent {
 
   createForm() {
     this.descriptionForm = this._fb.group({
+      title:       this.listing.title,
       description: this.listing.description,
       rules:       this.listing.rules
     })
@@ -59,12 +62,19 @@ export class DescriptionComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.descriptionForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'image'])
+    this.router.navigate(['app/listings', this.listing.id, 'image'])
+  }
+
+  redBox() {
+    if (this.descriptionForm.controls.description.value)
+      this.textareaStatus = false;
+    else
+    this.textareaStatus = true;
   }
  
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'address'])
+    this.router.navigate(['app/listings', this.listing.id, 'booking'])
   }
 
 }

@@ -10,6 +10,7 @@ import * as amenityActions from '@core/store/amenities/actions/amenity'
 import * as listingSpecificationActions from '@core/store/listing-specifications/actions/listing-specification'
 
 import { Space } from '@models/space'
+import { User } from '@models/user'
 
 @Component({
   selector: 'sn-listing-container',
@@ -22,12 +23,24 @@ export class ContainerComponent {
   listing$: Observable<Space>
   listingId: string
   listing: Space 
+  user$: Observable<User>
+  user: User
 
   constructor(private _store: Store<fromRoot.State>,
               private route: ActivatedRoute
   ) {
 
     this.listingId = this.route.snapshot.params.id
+
+    // this._store.dispatch(new authActions.GetUser())
+    // this.user$ = this._store.select( fromRoot.getAuthUserState )
+    // this.user$.subscribe(user => {
+
+    //   if (user) {
+    //     this.user = user;
+    //   }
+        
+    // })
 
   }
 
@@ -36,6 +49,7 @@ export class ContainerComponent {
     if (typeof this.listingId === 'undefined') {
 
       this.listing = new Space()
+      // this.listing.ownerUid = this.user.uid
 
       // Generate random alphanumeric listing ID 
       var m = 21, s = '', r = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

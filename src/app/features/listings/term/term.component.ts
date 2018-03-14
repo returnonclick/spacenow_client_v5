@@ -60,12 +60,12 @@ export class TermComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.termForm.value ))
     }
 
-    // this.router.navigate(['listing', this.listing.id, 'price']) go to list listings
+    // this.router.navigate(['app/listings', this.listing.id, 'price']) go to list listings
   }
   
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'exception'])
+    this.router.navigate(['app/listings', this.listing.id, 'image'])
   }
 }
  
