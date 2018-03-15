@@ -36,7 +36,6 @@ export class ForgotPasswordComponent implements OnInit {
     private _store: Store<fromRoot.State>
   ) { 
     this.error$ = this._store.pipe(select(fromRoot.getAuthError))
-    this.success$ = this._store.pipe(select(fromRoot.getAuthSuccess))
   }
 
   ngOnInit() {

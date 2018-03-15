@@ -30,11 +30,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
       return this._store.pipe(
-        select(fromRoot.getIsSignedInState),
+        select(fromRoot.getIsSignedIn),
         map(isSinedIn => {
           if (!isSinedIn) {
-            //this._store.dispatch(new actions.SignOut)
-            this.router.navigate(['sign-in'])
+            this._store.dispatch(new actions.Redirect())
             return false
           }
           return true
@@ -65,10 +64,9 @@ export class AuthGuardVerified implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
       return this._store.pipe(
-        select(fromRoot.getAuthUserState),
+        select(fromRoot.getIsSignedIn),
         map(user => {
           if (!user) {
-            this._store.dispatch(new actions.SignOut)
             return false
           }
           return true

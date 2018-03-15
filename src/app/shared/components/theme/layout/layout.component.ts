@@ -30,17 +30,11 @@ export class LayoutComponent {
     private afAuth: AngularFireAuth,
     private cdRef: ChangeDetectorRef
   ) {
-    this.afAuth.authState.subscribe(
-      (user) => {
-        if (user)
-          this._store.dispatch(new actions.GetUser(user.uid))
-      }
-    )
   }
 
   ngOnInit() {
-    this.authUser$ = this._store.select(fromRoot.getSelectedAuth)
-    this.isSignedIn$ = this._store.select(fromRoot.getIsSignedInState)
+    this.authUser$ = this._store.select(fromRoot.getAuthUser)
+    this.isSignedIn$ = this._store.select(fromRoot.getIsSignedIn)
     this.showSidenav$ = this._store.pipe(select(fromRoot.getShowSidenav));
     this.logo$ = this._store.pipe(select(fromRoot.getLogo));
   }

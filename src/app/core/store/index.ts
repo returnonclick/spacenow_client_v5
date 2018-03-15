@@ -125,29 +125,12 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
  */
 export const getAuthState = createFeatureSelector<fromAuth.State>('auth')
 
-export const getAuthEntitiesState = createSelector(
-  getAuthState,
-  (state) => state
-)
-
-export const getSelectedAuthId = createSelector(
-  getAuthEntitiesState,
-  (state) => state.selectedId
-)
-
-export const {
-  selectIds:      getAuthIds,
-  selectEntities: getAuthEntities,
-  selectAll:      getAllAuth,
-  selectTotal:    getTotalAuth,
-} = fromAuth.authAdapter.getSelectors(getAuthEntitiesState)
-
-export const getAuthUserState = createSelector(
+export const getAuthUser = createSelector(
   getAuthState,
   (state) => state.user
 )
 
-export const getIsSignedInState = createSelector(
+export const getIsSignedIn = createSelector(
   getAuthState,
   (state) => state.isSignedIn
 )
@@ -155,19 +138,6 @@ export const getIsSignedInState = createSelector(
 export const getAuthError = createSelector(
     getAuthState,
     (state) => state.error
-)
-
-export const getAuthSuccess = createSelector(
-    getAuthState,
-    (state) => state.success
-)
-
-export const getSelectedAuth = createSelector(
-  getAuthEntities,
-  getSelectedAuthId,
-  (entities, selectedId) => {
-    return selectedId && entities[selectedId];
-  }
 )
 
 /**

@@ -3,26 +3,17 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity'
 import { User } from '@shared/models/user'
 import * as auth from '@core/store/auth/actions/auth'
 
-export interface State extends EntityState<User> {
-    isSignedIn: boolean
-    user: User
-    selectedId: string | null
+export interface State {
+    isSignedIn: boolean | false
+    user: User | null
     error: string | null
-    success: string | null
 }
 
-export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
-    selectId: (obj: User) => obj.uid,
-    sortComparer: false,
-})
-
-export const initialState: State = authAdapter.getInitialState({
+const initialState: State = {
     isSignedIn: false,
     user: null,
-    selectedId: null,
-    error: null,
-    success: null
-})
+    error: null
+}
 
 export function reducer(
     state = initialState,
@@ -30,36 +21,10 @@ export function reducer(
 ): State {
     switch (action.type) {
 
-        case auth.ADDED: {
-            return authAdapter.addOne(action.payload, {
-                ...state,
-                isSignedIn: true,
-                selectedId: action.payload.uid
-            })
-        }
-
-        case auth.MODIFIED: {
-            return authAdapter.updateOne({
-                id: action.payload.uid,
-                changes: action.payload
-            }, {
-                ...state,
-                isSignedIn: true,
-                selectedId: action.payload.uid,
-            })
-        }
-
-        case auth.REMOVED: {
-            return authAdapter.removeOne(action.payload.uid, { 
-                ...state,
-                isSignedIn: true,
-                selectedId: action.payload.uid,
-            })
-        }
-
         case auth.FAIL: {
             return {
                 ...state,
+                user: null,
                 error: action.payload
             }
             
@@ -68,19 +33,14 @@ export function reducer(
         case auth.SUCCESS: {
             return {
                 ...state,
-                success: action.payload
+                user: action.payload.user,
+                isSignedIn: true
             }
             
         }
 
         case auth.SIGN_OUT: {
-            return authAdapter.removeAll({
-                ...state,
-                isSignedIn: false,
-                user: null,
-                selectedId: null,
-                error: null
-            })
+            return initialState
         }
 
         default: {

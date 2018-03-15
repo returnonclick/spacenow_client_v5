@@ -16,7 +16,7 @@
   <input id="fileToUpload" type="file" style="display:none;" (change)="startUpload($event.target.files)" multiple>
 
   <div *ngIf="(percentage | async) as pct">
-    <mat-progress-bar class="primary" [value]="pct" max="100" *ngIf="filesCount !== totalFiles">        
+    <mat-progress-bar mode="determinate" class="primary" [value]="pct" max="100" *ngIf="filesCount !== totalFiles">        
     </mat-progress-bar>
   </div>
 

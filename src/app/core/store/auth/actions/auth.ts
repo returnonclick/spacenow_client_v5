@@ -14,6 +14,7 @@ export const FORGOT_PASSWORD        = '[Auth] Forgot Password';
 export const SIGN_OUT               = '[Auth] SignOut';
 export const SUCCESS                = '[Auth] Sucess';
 export const FAIL                   = '[Auth] Fail';
+export const REDIRECT               = '[Auth] Redirect';
 
 export class Added implements Action {
     readonly type = ADDED
@@ -76,6 +77,10 @@ export class Fail implements Action {
     constructor(public payload: any) {}
 }
 
+export class Redirect implements Action {
+    readonly type = REDIRECT
+}
+
 export type Actions = 
     | Added
     | Modified
@@ -85,5 +90,6 @@ export type Actions =
     | SignInWithProvider
     | Success
     | Fail
+    | Redirect
     | SignOut
     | ForgotPassword;

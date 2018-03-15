@@ -28,6 +28,14 @@ export class AuthService {
     private _afs: AngularFirestore,
     private router: Router
   ) {
+
+    this.afAuth.authState.subscribe(
+      (user) => {
+        if (user)
+          this._store.dispatch(new actions.Success({user: new User(user)}))
+      }
+    )
+    
   }
 
   getUser(id) {
@@ -39,7 +47,9 @@ export class AuthService {
   }
 
   signInWithProvider(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
+    return this.afAuth.auth.signInWithPopup(provider).then(
+      data => this.updateUserData(data)
+    )
   }
 
   signUp(username, password) {
@@ -61,35 +71,12 @@ export class AuthService {
 
   private updateUserData(auth: any, credential?: any) {
 
-    const userRef: AngularFirestoreDocument<User> = this._afs.collection<User>(`users`).doc(`${auth.uid}`)
-    const userProfileRef: AngularFirestoreDocument<UserProfile> = this._afs.collection<UserProfile>(`users-profile`).doc(`${auth.uid}`)
-
-    let userData = new UserData()
-    userData.displayName  = auth.providerData[0].displayName ? auth.providerData[0].displayName : auth.providerData[0].email
-    userData.email        = auth.providerData[0].email
-    userData.phoneNumber  = auth.providerData[0].phoneNumber
-    userData.photoURL     = auth.providerData[0].photoURL ? auth.providerData[0].photoURL : 'https://pickaface.net/assets/images/slides/slide2.png'
-    userData.providerId   = auth.providerData[0].providerId
-    userData.uid          = auth.providerData[0].uid
-
-    let data: User = new User()
-    data.uid           = auth.uid
-    data.email         = auth.email
-    data.displayName   = auth.displayName ? auth.displayName : auth.email
-    data.phoneNumber   = auth.phoneNumber
-    data.photoURL      = auth.photoURL ? auth.photoURL : 'https://pickaface.net/assets/images/slides/slide2.png'
-    data.isVerified    = auth.emailVerified
-    data.idToken       = credential ? credential.idToken : null
-    data.userData.push(userData);
-
-    const contact: Contact = new Contact()
-    let userProfile: UserProfile = new UserProfile()
-    userProfile.uid = data.uid
-    userProfile.contact = contact
+    const userRef: AngularFirestoreDocument<User> = this._afs.collection<User>(`users`).doc(`${auth.user.uid}`)
+    
+    const data: User = new User(auth)
 
     userRef.set(Object.assign({}, data))
-    userProfileRef.set(Object.assign({}, userProfile))
-    return Promise.resolve(data)
+
   }
 
 }

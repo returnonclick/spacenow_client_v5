@@ -5,7 +5,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators, FormArray, FormCon
 import { AngularFireAuth } from 'angularfire2/auth'
 import * as firebase from 'firebase/app'
 
-import { Store, State } from '@ngrx/store'
+import { Store, State, select } from '@ngrx/store'
+import { Observable } from 'rxjs/Observable'
 
 import { AuthService } from '@core/store/auth/services'
 import { fadeInAnimation } from "@shared/animations/animations"
@@ -28,12 +29,14 @@ const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 export class SignInComponent implements OnInit {
 
   signinForm: FormGroup
+  error$: Observable<string>
 
   constructor(
     private fb: FormBuilder,
     private afAuth: AngularFireAuth,
     private _store: Store<fromRoot.State>
   ) {
+    this.error$ = this._store.pipe(select(fromRoot.getAuthError))
   }
 
   ngOnInit() {

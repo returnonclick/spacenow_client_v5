@@ -20,14 +20,14 @@ export class UserData extends Object{
 
   constructor( model: any = null ){
 
-    super(model)
+    super()
 
     if ( model ) {
   
       this.displayName  = model.displayName ? model.displayName : model.email
       this.email        = model.email
       this.phoneNumber  = model.phoneNumber
-      this.photoURL     = model.photoURL
+      this.photoURL     = model.photoURL || "https://pickaface.net/assets/images/slides/slide2.png"
       this.providerId   = model.providerId
       this.uid          = model.uid
     
