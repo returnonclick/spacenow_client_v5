@@ -9,7 +9,9 @@
       <mat-form-field>
         <input matInput placeholder="Password" type="password" name="password" required formControlName="password">
       </mat-form-field>
-    
+      
+      <span class="error" *ngIf="error$ | async as error">{{error.message}}</span>
+
       <mat-checkbox class="remember-me">Remember Me</mat-checkbox>
       <button mat-raised-button [disabled]="!signinForm.valid" class="primary">log in</button>
         
@@ -25,9 +27,9 @@
     <button mat-raised-button class="secondary " (click)="facebookLogin()">
       Facebook
     </button>
-    <button mat-raised-button class="secondary" (click)="linkedinLogin()">
+    <!-- <button mat-raised-button class="secondary" (click)="linkedinLogin()">
       Linkedin
-    </button>
+    </button> -->
   </div>
 
 </div>

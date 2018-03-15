@@ -82,28 +82,29 @@ $breakpoints: (
   }
 
 @mixin sn-icon($index-x, $index-y, $size) {
-  line-height: 1;
-  vertical-align: middle;
+  // line-height: 1;
+  // vertical-align: middle;
 
   &:before {
       // Manually define the icon set */
-      $columns: 20; // Number of icons going across
-      $row: 20; // Number of icons going across
-      background-image: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Ficons%2FIcons-.svg?alt=media&token=bf3fd305-b4d3-4429-9ff0-1751c99f12c0');
-      background-size: $columns * 100%;
+      $columns: 51; // Number of icons going across
+      $rows: 4; // Number of icons going across
+      background-image: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Ficons%2Fsn-icons.svg?alt=media&token=65b17905-aef8-4df2-9106-f5b8c2e841fc');
+      background-repeat: no-repeat;
+      background-size: #{$columns * $size}px #{$rows * $size}px;
 
       // Size icon will be displayed */
       width: #{$size}px;
       height: #{$size}px;
 
       // Position background-image based on number of icons in sprite */
-      background-position: #{(100/($columns - 1)*($index-x - 1))}% #{(($index-y + 1) * $size)}px;
+      background-position: #{($index-x - 1) * -$size}px #{($index-y - 1)  * -$size}px;
 
       // Set position to inline */
       content: "";
   
       display: inline-block;
       line-height: #{$size}px;
-      vertical-align: middle;
+      // vertical-align: middle;
   }
 }

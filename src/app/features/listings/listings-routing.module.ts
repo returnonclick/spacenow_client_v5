@@ -20,8 +20,8 @@ const routes: Routes = [
     path: '',
     component: ContainerComponent,
     children: [
-      { path: '', redirectTo: '/category', pathMatch: 'full' },
-      { path: 'category', component: CategoryComponent }
+      { path: 'category', component: CategoryComponent },
+      { path: '', redirectTo: '/category', pathMatch: 'full' }
     ]
   },
   {

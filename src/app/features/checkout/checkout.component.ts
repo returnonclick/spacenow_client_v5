@@ -46,7 +46,7 @@ export class CheckoutComponent {
     this.cart$         = this._store.select(fromRoot.getAllBookingSpaces)
     this.categories$   = this._store.select(fromRoot.getCategoryEntities)
     this.spaces$       = this._store.select(fromRoot.getSpaceEntities)
-    this.user$         = this._store.select(fromRoot.getSelectedAuth)
+    this.user$         = this._store.select(fromRoot.getAuthUser)
     this.pLoadPayments = new Promise((resolve, reject) => {
       this.loadPayments = resolve
     })

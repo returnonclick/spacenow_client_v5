@@ -20,9 +20,8 @@ import * as fromRoot from '@core/store'
 export class ProfileContainerComponent implements OnInit {
 
   isLoading$: Observable<boolean>
-  authId$: Observable<string>
-  authId: string
   authUser$: Observable<User>
+  authUser: User
   userProfile$: Observable<Profile>
   storagePath: string = `/images/users-profile/{$usersProfileID}/{$imageID}/{IMAGE_SIZE.JPG}`
 
@@ -31,24 +30,24 @@ export class ProfileContainerComponent implements OnInit {
   ) {
 
     this.isLoading$ = this._store.pipe(select(fromRoot.getIsLoadingProfile))
-    this.authId$ = this._store.pipe(select(fromRoot.getSelectedAuthId))
     this.userProfile$ = this._store.pipe(select(fromRoot.getSelectedUserProfile))
-    this.authUser$ = this._store.pipe(select(fromRoot.getSelectedAuth))
-
+    this.authUser$ = this._store.pipe(select(fromRoot.getAuthUser))
+    this.authUser$.subscribe(
+      (user) => {
+        if (user) {
+          this.authUser = user
+          this.storagePath = `/images/users-profile/${user.uid}`
+          return this._store.dispatch(new actions.Query(user.uid))
+        }
+      })
    }
 
   ngOnInit() {
     this._store.dispatch(new layoutActions.SetLogoGreen())
-    this.authId$.subscribe(
-      id => {
-        this.authId = id
-        this.storagePath = `/images/users-profile/${id}`
-        return this._store.dispatch(new actions.Query(id))
-      })
   }
 
   getImage(event) {
-    this._store.dispatch(new userActions.Update(this.authId, { photoURL: event.path }))
+    this._store.dispatch(new userActions.Update(this.authUser.uid, { photoURL: event.path }))
   }
 
 }

@@ -28,21 +28,21 @@ export class Address extends Object{
 
   constructor(model: any = null) {
     
-    super(model)
+    super()
 
     if (model) {
 
-      this.full_name          = model.full_name
-      this.unit_number        = model.unit_number || ''
-      this.street_number      = model.street_number || 0
-      this.route              = model.route || ''
-      this.locality           = model.locality || ''
-      this.administrative_area_level_1   = model.administrative_area_level_1 || ''
-      this.postal_code        = model.postal_code || ''
-      this.countryCode        = model.countryCode || ''
-      this.country            = model.country || ''
-      this.longitude          = model.longitude || 0
-      this.latitude           = model.latitude || 0
+      this.full_name                      = model.full_name
+      this.unit_number                    = model.unit_number
+      this.street_number                  = model.street_number
+      this.route                          = model.route
+      this.locality                       = model.locality
+      this.administrative_area_level_1    = model.administrative_area_level_1
+      this.postal_code                    = model.postal_code
+      this.countryCode                    = model.countryCode
+      this.country                        = model.country
+      this.longitude                      = model.longitude
+      this.latitude                       = model.latitude
 
     }
 

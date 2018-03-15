@@ -66,6 +66,7 @@ export class ProfileDetailComponent {
     this.profileForm.updateValueAndValidity()
     if(this.profileForm.invalid)
       return
+    let frmProfile = Object.assign({}, this.profileForm.value);
     this.profile = Object.assign(this.profile, this.profileForm.value)
     this._store.dispatch(new profileActions.Update( this.profile.uid, this.profile ))
   }
