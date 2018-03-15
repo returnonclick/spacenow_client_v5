@@ -69,15 +69,15 @@ export class Space extends Object{
 
   export class TaxDetails extends Object {
     percent: number = 0
-    name: string = ''
-    country: string = ''
+    name: string = 'none'
+    country: string = null
 
     constructor(model: any = null) {
       super (model)
       if(model) {
-        this.percent = model.percent
-        this.name = model.name
-        this.country = model.country
+        this.percent = model.percent | 0
+        this.name = model.name || 'none'
+        this.country = model.country || null 
       }
     }
   }

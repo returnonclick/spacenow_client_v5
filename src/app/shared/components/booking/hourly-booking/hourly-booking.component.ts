@@ -83,7 +83,7 @@ export class HourlyBookingComponent {
   // of `this.space`'s availability exceptions
   exceptions() {
     return (d: Date | null): boolean => {
-      let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.date).format('YYYY-MM-DD'))
+      let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.fromDate).format('YYYY-MM-DD'))
       let dayMoment      = moment(d)
       let day            = dayMoment.format('ddd').toLowerCase()
 

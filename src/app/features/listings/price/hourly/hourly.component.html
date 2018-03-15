@@ -3,12 +3,12 @@
     <div fxLayout="row">
       <div fxFlex="50%" fxLayout="column">
         <mat-form-field fxFlex="100%" style="padding-right: 23px">
-          <input matInput type="number" placeholder="Price per hour" formControlName="price" required>
+          <input matInput type="number" min="0" placeholder="Price per hour" formControlName="price" required>
         </mat-form-field>
-        <mat-form-field fxFlex="100%" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
+        <mat-form-field fxFlex="100%" min="0" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
           <input matInput type="number" placeholder="Price per half day" formControlName="halfDay" [required]="parentForm.controls.price.value.incentives">
         </mat-form-field>
-        <mat-form-field fxFlex="100%" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
+        <mat-form-field fxFlex="100%" min="0" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
           <input matInput type="number" placeholder="Price per day" formControlName="day" [required]="parentForm.controls.price.value.incentives">
         </mat-form-field>
         <div fxLayout="row">

@@ -48,7 +48,7 @@ export class PriceComponent {
     taxOptions = [
       {display: 'GST', value: 'GST' },
       {display: 'VAT', value: 'VAT' },
-      {display: 'NO', value: 'none' }
+      {display: 'None', value: 'none' }
     ]
 
     taxes = [
@@ -1240,8 +1240,7 @@ export class PriceComponent {
     }
 
     assignTax(tax) {
-      
-      this.priceForm.controls.tax.value.percent = tax
+      this.priceForm.controls.tax.get('percent').setValue(tax)
     }
 
     filterCountry(taxName) {
@@ -1250,14 +1249,17 @@ export class PriceComponent {
     }
 
     onSubmit() {
+
+      if (this.priceForm.value.tax.name === 'none')
+        this.priceForm.controls.tax.get('percent').setValue(0)
         
-        this.priceForm.updateValueAndValidity()
+      this.priceForm.updateValueAndValidity()
 
-        if (this.listing.id) {
-            this._store.dispatch(new listingActions.Update( this.listing.id, this.priceForm.value ))
-        }
+      if (this.listing.id) {
+          this._store.dispatch(new listingActions.Update( this.listing.id, this.priceForm.value ))
+      }
 
-        this.router.navigate(['app/listings', this.listing.id, 'booking'])
+      this.router.navigate(['app/listings', this.listing.id, 'booking'])
     }
 
     // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html

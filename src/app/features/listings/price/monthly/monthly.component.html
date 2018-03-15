@@ -3,13 +3,13 @@
     <div fxLayout="row">
       <div fxFlex="50%" fxLayout="column">
         <mat-form-field fxFlex="100%" style="padding-right: 23px">
-          <input matInput type="number" placeholder="Price per month" formControlName="price" required>
+          <input matInput type="number" min="0" placeholder="Price per month" formControlName="price" required>
         </mat-form-field>
         <mat-form-field fxFlex="100%" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
-          <input matInput type="number" placeholder="Price per six months" formControlName="sixMonths" [required]="parentForm.controls.price.value.incentives">
+          <input matInput type="number" min="0" placeholder="Price per six months" formControlName="sixMonths" [required]="parentForm.controls.price.value.incentives">
         </mat-form-field>
         <mat-form-field fxFlex="100%" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
-          <input matInput type="number" placeholder="Price per year" formControlName="year" [required]="parentForm.controls.price.value.incentives">
+          <input matInput type="number" min="0" placeholder="Price per year" formControlName="year" [required]="parentForm.controls.price.value.incentives">
         </mat-form-field>
         <div fxLayout="row">
           <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives </mat-checkbox><mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="You can set fixed prices for half or full day terms to encourage longer bookings." matTooltipPosition="after">info</mat-icon>

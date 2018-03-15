@@ -2,7 +2,7 @@
 export class Availability extends Object{
 
   bookingType:   string = null
-  leadTime:      number = 0
+  leadTime:      number = 1
   openingTime:   OpeningTime = new OpeningTime()
   isOpen247:     boolean = false
   exceptionDays: ExceptionDay[] = []
@@ -14,7 +14,7 @@ export class Availability extends Object{
     if ( model ) {
 
       this.bookingType      = model.bookingType || null
-      this.leadTime         = model.leadTime || 0
+      this.leadTime         = model.leadTime || 1
       this.openingTime      = new OpeningTime(model.openingTime) || new OpeningTime()
       this.isOpen247        = model.isOpen247 || false
       this.exceptionDays    = (model.exceptionDays || []).map(day => new ExceptionDay(day))
@@ -27,14 +27,16 @@ export class Availability extends Object{
 
 export class ExceptionDay {
 
-  date: Date 
+  fromDate: Date 
+  toDate: Date
   note: string
 
   constructor( model: any = null ) {
     
     if ( model ) {
 
-      this.date = model.date || null
+      this.fromDate = model.date || null
+      this.toDate = model.date || null
       this.note = model.note || ''
 
     }
@@ -46,8 +48,6 @@ export class ExceptionDay {
 export class OpeningDay extends Object {
   startHour: number = 0
   closeHour: number = 0
-  // open: number = 0
-  // close: number = 0
   startMinute: number = 0 // not gonna be used yet
   closeMinute: number = 0 // not gonna be used yet
   isOpen: boolean = true

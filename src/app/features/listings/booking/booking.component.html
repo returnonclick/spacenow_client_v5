@@ -10,7 +10,7 @@
       <div class="booking-type" fxFlex="35%" >
         <div fxLayout="column">
           <mat-form-field>
-            <mat-select placeholder="Booking Type" name="booking-type" formControlName="bookingType" required>
+            <mat-select placeholder="Booking System" name="booking-type" formControlName="bookingType" required>
               <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
                 {{ bookingType }} 
               </mat-option>
@@ -18,14 +18,15 @@
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput 
-              type="number"
-              placeholder="Lead time (days)" 
-              formControlName="leadTime" required>
+            <mat-select placeholder="Lead Time" name="lead-time" formControlName="leadTime" required>
+              <mat-option *ngFor="let leadTime of leadTimeOptions" [value]="leadTime">
+                {{ leadTime }} {{ leadTime === 1 ? leadTimeType : leadTimeType + 's' }} 
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
-        <div>
-          <mat-checkbox class="checkbox-list" (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
+        <div class="checkbox-list">
+          <mat-checkbox (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
         </div>
       </div>
     
