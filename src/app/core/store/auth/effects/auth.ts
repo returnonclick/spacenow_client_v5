@@ -21,11 +21,18 @@ import * as layoutActions from '@core/store/layouts/actions/layout';
 export class AuthEffects {
 
     @Effect()
+    public getUser$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.GetUser>( actions.GET_USER ),
+        switchMap(() => this.afAuth.authState),
+        map((user) => new actions.Success({user: new User(user)}))
+    )
+
+    @Effect()
     public signIn$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignIn>( actions.SIGN_IN ),
         switchMap((data) => 
             this.authService.signIn(data.payload.username, data.payload.password)
-            .then((user) => new actions.Success({user: new User(user)}))
+            .then(() => new actions.GetUser())
             .catch((err) => new actions.Fail(err))
         )
     )
@@ -37,7 +44,7 @@ export class AuthEffects {
             this.authService.signUp(data.payload.username, data.payload.password)
             .then((user) => {
                 this.authService.sendEmailVerification()
-                return new actions.Success()
+                return new actions.GetUser()
             })
             .catch((err) => new actions.Fail(err))
         )
@@ -58,7 +65,7 @@ export class AuthEffects {
         ofType<actions.SignInWithProvider>( actions.SIGN_IN_WITH_PROVIDER ),
         switchMap((data) => 
             this.authService.signInWithProvider(data.payload)
-            .then((user) => new actions.Success(new User(user)))
+            .then(() => new actions.GetUser())
             .catch((err) => new actions.Fail(err))
         )
     )
@@ -66,28 +73,21 @@ export class AuthEffects {
     @Effect()
     public success$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Success>( actions.SUCCESS ),
-        map((payload) => payload),
         map(() => new layoutActions.CloseSidenav())
-    );
+    )
 
     @Effect({ dispatch: false })
     public signout$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignOut>( actions.SIGN_OUT ),
-        tap(() => this.authService.signOut()),
-        map(() => this.router.navigate[''])
-    )
-
-    @Effect({ dispatch: false })
-    public redirect$: Observable<Action> = this.actions$.pipe(
-        ofType<actions.Redirect>( actions.REDIRECT ),
-        map(() => this.router.navigate[''])
+        map(() => this.authService.signOut()),
+        map(() => this.router.navigate['/'])
     )
 
     @Effect({ dispatch: false })
     public fail$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Fail>( actions.FAIL ),
         map(err => err.payload)
-    );
+    )
 
     constructor(
         private _store: Store<fromRoot.State>,

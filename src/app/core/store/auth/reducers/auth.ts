@@ -24,7 +24,6 @@ export function reducer(
         case auth.FAIL: {
             return {
                 ...state,
-                user: null,
                 error: action.payload
             }
             

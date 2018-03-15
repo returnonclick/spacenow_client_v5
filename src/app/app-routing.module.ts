@@ -13,7 +13,7 @@ import { AuthGuard } from '@core/store/auth/services';
 
 const appRoutes: Routes = [
   {
-    path: '',
+    path: 'app',
     component: LayoutComponent,
     children: [
       { path: '', loadChildren: '@features/pages/pages.module#PagesModule' },
@@ -35,6 +35,7 @@ const appRoutes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: '', redirectTo: '/app', pathMatch: 'full' },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}
 ]

@@ -1,3 +1,41 @@
+@import
+  '~sass/abstracts/mixins';
+
+.space-card {
+
+  // Black and White Colors
+
+  --color__mischka: #dedfe5;
+  --color__oslo_gray: #8c9199;
+  --color__pastel_green: #6cde93;
+
+  > .mat-card-content {
+
+    > .category {
+
+      bottom: 1px solid var(--color__oslo_gray);
+      margin: 0 auto;
+      width: 80%;
+
+    }
+
+    > .title {
+      
+    }
+
+    > .price {
+      
+    }
+
+    > .location {
+      
+    }
+
+  }
+
+}
+
+
 .space-container {
   --borderColor: transparent;
 

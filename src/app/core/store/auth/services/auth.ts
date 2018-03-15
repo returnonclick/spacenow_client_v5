@@ -29,12 +29,12 @@ export class AuthService {
     private router: Router
   ) {
 
-    this.afAuth.authState.subscribe(
-      (user) => {
-        if (user)
-          this._store.dispatch(new actions.Success({user: new User(user)}))
-      }
-    )
+    // this.afAuth.authState.subscribe(
+    //   (user) => {
+    //     if (user)
+    //       this._store.dispatch(new actions.GetUser)
+    //   }
+    // )
     
   }
 

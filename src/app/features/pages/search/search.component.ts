@@ -10,6 +10,7 @@ import { Space } from '@shared/models/space'
 
 import * as fromRoot from '@core/store'
 import * as searchActions from '@core/store/search/actions/search'
+import * as layoutActions from '@core/store/layouts/actions/layout'
 
 @Component({
   selector: 'sn-search',
@@ -39,6 +40,7 @@ export class SearchComponent {
     private _router: Router,
     private _store:  Store<fromRoot.State>,
   ) {
+    this._store.dispatch(new layoutActions.SetLogoGreen())
     this.results$   = this._store.select(fromRoot.getAllSearches)
     this.isLoading$ = this._store.select(fromRoot.isLoadingSearch)
   }

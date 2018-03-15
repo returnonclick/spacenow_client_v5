@@ -3,11 +3,13 @@ import { LayoutActionTypes, LayoutActions } from '../actions/layout'
 export interface State {
   showSidenav: boolean
   logo: string
+  showFooter: boolean
 }
 
 const initialState: State = {
   showSidenav: false,
-  logo: 'logo-white'
+  logo: 'logo-white',
+  showFooter: true
 }
 
 export function reducer(
