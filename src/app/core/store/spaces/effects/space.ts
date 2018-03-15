@@ -29,8 +29,11 @@ export class SpaceEffects {
   @Effect()
   select$ = this._actions$.pipe(
     ofType<actions.Select>(actions.SELECT),
-    switchMap(action => this._service.readOne(action.id)),
-    map(space => new actions.Success(space))
+    switchMap(action => this._service.select(action.ids)),
+    mergeMap(actions => actions),
+    map(action =>
+      new actions.Added(<Space>action.payload.data())
+    )
   )
 
   @Effect()
@@ -44,6 +47,12 @@ export class SpaceEffects {
         payload: change.doc.data()
       }
     })
+  )
+
+  @Effect()
+  success$ = this._actions$.pipe(
+    ofType(actions.ADDED, actions.REMOVED, actions.MODIFIED),
+    map(action => new actions.Success)
   )
 
   constructor(

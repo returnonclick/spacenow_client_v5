@@ -70,7 +70,7 @@ export class SpaceComponent {
   ngOnInit() {
     this._route.params.subscribe(params => {
       this.spaceId = params.id
-      this._store.dispatch(new spaceActions.Select(this.spaceId))
+      this._store.dispatch(new spaceActions.Select([ this.spaceId ]))
     })
     this._route.fragment.subscribe(fragment => {
       this.fragment = fragment

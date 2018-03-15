@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material'
 import { Store } from '@ngrx/store'
 
 import * as moment from 'moment'
@@ -26,8 +27,9 @@ export class HourlyBookingComponent {
   minDate:      Date = new Date()
 
   constructor(
-    private _fb:    FormBuilder,
-    private _store: Store<fromRoot.State>,
+    private _fb:       FormBuilder,
+    private _store:    Store<fromRoot.State>,
+    private _snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -69,6 +71,11 @@ export class HourlyBookingComponent {
     ]
 
     this._store.dispatch(new cartActions.Add(bookingSpace))
+    let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
+    snackBar.onAction().subscribe(() => {
+      window.open('/app/checkout')
+      snackBar.dismiss()
+    })
   }
 
   generateHours(start, end) {

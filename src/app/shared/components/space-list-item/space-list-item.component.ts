@@ -1,4 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core'
+import { Router } from '@angular/router'
 
 import { Space } from '@models/space'
 
@@ -14,10 +15,14 @@ export class SpaceListItemComponent {
   @Input() showOptions:    boolean = true
   imageIndex:              number  = 0
 
+  constructor(
+    private _router: Router,
+  ) { }
+
   handleClick(src) {
     switch(src) {
       case 'view':
-        console.log('view', this.space.id)
+        this._router.navigate([ 'app', 'space', this.space.id ])
         break;
       case 'edit':
         console.log('edit', this.space.id)

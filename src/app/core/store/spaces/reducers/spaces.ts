@@ -7,19 +7,17 @@ import * as actions from '@core/store/spaces/actions/space'
 
 export interface State extends EntityState<Space> {
   isLoading: boolean,
-  selectedSpaceId: string,
-  error: any,
+  error:     any,
 }
 
 export const spaceAdapter: EntityAdapter<Space> = createEntityAdapter<Space>({
-  selectId: (obj: Space) => obj.id,
+  selectId:     (obj: Space) => obj.id,
   sortComparer: false
 })
 
 export const initialState: State = spaceAdapter.getInitialState({
   isLoading: false,
-  selectedSpaceId: null,
-  error: null,
+  error:     null,
 })
 
 export function reducer(
@@ -29,21 +27,12 @@ export function reducer(
   switch(action.type) {
 
     case actions.ALL:
-    case actions.FILTER: {
-      return spaceAdapter.removeAll({
-        ...state,
-        isLoading: true,
-        selectedSpaceId: null,
-        error: null,
-      })
-    }
-
+    case actions.FILTER:
     case actions.SELECT: {
       return spaceAdapter.removeAll({
         ...state,
         isLoading: true,
-        selectedSpaceId: action.id,
-        error: null,
+        error:     null,
       })
     }
 
@@ -53,7 +42,7 @@ export function reducer(
 
     case actions.MODIFIED: {
       return spaceAdapter.updateOne({
-        id: action.payload.id,
+        id:      action.payload.id,
         changes: action.payload,
       }, state)
     }
@@ -63,18 +52,17 @@ export function reducer(
     }
 
     case actions.SUCCESS: {
-      return spaceAdapter.addOne(action.space, {
+      return {
         ...state,
         isLoading: false,
-      })
+      }
     }
 
     case actions.FAIL: {
       return spaceAdapter.removeAll({
         ...state,
         isLoading: false,
-        selectedSpaceId: null,
-        error: action.error,
+        error:     action.error,
       })
     }
 
@@ -86,3 +74,4 @@ export function reducer(
 }
 
 export const isLoading = (state: State) => state.isLoading
+export const getError  = (state: State) => state.error

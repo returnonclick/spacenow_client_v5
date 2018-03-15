@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 
@@ -24,8 +25,9 @@ export class GeneralBookingComponent implements OnInit {
   minDate: Date = new Date()
 
   constructor(
-    private _fb:    FormBuilder,
-    private _store: Store<fromRoot.State>,
+    private _fb:       FormBuilder,
+    private _store:    Store<fromRoot.State>,
+    private _snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -92,6 +94,11 @@ export class GeneralBookingComponent implements OnInit {
     }
 
     this._store.dispatch(new cartActions.Add(bookingSpace))
+    let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
+    snackBar.onAction().subscribe(() => {
+      window.open('/app/checkout')
+      snackBar.dismiss()
+    })
   }
 
   // this one is a closure: a function that returns a function with the context

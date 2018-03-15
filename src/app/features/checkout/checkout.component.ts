@@ -51,6 +51,11 @@ export class CheckoutComponent {
       this.loadPayments = resolve
     })
 
+    this.cart$.subscribe(cart => {
+      this._store.dispatch(new spaceActions.Select(
+        cart.map(item => item.spaceId)
+      ))
+    })
     this.categories$.subscribe(categories => {
       this.categories = categories
     })
@@ -61,7 +66,6 @@ export class CheckoutComponent {
 
   ngOnInit() {
     this._store.dispatch(new categoryActions.Query)
-    this._store.dispatch(new spaceActions.All)
 
     this.matTabs.selectedTabChange.subscribe(event => {
       if(!this.hasAgreed && event.index > 0) {

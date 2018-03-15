@@ -1,6 +1,5 @@
 <section id="checkout">
   <div id="main">
-    <!-- <pre style="width: 100%; height: 250px; overflow: scroll; padding: 16px; border: 1px solid gray;">{{ (cart$ | async) | json }}</pre> -->
     <mat-tab-group>
       <mat-tab label="review license">
         <h2>Review Contract</h2>
@@ -68,22 +67,30 @@
   </div>
   <aside>
     <div class="booking-cart">
-      <mat-accordion displayMode="flat">
-        <ng-container *ngFor="let cartItem of (cart$ | async)">
-          <mat-expansion-panel *ngIf="spaces[cartItem.spaceId]">
-            <mat-expansion-panel-header>
-              {{ spaces[cartItem.spaceId].title }}
-            </mat-expansion-panel-header>
-
-            <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre>
-            <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre>
-
-            <mat-action-row>
-              <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>
-            </mat-action-row>
-          </mat-expansion-panel>
+      <h3>Spaces</h3>
+      <div class="space-breakdown">
+        <ng-container *ngIf="(cart$ | async).length < 1; else hasItems">
+          No items.
         </ng-container>
-      </mat-accordion>
+        <ng-template #hasItems>
+          <mat-accordion displayMode="flat">
+            <ng-container *ngFor="let cartItem of (cart$ | async)">
+              <mat-expansion-panel *ngIf="spaces[cartItem.spaceId]">
+                <mat-expansion-panel-header>
+                  {{ spaces[cartItem.spaceId].title }}
+                </mat-expansion-panel-header>
+
+                <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre>
+                <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre>
+
+                <mat-action-row>
+                  <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>
+                </mat-action-row>
+              </mat-expansion-panel>
+            </ng-container>
+          </mat-accordion>
+        </ng-template>
+      </div>
 
       <table class="price-breakdown">
         <tbody>

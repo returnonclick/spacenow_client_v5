@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore'
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 
 import { Space } from '@models/space'
 
@@ -17,8 +17,12 @@ export class SpaceService {
     )
   }
 
-  readOne(id: string) {
-    return this.afs.doc<Space>(`${this.ref}/${id}`).valueChanges()
+  select(spaceIds: string[]) {
+    return Observable.combineLatest(
+      ...spaceIds.map(id =>
+        this.afs.doc<Space>(`${this.ref}/${id}`).snapshotChanges()
+      )
+    )
   }
 
   filter(params: any[]) {
