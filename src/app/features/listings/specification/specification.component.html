@@ -9,7 +9,7 @@
         <div formGroupName="specifications">
           <div *ngFor="let spec of categorySpecs">
             <mat-form-field class="items">
-              <input matInput type="number" placeholder="{{spec.name}}" formControlName="{{spec.slug}}" [required]="spec.slug === 'capacity' || spec.slug === 'stalls' || spec.slug === 'desks'">
+              <input matInput type="number" min="0" placeholder="{{spec.name}}" formControlName="{{spec.slug}}" [required]="spec.slug === 'capacity' || spec.slug === 'stalls' || spec.slug === 'desks'">
             </mat-form-field>
           </div>
         </div>

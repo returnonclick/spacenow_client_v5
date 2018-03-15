@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { Router, ActivatedRoute } from "@angular/router"
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material/datepicker' 
+import * as moment from 'moment'
 
 import * as fromRoot from '@core/store'
 import * as listingActions from '@core/store/listings/actions/listing'
@@ -41,7 +42,8 @@ export class ExceptionComponent {
         openingTime: [''],
         exceptionDays: [[]],
         note: [''],
-        date: ['']
+        fromDate: [''],
+        toDate: ['']
       }),
       
     })
@@ -66,7 +68,8 @@ export class ExceptionComponent {
         openingTime: this.listing.availability.openingTime,
         exceptionDays: this.listing.availability.exceptionDays,
         note: '',
-        date: ''
+        fromDate: '',
+        toDate: ''
       }),
     })
 
@@ -80,30 +83,38 @@ export class ExceptionComponent {
   }
 
   addExceptionDate() {
+    
+    if (!this.exceptionForm.value.availability.toDate) 
+      this.exceptionForm.value.availability.toDate = this.exceptionForm.value.availability.fromDate
 
     this.exceptionDays.push({ 
-      date: this.exceptionForm.controls.availability.value.date,
+      fromDate: this.exceptionForm.value.availability.fromDate,
+      toDate: this.exceptionForm.value.availability.toDate,
       note: this.exceptionForm.controls.availability.value.note
     }) 
 
+    // Reset aux formControls
     const note = this.exceptionForm.controls.availability.get("note") as FormControl
     note.setValue('')
-    const date = this.exceptionForm.controls.availability.get("date") as FormControl
-    date.setValue(null)
+    const fromDate = this.exceptionForm.controls.availability.get("fromDate") as FormControl
+    fromDate.setValue(null)
+    const toDate = this.exceptionForm.controls.availability.get("toDate") as FormControl
+    toDate.setValue(null)
 
   }
 
   deleteExceptionDay(date) {
     this.exceptionDays = this.exceptionDays
     .filter(d =>{
-      return d.date !== date.date
+      return d.fromDate !== date.fromDate && d.toDate !== date.toDate 
     })
   }
 
   onSubmit() {
 
     delete this.exceptionForm.controls.availability.value.note
-    delete this.exceptionForm.controls.availability.value.date
+    delete this.exceptionForm.controls.availability.value.fromDate
+    delete this.exceptionForm.controls.availability.value.toDate
 
     this.exceptionForm.controls.availability.value.exceptionDays = this.exceptionDays
 
@@ -111,7 +122,7 @@ export class ExceptionComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.exceptionForm.value ))
     }
 
-    this.router.navigate(['app/listings', this.listing.id, 'terms'])
+    this.router.navigate(['app/listings', this.listing.id, 'description'])
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html

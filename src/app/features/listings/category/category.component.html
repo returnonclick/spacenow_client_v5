@@ -4,7 +4,7 @@
       <span style="font-size: 60px">Select a category</span>
     </div>
     <div class="content">
-      <div id="select-one"><span>Select ONE category only</span></div>
+      <!-- <div id="select-one"><span>What type of space do you have?</span></div> -->
       <mat-radio-group flexLayout="column" class="items" formControlName="categoryId" required>
         <mat-radio-button *ngFor="let category of categories$ | async" [value]="category.id" style="padding:5px">
           <ul [ngSwitch]="category.slug">

@@ -15,7 +15,7 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field class="num-guests">
-    <input matInput type="number" placeholder="Guests" formControlName="numGuests">
+    <input matInput type="number" min="0" placeholder="Guests" formControlName="numGuests">
   </mat-form-field>
   <button mat-raised-button [disabled]="form.invalid || form.pristine">Book</button>
 </form>

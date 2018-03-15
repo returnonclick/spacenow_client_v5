@@ -1,17 +1,12 @@
 <ng-container [formGroup]="parentForm">
   <div formGroupName="price">
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="49%" fxFlex.lt-md="100%" fxLayout="column">
-        <mat-form-field>
-          <input matInput type="number" placeholder="Price per day" formControlName="price" required>
+    <div fxLayout="row">
+      <div fxFlex="50%" fxLayout="column">
+        <mat-form-field fxFlex="100%" style="padding-right: 23px">
+          <input matInput type="number" min="0" placeholder="Price per day" formControlName="price" required>
         </mat-form-field>
-        <mat-form-field [class.hide]="!parentForm.controls.price.value.incentives">
-          <input matInput type="number" placeholder="Price per week" formControlName="week" [required]="parentForm.controls.price.value.incentives">
-        </mat-form-field>
-
-        <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives {{parentForm.controls.price.value.incentives}}</mat-checkbox>
       </div>
-      <div fxFlex="49%" fxFlex.lt-md="100%">
+      <div fxFlex="50%" fxFlex.lt-md="100%">
         <mat-form-field fxFlex="100%">
           <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" required>
             <mat-option *ngFor="let term of terms" [value]="term.value">

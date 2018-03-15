@@ -32,6 +32,7 @@ export class PriceComponent {
     listing$: Observable<Space>
     listing: Space
     priceForm: FormGroup
+    taxesOptions: any = []
 
     priceUnits = [
         { value: 'hourly', display: 'Price per hour' },
@@ -40,12 +41,17 @@ export class PriceComponent {
         { value: 'monthly', display: 'Price per month' }
     ]
 
+    currencies = [
+      'AUD', 'USD', 'EUR', 'GBP', 'NZD', 'SGD', 'AED'
+    ]
+
+    taxOptions = [
+      {display: 'GST', value: 'GST' },
+      {display: 'VAT', value: 'VAT' },
+      {display: 'None', value: 'none' }
+    ]
+
     taxes = [
-        {
-          "country": "Country",
-          "value": "Percent",
-          "tax": "VAT or GST"
-        },
         {
           "country": "Afghanistan",
           "value": "0",
@@ -1177,7 +1183,13 @@ export class PriceComponent {
     {
 
         this.priceForm = this._fb.group({
-            priceUnit: ['', Validators.required ]
+          priceUnit: ['', Validators.required ],
+          currency:   ['', Validators.required],
+          tax:       this._fb.group({ 
+            percent: ['', Validators.required],
+            name:    ['', Validators.required],
+            country: ['', Validators.required],
+          }),
         })
 
         this.listing$ = this._store.select( fromRoot.selectCurrentListing )
@@ -1197,8 +1209,18 @@ export class PriceComponent {
     createForm() {
 
         this.priceForm = this._fb.group({
-            priceUnit: this.listing.priceUnit
+          priceUnit: this.listing.priceUnit,
+          currency:  this.listing.currency,
+          tax:       this._fb.group({ 
+            percent: this.listing.tax.percent,
+            name:    this.listing.tax.name,
+            country: this.listing.tax.country,
+          })
         })
+
+        this.assignTax(this.listing.tax.percent)
+        this.taxesOptions = this.taxes.filter(res => res.tax === this.listing.tax.name)
+
         // TODO: wait untill this.snPriceHost is ready to loadComponent() (?)
         setTimeout(() => this.loadComponent(), 100)
         
@@ -1213,20 +1235,31 @@ export class PriceComponent {
         (<AddPriceComponent>componentRef.instance).parentForm = this.priceForm;
         if (this.priceForm.controls.priceUnit.value === this.listing.priceUnit) {
             (<AddPriceComponent>componentRef.instance).inPriceI = this.listing.price;
-        }
-            
+        }   
         
     }
 
+    assignTax(tax) {
+      this.priceForm.controls.tax.get('percent').setValue(tax)
+    }
+
+    filterCountry(taxName) {
+      this.priceForm.controls.tax.get('country').reset()
+      this.taxesOptions = this.taxes.filter(res => res.tax === taxName)
+    }
+
     onSubmit() {
+
+      if (this.priceForm.value.tax.name === 'none')
+        this.priceForm.controls.tax.get('percent').setValue(0)
         
-        this.priceForm.updateValueAndValidity()
+      this.priceForm.updateValueAndValidity()
 
-        if (this.listing.id) {
-            this._store.dispatch(new listingActions.Update( this.listing.id, this.priceForm.value ))
-        }
+      if (this.listing.id) {
+          this._store.dispatch(new listingActions.Update( this.listing.id, this.priceForm.value ))
+      }
 
-        this.router.navigate(['app/listings', this.listing.id, 'booking'])
+      this.router.navigate(['app/listings', this.listing.id, 'booking'])
     }
 
     // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html

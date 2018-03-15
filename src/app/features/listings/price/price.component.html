@@ -1,5 +1,4 @@
 
-<!-- Pricing -->
 <form [formGroup]="priceForm" (ngSubmit)="onSubmit()" novalidate>
   <div class="price">
     <div class="title">
@@ -13,10 +12,40 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field class="currency">
+        <mat-select placeholder="Currency" name="currency" formControlName="currency" required>
+          <mat-option *ngFor="let currency of currencies" [value]="currency">
+            {{ currency }} 
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <div class="child">
         <ng-template d-sn-price></ng-template>
       </div>
+
+      <ng-container formGroupName="tax">
+        <mat-form-field class="taxName">
+          <mat-select placeholder="Registered for tax?" name="tax" formControlName="name" required>
+            <mat-option *ngFor="let taxName of taxOptions" [value]="taxName.value" (click)="filterCountry(taxName.value)">
+              {{ taxName.display }} 
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="taxCountry" [class.hide]="priceForm.controls.tax.value.name === 'none'">
+          <mat-select placeholder="Country" name="country" formControlName="country" [required]="priceForm.controls.tax.value.name !== 'none'">
+              <mat-option *ngFor="let tax of taxesOptions" [value]="tax.country" (click)="assignTax(tax.value)">
+                <span>{{ tax.country }} </span>
+              </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="taxValue" *ngIf="priceForm.controls.tax.value.name !== '' && priceForm.controls.tax.value.country">
+          <span>{{ priceForm.controls.tax.value.percent }} %</span>
+        </div>
+
+      </ng-container >
 
     </div>
     <div class="actions">

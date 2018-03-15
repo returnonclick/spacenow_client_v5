@@ -29,6 +29,9 @@ export class BookingComponent {
   isOpeningTimeValid: boolean
   bookingForm: FormGroup
 
+  leadTimeOptions = [1, 2, 3, 4, 5, 8, 10, 12, 15]
+  leadTimeType: any
+
 
   bookingTypes = [
     "Instant booking",
@@ -134,6 +137,20 @@ export class BookingComponent {
       })
     })
 
+    switch (this.listing.priceUnit) {
+      case "hourly":
+        this.leadTimeType = 'Hour'
+        break
+      case "daily":
+        this.leadTimeType = 'Day'
+        break
+      case "weekly":
+        this.leadTimeType = 'Week'
+        break
+      case "monthly":
+        this.leadTimeType = 'Month'
+        break
+    }
   }
 
   onOpen247Change(event) {
@@ -169,7 +186,7 @@ export class BookingComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.bookingForm.value ))
     }
 
-    this.router.navigate(['app/listings', this.listing.id, 'description'])
+    this.router.navigate(['app/listings', this.listing.id, 'exception'])
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html

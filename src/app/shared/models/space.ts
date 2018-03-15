@@ -25,6 +25,9 @@ export class Space extends Object{
     specifications:  Object[]
     availability:    Availability = new Availability()
     status:          ListingStatus = ListingStatus.DRAFT
+    currency:        string = 'AUD'
+    tax:             TaxDetails = new TaxDetails()
+    createdAt:       Date = new Date()
 
     constructor( model: any = null ) {
 
@@ -49,6 +52,9 @@ export class Space extends Object{
         this.address        = model.address || new Address()
         this.availability   = model.availability || new Availability()
         this.status         = model.status || ListingStatus.DRAFT
+        this.currency       = model.currency || 'AUD'
+        this.tax            = new TaxDetails(model.tax || null)
+        this.createdAt      = model.createdAt || new Date()
       }
     }
   }
@@ -61,18 +67,33 @@ export class Space extends Object{
     DELETED = 'deleted'
   }
 
+  export class TaxDetails extends Object {
+    percent: number = 0
+    name: string = 'none'
+    country: string = null
+
+    constructor(model: any = null) {
+      super (model)
+      if(model) {
+        this.percent = model.percent | 0
+        this.name = model.name || 'none'
+        this.country = model.country || null 
+      }
+    }
+  }
+
   export class Price extends Object {
-    price:       number
-    minimumTerm: number
-    incentives:  boolean
+    price:       number = null
+    minimumTerm: number = 1
+    incentives:  boolean = false
 
     constructor( model: any = null ) {
 
       super (model)
 
       if ( model ) {
-        this.price        = model.price || 0
-        this.minimumTerm  = model.minimumTerm || 0
+        this.price        = model.price || null
+        this.minimumTerm  = model.minimumTerm || 1
         this.incentives   = model.incentives || false
       }
     }
@@ -80,16 +101,16 @@ export class Space extends Object{
 
   export class Hourly extends Price {
 
-    halfDay: number
-    day:     number
+    halfDay: number = null
+    day:     number = null
 
     constructor( model: any = null ) {
 
       super(model)
 
       if (model) {
-        this.halfDay = model.halfDay || 0
-        this.day     = model.day || 0
+        this.halfDay = model.halfDay || null
+        this.day     = model.day || null
       }
 
     }
@@ -97,14 +118,14 @@ export class Space extends Object{
 
   export class Daily extends Price {
 
-    week: number
+    week: number = null
 
     constructor( model: any = null ) {
 
       super(model)
 
       if ( model ) {
-        this.week = model.week || 0
+        this.week = model.week || null
       }
 
     }
@@ -112,14 +133,14 @@ export class Space extends Object{
 
   export class Weekly extends Price {
 
-    month: number
+    month: number = null 
 
     constructor( model: any = null ) {
 
       super(model)
 
       if (model) {
-        this.month = model.month || 0
+        this.month = model.month || null
       }
 
     }
@@ -127,16 +148,16 @@ export class Space extends Object{
 
   export class Monthly extends Price {
 
-    sixMonths:  number
-    year:       number
+    sixMonths:  number = null 
+    year:       number = null
 
     constructor( model: any = null ) {
 
       super(model)
 
       if (model) {
-        this.sixMonths = model.sixMonths || 0
-        this.year      = model.year || 0
+        this.sixMonths = model.sixMonths || null
+        this.year      = model.year || null
       }
 
     }

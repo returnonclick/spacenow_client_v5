@@ -28,8 +28,8 @@ import { BookingComponent } from '@features/listings/booking/booking.component'
 import { ExceptionComponent } from '@features/listings/exception/exception.component'
 import { TermComponent } from '@features/listings/term/term.component'
 
-import { OpeningTimeComponent } from './opening-time/opening-time.component';
-import { OpeningDayComponent } from './opening-time/opening-day/opening-day.component'
+import { OpeningTimeComponent } from './booking/opening-time/opening-time.component';
+import { OpeningDayComponent } from './booking/opening-time/opening-day/opening-day.component'
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'

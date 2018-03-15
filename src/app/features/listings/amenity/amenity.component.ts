@@ -43,15 +43,14 @@ export class AmenityComponent {
       amenities: this._fb.array([]),
     })
 
-    this.categories$ = this._store.select( fromRoot.getAllCategories )
-    this.categories$.subscribe(categories => {
-      this.categories = categories
-    })
-  
     // TODO: Store the amenities themselves for each category (or use reference data)
     this.amenities$ = this._store.select( fromRoot.getAllAmenities )
-    this.amenities$.subscribe(amenities => {
-      this.amenities = amenities
+    this.amenities$.subscribe(amenity => {
+      this.amenities = amenity
+    })
+    this.categories$ = this._store.select( fromRoot.getAllCategories )
+    this.categories$.subscribe(category => {
+      this.categories = category
     })
 
     this.listing$ = this._store.select( fromRoot.selectCurrentListing )
@@ -62,14 +61,9 @@ export class AmenityComponent {
 
         // TODO: Change the Category, Amenity and listing model to reference data so: just bring listing
         // Wait while Observers are subscribed **
-        setTimeout(() => this.loadAmenities(), 100)
-        
+        setTimeout(() => this.loadAmenities(), 100)  
       }
     })
-
-    // forkJoin([this.categories$, this.amenities$, this.listing$ ]).subscribe(res => {
-    //   this.loadAmenities()
-    // })
 
   }
 
@@ -83,7 +77,7 @@ export class AmenityComponent {
     })
 
     let formAmenities = this.amenityForm.get('amenities') as FormArray;
-
+    
     if (this.listing.amenityIds) {
       // Load listing amenities when listing update
       this.categoryAmenities.forEach((amenity) => {

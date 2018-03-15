@@ -22,12 +22,29 @@
 }
 
 .unit {
+  width: 90%;
   grid-area: unit;
-  padding-right: 5%;
 }
 
 .child {
+  margin: 40px 0 80px 0;
   grid-area: child;
+}
+
+.currency {
+  grid-area: currency;
+}
+
+.taxName {
+  width: 90%;
+  grid-area: taxName;
+}
+.taxCountry {
+  grid-area: taxCountry;
+}
+.taxValue {
+  margin: 25px 0px 0px 25px;
+  grid-area: taxValue;
 }
 
 /* GRID CSS TITLE */
@@ -44,10 +61,12 @@
 
 .price .content {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas: 
-    "unit child";
+    "unit currency . ."
+    "child child . ."
+    "taxName taxCountry taxValue .";
 }
 
 .price .actions {
@@ -60,24 +79,24 @@
 
 @media screen and (max-width:1024px) {
 
-  .unit {
-    grid-area: unit;
-  }
+  // .unit {
+  //   grid-area: unit;
+  // }
   
-  .child {
-    grid-area: child;
-  }
+  // .child {
+  //   grid-area: child;
+  // }
 
   .price {
       grid-template-columns:  1fr 9fr 1fr;
   }
 
-  .price .content {
-    grid-template-columns: 1fr;
-    grid-template-areas: 
-      "unit"
-      "child";
-  }
+  // .price .content {
+  //   grid-template-columns: 1fr;
+  //   grid-template-areas: 
+  //     "unit"
+  //     "child";
+  // }
 
   .unit {
     padding-right: 0;
@@ -109,3 +128,7 @@
 
 }
 /* END GRID CSS TITLE */
+
+.hide {
+  display: none !important;
+}
