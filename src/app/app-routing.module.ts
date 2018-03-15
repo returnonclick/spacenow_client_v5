@@ -14,7 +14,7 @@ import { HomeComponent } from '@features/pages/home/home.component'
 import { GeneralComponent } from '@features/listings/general/general.component'
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
-import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
+// import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 import { SearchComponent } from '@features/search/search.component'
 import { SpaceComponent } from '@features/space/space.component'
 import { CheckoutComponent } from '@features/checkout/checkout.component'
@@ -38,7 +38,7 @@ const appRoutes: Routes = [
           { path: 'checkout', component: CheckoutComponent },
           { path: 'my-spaces', component: MySpacesComponent },
           { path: 'my-calendar', component: MyCalendarComponent },
-          { path: 'my-favorites', component: MyFavoritesComponent },
+          // { path: 'my-favorites', component: MyFavoritesComponent },
         ]
       },
       { path: 'search', component: SearchComponent },

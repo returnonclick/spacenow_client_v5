@@ -32,7 +32,7 @@ import { environment } from '../../environments/environment'
 
 import { MySpacesComponent } from '@features/my-spaces/my-spaces.component'
 import { MyCalendarComponent } from '@features/my-calendar/my-calendar.component'
-import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
+// import { MyFavoritesComponent } from '@features/my-favorites/my-favorites.component'
 import { SearchComponent } from '@features/search/search.component'
 import { SpaceComponent } from '@features/space/space.component'
 import { CheckoutComponent } from '@features/checkout/checkout.component'
@@ -43,7 +43,7 @@ import { BraintreeModule } from '@features/braintree/braintree.module'
 const COMPONENTS = [
   MySpacesComponent,
   MyCalendarComponent,
-  MyFavoritesComponent,
+  // MyFavoritesComponent,
   SearchComponent,
   SpaceComponent,
   CheckoutComponent,

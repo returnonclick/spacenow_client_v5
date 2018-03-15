@@ -5,6 +5,7 @@
   border: 2px solid var(--borderColor);
   transition: all 0.5s ease;
   box-shadow: 0 20px 40px 0 #dddddd;
+  height: 100%;
 
   &:hover {
     --borderColor: var(--hover);
@@ -15,6 +16,7 @@
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: repeat(4, auto);
+  grid-gap: 16px;
   align-items: start;
   color: #4d6364;
   cursor: pointer;
@@ -73,15 +75,20 @@
   }
 
   .space-name {
-    margin: 10px 0;
+    margin: 0;
   }
 
   .space-price {
-    margin: 8px 0;
+    margin: 0;
 
     > .price {
       color: var(--hover);
     }
+  }
+
+  .space-desc {
+    font-size: 0.8em;
+    line-height: 1.2em;
   }
 }
 

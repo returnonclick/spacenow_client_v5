@@ -16,9 +16,9 @@
   </ng-container>
   <ng-template #doneLoading>
     <div class="search-results">
-      <sn-space-list-item *ngFor="let space of results$ | async"
+      <sn-space-list-item
+        *ngFor="let space of results$ | async"
         [space]="space"
-        [multipleImages]="!!space.images"
         [showOptions]="false"
         (mouseenter)="toggleHover(space, true)"
         (mouseleave)="toggleHover(space, false)">

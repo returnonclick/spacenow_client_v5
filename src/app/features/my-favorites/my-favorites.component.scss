@@ -1,12 +1,14 @@
 :host {
-  display: block;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .space-list {
   --hover: #6cde93;
-  --gridSpace: 60px;
-  --numColumns: 4;
+  --gridSpace: 40px;
+  --numColumns: 3;
 
   display: grid;
   grid-template-columns: repeat(var(--numColumns), calc(100% / var(--numColumns) - var(--gridSpace)));

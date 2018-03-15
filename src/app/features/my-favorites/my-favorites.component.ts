@@ -1,4 +1,12 @@
 import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
+
+import { Space } from '@models/space'
+import { User } from '@models/user'
+
+import * as fromRoot from '@core/store'
+import * as spaceActions from '@core/store/spaces/actions/space'
 
 @Component({
   selector: 'sn-my-favorites',
@@ -24,7 +32,9 @@ export class MyFavoritesComponent {
     {
       id: 'DSnaaofV7ai42AFIXiLp',
       name: 'Newtown Office',
-      imageUrl: 'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
+      images: [
+        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
@@ -32,7 +42,9 @@ export class MyFavoritesComponent {
     {
       id: 'CbqprxXGgdg4Nnib0U5A',
       name: 'Newtown Office',
-      imageUrl: 'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
+      images: [
+        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
@@ -53,7 +65,9 @@ export class MyFavoritesComponent {
     {
       id: '06Eb1dBXlCUhdmHNPLzq',
       name: 'Newtown Office',
-      imageUrl: 'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
+      images: [
+        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
@@ -74,7 +88,9 @@ export class MyFavoritesComponent {
     {
       id: 'e1tkzwW9BBVyqC3Bpvgr',
       name: 'Newtown Office',
-      imageUrl: 'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
+      images: [
+        'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
@@ -115,5 +131,26 @@ export class MyFavoritesComponent {
       details: 'Multiple spaces',
     },
   ]
+
+  spaces$: Observable<Space[]>
+  user$:   Observable<User>
+
+  constructor(
+    private _store: Store<fromRoot.State>
+  ) {
+    this.spaces$ = this._store.select(fromRoot.getAllSpaces)
+    this.user$   = this._store.select(fromRoot.getSelectedAuth)
+
+    Observable.combineLatest(
+      this.spaces$,
+      this.user$
+    ).subscribe(([spaces, user]) => {
+
+    })
+  }
+
+  ngOnInit() {
+    this._store.dispatch(new spaceActions.All)
+  }
 
 }

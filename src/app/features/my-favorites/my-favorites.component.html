@@ -1,4 +1,7 @@
 <h3>My Favorites</h3>
 <div class="space-list">
-  <sn-space-list-item *ngFor="let space of spaces" [space]="space" [multipleImages]="!!space.images"></sn-space-list-item>
+  <sn-space-list-item
+    *ngFor="let space of (spaces$ | async)"
+    [space]="space">
+  </sn-space-list-item>
 </div>

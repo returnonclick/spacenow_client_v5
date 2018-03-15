@@ -28,7 +28,8 @@ export function reducer(
 ): State {
   switch(action.type) {
 
-    case actions.ALL: {
+    case actions.ALL:
+    case actions.FILTER: {
       return spaceAdapter.removeAll({
         ...state,
         isLoading: true,

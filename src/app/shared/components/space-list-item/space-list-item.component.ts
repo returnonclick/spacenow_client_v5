@@ -11,7 +11,6 @@ import { Space } from '@models/space'
 export class SpaceListItemComponent {
 
   @Input() space:          Space   = null
-  @Input() multipleImages: boolean = true
   @Input() showOptions:    boolean = true
   imageIndex:              number  = 0
 

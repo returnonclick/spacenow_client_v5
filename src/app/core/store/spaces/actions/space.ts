@@ -4,6 +4,7 @@ import { Space } from '@shared/models/space'
 
 export const ALL      = '[Spaces] all'
 export const SELECT   = '[Spaces] select'
+export const FILTER   = '[Spaces] filter'
 
 export const ADDED    = '[Spaces] added'
 export const MODIFIED = '[Spaces] modified'
@@ -20,6 +21,11 @@ export class All implements Action {
 export class Select implements Action {
   readonly type = SELECT
   constructor(public id: string) { }
+}
+
+export class Filter implements Action {
+  readonly type = FILTER
+  constructor(public params: any[]) {}
 }
 
 export class Added implements Action {
@@ -50,6 +56,7 @@ export class Fail implements Action {
 export type SpaceActions
   = All
   | Select
+  | Filter
   | Added
   | Modified
   | Removed
