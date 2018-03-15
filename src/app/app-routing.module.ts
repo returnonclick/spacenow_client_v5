@@ -20,7 +20,7 @@ const appRoutes: Routes = [
       { 
         path: 'listings', 
         loadChildren: '@features/listings/listings.module#ListingModule',
-        canActivate: [AuthGuard]
+        // canActivate: [AuthGuard]
       },
       { 
         path: 'users', 

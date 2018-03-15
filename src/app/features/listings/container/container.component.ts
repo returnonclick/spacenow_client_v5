@@ -32,19 +32,10 @@ export class ContainerComponent {
 
     this.listingId = this.route.snapshot.params.id
 
-    // this._store.dispatch(new authActions.GetUser())
-    // this.user$ = this._store.select( fromRoot.getAuthUserState )
-    // this.user$.subscribe(user => {
-
-    //   if (user) {
-    //     this.user = user;
-    //   }
-        
-    // })
-
   }
 
   ngOnInit() {
+    
 
     if (typeof this.listingId === 'undefined') {
 
@@ -60,7 +51,7 @@ export class ContainerComponent {
       this._store.dispatch(new listingActions.Create( this.listing ))
 
     }
-  
+
     // Query the listing to send to listing component
     this._store.dispatch(new listingActions.QueryOne( this.listingId ))
 
