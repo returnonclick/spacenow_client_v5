@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms'
-import { Store } from '@ngrx/store'
+import { Store, select } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { Router, ActivatedRoute } from "@angular/router"
 
@@ -11,6 +11,7 @@ import * as categoryActions from '@core/store/categories/actions/category'
 
 import { Space } from '@shared/models/space'
 import { Category } from '@shared/models/category'
+import { User } from '@models/user'
 
 
 @Component({
@@ -24,6 +25,8 @@ export class CategoryComponent {
   listing$: Observable<Space>
   listing: Space
   categories$: Observable<Category[]>
+  authUser$: Observable<User>
+  authUser: User
 
   categoryForm: FormGroup
 
@@ -42,8 +45,19 @@ export class CategoryComponent {
       if (listing) {
         this.listing = listing
         this.createForm()
+      } else {
+        this.listing = new Space()
+        this.createForm()
       }
     })
+
+    this.authUser$ = this._store.pipe(select(fromRoot.getAuthUser))
+    this.authUser$.subscribe(
+      (user) => {
+        if (user) {
+          this.authUser = user
+        }
+      })
 
     // Call this action here or in container?
     this._store.dispatch(new categoryActions.Query())
@@ -60,12 +74,27 @@ export class CategoryComponent {
   onSubmit() {
 
     this.categoryForm.updateValueAndValidity()
+    let result = this.categoryForm.value
 
     if(this.listing.id) {
-      this._store.dispatch(new listingActions.Update( this.listing.id, this.categoryForm.value ))
-    }
 
-    this.router.navigate(['app/listings', this.listing.id, 'address'])
+      this._store.dispatch(new listingActions.Update( this.listing.id, result ))
+      this.router.navigate(['app/listings', this.listing.id, 'address'])
+
+    } else {
+
+      // Generate random alphanumeric listing ID 
+      var m = 21, listingId = '', r = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for (var i=0; i < m; i++) { listingId += r.charAt(Math.floor(Math.random()*r.length)); }
+
+      // Store listing ownerUid and listingId when it's a new listing
+      result = Object.assign({}, this.listing, { ownerUid: this.authUser.uid, id: listingId, categoryId: this.categoryForm.value.categoryId })
+
+      this._store.dispatch(new listingActions.Create( result ))
+
+      this.router.navigate(['app/listings', listingId, 'address'])
+
+    }
   }
 
 }

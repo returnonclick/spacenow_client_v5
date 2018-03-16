@@ -9,8 +9,6 @@ import * as categoryActions from '@core/store/categories/actions/category'
 import * as amenityActions from '@core/store/amenities/actions/amenity'
 import * as listingSpecificationActions from '@core/store/listing-specifications/actions/listing-specification'
 
-import { Space } from '@models/space'
-import { User } from '@models/user'
 
 @Component({
   selector: 'sn-listing-container',
@@ -20,11 +18,7 @@ import { User } from '@models/user'
 
 export class ContainerComponent {
 
-  listing$: Observable<Space>
   listingId: string
-  listing: Space 
-  user$: Observable<User>
-  user: User
 
   constructor(private _store: Store<fromRoot.State>,
               private route: ActivatedRoute
@@ -35,25 +29,13 @@ export class ContainerComponent {
   }
 
   ngOnInit() {
-    
 
-    if (typeof this.listingId === 'undefined') {
+    if (typeof this.listingId !== 'undefined') {
 
-      this.listing = new Space()
-      // this.listing.ownerUid = this.user.uid
-
-      // Generate random alphanumeric listing ID 
-      var m = 21, s = '', r = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (var i=0; i < m; i++) { s += r.charAt(Math.floor(Math.random()*r.length)); }
-      this.listingId = this.listing.id = s
-
-      // Create new listing
-      this._store.dispatch(new listingActions.Create( this.listing ))
+      // Query the listing to send to listing component
+      this._store.dispatch(new listingActions.QueryOne( this.listingId ))
 
     }
-
-    // Query the listing to send to listing component
-    this._store.dispatch(new listingActions.QueryOne( this.listingId ))
 
     // Query categories, amenities and specifications
     this._store.dispatch(new amenityActions.Query())

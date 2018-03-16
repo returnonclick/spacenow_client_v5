@@ -32,6 +32,7 @@ const appRoutes: Routes = [
       { path: 'forgot-password', component: ForgotPasswordComponent, outlet: 'sidenav' }
     ]
   },
+  { path: '', redirectTo: '/app', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
