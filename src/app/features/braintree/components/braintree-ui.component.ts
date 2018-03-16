@@ -17,13 +17,14 @@ export class BraintreeUIComponent {
 
   @Input() requestData:        any
   @Input() customerId:         string
-  @Input() buttonText:         string            = 'Pay Now'
-  @Input() isCardNameRequired: boolean           = true
-  @Input() showPaypal:         boolean           = true
+  @Input() buttonText:         string              = 'Pay Now'
+  @Input() isCardNameRequired: boolean             = true
+  @Input() showPaypal:         boolean             = true
+  @Input() redirectUrl:        string              = ''
 
   dropInInstance:              any
-  clientToken:                 string            = null
-  requestType:                 string            = 'booking-payment'
+  clientToken:                 string              = null
+  requestType:                 string              = 'booking-payment'
   config:                      any
 
   clientToken$:                Observable<string>
@@ -82,7 +83,7 @@ export class BraintreeUIComponent {
     .takeUntil(stopper)
     .subscribe(nonce => {
       if(nonce) {
-        this._store.dispatch(new braintreeActions.Pay(nonce, this.requestData))
+        this._store.dispatch(new braintreeActions.Pay(nonce, this.requestData, this.redirectUrl))
         stopper.next()
         stopper.complete()
       }

@@ -15,19 +15,15 @@ import * as checkoutActions from '@core/store/checkout/actions/checkout'
 })
 export class PaymentComponent {
 
-  @ViewChild(BraintreeUIComponent) braintree: BraintreeUIComponent
-  @Input() cart: BookingSpace[]
-  @Input() customerId: string
+  @ViewChild(BraintreeUIComponent) braintreeComponent: BraintreeUIComponent
+  @Input() cart:                              BookingSpace[]
+  @Input() customerId:                        string
 
-  paymentServerDomain = "https://glacial-ocean-69657.herokuapp.com/api"
-  clientTokenURL      = this.paymentServerDomain + '/get-client-token'
-  // createCustomerURL   = this.paymentServerDomain + '/new-customer' // used by the host to input his card so spacenow can pay him
+  firestoreBooking: Booking        = new Booking()
+  braintreeBooking: PaymentBooking = new PaymentBooking()
 
-  firestoreBooking:        Booking        = new Booking()
-  braintreeBooking:        PaymentBooking = new PaymentBooking()
-
-  amount:   number = 11211
-  currency: string = 'USD'
+  amount:           number         = 11211
+  currency:         string         = 'USD'
 
   constructor(private _store: Store<fromRoot.State>) { }
 
@@ -36,7 +32,7 @@ export class PaymentComponent {
     this._store.select(fromRoot.getCheckoutState).subscribe(state => {
       if(!state.isLoading && state.bookingId) {
         this.prepareBraintree(state.bookingId)
-        this.braintree.initiatePayment()
+        this.braintreeComponent.initiatePayment()
       }
     })
   }

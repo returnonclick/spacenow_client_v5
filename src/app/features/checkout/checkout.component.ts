@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store'
 import { Dictionary } from '@ngrx/entity/src/models'
 import { Observable } from 'rxjs'
 
+import * as moment from 'moment'
+
 import { BookingSpace } from '@models/booking'
 import { Category } from '@models/category'
 import { Space } from '@models/space'
@@ -33,10 +35,10 @@ export class CheckoutComponent {
   categories: Dictionary<Category>
   spaces:     Dictionary<Space>
 
-  loadPayments:        any
   hasAgreed:           boolean      = false
   hasConfirmedDetails: boolean      = false
   lastDeleted:         BookingSpace = null
+  loadPayments:        any
   snackBarDuration:    number       = 1000
 
   constructor(
@@ -95,14 +97,20 @@ export class CheckoutComponent {
   }
 
   agreeToContract() {
-    this.hasAgreed = true
+    this.hasAgreed             = true
     this.matTabs.selectedIndex = 1
   }
 
   confirmDetails() {
-    this.hasConfirmedDetails = true
+    this.hasConfirmedDetails   = true
     this.matTabs.selectedIndex = 2
     this.loadPayments(true)
+  }
+
+  formatDate(d: Date, fromFmt: string, toFmt: string) {
+    if(!fromFmt)
+      return moment(d).format(toFmt)
+    return moment(d, fromFmt).format(toFmt)
   }
 
 }

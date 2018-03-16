@@ -39,14 +39,35 @@ section#checkout {
     mat-expansion-panel {
       --panelHeaderHeight: 36px;
 
-      mat-expansion-panel-header {
-        text-overflow: ellipsis;
+      .mat-expansion-panel-header {
         font-size: 14px;
         height: var(--panelHeaderHeight) !important;
+
+        > .mat-content {
+          display: block;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          padding-right: 8px;
+          overflow: hidden;
+        }
       }
 
       .mat-expansion-panel-content {
         font-size: 12px;
+
+        > .mat-expansion-panel-body {
+          display: flex;
+          flex-direction: column;
+          padding: 16px 24px;
+
+          > pre {
+            display: none;
+          }
+
+          h4 {
+            margin-bottom: 8px;
+          }
+        }
       }
 
       .mat-action-row {
@@ -63,8 +84,9 @@ section#checkout {
       }
     }
 
-    > .space-breakdown {
+    > .space-breakdown > span {
       text-align: center;
+      display: block;
     }
 
     > .price-breakdown {

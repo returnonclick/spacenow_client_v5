@@ -46,13 +46,14 @@ export class Pay implements Action {
   readonly type = PAY
   constructor(
     public nonce: string,
-    public paymentDetails: PaymentBooking
+    public paymentDetails: PaymentBooking,
+    public redirectUrl: string = '',
   ) { }
 }
 
 export class PaySuccess implements Action {
   readonly type = PAY_SUCCESS
-  constructor() { }
+  constructor(public redirectUrl: string = '') { }
 }
 
 export class PayFail implements Action {

@@ -69,8 +69,9 @@
     <div class="booking-cart">
       <h3>Spaces</h3>
       <div class="space-breakdown">
+        <!-- <pre style="height:120px; overflow: scroll;">{{ cart$ | async | json }}</pre> -->
         <ng-container *ngIf="(cart$ | async).length < 1; else hasItems">
-          No items.
+          <span>No items.</span>
         </ng-container>
         <ng-template #hasItems>
           <mat-accordion displayMode="flat">
@@ -80,8 +81,22 @@
                   {{ spaces[cartItem.spaceId].title }}
                 </mat-expansion-panel-header>
 
-                <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre>
+                <!-- <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre>
                 <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre>
+                <pre style="height: 120px; overflow: scroll">{{ categories[spaces[cartItem.spaceId].categoryId] | json }}</pre> -->
+
+                <h4>{{ categories[spaces[cartItem.spaceId].categoryId]?.name }}</h4>
+                <span class="num-guests">
+                  {{ cartItem.numGuests }} occupant{{ cartItem.numGuests > 1 ? 's' : '' }}
+                </span>
+                <div *ngIf="spaces[cartItem.spaceId].priceUnit == 'hourly'; else notHourly">
+                  {{ formatDate(cartItem.bookingDates[0].date, null, 'DD MMM YYYY') }} from
+                  {{ formatDate(cartItem.bookingDates[0].fromHour, 'H', 'h A') }} to
+                  {{ formatDate(cartItem.bookingDates[0].toHour, 'H', 'h A') }}
+                </div>
+                <ng-template #notHourly>
+                  Not Hourly
+                </ng-template>
 
                 <mat-action-row>
                   <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>
@@ -91,7 +106,6 @@
           </mat-accordion>
         </ng-template>
       </div>
-
       <table class="price-breakdown">
         <tbody>
           <tr>

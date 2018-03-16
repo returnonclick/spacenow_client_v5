@@ -105,11 +105,20 @@ export class GeneralBookingComponent implements OnInit {
   // of `this.space`'s availability exceptions
   exceptions() {
     return (d: Date | null): boolean => {
-      let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.date).format('YYYY-MM-DD'))
+      let exceptionRanges = this.space.availability.exceptionDays.map(range => {
+        return {
+          from: moment(range.fromDate),
+          to:   moment(range.toDate),
+        }
+      })
+      // let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.fromDate).format('YYYY-MM-DD'))
       let dayMoment      = moment(d)
       let day            = dayMoment.format('ddd').toLowerCase()
 
-      return exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
+      return exceptionRanges.reduce((acc, curr) => {
+          acc = acc && !moment(d).isBetween(curr.from, curr.to, null, '[]')
+          return acc
+        }, true)// exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
         && this.space.availability.openingTime[day].isOpen
     }
   }
