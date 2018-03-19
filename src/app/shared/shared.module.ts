@@ -22,7 +22,6 @@ import {
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  AuthMenuComponent,
   AddressComponent,
   CardComponent,
   FeaturedCardComponent,
@@ -40,7 +39,6 @@ import {
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent,
-
   GeneralBookingComponent,
   HourlyBookingComponent,
 } from './components'
@@ -49,7 +47,6 @@ const COMPONENTS = [
   ForgotPasswordComponent,
   SignInComponent,
   SignUpComponent,
-  AuthMenuComponent,
   AddressComponent,
   CardComponent,
   FeaturedCardComponent,
@@ -67,7 +64,6 @@ const COMPONENTS = [
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent,
-
   GeneralBookingComponent,
   HourlyBookingComponent,
 ]

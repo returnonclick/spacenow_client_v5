@@ -5,7 +5,9 @@
     <h3>Complete for to log in</h3>
     <mat-form-field>
       <input matInput placeholder="E-Mail" type="email" name="username" required formControlName="username">
+      <mat-error *ngIf="signupForm.controls.username.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
+    <span class="error" *ngIf="error$ | async as error">{{error.message}}</span>
     <mat-form-field>
       <input matInput placeholder="Password" type="password" name="password" required formControlName="password">
     </mat-form-field>
@@ -23,15 +25,15 @@
   </form>
 
   <div class="btn-container">
-      <button mat-raised-button class="secondary" (click)="googleLogin()">
-          Google
-        </button>
-        <button mat-raised-button class="secondary" (click)="facebookLogin()">
-          Facebook
-        </button>
-        <button mat-raised-button class="secondary" (click)="linkedinLogin()">
-          Linkedin
-        </button>
+    <button mat-raised-button class="secondary" (click)="googleLogin()">
+      Google
+    </button>
+    <button mat-raised-button class="secondary" (click)="facebookLogin()">
+      Facebook
+    </button>
+    <!-- <button mat-raised-button class="secondary" (click)="linkedinLogin()">
+      Linkedin
+    </button> -->
   </div>
 
 </div>

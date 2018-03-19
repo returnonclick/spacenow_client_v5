@@ -4,34 +4,23 @@
      (dropped)="startUpload($event)"
      [class.hovering]="isHovering"
      >
+  
+  <div class="sn-icon"></div>
+  <h4>or drag and drop</h4>
+  <caption>Drop any .jpg, .png, .gif or 
+    <button mat-button onclick="document.getElementById('fileToUpload').click()">
+      browse your files
+    </button>
+  </caption>
 
-  <button mat-mini-fab class="primary" type="button" onclick="document.getElementById('fileToUpload').click()" *ngIf="filesCount === totalFiles" style="margin-top: 100%;">
-    <mat-icon aria-label="Upload file icon">file_upload</mat-icon>
-  </button>
   <input id="fileToUpload" type="file" style="display:none;" (change)="startUpload($event.target.files)" multiple>
 
-      <!-- <input class="mat-raised-button" type="file" (change)="startUpload($event.target.files)" multiple> -->
-
-      <!-- <span class="file-cta">
-        <span class="file-icon">
-            <mat-icon aria-label="Upload file icon">file_upload</mat-icon>
-        </span>
-      </span> -->
-
-
   <div *ngIf="(percentage | async) as pct">
-    <mat-progress-spinner class="progress is-info" [value]="pct" max="100" *ngIf="filesCount !== totalFiles">        
-    </mat-progress-spinner>
+    <mat-progress-bar mode="determinate" class="primary" [value]="pct" max="100" *ngIf="filesCount !== totalFiles">        
+    </mat-progress-bar>
   </div>
 
 </div>
-
-<h5 *ngIf="(percentage | async) as pct">
-  {{ pct | number }}% <br>
-  {{filesCount}} | {{totalFiles}}
-</h5>
-
-<h4>Drag and drop to upload</h4>
 
 <!-- 
 <div *ngIf="snapshot | async as snap">

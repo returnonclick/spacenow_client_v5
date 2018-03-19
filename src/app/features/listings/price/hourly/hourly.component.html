@@ -1,26 +1,29 @@
-<form [formGroup]="priceForm">
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-    <div fxFlex="45%" fxFlex.lt-md="100%" fxLayout="column">
-      <mat-form-field>
-        <input matInput type="number" placeholder="Price per hour" formControlName="price" (input)="sendPrice()" required>
-      </mat-form-field>
-      <mat-form-field *ngIf="priceForm.controls.incentives.value">
-        <input matInput type="number" placeholder="Price per half day" formControlName="halfDay" (input)="sendPrice()">
-      </mat-form-field>
-      <mat-form-field *ngIf="priceForm.controls.incentives.value">
-        <input matInput type="number" placeholder="Price per day" formControlName="day" (input)="sendPrice()">
-      </mat-form-field>
-
-      <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives</mat-checkbox>
-    </div>
-    <div fxFlex="45%" fxFlex.lt-md="100%">
-      <mat-form-field>
-        <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" (change)="sendPrice()" required>
-          <mat-option *ngFor="let term of terms" [value]="term.value">
-            {{ term.display }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+<ng-container [formGroup]="parentForm">
+  <div formGroupName="price">
+    <div fxLayout="row">
+      <div fxFlex="50%" fxLayout="column">
+        <mat-form-field fxFlex="100%" style="padding-right: 23px">
+          <input matInput type="number" min="0" placeholder="Price per hour" formControlName="price" required>
+        </mat-form-field>
+        <mat-form-field fxFlex="100%" min="0" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
+          <input matInput type="number" placeholder="Price per half day" formControlName="halfDay" [required]="parentForm.controls.price.value.incentives">
+        </mat-form-field>
+        <mat-form-field fxFlex="100%" min="0" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
+          <input matInput type="number" placeholder="Price per day" formControlName="day" [required]="parentForm.controls.price.value.incentives">
+        </mat-form-field>
+        <div fxLayout="row">
+          <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives </mat-checkbox><mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="You can set fixed prices for half or full day terms to encourage longer bookings." matTooltipPosition="after">info</mat-icon>
+        </div>
+      </div>
+      <div fxFlex="50%">
+        <mat-form-field fxFlex="100%">
+          <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" required>
+            <mat-option *ngFor="let term of terms" [value]="term.value">
+              {{ term.display }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </div>
-</form>
+</ng-container>

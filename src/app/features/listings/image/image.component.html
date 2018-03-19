@@ -1,0 +1,25 @@
+
+<div class="image">
+  <div class="title">
+      <span style="font-size: 60px">Upload your photos</span>
+  </div> 
+  <div class="content">
+      <div id="select-one"><span *ngIf="images.length < 3">Please upload at least 3 photos</span></div>
+    <image-data [path]='storagePath' (getImage)="getImage($event)"></image-data>
+    
+    <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="start">
+      <div *ngFor="let image of images">
+        <img [src]="image" width="150" height="150" id="listing-images"><mat-icon (click)="remove(image)" id="delete-button">delete</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button mat-raised-button type="button" class="next-button" (click)="onSubmit()" [disabled]="!valid"> 
+        Continue 
+    </button>
+    <button mat-button type="button" class="back-button" (click)="back()"> 
+          Back 
+    </button>
+  </div>
+</div>
+

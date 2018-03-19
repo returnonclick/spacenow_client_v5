@@ -1,0 +1,49 @@
+
+<form [formGroup]="descriptionForm" (ngSubmit)="onSubmit()" novalidate>
+
+  <div class="description">
+    <div class="title">
+      <span style="font-size: 60px">Describe your space</span>
+    </div>
+    <div class="content">
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="title" required>
+      </mat-form-field>
+
+      <div fxLayout="row" style="margin-top: 20px">
+        <span>Description *</span>
+      </div>
+      <textarea 
+        (blur)="redBox()"
+        (input)="redBox()"
+        [ngClass]="{'textarea-required': textareaStatus}"
+        placeholder="Description"
+        rows="7"
+        required
+        formControlName="description">
+      </textarea>
+
+      <div fxLayout="row" style="margin-top: 20px">
+        <span>House rules</span>
+        <mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="Set the rules for your home, this helps to make sure it is suitable for your guests." matTooltipPosition="after">info</mat-icon>
+      </div>
+      <textarea
+        placeholder="Space rules"
+        rows="7"
+        formControlName="rules">
+      </textarea>
+
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button type="submit" class="next-button" 
+              [disabled]="descriptionForm.invalid"> 
+              Continue 
+      </button>
+      <button mat-button type="button" class="back-button" (click)="back()"> 
+            Back 
+      </button>
+    </div>
+  </div>
+  
+</form>

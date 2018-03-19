@@ -1,0 +1,55 @@
+
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" novalidate>
+
+  <div class="booking">
+    <div class="title">
+      <span style="font-size: 60px">Booking system</span>
+    </div>
+    <div class="content" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" formGroupName="availability" fxLayoutGap.lt-md="30px">
+      
+      <div class="booking-type" fxFlex="35%" >
+        <div fxLayout="column">
+          <mat-form-field>
+            <mat-select placeholder="Booking System" name="booking-type" formControlName="bookingType" required>
+              <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType">
+                {{ bookingType }} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Lead Time" name="lead-time" formControlName="leadTime" required>
+              <mat-option *ngFor="let leadTime of leadTimeOptions" [value]="leadTime">
+                {{ leadTime }} {{ leadTime === 1 ? leadTimeType : leadTimeType + 's' }} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="checkbox-list">
+          <mat-checkbox (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
+        </div>
+      </div>
+    
+      <div class="booking-times"
+        *ngIf="!bookingForm.controls.availability.value.isOpen247"
+        fxFlex="60%" fxLayout="column">
+        <sn-opening-time *ngIf="listing"
+          [openingTime]="listing.availability.openingTime"
+          (onOpeningTimeChange)="updateOpeningTime($event)">
+        </sn-opening-time>
+      </div>
+
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button type="submit" class="next-button" 
+              [disabled]="bookingForm.invalid"> 
+              Continue 
+      </button>
+      <button mat-button type="button" class="back-button" (click)="back()"> 
+            Back 
+      </button>
+    </div>
+  </div>
+  
+</form>

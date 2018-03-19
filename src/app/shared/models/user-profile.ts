@@ -5,7 +5,7 @@
  * IMPORTED MODES
  * Card, Contact, ImageData
  * 
- * Path to firebase: `/user-profiles/{$userUID}`
+ * Path to firebase: `/user-profiles/{$uid}`
  * 
  * #### SIZES
  * Original, Fullwidth, Halfwidth, Thumbnail
@@ -24,7 +24,7 @@ import { ImageData } from "@shared/models/image-data";
 
 export class UserProfile extends Object{
 
-  userUID:            string                    = null
+  uid:                string                    = null
   bankAccounts:       Array<BankAccount>        = new Array()
   cards:              Array<Card>               = new Array()
   contact:            Contact                   = new Contact()
@@ -32,11 +32,11 @@ export class UserProfile extends Object{
 
   constructor( model: any = null ) {
 
-    super(model)
+    super()
 
     if ( model ) {
 
-      this.userUID          = model.userUID
+      this.uid              = model.uid
       this.bankAccounts     = model.bankAccounts
       this.cards            = model.cards
       this.contact          = model.contact

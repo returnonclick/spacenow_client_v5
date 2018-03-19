@@ -5,7 +5,7 @@
  * IMPORTED MODES
  * Card, Contact, ImageData
  * 
- * Path to firebase: `/user-profiles/{$userUID}`
+ * Path to firebase: `/user-profiles/{$uid}`
  * 
  * #### SIZES
  * Original, Fullwidth, Halfwidth, Thumbnail

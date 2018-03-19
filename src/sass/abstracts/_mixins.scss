@@ -41,18 +41,18 @@ $breakpoints: (
     }
   }
 
-/// Mixin helper to output vendor prefixes
-/// @access public
-/// @author HugoGiraudel
-/// @param {String} $property - Unprefixed CSS property
-/// @param {*} $value - Raw CSS value
-/// @param {List} $prefixes - List of prefixes to output
-///
-/// @example scss - Usage
-/// .foo {
-///   @include prefix(transform, rotate(90deg), ('webkit', 'ms'));
-/// }
-///
+// Mixin helper to output vendor prefixes
+// @access public
+// @author HugoGiraudel
+// @param {String} $property - Unprefixed CSS property
+// @param {*} $value - Raw CSS value
+// @param {List} $prefixes - List of prefixes to output
+//
+// @example scss - Usage
+// .foo {
+//   @include prefix(transform, rotate(90deg), ('webkit', 'ms'));
+// }
+//
 @mixin prefix($property, $value, $prefixes: ()) {
     @each $prefix in $prefixes {
       -#{$prefix}-#{$property}: $value;
@@ -80,3 +80,31 @@ $breakpoints: (
     }
   
   }
+
+@mixin sn-icon($index-x, $index-y, $size) {
+  // line-height: 1;
+  // vertical-align: middle;
+
+  &:before {
+      // Manually define the icon set */
+      $columns: 51; // Number of icons going across
+      $rows: 4; // Number of icons going across
+      background-image: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Ficons%2Fsn-icons.svg?alt=media&token=65b17905-aef8-4df2-9106-f5b8c2e841fc');
+      background-repeat: no-repeat;
+      background-size: #{$columns * $size}px #{$rows * $size}px;
+
+      // Size icon will be displayed */
+      width: #{$size}px;
+      height: #{$size}px;
+
+      // Position background-image based on number of icons in sprite */
+      background-position: #{($index-x - 1) * -$size}px #{($index-y - 1)  * -$size}px;
+
+      // Set position to inline */
+      content: "";
+  
+      display: inline-block;
+      line-height: #{$size}px;
+      // vertical-align: middle;
+  }
+}

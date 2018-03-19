@@ -36,8 +36,12 @@ header {
 
         }
 
-        .mat-input-container {
+        .search-form {
             grid-column: 1 / span 2;
+        }
+
+        .mat-input-container {
+            
             width: 100%;
 
             .mat-input-prefix {

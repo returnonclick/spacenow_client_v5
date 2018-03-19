@@ -61,27 +61,27 @@ export class GeneralComponent {
     // Set root view for toastr notification
     this.toastr.setRootViewContainerRef(vcr)
     this.categories$ = this._store.select(fromRoot.getAllCategories)
-    
+
   }
 
   // Get price form
   getPrice(price) {
-    this.price = price 
+    this.price = price
   }
 
   // Get price form validation
   getPriceValid(status) {
     this.priceValid = status
   }
-  
+
   ngOnInit() {
 
-    
+
     console.log()
     // this.listing = this.data.item || new Listing() -> Enable line when ready to edit
     this.listing = new Listing() // remove
     console.log(this.listing)
-    this.listing.unit = 'daily' // set when not listing.id
+    this.listing.priceUnit = 'daily' // set when not listing.id
 
     // create a new listing
     this._store.dispatch(new listingActions.Create( this.listing ))
@@ -93,7 +93,7 @@ export class GeneralComponent {
       title:              [this.listing.title, Validators.required],
       description:        [this.listing.description, Validators.required],
       rules:              [this.listing.rules],
-      unit:               [this.listing.unit, Validators.required],
+      unit:               [this.listing.priceUnit, Validators.required],
 
       categoryId:               [this.listing.categoryId, Validators.required],
       // amenityIds:               [this.listing.amenityIds, Validators.required],
@@ -102,13 +102,13 @@ export class GeneralComponent {
       // tcAcceptance: [Validators.required],
 
       address: this._fb.group({
-        unit_number:                  [this.listing.address.unit],
-        street_number:                [this.listing.address.streetNumber, Validators.required],
-        route:                        [this.listing.address.street, Validators.required],
-        locality:                     [this.listing.address.city, Validators.required],
-        administrative_area_level_1:  [this.listing.address.state, Validators.required],
-        country:                      [this.listing.address.countryName, Validators.required],
-        postal_code:                  [this.listing.address.postalCode, Validators.required],
+        unit_number:                  [this.listing.address.unit_number],
+        street_number:                [this.listing.address.street_number, Validators.required],
+        route:                        [this.listing.address.route, Validators.required],
+        locality:                     [this.listing.address.locality, Validators.required],
+        administrative_area_level_1:  [this.listing.address.administrative_area_level_1, Validators.required],
+        country:                      [this.listing.address.country, Validators.required],
+        postal_code:                  [this.listing.address.postal_code, Validators.required],
       }),
 
       amenities: this._fb.array([])
@@ -144,11 +144,11 @@ export class GeneralComponent {
 
 
     // TODO(TT): create private function to convert checkbox groups
-    // into array of selected items. 
+    // into array of selected items.
     let tmpAmenityIDs = []
     let i = 0
-    const result = Object.assign({}, 
-      this.listingForm.value, { 
+    const result = Object.assign({},
+      this.listingForm.value, {
         amenityIds: this.amenities
         .filter((x, i) => !!this.listingForm.value.amenities[i]).map(a =>{
           return a.id
@@ -166,7 +166,7 @@ export class GeneralComponent {
       if(result.id) {
         this._store.dispatch(new listingActions.Update( result.id, result ))
 
-        // Listen for `success` action generated from update effect.  
+        // Listen for `success` action generated from update effect.
         this.listingEffects.update$
           .filter(action => action.type === listingActions.SUCCESS)
           .subscribe(res =>{
@@ -176,7 +176,7 @@ export class GeneralComponent {
       } else {
         this._store.dispatch(new listingActions.Create( result ))
 
-        // Listen for `success` action generated from create effect.  
+        // Listen for `success` action generated from create effect.
         this.listingEffects.create$
           .filter(action => action.type === listingActions.SUCCESS)
           .subscribe(res =>{
@@ -186,7 +186,7 @@ export class GeneralComponent {
             }, 3000)
           })
 
-        // Listen for `fail` action generated from create effect.  
+        // Listen for `fail` action generated from create effect.
         this.listingEffects.create$
           .filter(action => action.type === listingActions.FAIL)
           .subscribe(res =>{
@@ -197,4 +197,3 @@ export class GeneralComponent {
   }
 
 }
-

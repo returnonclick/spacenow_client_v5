@@ -13,6 +13,7 @@ import { map, take } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of';
 import { logging } from 'selenium-webdriver'
 import { catchError } from 'rxjs/operators/catchError';
+import { auth } from 'firebase/app';
 
 
 @Injectable()
@@ -23,23 +24,18 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private router: Router,
     public afAuth: AngularFireAuth
   ) {
-    this.afAuth.authState.subscribe(
-      (user) => this._store.dispatch(new actions.GetUser(user.uid))
-    )
+    this._store.dispatch(new actions.GetUser())
   }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      return this._store.pipe(
-        select(fromRoot.getIsSignedInState),
-        map(isSinedIn => {
-          if (!isSinedIn) {
-            this._store.dispatch(new actions.SignOut)
-            return false
-          }
-          return true
+      return this.afAuth.authState.pipe(
+        map(authState => {
+          if (!authState) 
+            this.router.navigate(['/'])
+            return !!authState
         }),
         take(1)
       )
@@ -67,10 +63,9 @@ export class AuthGuardVerified implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
       return this._store.pipe(
-        select(fromRoot.getAuthUserState),
+        select(fromRoot.getIsSignedIn),
         map(user => {
           if (!user) {
-            this._store.dispatch(new actions.SignOut)
             return false
           }
           return true

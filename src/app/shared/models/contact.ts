@@ -17,7 +17,7 @@ export class Contact extends Object{
 
   constructor( model: any = null ) {
 
-    super(model)
+    super()
 
     if ( model ) {
 

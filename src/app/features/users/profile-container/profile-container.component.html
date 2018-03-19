@@ -24,9 +24,9 @@
                     </div>
                     <div class="picture">
                         <h4>Current Profile Picture</h4>
-                        <image-data [path]='storagePath' (getImage)="getImage($event)" class="profile-picture-drop-zone"></image-data>
+                        <image-data [path]='storagePath' (getImage)="getImage($event)"></image-data>
                        
-                        <img [src]="user.photoURL" width="200" height="200" class="profile-picture">
+                        <!-- <img [src]="user.photoURL" width="200" height="200" class="profile-picture"> -->
 
                     </div>
                     <!-- <button mat-raised-button (click)="getImages()">show images</button> -->

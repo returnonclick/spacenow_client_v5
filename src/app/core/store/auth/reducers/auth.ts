@@ -3,22 +3,17 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity'
 import { User } from '@shared/models/user'
 import * as auth from '@core/store/auth/actions/auth'
 
-export interface State extends EntityState<User> {
-    isSignedIn: boolean
-    user: User
-    selectedId: string | null
+export interface State {
+    isSignedIn: boolean | false
+    user: User | null
+    error: string | null
 }
 
-export const authAdapter: EntityAdapter<User> = createEntityAdapter<User>({
-    selectId: (obj: User) => obj.uid,
-    sortComparer: false,
-})
-
-export const initialState: State = authAdapter.getInitialState({
+const initialState: State = {
     isSignedIn: false,
     user: null,
-    selectedId: null
-})
+    error: null
+}
 
 export function reducer(
     state = initialState,
@@ -26,24 +21,25 @@ export function reducer(
 ): State {
     switch (action.type) {
 
+        case auth.FAIL: {
+            return {
+                ...state,
+                error: action.payload
+            }
+            
+        }
+
         case auth.SUCCESS: {
-
-            return authAdapter.addOne(action.payload,
-                {
-                    ...state,
-                    isSignedIn: true,
-                    selectedId: action.payload.uid
-                })
-
+            return {
+                ...state,
+                user: action.payload.user,
+                isSignedIn: true
+            }
+            
         }
 
         case auth.SIGN_OUT: {
-            return authAdapter.removeAll(
-                {
-                    ...state,
-                    isSignedIn: false,
-                    selectedId: null
-            })
+            return initialState
         }
 
         default: {

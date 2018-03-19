@@ -1,7 +1,10 @@
+@import
+  '~sass/abstracts/mixins';
+
 :host {
     --gap: 20px;
     --color__pastel_green: #6cde93;
-    --color__eucalyptus: #29a554;
+    --color__eucalyptus: #6cde93;
     --color__mischka: #f2f3f5;
 
     .dropzone { 
@@ -21,12 +24,17 @@
         margin-bottom: var(--gap)
     }
 
-    progress::-webkit-progress-value {
-        transition: width 0.1s ease;
+    h4 {
+        text-align: center;
+        text-transform: uppercase;
     }
 
-    h4, h5 {
+    caption {
         text-align: center;
+    }
+
+    .sn-icon {
+        @include sn-icon(2, 4, 70);
     }
 
 }

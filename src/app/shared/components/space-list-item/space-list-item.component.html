@@ -1,4 +1,16 @@
-<div class="space-container">
+
+<mat-card class="space-card" (click)="handleClick('view')">
+  <img width="100%" [src]="multipleImages ? space.images[imageIndex] : space.imageUrl"/>
+  <mat-card-content>
+    <p class="category"><img src=""> 3 | <img src=""> COWORKING</p>
+    <h4 class="title">{{ space.name }}</h4>
+    <p class="price">From <span>{{ space.price }}</span> a {{ space.priceUnit }}</p>
+    <p class="location">{{ space.details }}</p>
+  </mat-card-content>
+</mat-card>
+
+
+<!-- <div class="space-container">
   <div class="space-item" (click)="handleClick('view')">
     <div class="space-image">
       <img class="featured-image" src="https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1"/>
@@ -25,4 +37,4 @@
     <button mat-menu-item type="button" (click)="handleClick('delete')">Delete</button>
     <button mat-menu-item type="button" (click)="handleClick('duplicate')">Duplicate</button>
   </mat-menu>
-</div>
+</div> -->

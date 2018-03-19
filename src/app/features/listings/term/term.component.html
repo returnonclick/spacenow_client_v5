@@ -1,0 +1,112 @@
+<form [formGroup]="termForm" (ngSubmit)="onSubmit()" novalidate>
+<div class="terms">
+  <div class="title">
+    <span style="font-size: 60px">Accept spacenow t+c</span>
+  </div>
+
+  <div class="content">
+    <div fxLayout="column" style="margin-bottom: 20px">
+      <mat-checkbox class="checkbox-list" (change)="onTCChange($event)" #tc>I accept the hosts terms</mat-checkbox>
+      <mat-checkbox class="checkbox-list" (change)="onHTChange($event)" #ht>I accept spacenow t+c</mat-checkbox>
+      <!-- <mat-error 
+        id="tc-notification"
+        align="start" 
+        *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error> -->
+    </div>
+
+    <textarea readonly> 
+Shared Space Australia Pty Limited ABN 28 607 793 144 (Spacenow) operates this Site. You are welcome to use this Site provided you accept the Terms of Use. If you do not agree to be bound you must cease using the Site. You agree to abide by and cause any Invitees to abide by these Terms of Use and any Space License Agreement and the Space Rules.
+
+1.    Documents and Dictionary. We are unable to set out the arrangements you may enter into through our Site in one document. We have created a Dictionary of the terms we use throughout our documentation. These agreements include Host Terms and any Space License Agreement. The link to the relevant agreement will appear when you use a particular Service.
+
+2.    Services. The services we provide comprise an online platform through which a Host may create listings for Spaces and a Guest may learn about and book Spaces directly with the Host.
+
+3.    Spacenow Not a Party. You understand and agree that Spacenow is not a party to any agreements entered into between a Host and a Guest, nor is it acting as a real estate agent, broker or insurer even if Guest and Host use the agreements provided on this Site for the arrangements between them. Spacenow has no control over the conduct of Host, Guest and other Users and disclaims all liability in this regard.
+
+4.    Payment. All payments are in accordance with the Payment Terms.
+
+5.    Confidentiality. You agree that if you enter into any agreement as a Host or a Guest that during the Term and thereafter, Confidential Information will not at any time be disclosed to any person by the recipient of that information, nor used for such recipient’s own benefit or the benefit of any third party without the prior written express consent of the party who owns such Confidential Information. You agree that if you breach this obligation, we or the person who owns the Confidential Information shall have the right to request any remedy in law and/or equity including, but not limited to, appropriate injunctive relief or specific performance, as may be granted by the appropriate court. As a Guest you will accept all risk to your intellectual property, interest in using the Space and that neither the Host, nor the owner of any Building shall have any liability arising from, disclosure (whether intentional or not), or any of your intellectual property or Confidential Information to any third party.
+
+6.    Non-Solicitation. None of the Host nor Guest, nor their representatives, employees and agents shall knowingly solicit, recruit, hire or otherwise employ or obtain the employees of the other during the Term and this restriction will remain in force for 180 days following its termination or expiration without the prior written consent of the other party.
+
+7.    Privacy Policy. If you do use our website, in addition to accepting these terms and conditions, you are also agreeing to accept our Privacy Policy as set out elsewhere on the Site.
+
+8.    Liability. To the maximum extent permitted by law, we exclude completely all liability to any person for loss or damage of any kind (however caused, including by negligence) arising from or relating to your use of the Site. This includes, but is not limited to the transmission of any computer virus from our Site or any damage to your computer system or other devices as a result of the use of our Site.
+
+Where any law implies a warranty into these terms of use, which may not be lawfully excluded, then to the maximum extent permitted by law, our liability for the breach of the warranty will be limited to in the case of goods, replacement or repair of the goods or payment of the costs of replacing or repairing the goods; and in the case of Services, re-supply the services or payment of the costs of re-supplying the services. No portion of any Fee is deemed to be compensation for anything other than the provision of our service.
+
+In the event liability cannot be excluded, such liability is to be limited in accordance with the ACL.
+
+9.    Release. These Terms of Use include the release by you of all claims or damages against us that may arise out of your use of our Service. By reviewing or using a Service you agree to this release.
+
+10.     Accounts and Registration. To schedule a Space from a User through the Service, you must register for a User Account.
+
+11.     Copyright. Unless otherwise expressly indicated in any specific material, copyright in the design and content of this Site is owned or licensed by Spacenow.
+
+Other than for the purposes of and subject to the conditions prescribed under the Copyright Act, or as otherwise provided for in this copyright notice, no part of any Material may in any form or by any means (including electronic, mechanical, microcopying, photocopying or recording) be reproduced, adapted, stored in a retrieval system or transmitted without the prior written permission of the copyright owner. Unless we indicate otherwise, we reserve all copyright in the design and contents of the Site. Other than for the purposes of and subject to the terms of the Copyright Act you may not, without first obtaining our consent, publish, adapt, reproduce, store, distribute, transmit, display, perform or create derivative works from any of the materials on our Site, nor may such materials be used by you for commercial purposes.
+
+12.     Copyright Infringement. We reserve the right to remove User Content alleged to be infringing these Terms of Use or any applicable law without prior notice and at our sole discretion. In appropriate circumstances, Spacenow may also terminate a User’s account if the User is determined to be a repeat infringer, Spacenow’s address for notices of any alleged copyright infringement is:
+Spacenow
+
+    Suite 2, 28 Bayswater Road,
+
+    POTTS POINT NSW 2011
+
+    info@spacenow.com.au
+
+13.     Cancellation Terms. All Fees and Taxes paid by Guests are non-refundable except as expressly stated in the Space Licence Agreement.
+
+14.     Termination. Spacenow may terminate or suspend your account or ability to use the Service in whole or in part, without notice in the event that:
+
+a)    you violate these Terms of Use; the Space Licence Agreement (including any applicable Space Rules) or violate any other rules that apply to the use of the Service; or
+b)    your conduct may harm Spacenow or others or cause Spacenow or others to incur liability; or
+c)    you receive negative feedback from other Users or as otherwise determined by Spacenow in its sole discretion.
+
+If we terminate or suspend your account or ability to use the Service:
+
+d)    any pending or accepted future reservations as either Guest or Host will be immediately terminated;
+e)    we may communicate to your Guest or Host that such reservations have been cancelled;
+f)    for Hosts, we may refund your Guest in full for any and all confirmed reservations;
+g)    you will not be entitled to any compensation for reservations that were cancelled as a result of a suspension or termination of your account;
+h)    and for Professionals, you will not be entitled to any Referral Fees for reservations that end after the suspension or termination of your account.
+
+You may terminate your Spacenow account at any time by providing Spacenow with a notice of termination in accordance with the termination instructions available through the Service. Your access to, use of, or participation in the Service, including any content may be prevented by Spacenow at any time after your termination of your account. Notwithstanding anything to the contrary, upon termination of your account, Spacenow will remove your Profile and cease displaying your Profile Content, including your Space listings if you are a Host and your collections on or through the Spacenow Services.
+
+15.     Changes to these Terms of Use. These terms and conditions of use may be changed from time to time without notice. Please do not hesitate to contact us if you have any questions about our terms and conditions of use and our Site in general. Spacenow may modify the Service, and all content, software and other items used or contained in the Service, at any time.
+
+16.     Inconsistency. In the event of any conflict between the Space Licence Agreement and/or Host Terms and/or these Terms of Use, these Terms of Use will govern and control.
+
+17.     Jurisdiction. All agreements in respect of the provision of the Services including the Space Licence Agreements will be interpreted and enforced in accordance with the laws of the state or commonwealth in which the Building is located.
+
+18.     Disclaimer. Spacenow is not responsible or liable in any manner for any User Content or the content of any Third Party Sites or displayed in connection with the Service, including but not limited to the accuracy of any Space description, availability, information or Guest information. We provide rules for User Conduct, however, we do not control and are not responsible for what Users post, transmit or distribute on the Site and are not responsible for any offensive, inappropriate, obscene, unlawful or otherwise objectionable content that you may encounter on the Site or in connection with any User Content or the content of any Third Party Sites. Spacenow is not responsible for the conduct, whether online or offline, of any user, including any Guest’s non-compliance with any terms, conditions and policies relating to the use of any Space. The Service may be temporarily unavailable from time to time for maintenance or other reasons. Spacenow shall have no responsibility for any interruption, delay and operation or transmission, theft or destruction of, unauthorised access to, or alterations of, User communications or any other content made available via the Service.
+
+19.     Trademarks. “Spacenow” is a registered trademark of Spacenow, together with any other graphics, logos, designs, buttons, button icons, scripts, page headers and service names on the Site. You may not use the Trademark including any part of the Trademarks and/or as part of domain names, in connection with any product or service in any manner that is likely to cause confusion or create the impression that Spacenow endorses any product or service. You may not reproduce or use the Trademark without the prior written permission of Spacenow.
+
+20.     User Conduct. You agree not to do any of the following in connection with your use of the Service.
+
+a)    use automated scripts to collect information from or otherwise interact with the Service;
+b)    use or engage in any Unauthorised Process;
+c)    impersonate any person or entity, or falsely state or otherwise misrepresent you or your affiliation with any person entity, including giving the impression that any content you upload, post, transmit, Distribute or otherwise make available emanates from Spacenow;
+d)    distribute, store or otherwise make publicly available on the Site any private information of any third party, including, addresses, phone numbers, email addresses and credit card numbers;
+e)    interfere with or damage the Service by using any Unauthorised Process;
+f)    intimidate or harass another, or promote sexually explicit material, violence or discrimination based on race, sex, religion, nationality, disability, sexual orientation or age;
+g)    use or attempt to use another’s account, service or system without authorisation from Spacenow, or create a false identity on the Service;
+h)    use the Service in a manner that may create a conflict or interest or undermine the purposes of the Service, such as trading reviews with other Users or writing or soliciting fake reviews; or
+i)    use the Service in any manner that violates any law or otherwise conduct illegal activities in connection with your use of the Service.
+
+21.     Eligibility. This Service is intended solely for Users for 18 years of age and older. Any registration by, use of or access to the Service by anyone under 18 is unauthorised and in violation of these Terms of Use. By using the Service you represent and warrant that you are 18 years of age or older.
+
+22.     Mobile Software Licence. Subject to the terms of these Terms of Use, Spacenow grants you a non-transferable, non-exclusive licence to download, install and use one copy of the Mobile Software in object code form only on a mobile device that you own or control. You may not derive or attempt to derive the source code of all or any portion of the Mobile Software, permit any third party to derive or attempt to derive such source code, or reverse engineer, decompile, disassemble, or translate the Mobile Software or any part of it. Spacenow and its licensors shall own and shall retain all intellectual property rights and other rights in and to the Mobile Software, and any changes, modifications or corrections to that software. It is your sole responsibility to comply with the terms and conditions of use of any provider of any mobile software application that is installed by you to a device.
+    </textarea>
+  </div>
+      
+  <div class="actions">
+    <button mat-raised-button type="submit" class="next-button" [disabled]="!isHTChecked || !isTCChecked"> 
+        Finish 
+    </button>
+    <button mat-button type="button" class="back-button" (click)="back()"> 
+          Back 
+    </button>
+  </div>
+</div>
+</form>

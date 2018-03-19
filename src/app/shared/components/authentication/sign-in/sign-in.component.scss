@@ -1,25 +1,58 @@
+@import
+    '~sass/abstracts/mixins';
+
+
 :host {
 
     --gap: 30px;
-    
-    .signinForm {
+    --size: 60%;
+    display: flex;
+    align-content: center;
+    height: 100vh;
+
+    @include respond-to('desktop') {
+        --size: 70%;
+    }
+    @include respond-to('tablet') {
+        --size: 80%;
+    }
+    @include respond-to('phone') {
+        --size: 90%;
+    }
+
+    > div {
+
+        min-width: var(--size) !important;
+        width: var(--size) !important;
+        max-width: var(--size) !important;
+        margin: auto auto !important;
         
-        width: 60%;
-        
-        > * {
+        .signinForm {
             
-            margin: calc(var(--gap) / 2);
+            width: 100%;
+            
+            > * {
+                
+                margin: calc(var(--gap) / 2);
+                
+            }
             
         }
         
-    }
-    
-    .btn-container {
-        display: grid;
-        grid-gap: var(--gap);
-        grid-template-columns: repeat(3, 1fr);
-        padding: calc(var(--gap) / 2);
-        width: 60%;
+        .btn-container {
+
+            display: grid;
+            grid-gap: var(--gap);
+            grid-template-columns: repeat(3, 1fr);
+            padding: calc(var(--gap) / 2);
+            width: 100%;
+
+            @include respond-to('phone') {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+        }
+
     }
 
 }

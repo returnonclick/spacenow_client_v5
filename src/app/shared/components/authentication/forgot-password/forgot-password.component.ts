@@ -5,7 +5,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators, FormArray, FormCon
 import { AngularFireAuth } from 'angularfire2/auth'
 import * as firebase from 'firebase/app'
 
-import { Store, State } from '@ngrx/store'
+import { Store, State, select } from '@ngrx/store'
+import { Observable } from 'rxjs/Observable'
 
 import { AuthService } from '@core/store/auth/services'
 import { fadeInAnimation } from "@shared/animations/animations"
@@ -26,25 +27,33 @@ const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 export class ForgotPasswordComponent implements OnInit {
 
   forgotForm: FormGroup
+  error$: Observable<string>
+  success$: Observable<string>
 
   constructor(
     private fb: FormBuilder,
     private afAuth: AngularFireAuth,
     private _store: Store<fromRoot.State>
-  ) { }
+  ) { 
+    this.error$ = this._store.pipe(select(fromRoot.getAuthError))
+  }
 
   ngOnInit() {
     this.forgotForm = this.fb.group({
-      forgotForm: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
       }
     )
   }
 
   //forgot
   onForgotSubmit() {
-    this._store.dispatch(
-      new actions.SignIn(this.forgotForm.value)
-    )
+    this._store.dispatch(new actions.ForgotPassword(this.forgotForm.value))
+  }
+
+  getErrorMessage() {
+    return this.forgotForm.controls.email.hasError('required') ? 'You must enter a value' :
+    this.forgotForm.controls.email.hasError('email') ? 'Not a valid email' :
+    '';
   }
 
 }

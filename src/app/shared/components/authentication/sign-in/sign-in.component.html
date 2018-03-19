@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxFill>
 
   <form #form="ngForm" (ngSubmit)="onSigninSubmit()" [formGroup]="signinForm" fxLayout="column" class="signinForm">
-      <h1>Log 1n</h1>
+      <h1>Log In</h1>
       <h3>Complete for to log in</h3>
       <mat-form-field>
         <input matInput placeholder="E-Mail" type="text" name="username" required formControlName="username">
@@ -9,7 +9,9 @@
       <mat-form-field>
         <input matInput placeholder="Password" type="password" name="password" required formControlName="password">
       </mat-form-field>
-    
+      
+      <span class="error" *ngIf="error$ | async as error">{{error.message}}</span>
+
       <mat-checkbox class="remember-me">Remember Me</mat-checkbox>
       <button mat-raised-button [disabled]="!signinForm.valid" class="primary">log in</button>
         
@@ -19,17 +21,15 @@
   </form>
 
   <div class="btn-container">
-      <button mat-raised-button class="secondary" (click)="googleLogin()">
-          Google
-        </button>
-        <button mat-raised-button class="secondary" (click)="facebookLogin()">
-          Facebook
-        </button>
-        <button mat-raised-button class="secondary" (click)="linkedinLogin()">
-          Linkedin
-        </button>
+    <button mat-raised-button class="secondary" (click)="googleLogin()">
+      Google
+    </button>
+    <button mat-raised-button class="secondary " (click)="facebookLogin()">
+      Facebook
+    </button>
+    <!-- <button mat-raised-button class="secondary" (click)="linkedinLogin()">
+      Linkedin
+    </button> -->
   </div>
-
-  
 
 </div>

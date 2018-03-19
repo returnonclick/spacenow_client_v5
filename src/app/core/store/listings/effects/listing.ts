@@ -29,11 +29,27 @@ export class ListingEffects {
         } )
     )
 
+     @Effect()
+    public queryOne$: Observable<Action> = this.actions$.pipe(
+        ofType<actions.QueryOne>( actions.QUERY_ONE ),
+        switchMap( action  => this.listingService.readOne(action.id) ),
+        mergeMap( actions => actions ),
+        map( action => {
+            return {
+                type: `[Listing] ${action.type}`,
+                payload: {
+                    id: action.payload.doc.id,
+                    ...action.payload.doc.data()
+                }
+            }
+        } )
+    )
+
     @Effect()
     public create$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Create>( actions.CREATE ),
         switchMap(data => Observable.fromPromise(this.listingService.create(data.payload))),
-        map(() => new actions.Success())
+        map(() => new actions.Success()),
     )
 
     @Effect()
