@@ -60,12 +60,22 @@ section#checkout {
           flex-direction: column;
           padding: 16px 24px;
 
-          > pre {
-            display: none;
-          }
-
           h4 {
             margin-bottom: 8px;
+          }
+
+          h5 {
+            margin: 8px 0;
+          }
+
+          ul {
+            padding-left: 16px;
+
+            li:before {
+              content: '\2022';
+              font-weight: 800;
+              margin-right: 4px;
+            }
           }
         }
       }
@@ -101,8 +111,11 @@ section#checkout {
       }
 
       td {
-        padding: 8px 0;
+        padding: 4px;
 
+        &:nth-child(2) {
+          text-align: right;
+        }
       }
     }
   }

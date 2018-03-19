@@ -8,7 +8,7 @@ import * as moment from 'moment'
 
 import { BookingSpace } from '@models/booking'
 import { Category } from '@models/category'
-import { Space } from '@models/space'
+import { Space, Price } from '@models/space'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
@@ -35,6 +35,7 @@ export class CheckoutComponent {
   categories: Dictionary<Category>
   spaces:     Dictionary<Space>
 
+  costBreakdown:       any[]
   hasAgreed:           boolean      = false
   hasConfirmedDetails: boolean      = false
   lastDeleted:         BookingSpace = null
@@ -63,6 +64,42 @@ export class CheckoutComponent {
     })
     this.spaces$.subscribe(spaces => {
       this.spaces = spaces
+    })
+    Observable.combineLatest(
+      this.cart$,
+      this.spaces$
+    ).subscribe(([cart, spaces]) => {
+      if(cart.length > 1 && Object.keys(spaces).length > 1) {
+        let totalPrice = 0
+        let tax        = 0
+        for(let item of cart) {
+          let space      = spaces[item.spaceId]
+          let spacePrice = space.price[space.priceUnit] as Price
+          let price      = 0
+          if(space.priceUnit == 'hourly')
+            price += spacePrice.price * (item.bookingDates[0].toHour - item.bookingDates[0].fromHour)
+          else
+            price += spacePrice.price * item.bookingDates.length
+
+          totalPrice += price
+          tax        += price * (spacePrice.tax.percent / 100.0)
+        }
+
+        this.costBreakdown = [
+          {
+            name: 'Accomodation',
+            value: totalPrice
+          },
+          {
+            name: 'Tax',
+            value: tax
+          },
+          {
+            name: 'Total',
+            value: totalPrice + tax
+          }
+        ]
+      }
     })
   }
 
@@ -107,10 +144,22 @@ export class CheckoutComponent {
     this.loadPayments(true)
   }
 
-  formatDate(d: Date, fromFmt: string, toFmt: string) {
+  formatDate(d: Date, fromFmt: string = null, toFmt: string = 'DD MMM YYYY') {
     if(!fromFmt)
       return moment(d).format(toFmt)
     return moment(d, fromFmt).format(toFmt)
+  }
+
+  mapPriceUnit(priceUnit: string) {
+    if(!priceUnit)
+      return ''
+
+    switch(priceUnit) {
+      case 'daily':   return 'day'
+      case 'weekly':  return 'week'
+      case 'monthly': return 'month'
+      default:        return ''
+    }
   }
 
 }

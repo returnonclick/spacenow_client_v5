@@ -69,7 +69,6 @@
     <div class="booking-cart">
       <h3>Spaces</h3>
       <div class="space-breakdown">
-        <!-- <pre style="height:120px; overflow: scroll;">{{ cart$ | async | json }}</pre> -->
         <ng-container *ngIf="(cart$ | async).length < 1; else hasItems">
           <span>No items.</span>
         </ng-container>
@@ -81,22 +80,29 @@
                   {{ spaces[cartItem.spaceId].title }}
                 </mat-expansion-panel-header>
 
-                <!-- <pre style="height: 120px; overflow: scroll">{{ cartItem | json }}</pre>
-                <pre style="height: 120px; overflow: scroll">{{ spaces[cartItem.spaceId] | json }}</pre>
-                <pre style="height: 120px; overflow: scroll">{{ categories[spaces[cartItem.spaceId].categoryId] | json }}</pre> -->
-
                 <h4>{{ categories[spaces[cartItem.spaceId].categoryId]?.name }}</h4>
                 <span class="num-guests">
                   {{ cartItem.numGuests }} occupant{{ cartItem.numGuests > 1 ? 's' : '' }}
                 </span>
-                <div *ngIf="spaces[cartItem.spaceId].priceUnit == 'hourly'; else notHourly">
-                  {{ formatDate(cartItem.bookingDates[0].date, null, 'DD MMM YYYY') }} from
-                  {{ formatDate(cartItem.bookingDates[0].fromHour, 'H', 'h A') }} to
-                  {{ formatDate(cartItem.bookingDates[0].toHour, 'H', 'h A') }}
+                <div>
+                  <ng-container *ngIf="spaces[cartItem.spaceId].priceUnit == 'hourly'; else notHourly">
+                    {{ formatDate(cartItem.bookingDates[0].date) }} from
+                    {{ formatDate(cartItem.bookingDates[0].fromHour, 'H', 'h A') }} to
+                    {{ formatDate(cartItem.bookingDates[0].toHour, 'H', 'h A') }}
+                  </ng-container>
+                  <ng-template #notHourly>
+                    {{ cartItem.bookingDates.length }} {{ mapPriceUnit(spaces[cartItem.spaceId].priceUnit) }}{{ cartItem.bookingDates.length > 1 ? 's' : '' }}
+                    starting {{ formatDate(cartItem.bookingDates[0].date) }}
+                    <div *ngIf="spaces[cartItem.spaceId].priceUnit == 'daily'">
+                      <h5>Days included:</h5>
+                      <ul>
+                        <li *ngFor="let date of cartItem.bookingDates">
+                          {{ formatDate(date.date) }}
+                        </li>
+                      </ul>
+                    </div>
+                  </ng-template>
                 </div>
-                <ng-template #notHourly>
-                  Not Hourly
-                </ng-template>
 
                 <mat-action-row>
                   <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>
@@ -108,25 +114,9 @@
       </div>
       <table class="price-breakdown">
         <tbody>
-          <tr>
-            <td>Accomodation</td>
-            <td>$5,571</td>
-          </tr>
-          <tr>
-            <td>15% monthly price discount</td>
-            <td>-$836</td>
-          </tr>
-          <tr>
-            <td>Cleaning fee</td>
-            <td>$82</td>
-          </tr>
-          <tr>
-            <td>Service fee</td>
-            <td>$302</td>
-          </tr>
-          <tr>
-            <td><strong>Total</strong> AUD</td>
-            <td><strong>$5,119</strong></td>
+          <tr *ngFor="let item of costBreakdown">
+            <td>{{ item.name }}</td>
+            <td>{{ item.value }} $</td>
           </tr>
         </tbody>
       </table>
