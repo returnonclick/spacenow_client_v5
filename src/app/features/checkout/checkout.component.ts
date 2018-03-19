@@ -144,6 +144,10 @@ export class CheckoutComponent {
     this.loadPayments(true)
   }
 
+  viewSpace(spaceId) {
+    window.open(`/app/space/${spaceId}`)
+  }
+
   formatDate(d: Date, fromFmt: string = null, toFmt: string = 'DD MMM YYYY') {
     if(!fromFmt)
       return moment(d).format(toFmt)
