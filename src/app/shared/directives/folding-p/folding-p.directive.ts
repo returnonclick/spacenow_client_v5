@@ -12,7 +12,7 @@ export class FoldingPDirective {
     private _el: ElementRef
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     let text = this._el.nativeElement.innerHTML as string
 
     if(text.length > this.textLimit) {
