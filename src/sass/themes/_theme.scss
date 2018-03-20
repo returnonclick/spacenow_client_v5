@@ -9,9 +9,11 @@
 	-moz-transition: all 0.2s ease;
 	-o-transition: all 0.2s ease;
 	transition: all 0.2s ease;
+
 	&:focus {
 		outline: none !important;
 	}
+
 }
 
 body, 
@@ -21,20 +23,14 @@ body,
 	text-rendering: optimizeLegibility;
 }
 
-gen-layout {
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-auto-rows: auto;
-}
-
 .grid {
 	display: grid;
 	grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
 	grid-column-gap: 30px;
 
 	@include respond-to('phone') {
-		grid-template-columns: 1fr repeat(12, minmax(auto, 30px)) 1fr;
-		grid-column-gap: 5px;
+		grid-template-columns: 20px repeat(32, minmax(10px, auto)) 20px;
+		grid-column-gap: 0;
 	}
 
 	.wrapper {
@@ -42,9 +38,119 @@ gen-layout {
 		display: grid !important;
 		grid-column: 2 / span 12;
 
+		@include respond-to('phone') {
+			grid-column: 2 / span 34;
+		}
+
 	}
 
 }
+
+.hidden-phone {
+	@include respond-to('phone') {
+		display: none !important;
+	}
+}
+
+.hidden-phone-wide {
+	@include respond-to('phone-wide') {
+		display: none !important;
+	}
+}
+
+.hidden-phablet {
+	@include respond-to('phablet') {
+		display: none !important;
+	}
+}
+
+.hidden-tablet-small {
+	@include respond-to('tablet-small') {
+		display: none !important;
+	}
+}
+
+.hidden-tablet {
+	@include respond-to('tablet') {
+		display: none !important;
+	}
+}
+
+.hidden-tablet-wide {
+	@include respond-to('tablet-wide') {
+		display: none !important;
+	}
+}
+
+.hidden-desktop {
+	@include respond-to('desktop') {
+		display: none !important;
+	}
+}
+
+.hidden-desktop-wide {
+	@include respond-to('desktop-wide') {
+		display: none !important;
+	}
+}
+
+.hidden {
+	display: none !important;
+}
+
+.show-phone {
+	@include respond-to('phone') {
+		display: grid !important;
+	}
+}
+
+.show-phone-wide {
+	@include respond-to('phone-wide') {
+		display: grid !important;
+	}
+}
+
+.show-phablet {
+	@include respond-to('phablet') {
+		display: grid !important;
+	}
+}
+
+.show-tablet-small {
+	@include respond-to('tablet-small') {
+		display: grid !important;
+	}
+}
+
+.show-tablet {
+	@include respond-to('tablet') {
+		display: grid !important;
+	}
+}
+
+.show-tablet-wide {
+	@include respond-to('tablet-wide') {
+		display: grid !important;
+	}
+}
+
+.show-desktop {
+	@include respond-to('desktop') {
+		display: grid !important;
+	}
+}
+
+.show-desktop-wide {
+	@include respond-to('desktop-wide') {
+		display: grid !important;
+	}
+}
+
+.show {
+	display: grid !important;
+}
+
+
 
 a {
 	color: $color__eucalyptus;

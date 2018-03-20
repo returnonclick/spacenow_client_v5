@@ -1,13 +1,25 @@
+@import
+  '~sass/abstracts/mixins';
+
 .sidenav {
+
+    --sidenav: 40%;
+    --sidenav-r: -40%;
 
     --color: $color__pastel_green;
 
     position: fixed; /* or choose `absolute` depending on desired behavior*/
     top: 0;
     bottom: 0;
-    width: $sidebar__max-width;
-    right: -$sidebar__max-width;
+    width: var(--sidenav);
+    right: var(--sidenav-r);
     transition: transform .3s ease-in-out;
+
+    @include respond-to('phone') {
+        width: calc(var(--sidenav) * 2 + 10%);
+        right: calc(var(--sidenav-r) * 2 + 10%);
+    }
+
 
     .closeMenu {
 

@@ -29,12 +29,12 @@ export class AuthService {
     private router: Router
   ) {
 
-    // this.afAuth.authState.subscribe(
-    //   (user) => {
-    //     if (user)
-    //       this._store.dispatch(new actions.GetUser)
-    //   }
-    // )
+    this.afAuth.authState.subscribe(
+      (user) => {
+        if (user)
+          this._store.dispatch(new actions.GetUser)
+      }
+    )
     
   }
 
@@ -48,7 +48,7 @@ export class AuthService {
 
   signInWithProvider(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then(
-      data => this.updateUserData(data)
+      data => this.updateUserData(data.user)
     )
   }
 
@@ -71,7 +71,7 @@ export class AuthService {
 
   private updateUserData(auth: any, credential?: any) {
 
-    const userRef: AngularFirestoreDocument<User> = this._afs.collection<User>(`users`).doc(`${auth.user.uid}`)
+    const userRef: AngularFirestoreDocument<User> = this._afs.collection<User>(`users`).doc(`${auth.uid}`)
     
     const data: User = new User(auth)
 

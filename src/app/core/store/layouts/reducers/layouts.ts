@@ -4,12 +4,14 @@ export interface State {
   showSidenav: boolean
   logo: string
   showFooter: boolean
+  sidenavComponent: string
 }
 
 const initialState: State = {
   showSidenav: false,
   logo: 'logo-white',
-  showFooter: true
+  showFooter: true,
+  sidenavComponent: 'sign-in'
 }
 
 export function reducer(
@@ -40,7 +42,24 @@ export function reducer(
         ...state,
         logo: 'logo-white'
       }
-        
+
+    case LayoutActionTypes.SetSidenavLogin:
+      return {
+        ...state,
+        sidenavComponent: 'sign-in'
+      }
+    
+    case LayoutActionTypes.SetSidenavRegister:
+      return {
+        ...state,
+        sidenavComponent: 'register'
+      }
+    
+    case LayoutActionTypes.SetSidenavForgotPassword:
+      return {
+        ...state,
+        sidenavComponent: 'forgot-password'
+      } 
 
     default:
       return state

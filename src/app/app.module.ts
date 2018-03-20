@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common'
+import { FlexLayoutModule } from '@angular/flex-layout'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 
 // Angularfire2 and Firebase
 import { AngularFireModule } from 'angularfire2';
@@ -23,25 +26,63 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SharedModule } from '@shared/shared.module';
 import { CoreModule } from '@core/core.module';
 
-import { FeatureModule } from '@features/feature.module';
+import { AgmCoreModule } from '@agm/core'
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { reducers, metaReducers } from '@core/store';
 import { AuthGuard } from '@core/store/auth/services';
 
+import { HomeComponent } from './home/home.component';
+import { SearchComponent } from './search/search.component';
+import { SpaceComponent } from './space/space.component';
+
+import { SpaceService } from '@core/store/spaces/services/space'
+import { SpaceEffects } from '@core/store/spaces/effects/space'
+
+import { SearchService } from '@core/store/search/services/search'
+import { SearchEffects } from '@core/store/search/effects/search'
+
+const COMPONENTS = [
+  HomeComponent,
+  SearchComponent,
+  SpaceComponent
+]
+
+const SERVICES = [
+  SpaceService,
+  SearchService
+]
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    ...COMPONENTS
   ],
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
     BrowserModule,
     BrowserAnimationsModule, // TT. required for material2/animation
     SharedModule,
     CoreModule.forRoot(),
-    FeatureModule.forRoot(),
     
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleApi,
+      libraries: [
+        'places'
+      ]
+    }),
+
+    EffectsModule.forFeature([
+      SpaceEffects,
+      SearchEffects
+    ]),
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
@@ -59,7 +100,7 @@ import { AuthGuard } from '@core/store/auth/services';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, ...SERVICES],
   bootstrap: [AppComponent]
 })
 

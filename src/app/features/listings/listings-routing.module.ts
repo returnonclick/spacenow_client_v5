@@ -20,8 +20,7 @@ const routes: Routes = [
     path: '',
     component: ContainerComponent,
     children: [
-      { path: 'category', component: CategoryComponent },
-      { path: '', redirectTo: '/category', pathMatch: 'full' }
+      { path: 'category', component: CategoryComponent }
     ]
   },
   {
@@ -38,7 +37,7 @@ const routes: Routes = [
         { path: 'booking', component: BookingComponent },
         { path: 'exception', component: ExceptionComponent },
         { path: 'terms', component: TermComponent },
-        { path: '', redirectTo: '/title', pathMatch: 'full' }
+        { path: '', redirectTo: '/category', pathMatch: 'full' }
     ]
   }
 ]

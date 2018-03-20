@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Component, OnInit }      from '@angular/core';
+import { Router }                 from "@angular/router";
 
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormArray, FormControl, ValidatorFn } from '@angular/forms'
-import { AngularFireAuth } from 'angularfire2/auth'
-import * as firebase from 'firebase/app'
+import { AngularFireAuth }        from 'angularfire2/auth'
+import * as firebase              from 'firebase/app'
 
-import { Store, State, select } from '@ngrx/store'
-import { Observable } from 'rxjs/Observable'
+import { Store, State, select }   from '@ngrx/store'
+import { Observable }             from 'rxjs/Observable'
 
-import { AuthService } from '@core/store/auth/services'
-import { fadeInAnimation } from "@shared/animations/animations"
-import * as actions from '@core/store/auth/actions/auth'
-import * as fromRoot from '@core/store'
+import { AuthService }            from '@core/store/auth/services'
+import { fadeInAnimation }        from "@shared/animations/animations"
+import * as actions               from '@core/store/auth/actions/auth'
+import * as layoutActions         from '@core/store/layouts/actions/layout'
+import * as fromRoot              from '@core/store'
 
 const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -54,6 +55,10 @@ export class ForgotPasswordComponent implements OnInit {
     return this.forgotForm.controls.email.hasError('required') ? 'You must enter a value' :
     this.forgotForm.controls.email.hasError('email') ? 'Not a valid email' :
     '';
+  }
+
+  setSidenavLogin() {
+    this._store.dispatch(new layoutActions.SetSidenavLogin());
   }
 
 }

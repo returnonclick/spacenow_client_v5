@@ -24,7 +24,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private router: Router,
     public afAuth: AngularFireAuth
   ) {
-    this._store.dispatch(new actions.GetUser())
+    this.afAuth.authState.subscribe(
+      (user) => {
+        if (user)
+          this._store.dispatch(new actions.GetUser)
+      }
+    )
   }
 
   canActivate(
@@ -34,7 +39,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       return this.afAuth.authState.pipe(
         map(authState => {
           if (!authState) 
-            this.router.navigate(['/'])
+            this.router.navigate['']
             return !!authState
         }),
         take(1)

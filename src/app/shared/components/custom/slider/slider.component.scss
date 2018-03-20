@@ -1,7 +1,9 @@
+@import
+    '~sass/abstracts/mixins';
+
 .gen-slider {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto auto auto;
 
   > .gen-nav {
     display: flex;
@@ -11,6 +13,11 @@
 
     margin: 8px;
     padding: 8px;
+
+    @include respond-to('phone') {
+      margin: 0;
+    }
+
   }
 
   .gen-page-container {

@@ -1,9 +1,20 @@
 
 <mat-card class="space-card" (click)="handleClick('view')">
-  <img width="100%" [src]="multipleImages ? space.images[imageIndex] : space.imageUrl"/>
+  <img width="100%" height="400px" [src]="multipleImages ? space.images[imageIndex] : space.imageUrl"/>
+  <div class="nav-slider" *ngIf="multipleImages">
+      <button mat-icon-button (click)="imageIndex = 0">
+          <i class="material-icons">{{ imageIndex === 0 ? 'lens' : 'panorama_fish_eye' }}</i>
+      </button>
+      <button mat-icon-button (click)="imageIndex = 1">
+          <i class="material-icons">{{ imageIndex === 1 ? 'lens' : 'panorama_fish_eye' }}</i>
+      </button>
+      <button mat-icon-button (click)="imageIndex = 2">
+          <i class="material-icons">{{ imageIndex === 2 ? 'lens' : 'panorama_fish_eye' }}</i>
+      </button>
+  </div>
   <mat-card-content>
     <p class="category"><img src=""> 3 | <img src=""> COWORKING</p>
-    <h4 class="title">{{ space.name }}</h4>
+    <h3 class="title">{{ space.name }}</h3>
     <p class="price">From <span>{{ space.price }}</span> a {{ space.priceUnit }}</p>
     <p class="location">{{ space.details }}</p>
   </mat-card-content>

@@ -2,6 +2,10 @@
 footer {
 
     --margin: 200px;
+    --gap: 30px;
+    @include respond-to('phone') {
+        --margin: 50px;
+    }
 
     margin-top: var(--margin);
     border-top: 1px solid $color__mischka;
@@ -13,42 +17,102 @@ footer {
         display: grid;
         grid-column: 2 / span 12;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        grid-row-gap: calc(var(--margin) / 4);
-        grid-column-gap: calc(var(--margin) / 8);
+        grid-template-rows: repeat(3, 1fr);
         grid-template-areas: 
-        "logo . help-pages"
+        "logo help-pages help-pages" 
+        "copyright . social-media"
         "menu menu social-media";
         margin: var(--margin) 0;
 
+        @include respond-to('phone') {
+            grid-column: 2 / 34;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+            grid-gap: 5px;
+            grid-template-areas: 
+                "social-media"
+                "help-pages"
+                "logo"
+                "menu"
+                "copyright";
+            justify-content: center;
+            align-content: center
+        }
+
         img.logo {
             grid-area: logo;
+            @include respond-to('phone') {
+                justify-self: center;
+                margin: var(--gap) 0;
+            }
         }
 
         div.help-pages {
             grid-area: help-pages;
-            justify-content: end;
+            justify-self: end;
+
+            @include respond-to('phone') {
+                justify-self: center;
+            }
         
 
             ul li {
                 display: inline-block;
+                margin-left: var(--gap);
+
+                @include respond-to('phone') {
+                    margin: 5px;
+                }
 
                 a {
                     font-size: 18px;
+                    @include respond-to('phone') {
+                        font-size: 12px;
+                    }
                 }
 
             }
 
         }
 
+        span.copyright {
+            grid-area: copyright;
+            font-size: 14px;
+            align-self: end;
+
+            @include respond-to('phone') {
+                font-size: 12px;
+                justify-self: center;
+            }
+        }
+
         div.menu {
             grid-area: menu;
 
+            ul {
+
+                @include respond-to('phone') {
+                    flex-direction: column !important;
+                }
+
+            }
+
             ul li {
+                
                 display: inline-block;
+
+                @include respond-to('phone') {
+                    display: block;
+                    text-align: center;
+                }
 
                 a {
                     font-size: 14px;
+
+                    @include respond-to('phone') {
+                        font-size: 12px;
+                    }
+
                 }
             }
 
@@ -57,6 +121,10 @@ footer {
         ul.social-media {
             grid-area: social-media;
             justify-self: end;
+            align-self: end;
+            @include respond-to('phone') {
+                justify-self: center;
+            }
 
             li {
                 display: inline-block;

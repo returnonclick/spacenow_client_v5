@@ -80,7 +80,7 @@ export class AuthEffects {
     public signout$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignOut>( actions.SIGN_OUT ),
         map(() => this.authService.signOut()),
-        map(() => this.router.navigate['/'])
+        map(() => this.router.navigate[''])
     )
 
     @Effect({ dispatch: false })

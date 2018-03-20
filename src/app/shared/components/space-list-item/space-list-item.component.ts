@@ -18,16 +18,7 @@ export class SpaceListItemComponent {
       case 'view':
         console.log('view', this.space.id)
         break;
-      case 'edit':
-        console.log('edit', this.space.id)
-        break;
-      case 'delete':
-        console.log('delete', this.space.id)
-        break;
-      case 'duplicate':
-        console.log('duplicate', this.space.id)
-        break;
-      case 'favorite':
+       case 'favorite':
         console.log('favorite', this.space.id)
         // this.space.isFavorite = !this.space.isFavorite
         break;

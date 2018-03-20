@@ -20,7 +20,7 @@
   
     <button mat-raised-button [disabled]="!signupForm.valid" class="primary">Sign up</button>
       
-    <p class="note">Already have an account?<br/> <a [routerLink]="['../', { outlets: { sidenav: ['sign-in'] } }]">Sign in here</a></p>
+    <p class="note">Already have an account?<br/> <a href="#" (click)="setSidenavLogin();">Sign in here</a></p>
 
   </form>
 

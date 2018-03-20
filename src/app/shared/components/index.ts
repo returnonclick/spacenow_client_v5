@@ -20,7 +20,8 @@ import {
 } from './custom'
 
 import {
-  LayoutComponent
+  LayoutComponent,
+  LayoutNoFooterComponent
 } from './theme'
 
 import { SpaceListItemComponent } from './space-list-item/space-list-item.component'
@@ -52,6 +53,7 @@ export {
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,
+  LayoutNoFooterComponent,
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent,
@@ -78,6 +80,7 @@ export default {
   TableComponent,
   TableSelectorComponent,
   LayoutComponent,
+  LayoutNoFooterComponent,
   LoadingComponent,
   LoadingOverlayComponent,
   ImageUploadComponent,

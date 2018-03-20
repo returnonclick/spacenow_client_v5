@@ -1,25 +1,13 @@
 <!-- Header -->
 <header id="header" class="grid">
   <div class="inner">
-    <h1>Find any space<br>
-    anytime<br>
-    anywhere</h1>
-
+    <h2>Find any space<br> anytime<br> anywhere</h2>
     <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-    <mat-form-field>
-      <mat-icon matPrefix>search</mat-icon>
-      <input type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event)">
-    </mat-form-field>
+      <mat-form-field>
+        <mat-icon matPrefix>search</mat-icon>
+        <input type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event)">
+      </mat-form-field>
     </form>
-    <!-- <mat-form-field>
-      <mat-icon matPrefix>business</mat-icon>
-      <input type="text" matInput placeholder="category">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-icon matPrefix>access_time</mat-icon>
-      <input type="text" matInput placeholder="anytime">
-    </mat-form-field> -->
-
   </div>
 </header>
 
@@ -29,24 +17,22 @@
   <!-- SECTION ONE -->
   <section id="section-one">
     
-    <h1 class="left">Any space <br>
-    by the hour<br>
-    day or month</h1>
+    <h2 class="left">Any space 
+    by the hour
+    day or month</h2>
 
-    <gen-slider [component]="sliderComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
+    <gen-slider [component]="sliderComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
 
   </section>
 
   <!-- SECTION TWO -->
   <section id="section-two">
     
-    <h1 class="right">Any space <br>
-    by the hour<br>
-    day or month</h1>
+    <h2 class="right">Any space 
+    by the hour
+    day or month</h2>
 
-    <!-- <sn-card></sn-card> -->
-
-    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
+    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
 
   </section>
 
@@ -57,11 +43,11 @@
     </div>
     <div>
       <h3>our story</h3>
-      <h1>Let us help you <br>
-      find the right<br>
-      space to grow<br>
-      your business</h1>
-      <p>Arash<br>
+      <h2>Let us help you 
+      find the right
+      space to grow
+      your business</h2>
+      <p>Arash
       CEO of spacenow</p>
     </div>
   </section>
@@ -69,7 +55,7 @@
   <!-- SECTION FOUR -->
   <section id="section-four" class="grid">
     <div>
-      <h1>Your space is safe and secured</h1>
+      <h2>Your space is safe and secured</h2>
       <p>We are, and have been for some time, rooted very firmly in the moment, just as John Muir must have been in the late 1800s when he spent his first-ever summer in the Sierra. Muir was born and grew up in East Lothian, Scotland, where he developed a fascination with the surrounding countryside and the nearby coastli</p>
       <div class="perc">
         <mat-card>
@@ -92,7 +78,7 @@
                     mode="determinate"
                     value="25">
                 </mat-progress-spinner>
-                <h4>25% more income</h4>
+                  <h4>25% more income</h4>
                 <p>We are, and have been for some time, rooted very firmly in the moment, just as John Muir must have been in the late 1800s when</p>
               </mat-card-content>
             </mat-card>
@@ -110,31 +96,27 @@
               </mat-card>
       </div>
     </div>
-  </section>
-
-  <!-- SECTION FIVE -->
-  <section id="section-five">
-  </section>
+  </section> 
 
   <!-- SECTION SIX -->
   <section id="section-six">
     
-    <h1 class="left">Any space <br>
-      by the hour<br>
-      day or month</h1>
+    <h2 class="left">Any space 
+      by the hour
+      day or month</h2>
 
-    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
+    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
   
   </section>
 
   <!-- SECTION SEVEN -->
   <section id="section-seven">
     
-    <h1 class="right">Any space <br>
-    by the hour<br>
-    day or month</h1>
+    <h2 class="right">Any space 
+    by the hour
+    day or month</h2>
 
-    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="4" style="--totalItems: 8; --perPage: 4;"></gen-slider>
+    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
 
   </section>
 

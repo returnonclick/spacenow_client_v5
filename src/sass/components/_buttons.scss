@@ -17,6 +17,7 @@ $button-radius: 2 * $button-padding-lr;
 
     .mat-mini-fab {
 
+        min-height: fit-content;
         color: mat-color($primary, 50, 1) !important;
         background: mat-color($primary, default-contrast, 1);
         border: 1px solid mat-color($primary, default-contrast, 1) !important;
@@ -43,6 +44,7 @@ $button-radius: 2 * $button-padding-lr;
 
     .mat-raised-button, .mat-fab {
         
+        min-height: fit-content;
         border-radius: $button-radius !important;
         padding: $button-padding-tb $button-padding-lr !important;
         text-transform: uppercase;

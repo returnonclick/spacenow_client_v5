@@ -15,8 +15,8 @@
       <mat-checkbox class="remember-me">Remember Me</mat-checkbox>
       <button mat-raised-button [disabled]="!signinForm.valid" class="primary">log in</button>
         
-      <a class="forgot-password" [routerLink]="['../', { outlets: { sidenav: ['forgot-password'] } }]">Forgot Password?</a>
-      <p class="note">Not a member? <a [routerLink]="['../', { outlets: { sidenav: ['register'] } }]">Sign up</a></p>
+      <a class="forgot-password" href="#" (click)="setSidenavForgotPassword();">Forgot Password?</a>
+      <p class="note">Not a member? <a href="#" (click)="setSidenavRegister();">Sign up</a></p>
 
   </form>
 

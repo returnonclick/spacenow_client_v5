@@ -4,10 +4,17 @@
         --gap: 30px;
         --color__pastel_green: $color__pastel_green;
 
-        display: flex;
+        @include respond-to('phone') {
+            --gap: 20px;
+        }
+
+
         align-items: center;
-        text-align: right;
+        display: flex;
+        height: 110px;;
+        margin-top: 0;
         padding: var(--gap);
+        text-align: right;
 
         grid-column-start: 1;
         grid-column-end: 2;
@@ -25,6 +32,11 @@
             height: 50px;
             width: 200px;
 
+            @include respond-to('phone') {
+                height: 42px;
+                width: 150px;
+            }
+
             &.logo-white {
                 background: url('/assets/images/logo/spacenow-logo-white.svg') no-repeat;
             }
@@ -33,24 +45,30 @@
                 background: url('/assets/images/logo/spacenow-logo.svg') no-repeat;
             }
         }
-
+        
         a {
             font-size: 20px;
             font-weight: 400;
             text-transform: uppercase;
-
+            
             &:not(.logo) {
                 padding-left: var(--gap);
                 display: flex;
                 align-items: center;
             }
-
+            
+        }
+        
+        a.list-your-space {
+            @include respond-to('phone') {
+                display: none;
+            }
         }
 
         .mat-icon-button {
 
             height: auto;
-            margin: 0 var(--gap);
+            margin: 0 0 0 var(--gap);
             width: auto;
 
             img.userProfilePicture {

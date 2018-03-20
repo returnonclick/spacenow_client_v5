@@ -1,0 +1,49 @@
+<!-- Sidebar -->
+<mat-drawer-container class="main-container" fullscreen>
+
+  <mat-drawer class="sidenav" [opened]="showSidenav$ | async" align="end" disableClose>
+    <button mat-icon-button (click)="closeSidenav()" class="closeMenu">
+        <mat-icon aria-label="Close sidenav icon">arrow_forward</mat-icon>
+    </button>
+    <router-outlet name="sidenav"></router-outlet>
+  </mat-drawer>
+
+  <mat-drawer-content>
+  
+    <!-- Nav -->
+    <nav id="main-nav">
+      <a routerLink="/" class="logo" [ngClass]="logo$ | async"></a>
+      <span><!-- fill space --></span>
+      <a routerLink="/listing/category">List your space</a>
+      <div *ngIf="isSignedIn$ | async; then authenticated else guest"></div>
+    </nav>
+
+    <!-- User NOT logged in -->
+    <ng-template #guest>
+      <a [routerLink]="[{ outlets: { sidenav: ['sign-in'] } }]" routerLinkActive="active" (click)="openSidenav()">Log in</a>
+      <a [routerLink]="[{ outlets: { sidenav: ['register'] } }]" routerLinkActive="active" (click)="openSidenav()">Sign up</a>
+    </ng-template>
+
+    <!-- User logged in -->
+    <ng-template #authenticated>
+      <button *ngIf="(authUser$ | async) as authUser" mat-icon-button [matMenuTriggerFor]="menu">
+        <img [src]="authUser.photoURL" class="userProfilePicture" width="50px" height="50px">
+      </button>
+      <mat-menu #menu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
+        <button mat-menu-item routerLink="/listing/category">List a space</button>
+        <button mat-menu-item routerLink="/users/my-spaces">My spaces</button>
+        <button mat-menu-item routerLink="/users/my-profile">Profile</button>
+        <button mat-menu-item routerLink="/users/my-favorites">Favorites</button>
+        <button mat-menu-item routerLink="/users/my-spaces">Manage Bookings</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="signOut()">Logout</button>
+      </mat-menu> 
+    
+    
+    </ng-template>
+
+    <router-outlet></router-outlet>
+
+  </mat-drawer-content>
+
+</mat-drawer-container>
