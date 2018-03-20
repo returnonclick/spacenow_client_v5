@@ -268,23 +268,6 @@ export const getSidenavComponent = createSelector(
   (state) => state.sidenavComponent
 )
 
-
-/* 
- * SPACE REDUCERS
- * **************************************************************************** */
-export const getSpaceState = createFeatureSelector<fromSpaces.State>('space')
-
-export const getSelectedSpaceID = (state: fromSpaces.State) => state.selectedSpaceId
-export const selectCurrentSpaceID = createSelector(getSpaceState, getSelectedSpaceID)
-export const selectSpaceEntities = createSelector(getSpaceState, (spaceState) => spaceState.entities)
-export const selectCurrentSpace = createSelector(
-  selectSpaceEntities,
-  selectCurrentSpaceID,
-  (spaceEntities, spaceID) => spaceEntities[spaceID]
-)
-
-/* *********************End of Space reducers **********************************/
-
 /**
  * Categories Reducers
  */

@@ -55,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}
+]
 
 
 @NgModule({

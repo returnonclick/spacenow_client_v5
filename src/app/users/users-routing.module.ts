@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'my-caalendar', component: CalendarComponent },
   { path: 'my-favorites', component: FavoritesComponent },
   { path: '', redirectTo: '/my-profile', pathMatch: 'full' }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

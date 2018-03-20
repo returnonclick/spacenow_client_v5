@@ -22,7 +22,7 @@ export class FavoritesComponent {
     private _store: Store<fromRoot.State>
   ) {
     this.spaces$ = this._store.select(fromRoot.getAllSpaces)
-    this.user$   = this._store.select(fromRoot.getSelectedAuth)
+    this.user$   = this._store.select(fromRoot.getAuthUser)
 
     this.user$.subscribe(user => {
       if(user) {
