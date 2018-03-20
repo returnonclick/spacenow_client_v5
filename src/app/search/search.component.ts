@@ -21,11 +21,11 @@ export class SearchComponent {
 
   @ViewChild(AgmMap) map: AgmMap
 
-  zoom:   number = 16
-  name:   string = ''
-  radius: number = 20
-  lat:    number = -33.9108137
-  lng:    number = 151.1960078
+  zoom:      number = 16
+  name:      string = ''
+  radius:    number = 20
+  latitude:  number = -33.9108137
+  longitude: number = 151.1960078
 
   results$:   Observable<Space[]>
   isLoading$: Observable<boolean>
@@ -51,10 +51,10 @@ export class SearchComponent {
       this.map.mapReady,
     ).subscribe(([queryParams, map]) => {
       if(queryParams && map) {
-        this.name   = queryParams.name ? decodeURIComponent(queryParams.name) : this.name
-        this.radius = +queryParams.radius || this.radius
-        this.lat    = +queryParams.lat || this.lat
-        this.lng    = +queryParams.lng || this.lng
+        this.name      = queryParams.name ? decodeURIComponent(queryParams.name): this.name
+        this.radius    = +queryParams.radius || this.radius
+        this.latitude  = +queryParams.latitude || this.latitude
+        this.longitude = +queryParams.longitude || this.longitude
         this._store.dispatch(new searchActions.Query(queryParams))
 
         if(!this.nativeMap)
@@ -71,7 +71,7 @@ export class SearchComponent {
       if(searchResults && map) {
         this.markerMap = {}
         for(let result of searchResults) {
-          let markerLatLng = new google.maps.LatLng(this.lat + result.address.latitude, this.lng + result.address.longitude);
+          let markerLatLng = new google.maps.LatLng(this.latitude + result.address.latitude, this.longitude + result.address.longitude);
           let thisLoc      = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map:       this.nativeMap,
@@ -87,8 +87,8 @@ export class SearchComponent {
   }
 
   selectedAddress(address) {
-    this.form.get('lat').setValue(address.latitude)
-    this.form.get('lng').setValue(address.longitude)
+    this.form.get('latitude').setValue(address.latitude)
+    this.form.get('longitude').setValue(address.longitude)
     this.form.get('name').setValue(address.full_name)
   }
 
@@ -101,20 +101,20 @@ export class SearchComponent {
 
     this._router.navigate(['search'], {
       queryParams: {
-        name:   encodeURIComponent(formVal.name),
-        radius: formVal.radius,
-        lat:    formVal.lat,
-        lng:    formVal.lng,
+        name:      encodeURIComponent(formVal.name),
+        radius:    formVal.radius,
+        latitude:  formVal.latitude,
+        longitude: formVal.longitude,
       }
     })
   }
 
   private _updateForm() {
     this.form = this._fb.group({
-      name:   [ this.name, Validators.required ],
-      radius: [ this.radius, Validators.required ],
-      lat:    [ this.lat ],
-      lng:    [ this.lng ],
+      name:      [ this.name, Validators.required ],
+      radius:    [ this.radius, Validators.required ],
+      latitude:  [ this.latitude ],
+      longitude: [ this.longitude ],
     })
   }
 

@@ -11,9 +11,11 @@ import {
 } from '@shared/components'
 
 import { AuthGuard } from '@core/store/auth/services';
-import { HomeComponent } from './home/home.component';
-import { SearchComponent } from './search/search.component';
-import { SpaceComponent } from './space/space.component';
+
+import { HomeComponent } from '@app/home/home.component';
+import { SearchComponent } from '@app/search/search.component';
+import { SpaceComponent } from '@app/space/space.component';
+
 
 const appRoutes: Routes = [
   {
@@ -21,7 +23,8 @@ const appRoutes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'space', component: SpaceComponent }
+      { path: 'space', component: SpaceComponent },
+      { path: 'space/:id', component: SpaceComponent },
     ]
   },
   {
@@ -52,7 +55,7 @@ const appRoutes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
   { path: 'page-not-found', component:  SignInComponent}
-]
+
 
 @NgModule({
   imports: [

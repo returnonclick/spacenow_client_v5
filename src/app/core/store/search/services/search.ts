@@ -26,32 +26,36 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
       id: 'DSnaaofV7ai42AFIXiLp',
       name: 'Newtown Office',
-      imageUrl: 'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
+      images: [
+        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
       id: 'CbqprxXGgdg4Nnib0U5A',
       name: 'Newtown Office',
-      imageUrl: 'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
+      images: [
+        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -67,20 +71,22 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
       id: '06Eb1dBXlCUhdmHNPLzq',
       name: 'Newtown Office',
-      imageUrl: 'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
+      images: [
+        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
@@ -96,20 +102,22 @@ export class SearchService {
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
     {
       id: 'e1tkzwW9BBVyqC3Bpvgr',
       name: 'Newtown Office',
-      imageUrl: 'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
+      images: [
+        'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg'
+      ],
       price: '40 AUD',
       priceUnit: 'day',
       details: 'Multiple spaces',
       address: {
-        lat: (Math.random() - 0.5) / 100.0,
-        lng: (Math.random() - 0.5) / 100.0,
+        latitude: (Math.random() - 0.5) / 100.0,
+        longitude: (Math.random() - 0.5) / 100.0,
       },
     },
   ]

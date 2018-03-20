@@ -2,163 +2,155 @@ import { Address } from '@models/address'
 import { Availability } from '@models/availability'
 import { ImageData } from '@models/image-data'
 
-export class Space extends Object{
+export class Space extends Object {
 
-    id:              string = null
-    ref:             string = null
-    ownerUid:        string = null
-    title:           string = ''
-    description:     string = ''
-    rules:           string = ''
-    tags:            string[] = []
-    images:          ImageData[] = []
-    price: {
-      hourly:         Hourly,
-      daily:          Daily,
-      weekly:         Weekly,
-      monthly:        Monthly,
-    }
-    priceUnit:       string = 'daily'
-    categoryId:      string = null 
-    amenityIds:      string[] = []
-    address:         Address = new Address()
-    specifications:  Object[]
-    availability:    Availability = new Availability()
-    status:          ListingStatus = ListingStatus.DRAFT
-    currency:        string = 'AUD'
-    tax:             TaxDetails = new TaxDetails()
-    createdAt:       Date = new Date()
+  id:             string        = null
+  ref:            string        = null
+  ownerUid:       string        = null
+  title:          string        = ''
+  description:    string        = ''
+  rules:          string        = ''
+  tags:           string[]      = []
+  images:         ImageData[]   = []
+  price:          {
+    hourly:  Hourly
+    daily:   Daily
+    weekly:  Weekly
+    monthly: Monthly
+  }
+  priceUnit:      string        = 'daily'
+  categoryId:     string        = null
+  amenityIds:     string[]      = []
+  address:        Address       = new Address()
+  specifications: Object[]
+  availability:   Availability  = new Availability()
+  status:         ListingStatus = ListingStatus.DRAFT
+  createdAt:      Date          = new Date()
 
-    constructor( model: any = null ) {
-
-      super(model)
-
-      if ( model ) {
-        this.id             = model.id || null
-        this.ref            = model.ref || null
-        this.ownerUid       = model.ownerUid || null
-        this.title          = model.title || ''
-        this.description    = model.description || ''
-        this.rules          = model.rules || ''
-        this.tags           = model.tags || []
-        this.images         = model.images || []
-        this.price.hourly   = new Hourly(model.price)
-        this.price.daily    = new Daily(model.price)
-        this.price.weekly   = new Weekly(model.price)
-        this.price.monthly  = new Monthly(model.price)
-        this.priceUnit      = model.priceUnit || 'daily'
-        this.categoryId     = model.categoryId || null
-        this.amenityIds     = model.amenityIds || []
-        this.address        = model.address || new Address()
-        this.availability   = model.availability || new Availability()
-        this.status         = model.status || ListingStatus.DRAFT
-        this.currency       = model.currency || 'AUD'
-        this.tax            = new TaxDetails(model.tax || null)
-        this.createdAt      = model.createdAt || new Date()
-      }
+  constructor(model: any = null) {
+    super(model)
+    if(model) {
+      this.id            = model.id || null
+      this.ref           = model.ref || null
+      this.ownerUid      = model.ownerUid || null
+      this.title         = model.title || ''
+      this.description   = model.description || ''
+      this.rules         = model.rules || ''
+      this.tags          = model.tags || []
+      this.images        = model.images || []
+      this.price.hourly  = new Hourly(model.price)
+      this.price.daily   = new Daily(model.price)
+      this.price.weekly  = new Weekly(model.price)
+      this.price.monthly = new Monthly(model.price)
+      this.priceUnit     = model.priceUnit || 'daily'
+      this.categoryId    = model.categoryId || null
+      this.amenityIds    = model.amenityIds || []
+      this.address       = model.address || new Address()
+      this.availability  = model.availability || new Availability()
+      this.status        = model.status || ListingStatus.DRAFT
+      this.createdAt     = model.createdAt || new Date()
     }
   }
 
-  export enum ListingStatus {
-    DRAFT   = 'draft',
-    PENDING = 'pending',
-    ACTIVE  = 'active',
-    HIDDEN  = 'hidden',
-    DELETED = 'deleted'
-  }
+}
 
-  export class TaxDetails extends Object {
-    percent: number = 0
-    name: string = 'none'
-    country: string = null
+export enum ListingStatus {
+  DRAFT   = 'draft',
+  PENDING = 'pending',
+  ACTIVE  = 'active',
+  HIDDEN  = 'hidden',
+  DELETED = 'deleted'
+}
 
-    constructor(model: any = null) {
-      super (model)
-      if(model) {
-        this.percent = model.percent | 0
-        this.name = model.name || 'none'
-        this.country = model.country || null 
-      }
+export class TaxDetails extends Object {
+  percent: number
+  name:    string
+  country: string
+
+  constructor(model: any = null) {
+    super(model)
+    if(model) {
+      this.percent = model.percent
+      this.name    = model.name
+      this.country = model.country
     }
   }
 
-  export class Price extends Object {
-    price:       number = null
-    minimumTerm: number = 1
-    incentives:  boolean = false
+}
 
-    constructor( model: any = null ) {
+export class Price extends Object {
 
-      super (model)
+  price:       number
+  minimumTerm: number
+  incentives:  boolean
+  currency:    string = 'AUD'
+  tax:         TaxDetails
 
-      if ( model ) {
-        this.price        = model.price || null
-        this.minimumTerm  = model.minimumTerm || 1
-        this.incentives   = model.incentives || false
-      }
+  constructor(model: any = null) {
+    super(model)
+    if(model) {
+      this.price       = model.price || 0
+      this.minimumTerm = model.minimumTerm || 0
+      this.incentives  = model.incentives || false
+      this.currency    = model.currency || 'AUD'
+      this.tax         = new TaxDetails(model.tax || null)
     }
   }
 
-  export class Hourly extends Price {
+}
 
-    halfDay: number = null
-    day:     number = null
+export class Hourly extends Price {
 
-    constructor( model: any = null ) {
+  halfDay: number
+  day:     number
 
-      super(model)
-
-      if (model) {
-        this.halfDay = model.halfDay || null
-        this.day     = model.day || null
-      }
-
+  constructor(model: any = null) {
+    super(model)
+    if(model) {
+      this.halfDay = model.halfDay || 0
+      this.day     = model.day || 0
     }
   }
 
-  export class Daily extends Price {
+}
 
-    week: number = null
+export class Daily extends Price {
 
-    constructor( model: any = null ) {
+  week: number
 
-      super(model)
-
-      if ( model ) {
-        this.week = model.week || null
-      }
-
+  constructor(model: any = null) {
+    super(model)
+    if(model) {
+      this.week = model.week || 0
     }
   }
 
-  export class Weekly extends Price {
+}
 
-    month: number = null 
+export class Weekly extends Price {
 
-    constructor( model: any = null ) {
+  month: number
 
-      super(model)
-
-      if (model) {
-        this.month = model.month || null
-      }
-
+  constructor(model: any = null) {
+    super(model)
+    if(model) {
+      this.month = model.month || 0
     }
   }
 
-  export class Monthly extends Price {
+}
 
-    sixMonths:  number = null 
-    year:       number = null
+export class Monthly extends Price {
 
-    constructor( model: any = null ) {
+  sixMonths: number
+  year:      number
 
-      super(model)
-
-      if (model) {
-        this.sixMonths = model.sixMonths || null
-        this.year      = model.year || null
-      }
-
+  constructor(model: any = null) {
+    super(model)
+    if(model) {
+      this.sixMonths = model.sixMonths || 0
+      this.year      = model.year || 0
     }
   }
+
+}

@@ -70,25 +70,6 @@
         }
       }
 
-      .paragraph-section {
-        p {
-          text-overflow: ellipsis;
-
-          a {
-            display: block;
-            padding-top: 8px;
-
-            &:before {
-              content: '+';
-            }
-          }
-
-          &.truncate {
-            a { display: none }
-          }
-        }
-      }
-
       > .overview-ammenities {
         ul.ammenities-list {
           display: grid;

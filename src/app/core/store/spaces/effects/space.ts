@@ -20,8 +20,8 @@ export class SpaceEffects {
     mergeMap(actions => actions),
     map(action => {
       return {
-        type: `[Spaces] ${action.type}`,
-        payload: action.payload.doc.data()
+        type:    `[Spaces] ${action.type}`,
+        payload: action.doc.data()
       }
     })
   )
@@ -29,8 +29,30 @@ export class SpaceEffects {
   @Effect()
   select$ = this._actions$.pipe(
     ofType<actions.Select>(actions.SELECT),
-    switchMap(action => this._service.readOne(action.id)),
-    map(space => new actions.Success(space))
+    switchMap(action => this._service.select(action.ids)),
+    mergeMap(actions => actions),
+    map(action =>
+      new actions.Added(<Space>action.payload.data())
+    )
+  )
+
+  @Effect()
+  filter$ = this._actions$.pipe(
+    ofType<actions.Filter>(actions.FILTER),
+    switchMap(action => this._service.filter(action.params)),
+    mergeMap(docChanges => docChanges),
+    map(change => {
+      return {
+        type:    `[Spaces] ${change.type}`,
+        payload: change.doc.data()
+      }
+    })
+  )
+
+  @Effect()
+  success$ = this._actions$.pipe(
+    ofType(actions.ADDED, actions.REMOVED, actions.MODIFIED),
+    map(action => new actions.Success)
   )
 
   constructor(

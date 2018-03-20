@@ -1,0 +1,275 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Booking Hosting Confirmation</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,700" rel="stylesheet">
+<style>
+    * {
+        --gap: 10px;
+        --font-family: 'Montserrat', sans-serif;
+        --light: 300;
+        --bold: 700;
+        --font-small: calc(8px * 2);
+        --font-regular: calc(10px * 2);
+        --font-large: calc(16px * 2);
+        --color: #173839;
+        --color-light: #6cde93;
+    }
+
+    body {
+        background-color: #E9E9E9;
+        color: var(--color);
+        font-family: var(--font-family);
+        font-weight: var(--light);
+        font-size: var(--font-regular);
+        line-height: calc(var(--font-regular) * 1.5);
+        margin: 0 auto;
+        max-width: 960px;
+        width: 960px;
+    }
+
+    /***************
+        HELPERS
+    ****************/
+
+    a {
+        color: var(--color-light);
+    }
+
+    .bold {
+        font-weight: var(--bold);
+    }
+
+    .caption {
+        font-size: var(--font-small);
+    }
+
+    .title {
+        font-size: var(--font-large);
+        font-weight: var(--bold);
+    }
+
+    .gridx12x10 {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-column-gap: var(--gap);
+    }
+
+    .grid {
+        grid-template-rows: repeat(53, 42px);
+    }
+
+    .grid > * {
+        grid-column: 1 / 13;
+    }
+
+    .header {
+        grid-row: 1 / 5;
+        background-color: #E9E9E9 ;
+        display: grid;
+        align-content: center;
+        justify-content: center;
+
+    }
+
+    .main-image {
+        background-color: #FFF;
+        grid-row: 5 / 17;
+    }
+
+    .body {
+        background-color: #FFF;
+        grid-row: 17 / 49;
+        grid-template-rows: repeat(13, 42px);
+    }
+
+    .body section {
+        grid-column: 2 / 12;
+        grid-template-rows: repeat(13, 42px);
+        margin: 0;
+        padding: 0;
+    }
+
+    .body section h1 {
+        margin-bottom: calc(var(--gap) * 6);
+        text-align: center;
+        font-size: var(--font-large);
+        font-weight: var(--bold);
+    }
+
+    .body section .info-space {
+        display: inline-block;
+        grid-template-rows: repeat(7, 42px);
+    }
+
+    .body section .info-space h1 {
+        text-align: left;
+        display: grid;
+        font-size: 28px;
+
+    }
+
+    .body section .info-space h2 {
+        display: inline-block;
+        width: calc(var(--gap) * 15);
+        font-size: 20px;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .body section .last-info {
+        padding-top : 90px;
+    }
+
+    .body section .last-info h1 {
+    text-align: center;        
+    font-size: 20px;
+
+    }
+
+    .footer {
+        grid-row: 49 / 53;
+    }
+
+    .footer ul {
+        grid-template-rows: repeat(2, 42px);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .footer ul > * {
+        grid-row: 2 / 3;
+    }
+
+    .footer ul > :nth-child(1) {
+        grid-column: 4 / 5;
+    }
+
+    .footer ul > :nth-child(2) {
+        grid-column: 5 / 6;
+    }
+
+    .footer ul > :nth-child(3) {
+        grid-column: 6 / 7;
+    }
+
+    .footer ul > :nth-child(4) {
+        grid-column: 7 / 8;
+    }
+
+    .footer ul > :nth-child(5) {
+        grid-column: 8 / 9;
+    }
+
+    .footer ul > :nth-child(6) {
+        grid-column: 9 / 10;
+    }
+    
+    .footer div {
+        grid-template-rows: repeat(3, 42px);
+    }
+
+    .footer div > span {
+        text-align: center;
+        grid-column: 3 / 11;
+        grid-row: 1 / 4;
+        justify-self: center;
+        align-self: center;
+    }
+    
+
+    article {
+        background: #FFFFFF;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="grid gridx12x10">
+
+    <header class="header">
+        <img width="220px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fspacenow-logo.svg?alt=media&token=c77eb9a4-90a7-4153-bb5b-653957648411" alt="Spacenow">
+    </header>
+
+    <div align="center" class="main-image">
+         <img src="{{listings/images}}" alt="spaceImage" width="90%">
+    </div>
+
+    <article class="body gridx12x10">
+        <section>
+            <h1 class="title">YOUR BOOKING HAS BEEN CONFIRMED</h1>
+            <hr color="#E4E4E4"></hr>
+            <br>
+            <p>Hi
+                <b>{{displayName}}</b>,
+                <br> Congratulations, your booking has been approved.</p>
+        
+            <div class="info-space">
+                <h1>Listing Details</h1>
+                <h2>Title:</h2>
+                <span>{{listings.titlle}}</span><br>
+                <h2>Price:</h2>
+                <span>{{listings.price}}</span><br>
+                <h2>Address:</h2>
+                <span>{{listings.aaddress}}</span><br>
+                <h2>Category:</h2>
+                <span>{{listings.category}}</span><br>
+                <h2>Capacity:</h2>
+                <span>{listings.capacity}}</span><br>
+            </div>
+            <div class="last-info">
+                <hr color="#E4E4E4"></hr>
+                <br>
+                <h1>Please find your invoice attached</h1>
+                <p>What happens next?</p>
+                <p>1. Review the rules and check in process for your booking to ensure there are no mix ups</p>
+                <p>2. Reach out to your host ahead of arrival if you are unclear about access to the site, the check in process, or
+                    specific amenities that are not already confirmed in the booking </p>
+                <p>If you have any concerns or need help please contact us at
+                    <br/>
+                    <br>
+                    <a href="mailto: info@spacenow.com.au">
+                        <u style="color: #6cde93 !important">info@spacenow.com.au</u>
+                    </a> or
+                    <a href="call: 1300127120">
+                        <u style="color: #6cde93 !important">1300 127 120</u>
+                    </a>
+                </p>
+                <br>
+                <p>Sincerely,
+                    <br/>
+                    <font color="#6cde93">Spacenow Team</font>
+                </p>
+            </div>
+        </section>
+
+    </article>
+
+    <footer class="footer">
+        
+        <ul class="gridx12x10">
+            <li><a href="https://www.facebook.com/spacenowaustralia/" target="_blank"><img width="27px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Ffacebook-icon.png?alt=media&token=fe6c5a2e-0181-4cd6-b66b-414f5ca4c855"></a></li>
+            <li><a href="https://www.linkedin.com/company/17945312" target="_blank"><img width="36px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Flinkedin-icon.png?alt=media&token=b3a07cc1-2115-4b31-8bd4-b4868cc080f0"></a></li>
+            <li><a href="https://plus.google.com/+SpaceNowSurryHills" target="_blank"><img width="50px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fgplus-icon.png?alt=media&token=14aa9cab-1e8d-410e-ba4e-422bccae7470"></a></li>
+            <li><a href="https://twitter.com/spacenow_aus" target="_blank"><img width="40px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Ftwitter-icon.png?alt=media&token=2a03f7b2-35c4-4d6d-a8e4-7add1aaeadd0"></a></li>
+            <li><a href="https://www.instagram.com/spacenowaustralia/" target="_blank"><img width="35px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Finstagram-icon.png?alt=media&token=911e2827-11e3-4d1f-a48f-6bbfaa615668"></a></li>
+            <li><a href="https://www.youtube.com/channel/UCIq-FZwLqPS81bASw2EksTA/featured" target="_blank"><img width="45px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fyoutube-icon.png?alt=media&token=0e64feb1-987d-4445-a217-0422a7f2a07f"></a></li>
+        </ul>
+
+        <div class="gridx12x10">
+            <span class="caption">
+                    You received this email because you are subscripted to Spacenow Email notification from Spacenow. Update your email preferences to chose the type of emails you receive.
+            </span>
+        </div>
+
+    </footer>
+</div>
+
+</body>
+</html>

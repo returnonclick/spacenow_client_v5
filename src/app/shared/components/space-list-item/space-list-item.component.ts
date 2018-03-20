@@ -1,4 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core'
+import { Router } from '@angular/router'
+
+import { Space } from '@models/space'
 
 @Component({
   selector: 'sn-space-list-item',
@@ -8,15 +11,18 @@ import { Component, Input, ViewEncapsulation } from '@angular/core'
 })
 export class SpaceListItemComponent {
 
-  @Input() space:          any     = null
-  @Input() multipleImages: boolean = true
+  @Input() space:          Space   = null
   @Input() showOptions:    boolean = true
   imageIndex:              number  = 0
+
+  constructor(
+    private _router: Router,
+  ) { }
 
   handleClick(src) {
     switch(src) {
       case 'view':
-        console.log('view', this.space.id)
+        this._router.navigate([ 'app', 'space', this.space.id ])
         break;
        case 'favorite':
         console.log('favorite', this.space.id)

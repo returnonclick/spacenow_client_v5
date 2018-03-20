@@ -35,8 +35,8 @@ export class ExceptionDay {
     
     if ( model ) {
 
-      this.fromDate = model.date || null
-      this.toDate = model.date || null
+      this.fromDate = model.fromDate || null
+      this.toDate = model.toDate || null
       this.note = model.note || ''
 
     }

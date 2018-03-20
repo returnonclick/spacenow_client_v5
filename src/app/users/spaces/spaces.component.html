@@ -1,0 +1,7 @@
+<h3>Manage my Spaces</h3>
+<div class="space-list">
+  <sn-space-list-item
+    *ngFor="let space of (spaces$ | async)"
+    [space]="space">
+  </sn-space-list-item>
+</div>

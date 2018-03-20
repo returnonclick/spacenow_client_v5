@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 
@@ -24,8 +25,9 @@ export class GeneralBookingComponent implements OnInit {
   minDate: Date = new Date()
 
   constructor(
-    private _fb:    FormBuilder,
-    private _store: Store<fromRoot.State>,
+    private _fb:       FormBuilder,
+    private _store:    Store<fromRoot.State>,
+    private _snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -92,17 +94,31 @@ export class GeneralBookingComponent implements OnInit {
     }
 
     this._store.dispatch(new cartActions.Add(bookingSpace))
+    let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
+    snackBar.onAction().subscribe(() => {
+      window.open('/app/checkout')
+      snackBar.dismiss()
+    })
   }
 
   // this one is a closure: a function that returns a function with the context
   // of `this.space`'s availability exceptions
   exceptions() {
     return (d: Date | null): boolean => {
-      let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.fromDate).format('YYYY-MM-DD'))
+      let exceptionRanges = this.space.availability.exceptionDays.map(range => {
+        return {
+          from: moment(range.fromDate),
+          to:   moment(range.toDate),
+        }
+      })
+      // let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.fromDate).format('YYYY-MM-DD'))
       let dayMoment      = moment(d)
       let day            = dayMoment.format('ddd').toLowerCase()
 
-      return exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
+      return exceptionRanges.reduce((acc, curr) => {
+          acc = acc && !moment(d).isBetween(curr.from, curr.to, null, '[]')
+          return acc
+        }, true)// exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
         && this.space.availability.openingTime[day].isOpen
     }
   }
