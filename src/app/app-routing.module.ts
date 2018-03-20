@@ -39,7 +39,7 @@ const appRoutes: Routes = [
     component: LayoutNoFooterComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', loadChildren: '@features/listings/listings.module#ListingModule'}
+      { path: '', loadChildren: '@app/listings/listings.module#ListingModule'}
     ]
   },
   {
@@ -47,7 +47,7 @@ const appRoutes: Routes = [
     component: LayoutNoFooterComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', loadChildren: '@features/users/users.module#UsersModule'}
+      { path: '', loadChildren: '@app/users/users.module#UsersModule'}
     ]
   },
   { path: 'sign-in', component: SignInComponent },

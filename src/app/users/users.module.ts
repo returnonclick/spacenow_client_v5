@@ -15,12 +15,12 @@ import { UserProfileEffects } from '@core/store/users-profile/effects/user-profi
 
 import { SharedModule }       from '@shared/shared.module'
 
-import { UsersRoutingModule }         from '@features/users/users-routing.module'
-import { ProfileDetailComponent }     from "@features/users/profile-detail/profile-detail.component"
-import { ProfileContainerComponent }  from '@features/users/profile-container/profile-container.component'
-import { SpacesComponent }            from '@features/users/spaces/spaces.component'
-import { CalendarComponent }          from '@features/users/calendar/calendar.component'
-import { FavoritesComponent }         from '@features/users/favorites/favorites.component'
+import { UsersRoutingModule }         from '@app/users/users-routing.module'
+import { ProfileDetailComponent }     from "@app/users/profile-detail/profile-detail.component"
+import { ProfileContainerComponent }  from '@app/users/profile-container/profile-container.component'
+import { SpacesComponent }            from '@app/users/spaces/spaces.component'
+import { CalendarComponent }          from '@app/users/calendar/calendar.component'
+import { FavoritesComponent }         from '@app/users/favorites/favorites.component'
 
 const COMPONENTS = [
   CalendarComponent,
