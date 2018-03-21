@@ -8,6 +8,8 @@
  * 
  *  */
 
+import { ImageData } from "@shared/models/image-data";
+
 export class Category {
   id: string
   name: string
@@ -15,5 +17,9 @@ export class Category {
   order: number
   amenities: string[]
   specifications: Object[]
+  icon: number[][]
+  description: string
+  image: ImageData
+
 }
 

@@ -16,7 +16,7 @@
     @include respond-to('tablet') {
         --size: 80%;
     }
-    @include respond-to('phone') {
+    @include respond-to('phone-wide') {
         --size: 90%;
     }
 
@@ -47,7 +47,7 @@
             padding: calc(var(--gap) / 2);
             width: 100%;
 
-            @include respond-to('phone') {
+            @include respond-to('phone-wide') {
                 grid-template-columns: repeat(1, 1fr);
             }
 

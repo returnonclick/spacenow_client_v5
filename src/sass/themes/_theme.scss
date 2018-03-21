@@ -28,7 +28,12 @@ body,
 	grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
 	grid-column-gap: 30px;
 
-	@include respond-to('phone') {
+	@include respond-to('tablet') {
+		grid-template-columns: 1fr repeat(12, minmax(auto, 75px)) 1fr;
+		grid-column-gap: 20px;
+	}
+
+	@include respond-to('phone-wide') {
 		grid-template-columns: 20px repeat(32, minmax(10px, auto)) 20px;
 		grid-column-gap: 0;
 	}
@@ -38,7 +43,11 @@ body,
 		display: grid !important;
 		grid-column: 2 / span 12;
 
-		@include respond-to('phone') {
+		@include respond-to('tablet') {
+			grid-column: 2 / span 14;
+		}
+
+		@include respond-to('phone-wide') {
 			grid-column: 2 / span 34;
 		}
 

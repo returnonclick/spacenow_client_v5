@@ -3,6 +3,8 @@ import { AngularFirestore } from 'angularfire2/firestore'
 import { Category } from '@shared/models/category';
 import { ListingSpecification } from '@shared/models/listing-specification';
 
+import {Observable} from "rxjs/Observable";
+
 @Injectable()
 export class CategoryService {
 

@@ -16,13 +16,15 @@ import { HomeComponent } from '@app/home/home.component';
 import { SearchComponent } from '@app/search/search.component';
 import { SpaceComponent } from '@app/space/space.component';
 
-
 const appRoutes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: HomeComponent },
+      { 
+        path: '', 
+        component: HomeComponent
+      },
       { path: 'space', component: SpaceComponent },
       { path: 'space/:id', component: SpaceComponent },
     ]
@@ -37,7 +39,7 @@ const appRoutes: Routes = [
   {
     path: 'listing',
     component: LayoutNoFooterComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       { path: '', loadChildren: '@app/listings/listings.module#ListingModule'}
     ]
@@ -62,10 +64,10 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      //{ enableTracing: true } // <-- debugging purposes only
+      { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  // providers: [ appRoutingProviders ],
+  providers: [ ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

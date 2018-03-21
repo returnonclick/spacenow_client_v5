@@ -4,7 +4,7 @@
         --gap: 30px;
         --color__pastel_green: $color__pastel_green;
 
-        @include respond-to('phone') {
+        @include respond-to('phone-wide') {
             --gap: 20px;
         }
 
@@ -32,7 +32,7 @@
             height: 50px;
             width: 200px;
 
-            @include respond-to('phone') {
+            @include respond-to('phone-wide') {
                 height: 42px;
                 width: 150px;
             }
@@ -60,7 +60,7 @@
         }
         
         a.list-your-space {
-            @include respond-to('phone') {
+            @include respond-to('phone-wide') {
                 display: none;
             }
         }

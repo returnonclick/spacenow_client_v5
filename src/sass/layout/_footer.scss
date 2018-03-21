@@ -3,7 +3,7 @@ footer {
 
     --margin: 200px;
     --gap: 30px;
-    @include respond-to('phone') {
+    @include respond-to('phone-wide') {
         --margin: 50px;
     }
 
@@ -24,10 +24,61 @@ footer {
         "menu menu social-media";
         margin: var(--margin) 0;
 
-        @include respond-to('phone') {
-            grid-column: 2 / 34;
+        .logo {
+            grid-area: logo;
+        }
+
+        .help-pages {
+            grid-area: help-pages;
+            justify-self: end;
+
+            ul li {
+                display: inline-block;
+                margin-left: var(--gap);
+
+                a {
+                    font-size: 18px;
+                }
+
+            }
+
+        }
+
+        .copyright {
+            grid-area: copyright;
+            font-size: 14px;
+            align-self: end;
+        }
+
+        .menu {
+            grid-area: menu;
+
+            ul li {
+                display: inline-block;
+
+                a {
+                    font-size: 14px;
+                }
+            }
+
+        }
+
+        .social-media {
+            grid-area: social-media;
+            justify-self: end;
+            align-self: end;
+
+            li {
+                display: inline-block;
+                margin-left: var(--gap);
+            }
+
+        }
+
+        @include respond-to('tablet') {
+            grid-column: 2 / 14;
             grid-template-columns: 1fr;
-            grid-template-rows: auto;
+            grid-template-rows: repeat(5, auto);
             grid-gap: 5px;
             grid-template-areas: 
                 "social-media"
@@ -36,99 +87,120 @@ footer {
                 "menu"
                 "copyright";
             justify-content: center;
-            align-content: center
-        }
+            align-content: center;
 
-        img.logo {
-            grid-area: logo;
-            @include respond-to('phone') {
+            > .logo {
+                grid-area: logo;
                 justify-self: center;
                 margin: var(--gap) 0;
             }
-        }
 
-        div.help-pages {
-            grid-area: help-pages;
-            justify-self: end;
-
-            @include respond-to('phone') {
+            > .help-pages {
+                grid-area: help-pages;
                 justify-self: center;
-            }
-        
 
-            ul li {
-                display: inline-block;
-                margin-left: var(--gap);
+                ul li {
 
-                @include respond-to('phone') {
                     margin: 5px;
-                }
 
-                a {
-                    font-size: 18px;
-                    @include respond-to('phone') {
+                    a {
                         font-size: 12px;
                     }
+
                 }
 
             }
 
-        }
-
-        span.copyright {
-            grid-area: copyright;
-            font-size: 14px;
-            align-self: end;
-
-            @include respond-to('phone') {
+            > .copyright {
+                grid-area: copyright;
                 font-size: 12px;
                 justify-self: center;
             }
-        }
 
-        div.menu {
-            grid-area: menu;
+            > .menu {
+                grid-area: menu;
 
-            ul {
-
-                @include respond-to('phone') {
+                ul {
                     flex-direction: column !important;
+                    li {
+                        display: block;
+                        text-align: center;
+                        a {
+                            font-size: 12px;
+                        }
+                    }
                 }
-
+    
             }
 
-            ul li {
-                
-                display: inline-block;
+            > .social-media {
+                grid-area: social-media;
+                justify-self: center;
+            }
 
-                @include respond-to('phone') {
-                    display: block;
-                    text-align: center;
-                }
+        }
 
-                a {
-                    font-size: 14px;
+        @include respond-to('phone-wide') {
+            grid-column: 2 / 34;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(5, auto);
+            grid-gap: 5px;
+            grid-template-areas: 
+                "social-media"
+                "help-pages"
+                "logo"
+                "menu"
+                "copyright";
+            justify-content: center;
+            align-content: center;
 
-                    @include respond-to('phone') {
+            > .logo {
+                grid-area: logo;
+                justify-self: center;
+                margin: var(--gap) 0;
+            }
+
+            > .help-pages {
+                grid-area: help-pages;
+                justify-self: center;
+
+                ul li {
+
+                    margin: 5px;
+
+                    a {
                         font-size: 12px;
                     }
 
                 }
+
             }
 
-        }
-
-        ul.social-media {
-            grid-area: social-media;
-            justify-self: end;
-            align-self: end;
-            @include respond-to('phone') {
+            > .copyright {
+                grid-area: copyright;
+                font-size: 12px;
                 justify-self: center;
             }
 
-            li {
-                display: inline-block;
-                margin-left: var(--gap);
+            > .menu {
+                grid-area: menu;
+
+                ul {
+                    flex-direction: column !important;
+                    li {
+                        display: block;
+                        text-align: center;
+                        a {
+                            font-size: 12px;
+                        }
+                    }
+                }
+    
+            }
+
+            > .social-media {
+                grid-area: social-media;
+                justify-self: center;
             }
 
         }

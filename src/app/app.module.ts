@@ -38,6 +38,9 @@ import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { SpaceComponent } from './space/space.component';
 
+import { CategoryService } from '@core/store/categories/services/category'
+import { CategoryEffects } from '@core/store/categories/effects/category'
+
 import { SpaceService } from '@core/store/spaces/services/space'
 import { SpaceEffects } from '@core/store/spaces/effects/space'
 
@@ -51,6 +54,7 @@ const COMPONENTS = [
 ]
 
 const SERVICES = [
+  CategoryService,
   SpaceService,
   SearchService
 ]
@@ -79,6 +83,7 @@ const SERVICES = [
     }),
 
     EffectsModule.forFeature([
+      CategoryEffects,
       SpaceEffects,
       SearchEffects
     ]),

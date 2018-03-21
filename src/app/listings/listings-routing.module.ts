@@ -12,7 +12,6 @@ import { BookingComponent } from './booking/booking.component'
 import { ExceptionComponent } from './exception/exception.component'
 import { ImageComponent } from './image/image.component'
 import { TermComponent } from './term/term.component'
-
  
 const routes: Routes = [
 
@@ -20,7 +19,10 @@ const routes: Routes = [
     path: '',
     component: ContainerComponent,
     children: [
-      { path: 'category', component: CategoryComponent }
+      { 
+        path: 'category', 
+        component: CategoryComponent
+      }
     ]
   },
   {

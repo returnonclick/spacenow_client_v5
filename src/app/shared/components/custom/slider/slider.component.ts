@@ -6,6 +6,7 @@ import {
   Renderer2,
   ViewChild,
   ViewContainerRef,
+  ElementRef,
   // ViewEncapsulation,
 } from '@angular/core'
 import { Observable } from 'rxjs'
@@ -49,11 +50,19 @@ export class SliderComponent {
   constructor(
     private _factoryResolver: ComponentFactoryResolver,
     private _renderer: Renderer2,
-  ) { }
+    private _el: ElementRef
+  ) {}
 
-  ngOnInit() {
+  ngOnChanges() {
+    
+    if (this.items.length === 0)
+      return
+    
+    console.log(this.items)
+
+    this._el.nativeElement.style.setProperty('--totalItems', this.items.length)
     this.slider     = this.container.element.nativeElement.parentNode
-    this.totalPages = Math.ceil(1.0 * this.items.length / this.perPage)
+    this.totalPages = this.items.length - Math.ceil(1.0 * (this._el.nativeElement.offsetWidth / 320)) + 2//Math.ceil(1.0 * this.items.length / this.perPage)
     let factory     = this._factoryResolver.resolveComponentFactory(this.component)
 
     this.items.forEach(item => {
@@ -68,7 +77,7 @@ export class SliderComponent {
   }
 
   applyTransition() {
-    this._renderer.setStyle(this.slider, 'transform', `translateX(calc(-100% * ${this.currentPage}))`)
+    this._renderer.setStyle(this.slider, 'transform', `translateX(calc(-340px * ${this.currentPage}))`)
   }
 
   nextPage() {

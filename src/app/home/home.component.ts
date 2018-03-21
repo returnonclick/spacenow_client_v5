@@ -1,35 +1,56 @@
-import { Component } from '@angular/core'
-import { FormBuilder,  FormGroup, Validators } from '@angular/forms'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Component }              from '@angular/core'
+import { FormBuilder,  
+         FormGroup, 
+         Validators }             from '@angular/forms'
+import { ActivatedRoute, 
+         Router }                 from '@angular/router'
 
 import { Store, select }          from '@ngrx/store'
+import { Observable }             from 'rxjs/Observable'
 
-import { CardComponent, FeaturedCardComponent } from '@shared/components/custom/cards'
+import { CardComponent, 
+         FeaturedCardComponent }  from '@shared/components/custom/cards'
+import { Category }               from '@shared/models/category'
 
 import * as fromRoot              from '@core/store'
-import * as actions         from '@core/store/layouts/actions/layout'
+import * as actions               from '@core/store/layouts/actions/layout'
+import * as categoryActions       from '@core/store/categories/actions/category'
+import { switchMap, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sn-home',
   templateUrl: './home.component.html',
   styleUrls: [ './home.component.scss' ]
 })
-export class HomeComponent {
 
-  form:      FormGroup
+export class HomeComponent {
+  
+  form:   FormGroup
   name:   string = ''
   radius: number = 20
   lat:    number = -33.9108137
   lng:    number = 151.1960078
 
+  categories$: Observable<Category[]>
+
+  sliderComponent: any = CardComponent
+  sliderFeaturedComponent: any = FeaturedCardComponent
+
   constructor(
     private _fb:     FormBuilder,
-    private _store: Store<fromRoot.State>,
-    private _router: Router
-  ){}
+    private _store:  Store<fromRoot.State>,
+    private _router: Router,
+    private _route:  ActivatedRoute
+  ){
+    this.categories$ = this._store.pipe(
+      select(fromRoot.getAllCategories)
+    )
+  }
 
   ngOnInit() {
     this._store.dispatch(new actions.SetLogoWhite())
+    this._store.dispatch(new categoryActions.Query())
     this.createForm()
   }
 
@@ -46,12 +67,12 @@ export class HomeComponent {
 
     let formVal = this.form.value
 
-    this._router.navigate(['/app/search'], {
+    this._router.navigate(['/search'], {
       queryParams: {
         name:   encodeURIComponent(formVal.name),
         radius: formVal.radius,
         lat:    formVal.lat,
-        lng:    formVal.lng,
+        lng:    formVal.lng
       }
     })
   }
@@ -65,24 +86,12 @@ export class HomeComponent {
     })
   }
 
-  sliderComponent: any = CardComponent
-  sliderFeaturedComponent: any = FeaturedCardComponent
-  data: Array<any> = [{
-    isNew: true
-  }, {
-    isNew: !true
-  }, {
-    isNew: true
-  }, {
-    isNew: true
-  }, {
-    isNew: !true
-  }, {
-    isNew: true
-  }, {
-    isNew: !true
-  }, {
-    isNew: true
-  }]
+  
+  // data: Array<any> = [{
+  //   isNew: true,
+  //   icon: 'add',
+  //   button: 'Coworking',
+  //   description: 'First test with description'
+  // }]
 }
 

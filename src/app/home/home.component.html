@@ -21,12 +21,12 @@
     by the hour
     day or month</h2>
 
-    <gen-slider [component]="sliderComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
+    <gen-slider [component]="sliderComponent" [items]="categories$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
   </section>
 
   <!-- SECTION TWO -->
-  <section id="section-two">
+  <!-- <section id="section-two">
     
     <h2 class="right">Any space 
     by the hour
@@ -34,10 +34,10 @@
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
 
-  </section>
+  </section> -->
 
   <!-- SECTION THREE -->
-  <section id="section-three">
+  <!-- <section id="section-three">
     <div>
         <iframe src="https://www.youtube.com/embed/Nyw7ytSKbus?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="video"></iframe>
     </div>
@@ -50,10 +50,10 @@
       <p>Arash
       CEO of spacenow</p>
     </div>
-  </section>
+  </section> -->
 
   <!-- SECTION FOUR -->
-  <section id="section-four" class="grid">
+  <!-- <section id="section-four" class="grid">
     <div>
       <h2>Your space is safe and secured</h2>
       <p>We are, and have been for some time, rooted very firmly in the moment, just as John Muir must have been in the late 1800s when he spent his first-ever summer in the Sierra. Muir was born and grew up in East Lothian, Scotland, where he developed a fascination with the surrounding countryside and the nearby coastli</p>
@@ -96,10 +96,10 @@
               </mat-card>
       </div>
     </div>
-  </section> 
+  </section>  -->
 
   <!-- SECTION SIX -->
-  <section id="section-six">
+  <!-- <section id="section-six">
     
     <h2 class="left">Any space 
       by the hour
@@ -107,10 +107,10 @@
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
   
-  </section>
+  </section> -->
 
   <!-- SECTION SEVEN -->
-  <section id="section-seven">
+  <!-- <section id="section-seven">
     
     <h2 class="right">Any space 
     by the hour
@@ -118,6 +118,6 @@
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
 
-  </section>
+  </section> -->
 
 </div>

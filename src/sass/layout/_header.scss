@@ -2,6 +2,7 @@ header {
 
     border-bottom: 4px solid $color__gable_green;
     height: 90vh;
+    min-height: 700px;
     align-items: center;
 
     background: $color__white url('/assets/images/layout/header.jpg');
@@ -29,7 +30,7 @@ header {
         grid-template-rows: 1fr 1fr;
         grid-gap: 30px;
 
-        @include respond-to('phone') {
+        @include respond-to('phone-wide') {
             grid-column: 2 / 34;
             grid-template-columns: 1fr;
             grid-template-rows: auto;
@@ -42,7 +43,7 @@ header {
             grid-column: 1 / 2;
             color: $color__white;
 
-            @include respond-to('phone') {
+            @include respond-to('phone-wide') {
                 grid-column: 1 / 2;
                 font-size: 40px;
                 line-height: 40px;
@@ -52,7 +53,7 @@ header {
 
         .search-form {
             grid-column: 1 / span 2;
-            @include respond-to('phone') {
+            @include respond-to('phone-wide') {
                 grid-column: 1 / 2;
             }
         }

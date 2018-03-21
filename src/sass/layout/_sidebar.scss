@@ -15,9 +15,14 @@
     right: var(--sidenav-r);
     transition: transform .3s ease-in-out;
 
-    @include respond-to('phone') {
-        width: calc(var(--sidenav) * 2 + 10%);
-        right: calc(var(--sidenav-r) * 2 + 10%);
+    @include respond-to('tablet') {
+        width: 80%;
+        right: -80%;
+    }
+
+    @include respond-to('phone-wide') {
+        width: 100%;
+        right: -100%;
     }
 
 

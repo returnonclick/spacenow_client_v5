@@ -26,13 +26,13 @@
     <nav id="main-nav">
       <a routerLink="/" class="logo" [ngClass]="logo$ | async"></a>
       <span><!-- fill space --></span>
-      <a routerLink="/listing/category" class="hidden-tablet-small">List your space</a>
+      <a routerLink="/listing/category" class="hidden-tablet">List your space</a>
       <div *ngIf="isSignedIn$ | async; then authenticated else guest"></div>
     </nav>
 
     <!-- User NOT logged in -->
     <ng-template #guest>
-      <button mat-icon-button [matMenuTriggerFor]="burguerMenu" class="hidden show-tablet-small">
+      <button mat-icon-button [matMenuTriggerFor]="burguerMenu" class="hidden show-tablet">
         <mat-icon aria-label="Menu" style="color: white">menu</mat-icon>
       </button>
       <mat-menu #burguerMenu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
@@ -40,8 +40,8 @@
         <button mat-menu-item (click)="openSidenav(); setSidenavLogin();">Log in</button>
         <button mat-menu-item (click)="openSidenav(); setSidenavRegister();">Sign up</button>
       </mat-menu> 
-      <a href="#" (click)="openSidenav(); setSidenavLogin();" class="hidden-tablet-small">Log in</a>
-      <a href="#" (click)="openSidenav(); setSidenavRegister();" class="hidden-tablet-small">Sign up</a>
+      <a href="#" (click)="openSidenav(); setSidenavLogin();" class="hidden-tablet">Log in</a>
+      <a href="#" (click)="openSidenav(); setSidenavRegister();" class="hidden-tablet">Sign up</a>
     </ng-template>
 
     <!-- User logged in -->
