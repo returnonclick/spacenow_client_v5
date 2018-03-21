@@ -1,7 +1,8 @@
-import { Component, HostListener } from '@angular/core'
+import { AgmMap } from '@agm/core'
+import { Component, HostListener, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-
 import { Store } from '@ngrx/store'
+import {} from 'googlemaps'
 import { Observable } from 'rxjs'
 
 import { Space } from '@models/space'
@@ -15,6 +16,8 @@ import * as spaceActions from '@core/store/spaces/actions/space'
   styleUrls: ['./space.component.scss']
 })
 export class SpaceComponent {
+
+  @ViewChild(AgmMap) map: AgmMap
 
   space$:         Observable<Space>
   isLoadingPage$: Observable<boolean>
@@ -50,6 +53,20 @@ export class SpaceComponent {
     this._route.fragment.subscribe(fragment => {
       this.fragment = fragment
       this.jumpToSection()
+    })
+    Observable.combineLatest(
+      this.map.mapReady,
+      this.space$,
+    ).subscribe(([map, space]) => {
+      if(map && space) {
+        let latLng = new google.maps.LatLng(+space.address.latitude, +space.address.longitude)
+        new google.maps.Marker({
+          animation: google.maps.Animation.DROP,
+          map:       <google.maps.Map>map,
+          position:  latLng,
+          icon:      'assets/icons/spacenow_icon_01.svg',
+        })
+      }
     })
   }
 

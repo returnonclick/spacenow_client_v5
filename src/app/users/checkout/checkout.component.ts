@@ -35,10 +35,10 @@ export class CheckoutComponent {
   categories: Dictionary<Category>
   spaces:     Dictionary<Space>
 
+  cart:                BookingSpace[]
   costBreakdown:       any[]
   hasAgreed:           boolean      = false
   hasConfirmedDetails: boolean      = false
-  lastDeleted:         BookingSpace = null
   loadPayments:        any
   snackBarDuration:    number       = 1000
 
@@ -55,6 +55,7 @@ export class CheckoutComponent {
     })
 
     this.cart$.subscribe(cart => {
+      this.cart = cart
       this._store.dispatch(new spaceActions.Select(
         cart.map(item => item.spaceId)
       ))
@@ -74,7 +75,7 @@ export class CheckoutComponent {
         let tax        = 0
         for(let item of cart) {
           let space      = spaces[item.spaceId]
-          let spacePrice = space.price[space.priceUnit] as Price
+          let spacePrice = space.price
           let price      = 0
           if(space.priceUnit == 'hourly')
             price += spacePrice.price * (item.bookingDates[0].toHour - item.bookingDates[0].fromHour)
@@ -82,7 +83,7 @@ export class CheckoutComponent {
             price += spacePrice.price * item.bookingDates.length
 
           totalPrice += price
-          tax        += price * (spacePrice.tax.percent / 100.0)
+          tax        += price * (space.tax.percent / 100.0)
         }
 
         this.costBreakdown = [
@@ -123,13 +124,27 @@ export class CheckoutComponent {
   }
 
   removeItem(cartItem: BookingSpace) {
-    this.lastDeleted = cartItem
+    let lastDeleted = cartItem
     this._store.dispatch(new cartActions.Remove(cartItem.spaceId))
 
     this._snackbar.open('Listing deleted from cart', 'Undo' , {
       duration: this.snackBarDuration * 10,
     }).onAction().subscribe(() => {
-      this._store.dispatch(new cartActions.Add(this.lastDeleted))
+      this._store.dispatch(new cartActions.Add(lastDeleted))
+    })
+  }
+
+  clearCart(cart: BookingSpace[]) {
+    let lastDeleted = this.cart
+
+    this._store.dispatch(new cartActions.Clear)
+
+    this._snackbar.open('Cart cleared', 'Undo', {
+      duration: this.snackBarDuration * 10,
+    }).onAction().subscribe(() => {
+      lastDeleted.forEach(item => {
+        this._store.dispatch(new cartActions.Add(item))
+      })
     })
   }
 
@@ -145,7 +160,7 @@ export class CheckoutComponent {
   }
 
   viewSpace(spaceId) {
-    window.open(`/app/space/${spaceId}`)
+    window.open(`/space/${spaceId}`)
   }
 
   formatDate(d: Date, fromFmt: string = null, toFmt: string = 'DD MMM YYYY') {

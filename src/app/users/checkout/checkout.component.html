@@ -81,6 +81,7 @@
                 </mat-expansion-panel-header>
 
                 <h4>{{ categories[spaces[cartItem.spaceId].categoryId]?.name }}</h4>
+                <span>{{ spaces[cartItem.spaceId]?.address.full_name }}</span>
                 <span class="num-guests">
                   {{ cartItem.numGuests }} occupant{{ cartItem.numGuests > 1 ? 's' : '' }}
                 </span>
@@ -113,6 +114,7 @@
           </mat-accordion>
         </ng-template>
       </div>
+      <button mat-button class="clear-cart" color="warn" (click)="clearCart()">Remove All</button>
       <table class="price-breakdown">
         <tbody>
           <tr *ngFor="let item of costBreakdown">

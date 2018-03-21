@@ -19,8 +19,8 @@
     </ul>
     <div id="space-overview">
       <div class="overview-title">
-        <span class="address">114 William Street, Melbourne, VIC</span>
-        <h2 class="title">{{ (space$ | async).title }}</h2>
+        <span class="address">{{ (space$ | async)?.address.full_name }}</span>
+        <h2 class="title">{{ (space$ | async)?.title }}</h2>
         <div class="rating">
           <mat-icon color="primary">star</mat-icon>
           <mat-icon color="primary">star</mat-icon>
@@ -202,8 +202,8 @@
         </div>
       </div>
       <div class="space-price">
-        <span class="currency">AUD</span>
-        <span class="price">$550</span> a
+        <span class="currency">{{ (space$ | async)?.currency }}</span>
+        <span class="price">{{ (space$ | async)?.price.price }}</span> a
         <span class="unit">day</span>
       </div>
       <div class="booking-form">

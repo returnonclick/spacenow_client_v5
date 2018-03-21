@@ -1,12 +1,14 @@
 import { NgModule }           from '@angular/core'
 import { CommonModule }       from '@angular/common';
 import { FlexLayoutModule }   from '@angular/flex-layout'
-import { ReactiveFormsModule, 
+import { ReactiveFormsModule,
          FormsModule }        from '@angular/forms'
 
 import { StoreModule }        from '@ngrx/store'
 import { EffectsModule }      from '@ngrx/effects'
 
+import { CategoryEffects } from '@core/store/categories/effects/category'
+import { CategoryService } from '@core/store/categories/services/category'
 
 import { UserService }        from '@core/store/users/services/user'
 import { UserEffects }        from '@core/store/users/effects/user'
@@ -15,19 +17,24 @@ import { UserProfileEffects } from '@core/store/users-profile/effects/user-profi
 
 import { SharedModule }       from '@shared/shared.module'
 
+import { BraintreeModule }            from '@app/braintree/braintree.module'
 import { UsersRoutingModule }         from '@app/users/users-routing.module'
 import { ProfileDetailComponent }     from "@app/users/profile-detail/profile-detail.component"
 import { ProfileContainerComponent }  from '@app/users/profile-container/profile-container.component'
 import { SpacesComponent }            from '@app/users/spaces/spaces.component'
 import { CalendarComponent }          from '@app/users/calendar/calendar.component'
 import { FavoritesComponent }         from '@app/users/favorites/favorites.component'
+import { CheckoutComponent }          from '@app/users/checkout/checkout.component'
+import { PaymentComponent }           from '@app/users/checkout/payment/payment.component'
 
 const COMPONENTS = [
   CalendarComponent,
   FavoritesComponent,
   ProfileDetailComponent,
   ProfileContainerComponent,
-  SpacesComponent
+  SpacesComponent,
+  CheckoutComponent,
+  PaymentComponent,
 ]
 
 const MODULES = [
@@ -38,13 +45,17 @@ const MODULES = [
   FormsModule,
   UsersRoutingModule,
   EffectsModule.forFeature([
-    UserEffects, UserProfileEffects
+    CategoryEffects,
+    UserEffects,
+    UserProfileEffects,
   ]),
+  BraintreeModule,
 ]
 
 const SERVICES = [
+  CategoryService,
   UserService,
-  UserProfileService
+  UserProfileService,
 ]
 
 @NgModule({

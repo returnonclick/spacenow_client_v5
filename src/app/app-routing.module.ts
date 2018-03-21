@@ -23,7 +23,6 @@ const appRoutes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'space', component: SpaceComponent },
       { path: 'space/:id', component: SpaceComponent },
     ]
   },

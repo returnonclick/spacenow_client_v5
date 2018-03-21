@@ -70,7 +70,7 @@ const SERVICES = [
     BrowserAnimationsModule, // TT. required for material2/animation
     SharedModule,
     CoreModule.forRoot(),
-    
+
     AgmCoreModule.forRoot({
       apiKey: environment.googleApi,
       libraries: [
@@ -87,15 +87,14 @@ const SERVICES = [
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
-    
+
     ToastModule.forRoot(),
-    
+
     AppRoutingModule,
 
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     // StoreRouterConnectingModule,
-    
 
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 

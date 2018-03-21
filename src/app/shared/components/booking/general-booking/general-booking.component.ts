@@ -96,7 +96,7 @@ export class GeneralBookingComponent implements OnInit {
     this._store.dispatch(new cartActions.Add(bookingSpace))
     let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
     snackBar.onAction().subscribe(() => {
-      window.open('/app/checkout')
+      window.open('/users/checkout')
       snackBar.dismiss()
     })
   }
