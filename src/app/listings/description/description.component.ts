@@ -62,7 +62,7 @@ export class DescriptionComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.descriptionForm.value ))
     }
 
-    this.router.navigate(['app/listings', this.listing.id, 'image'])
+    this.router.navigate(['listing', this.listing.id, 'image'])
   }
 
   redBox() {
@@ -74,7 +74,7 @@ export class DescriptionComponent {
  
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['app/listings', this.listing.id, 'exception'])
+    this.router.navigate(['listing', this.listing.id, 'exception'])
   }
 
 }

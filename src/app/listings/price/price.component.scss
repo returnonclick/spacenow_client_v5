@@ -46,6 +46,9 @@
   margin: 25px 0px 0px 25px;
   grid-area: taxValue;
 }
+.info-box {
+  grid-area: info-box;
+}
 
 /* GRID CSS TITLE */
 .price {
@@ -66,12 +69,13 @@
   grid-template-areas: 
     "unit currency . ."
     "child child . ."
-    "taxName taxCountry taxValue .";
+    "taxName taxCountry taxValue ."
+    "info-box info-box . .";
 }
 
 .price .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr 5fr;
+  grid-template-columns: 1fr 2fr 4fr;
   grid-template-rows: auto;
   grid-template-areas: 
     "back-button next-button .";
@@ -79,24 +83,9 @@
 
 @media screen and (max-width:1024px) {
 
-  // .unit {
-  //   grid-area: unit;
-  // }
-  
-  // .child {
-  //   grid-area: child;
-  // }
-
   .price {
       grid-template-columns:  1fr 9fr 1fr;
   }
-
-  // .price .content {
-  //   grid-template-columns: 1fr;
-  //   grid-template-areas: 
-  //     "unit"
-  //     "child";
-  // }
 
   .unit {
     padding-right: 0;
@@ -131,4 +120,27 @@
 
 .hide {
   display: none !important;
+}
+
+#help-box {
+  background-color: rgba(128, 128, 128, 0.4); 
+  border-radius: 5px; 
+  padding: 6px 10px;
+  margin-bottom: 40px
+}
+
+#help-icon {
+  background-color: white; 
+  border-radius: 3px; 
+  color: rgba(128, 128, 128, 0.4);
+  cursor: pointer;
+  width: 17px;
+  height: 17px;
+  font-size: 17px;
+  margin-left: 20px;
+}
+
+#help-font {
+  font-size: 14px;
+  color: white;
 }

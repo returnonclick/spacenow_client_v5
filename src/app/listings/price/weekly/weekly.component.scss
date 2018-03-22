@@ -1,3 +1,36 @@
 .hide {
   display: none !important;
 }
+
+.input-currency {
+  position: relative;
+}
+
+.input-currency.left input {
+  padding-left:25px;
+}
+
+.input-currency:before {
+  position: absolute;
+  top: 0;
+}
+
+.input-currency.left:before {
+  left: 5px;
+}
+
+.dollar::before {
+  content: '$'
+}
+
+.eur::before {
+  content: '€'
+}
+
+.gbp::before {
+  content: '£'
+}
+
+.aed::before {
+  content: 'د.إ'
+}
