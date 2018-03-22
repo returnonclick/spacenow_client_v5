@@ -1185,11 +1185,11 @@ export class PriceComponent {
         this.priceForm = this._fb.group({
           priceUnit: ['', Validators.required ],
           currency:   ['', Validators.required],
-          tax:       this._fb.group({ 
-            percent: ['', Validators.required],
-            name:    ['', Validators.required],
-            country: ['', Validators.required],
-          }),
+          // tax:       this._fb.group({ 
+          //   percent: ['', Validators.required],
+          //   name:    ['', Validators.required],
+          //   country: ['', Validators.required],
+          // }),
         })
 
         this.listing$ = this._store.select( fromRoot.selectCurrentListing )
@@ -1210,16 +1210,16 @@ export class PriceComponent {
 
         this.priceForm = this._fb.group({
           priceUnit: this.listing.priceUnit,
-          currency:  this.listing.currency,
-          tax:       this._fb.group({ 
-            percent: this.listing.tax.percent,
-            name:    this.listing.tax.name,
-            country: this.listing.tax.country,
-          })
+          // currency:  this.listing.currency
+          // tax:       this._fb.group({ 
+          //   percent: this.listing.tax.percent,
+          //   name:    this.listing.tax.name,
+          //   country: this.listing.tax.country,
+          // })
         })
 
-        this.assignTax(this.listing.tax.percent)
-        this.taxesOptions = this.taxes.filter(res => res.tax === this.listing.tax.name)
+        // this.assignTax(this.listing.tax.percent)
+        // this.taxesOptions = this.taxes.filter(res => res.tax === this.listing.tax.name)
 
         // TODO: wait untill this.snPriceHost is ready to loadComponent() (?)
         setTimeout(() => this.loadComponent(), 100)
