@@ -63,7 +63,10 @@ export class ImageDataComponent {
       this.totalFiles = 0
     }
 
+  }
 
+  triggerUpload() {
+    document.getElementById('fileToUpload').click()
   }
 
   upload(file:File): Promise<any> {
@@ -93,7 +96,7 @@ export class ImageDataComponent {
       // Wait until observable is resolve
       this.task.downloadURL().subscribe(
         res => {
-          image.path = res
+          image.imageURL = res
           return resolve(image)
         }
       )

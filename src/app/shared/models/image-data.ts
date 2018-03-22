@@ -25,12 +25,12 @@ export class ImageData extends Object {
 
         if ( model ) {
 
-            this.id         = model.id
-            this.path       = model.path
-            this.title      = model.title
-            this.tags       = model.tags
-            this.imageURL   = model.imageURL
-            this.storageRef = model.storageRef
+            this.id         = model.id || ''
+            this.path       = model.path || ''
+            this.title      = model.title || ''
+            this.tags       = model.tags || new Array()
+            this.imageURL   = model.imageURL || ''
+            this.storageRef = model.storageRef || ''
 
         }
 

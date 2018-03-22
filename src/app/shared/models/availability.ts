@@ -1,4 +1,4 @@
-// import { OpeningTime } from './opening-time'
+
 export class Availability extends Object{
 
   bookingType:   string = null
@@ -8,9 +8,7 @@ export class Availability extends Object{
   exceptionDays: ExceptionDay[] = []
 
   constructor( model: any = null ) {
-
-    super(model)
-
+    super()
     if ( model ) {
 
       this.bookingType      = model.bookingType || null
@@ -25,14 +23,14 @@ export class Availability extends Object{
 
 }
 
-export class ExceptionDay {
+export class ExceptionDay extends Object {
 
   fromDate: Date 
   toDate: Date
   note: string
 
   constructor( model: any = null ) {
-    
+    super()
     if ( model ) {
 
       this.fromDate = model.fromDate || null
@@ -53,7 +51,7 @@ export class OpeningDay extends Object {
   isOpen: boolean = true
 
   constructor(model: any = null) {
-    super(model)
+    super()
     if(model) {
       this.startHour = model.startHour || 0
       this.closeHour = model.clostHour || 0
@@ -67,6 +65,7 @@ export class OpeningDay extends Object {
 
 
 export class OpeningTime extends Object {
+
   sun: OpeningDay = new OpeningDay()
   mon: OpeningDay = new OpeningDay()
   tue: OpeningDay = new OpeningDay()
@@ -76,8 +75,7 @@ export class OpeningTime extends Object {
   sat: OpeningDay = new OpeningDay()
   
   constructor(model: any = null) {
-    super(model)
-
+    super()
     if(model) {
       this.sun = new OpeningDay(model.sun) || new OpeningDay()
       this.mon = new OpeningDay(model.mon) || new OpeningDay()

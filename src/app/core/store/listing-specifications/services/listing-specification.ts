@@ -11,7 +11,7 @@ export class ListingSpecificationService {
   }
 
   public readAll() {
-    return this.afs.collection<ListingSpecification>(this.ref).stateChanges()
+    return this.afs.collection<ListingSpecification>(this.ref, ref => ref.orderBy('order')).stateChanges()
   }
 
   public update(id: string, listingSpecification: Partial<ListingSpecification>) {

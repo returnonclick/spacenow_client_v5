@@ -3,7 +3,15 @@
     <div fxLayout="row">
       <div fxFlex="50%" fxLayout="column">
         <mat-form-field fxFlex="100%" style="padding-right: 23px">
-          <input matInput type="number" min="0" placeholder="Price per day" formControlName="price" required>
+          <span class="input-currency left" [ngClass]="{'dollar': (parentForm.value.currency === 'AUD' ||
+                                                               parentForm.value.currency === 'USD' ||
+                                                               parentForm.value.currency === 'NZD' ||
+                                                               parentForm.value.currency === 'SGD') && (focus || parentForm.value.price.price),
+                                                    'eur': parentForm.value.currency === 'EUR' && (focus || parentForm.value.price.price),
+                                                    'gbp': parentForm.value.currency === 'GBP' && (focus || parentForm.value.price.price),
+                                                    'aed': parentForm.value.currency === 'AED' && (focus || parentForm.value.price.price) }">
+            <input matInput type="number" min="0" placeholder="Price per day" formControlName="price" required (focus)="focus = true" (blur)="focus = false">
+          </span>
         </mat-form-field>
       </div>
       <div fxFlex="50%" fxFlex.lt-md="100%">

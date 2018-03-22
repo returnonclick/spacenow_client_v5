@@ -115,12 +115,12 @@ export class AmenityComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, result ))
     }
 
-    this.router.navigate(['app/listings', this.listing.id, 'specification'])
+    this.router.navigate(['listing', this.listing.id, 'specification'])
   }
 
     // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
     back() {
-      this.router.navigate(['app/listings', this.listing.id, 'address'])
+      this.router.navigate(['listing', this.listing.id, 'address'])
     }
  
 }

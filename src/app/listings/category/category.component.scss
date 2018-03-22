@@ -73,15 +73,14 @@
   }
 
   .category .actions {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-      "next-button .";
+      "next-button";
   }
 
   .next-button {
     grid-area: next-button;
   }
-
 
 }
 /* END GRID CSS TITLE */
