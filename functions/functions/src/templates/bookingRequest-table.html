@@ -224,7 +224,7 @@
                     <strong>Booking Details</strong>
                 </p>
                 <table id="booking" align="center">
-                    <tr>
+                    <!-- <tr>
                         <td align="left">
                             <strong>Schedule:</strong>
                             <span style="margin-left: 20px;">
@@ -233,6 +233,20 @@
                                     <li> {{ date.date }}, Start Time:  {{date.fromHour}}   End Time:  {{date.toHour}}</li>
                                     {% endfor %}
                                 </ul>
+                            </span>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <td align="left">
+                            <strong>Start Time:</strong>
+                            <span style="margin-left: 20px;">{{ date[0].date }}, {{date[0].fromHour}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>End Time:</strong>
+                            <span style="margin-left: 20px;">{{ date[daysTot].date }}, {{date[0].fromHour}}
                             </span>
                         </td>
                     </tr>

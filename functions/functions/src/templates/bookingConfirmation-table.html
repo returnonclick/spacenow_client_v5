@@ -207,13 +207,16 @@
                 <table id="booking" align="center">
                     <tr>
                         <td align="left">
-                            <strong>Schedule:</strong>
-                            <span style="margin-left: 20px;">
-                           <ul style="list-style-type:none"> 
-                                {% for date in dates %}
-                                    <li> {{ date.date }}, Start Time:  {{date.fromHour}}   End Time:  {{date.toHour}}</li>
-                                {% endfor %}  
-                            </ul> </span> 
+                            <strong>Start Time:</strong>
+                            <span style="margin-left: 20px;">{{ date[0].date }}, {{date[0].fromHour}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>End Time:</strong>
+                            <span style="margin-left: 20px;">{{ date[0].date }}, {{date[0].fromHour}}
+                            </span>
                         </td>
                     </tr>
                     <tr>
