@@ -43,6 +43,13 @@ const appRoutes: Routes = [
     ]
   },
   {
+    path: 'pages',
+    component: LayoutComponent,
+    children: [
+      { path: '', loadChildren: '@app/pages/pages.module#PageModule'}
+    ]
+  },
+  {
     path: 'users',
     component: LayoutNoFooterComponent,
     canActivate: [AuthGuard],
