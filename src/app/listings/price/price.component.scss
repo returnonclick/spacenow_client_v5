@@ -13,13 +13,11 @@
   grid-area: actions;
 }
 
-.next-button {
-  grid-area: next-button;
-}
-
-.back-button {
-  grid-area: back-button;
-}
+.next-button { grid-area: next-button; }
+.back-button { grid-area: back-button; }
+.currency { grid-area: currency; }
+.taxCountry { grid-area: taxCountry; }
+.info-box { grid-area: info-box; }
 
 .unit {
   width: 90%;
@@ -27,21 +25,15 @@
 }
 
 .child {
-  margin: 40px 0 80px 0;
+  margin: 40px 0 40px 0;
   grid-area: child;
-}
-
-.currency {
-  grid-area: currency;
 }
 
 .taxName {
   width: 90%;
   grid-area: taxName;
 }
-.taxCountry {
-  grid-area: taxCountry;
-}
+
 .taxValue {
   margin: 25px 0px 0px 25px;
   grid-area: taxValue;
@@ -50,13 +42,12 @@
 /* GRID CSS TITLE */
 .price {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 8fr 2fr;
   grid-template-rows: auto;
   grid-template-areas: 
     ". title ."
     ". content ."
     ". actions .";
-  align-items: space-between;
 }
 
 .price .content {
@@ -66,12 +57,13 @@
   grid-template-areas: 
     "unit currency . ."
     "child child . ."
-    "taxName taxCountry taxValue .";
+    "taxName taxCountry taxValue ."
+    "info-box info-box . .";
 }
 
 .price .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr 5fr;
+  grid-template-columns: 2fr 4fr 6fr;
   grid-template-rows: auto;
   grid-template-areas: 
     "back-button next-button .";
@@ -79,24 +71,9 @@
 
 @media screen and (max-width:1024px) {
 
-  // .unit {
-  //   grid-area: unit;
-  // }
-  
-  // .child {
-  //   grid-area: child;
-  // }
-
   .price {
-      grid-template-columns:  1fr 9fr 1fr;
+    grid-template-columns: 1fr 10fr 1fr;
   }
-
-  // .price .content {
-  //   grid-template-columns: 1fr;
-  //   grid-template-areas: 
-  //     "unit"
-  //     "child";
-  // }
 
   .unit {
     padding-right: 0;
@@ -104,31 +81,82 @@
 
 }
 
-@media screen and (max-width:768px) {
-  .price .actions {
-    grid-template-columns: 1fr 2fr 3fr;
+@media screen and (max-width:599px) {
+
+  .price {
+    grid-template-columns: 0fr 12fr 0fr;
   }
-}
 
-@media screen and (max-width:425px) {
-
-  .price .actions {
-    grid-template-columns: 1fr 3fr;
+  .price .content {
+    display: grid;
+    grid-template-columns: 10fr 2fr;
+    grid-template-rows: auto;
     grid-template-areas: 
-      "back-button next-button";
+      "unit unit"
+      "currency currency"
+      "child child"
+      "taxName taxName"
+      "taxCountry taxValue"
+      "info-box info-box";
   }
 
-  .next-button {
-    grid-area: next-button;
+  .price .actions {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "next-button"
+      "back-button";
+  }
+
+  .next-button { grid-area: next-button; }
+  .back-button {  grid-area: back-button; }
+  
+  .taxName { width: 100%; }
+  .currency { grid-area: currency; }
+  .info-box { grid-area: info-box; }
+  .taxCountry { grid-area: taxCountry; }
+  .child { grid-area: child; }
+  
+  .unit {  
+    width: 100%;
+    grid-area: unit; 
+  }
+
+  .taxName {
+    width: 100%;
+    grid-area: taxName;
   }
   
-  .back-button {
-    grid-area: back-button;
+  .taxValue {
+    margin: 25px 0px 0px 25px;
+    grid-area: taxValue;
   }
-
+  
 }
 /* END GRID CSS TITLE */
 
 .hide {
   display: none !important;
+}
+
+#help-box {
+  background-color: rgba(128, 128, 128, 0.4); 
+  border-radius: 5px; 
+  padding: 6px 10px;
+  margin-bottom: 40px
+}
+
+#help-icon {
+  background-color: white; 
+  border-radius: 3px; 
+  color: rgba(128, 128, 128, 0.4);
+  cursor: pointer;
+  width: 17px;
+  height: 17px;
+  font-size: 17px;
+  margin-left: 20px;
+}
+
+#help-font {
+  font-size: 14px;
+  color: white;
 }

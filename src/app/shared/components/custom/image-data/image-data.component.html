@@ -8,9 +8,9 @@
   <div class="sn-icon"></div>
   <h4>or drag and drop</h4>
   <caption>Drop any .jpg, .png, .gif or 
-    <button mat-button onclick="document.getElementById('fileToUpload').click()">
+    <a class="link-dropbox" onclick="document.getElementById('fileToUpload').click()">
       browse your files
-    </button>
+    </a>
   </caption>
 
   <input id="fileToUpload" type="file" style="display:none;" (change)="startUpload($event.target.files)" multiple>

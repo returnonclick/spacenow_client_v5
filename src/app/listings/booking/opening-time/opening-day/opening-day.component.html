@@ -1,12 +1,12 @@
 <form [formGroup]="openingDayForm">
   <!-- <div fxLayout="row" fxLayoutAlign="space-between center"> -->
-    <div fxFlex="100%" fxLayout="row" fxLayoutAlign="space-between center" >
+    <div fxFlex="100%" fxLayout="row" fxLayoutAlign="space-between center"  fxLayoutWrap="wrap">
       <span fxFlex="10%">{{weekday}}</span>
-      <mat-slide-toggle fxFlex="20%" #slider
+      <mat-slide-toggle fxFlex="30%" fxFlex.lt-sm="25%" #slider
         formControlName = "isOpen"
         (change)="openingDayChange()"> {{ openingDayForm.value.isOpen ? 'Open' : 'Closed' }}
       </mat-slide-toggle>
-      <mat-form-field fxFlex="24%" *ngIf="isSlideOpened">
+      <mat-form-field fxFlex="24%" fxFlex.lt-sm="30%" *ngIf="isSlideOpened">
         <mat-select
           formControlName = "startHour"
           (selectionChange)="filterClosingHours($event); openingDayChange()"
@@ -16,10 +16,10 @@
             </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field fxFlex="24%" *ngIf="!isSlideOpened">
+      <mat-form-field fxFlex="24%" fxFlex.lt-sm="30%" *ngIf="!isSlideOpened">
         <input matInput formControlName="startHour" readonly value="">
       </mat-form-field>
-      <mat-form-field fxFlex="24%" *ngIf="isSlideOpened">
+      <mat-form-field fxFlex="24%" fxFlex.lt-sm="30%" *ngIf="isSlideOpened">
         <mat-select
           formControlName = "closeHour"
           (selectionChange)="openingDayChange()"
@@ -29,7 +29,7 @@
             </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field fxFlex="24%" *ngIf="!isSlideOpened">
+      <mat-form-field fxFlex="24%" fxFlex.lt-sm="30%" *ngIf="!isSlideOpened">
         <input matInput formControlName="closeHour" readonly value="">
       </mat-form-field>
     </div>

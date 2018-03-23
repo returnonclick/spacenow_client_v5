@@ -24,7 +24,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compile-functions": "rm -rf functions/server & tsc -p functions",
+    "deploy-functions": "rm -rf functions/server & tsc -p functions && firebase deploy --only functions",
+    "deploy-functions-local": "rm -rf functions/server & tsc -p functions && firebase serve --only functions"
   },
   "genNgrx": {
     "baseNgrxPath": "./src/app/core/store",

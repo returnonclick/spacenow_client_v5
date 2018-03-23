@@ -11,7 +11,6 @@ import * as listingActions from '@core/store/listings/actions/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 
 import { Space } from '@shared/models/space'
-import { ExceptionDay } from '@shared/models/availability'
 
 
 @Component({
@@ -25,7 +24,7 @@ export class ExceptionComponent {
   listing$: Observable<Space>
   listing: Space
 
-  exceptionDays: ExceptionDay[] = []
+  exceptionDays: any = []
   exceptionForm: FormGroup
 
   constructor(private _store: Store<fromRoot.State>,
@@ -40,7 +39,7 @@ export class ExceptionComponent {
         leadTime: [''],
         isOpen247: [''],
         openingTime: [''],
-        exceptionDays: [[]],
+        exceptionDays: [''],
         note: [''],
         fromDate: [''],
         toDate: ['']
@@ -53,13 +52,13 @@ export class ExceptionComponent {
       if (listing) {
         this.listing = listing
         this.createForm()
+        console.log(new Space(this.listing))
       }
     })
 
   }
 
   createForm() {
-    
     this.exceptionForm = this._fb.group({
       availability: this._fb.group({
         bookingType: this.listing.availability.bookingType,
@@ -73,7 +72,8 @@ export class ExceptionComponent {
       }),
     })
 
-    // Set existing exceptions
+     // Set existing exceptions
+    this.exceptionDays = []
     if(this.listing.availability.exceptionDays.length > 0) {
       this.listing.availability.exceptionDays.forEach(res => {
         this.exceptionDays.push(res)
@@ -116,18 +116,21 @@ export class ExceptionComponent {
     delete this.exceptionForm.controls.availability.value.fromDate
     delete this.exceptionForm.controls.availability.value.toDate
 
-    this.exceptionForm.controls.availability.value.exceptionDays = this.exceptionDays
+    if (this.exceptionDays.length > 0)
+      this.exceptionForm.value.availability.exceptionDays = this.exceptionDays
+    else
+      this.exceptionForm.value.availability.exceptionDays = []
 
     if(this.listing.id) {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.exceptionForm.value ))
     }
 
-    this.router.navigate(['app/listings', this.listing.id, 'description'])
+    this.router.navigate(['listing', this.listing.id, 'description'])
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['app/listings', this.listing.id, 'booking'])
+    this.router.navigate(['listing', this.listing.id, 'booking'])
   }
  
 }

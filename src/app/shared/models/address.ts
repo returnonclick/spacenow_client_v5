@@ -27,7 +27,7 @@ export class Address extends Object{
   latitude:                    number = 0        // (10) Latitude to use on GOOGLE API
 
   constructor(model: any = null) {
-    super(model)
+    super()
     if (model) {
       this.full_name                   = model.full_name
       this.unit_number                 = model.unit_number || ''

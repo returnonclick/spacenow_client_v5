@@ -24,19 +24,12 @@
 /* GRID CSS amenity */
 .amenity {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 8fr 2fr;
   grid-template-rows: auto;
   grid-template-areas: 
     ". title ."
     ". content ."
     ". actions .";
-  align-items: space-between;
-}
-
-.amenity .content {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
 }
 
 .amenity .content .items {
@@ -47,7 +40,7 @@
 
 .amenity .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr 5fr;
+  grid-template-columns: 2fr 4fr 6fr;
   grid-template-rows: auto;
   grid-template-areas: 
       "back-button next-button .";
@@ -55,31 +48,28 @@
 
 // Responsive classes
 @media screen and (max-width:1024px) {
+  
+  .amenity {
+    grid-template-columns: 1fr 10fr 1fr;
+  }
+    
+}
+  
+@media screen and (max-width:599px) {
 
   .amenity {
-      grid-template-columns:  1fr 9fr 1fr;
+    grid-template-columns: 0fr 12fr 0fr;
   }
-
-}
-
-@media screen and (max-width:768px) {
-
-  .amenity .actions {
-    grid-template-columns: 1fr 2fr 3fr;
-  }
-
-}
-
-@media screen and (max-width:425px) {
 
   .amenity .content .items {
     grid-template-columns: 1fr;
   }
 
   .amenity .actions {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-      "back-button next-button";
+      "next-button"
+      "back-button";
   }
 
   .next-button {
@@ -89,6 +79,6 @@
   .back-button {
     grid-area: back-button;
   }
-
+  
 }
 /* END GRID CSS amenity */

@@ -34,9 +34,8 @@ export class BookingComponent {
 
 
   bookingTypes = [
-    "Instant booking",
-    "Request booking",
-    "Manunal enquiries"
+    { display: "Instant booking", value: 'instantly' },
+    { display: "Request booking", value: 'request' }
   ]
   
   openingHours = [
@@ -167,7 +166,6 @@ export class BookingComponent {
   }
 
   updateOpeningTime(event) {
-    // console.log(event.openingTime)
     this.openingTime = event.openingTime
     this.isOpeningTimeValid = event.valid
   }
@@ -176,22 +174,23 @@ export class BookingComponent {
 
     this.bookingForm.updateValueAndValidity()
 
-    this.bookingForm.value.availability.openingTime = this.openingTime
-    this.bookingForm.value.availability.exceptionDays = this.listing.availability.exceptionDays
-
     // reset opening time when open 24/7
     if(this.bookingForm.value.availability.isOpen247) { this.openingTime = new OpeningTime() }
+
+    this.bookingForm.value.availability.openingTime = this.openingTime
+    
+    this.bookingForm.value.availability.exceptionDays = this.listing.availability.exceptionDays
 
     if(this.listing.id) {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.bookingForm.value ))
     }
 
-    this.router.navigate(['app/listings', this.listing.id, 'exception'])
+    this.router.navigate(['listing', this.listing.id, 'exception'])
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['app/listings', this.listing.id, 'price'])
+    this.router.navigate(['listing', this.listing.id, 'price'])
   }
     
 }

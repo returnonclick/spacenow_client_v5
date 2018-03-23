@@ -1,29 +1,52 @@
 <ng-container [formGroup]="parentForm">
   <div formGroupName="price">
-    <div fxLayout="row">
-      <div fxFlex="50%" fxLayout="column">
-        <mat-form-field fxFlex="100%" style="padding-right: 23px">
-          <input matInput type="number" min="0" placeholder="Price per hour" formControlName="price" required>
-        </mat-form-field>
-        <mat-form-field fxFlex="100%" min="0" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
-          <input matInput type="number" placeholder="Price per half day" formControlName="halfDay" [required]="parentForm.controls.price.value.incentives">
-        </mat-form-field>
-        <mat-form-field fxFlex="100%" min="0" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
-          <input matInput type="number" placeholder="Price per day" formControlName="day" [required]="parentForm.controls.price.value.incentives">
-        </mat-form-field>
-        <div fxLayout="row">
-          <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives </mat-checkbox><mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="You can set fixed prices for half or full day terms to encourage longer bookings." matTooltipPosition="after">info</mat-icon>
-        </div>
+    <div class="price">
+      <mat-form-field class="price-value">
+        <span class="input-currency left" [ngClass]="{'dollar': (parentForm.value.currency === 'AUD' ||
+                                                              parentForm.value.currency === 'USD' ||
+                                                              parentForm.value.currency === 'NZD' ||
+                                                              parentForm.value.currency === 'SGD') && (focus || parentForm.value.price.price),
+                                                  'eur': parentForm.value.currency === 'EUR' && (focus || parentForm.value.price.price),
+                                                  'gbp': parentForm.value.currency === 'GBP' && (focus || parentForm.value.price.price),
+                                                  'aed': parentForm.value.currency === 'AED' && (focus || parentForm.value.price.price) }">
+          <input matInput type="number" min="0" placeholder="Price per hour" formControlName="price" required (focus)="focus = true" (blur)="focus = false">
+        </span>
+      </mat-form-field>
+      <mat-form-field class="price-half" min="0" [class.hide]="!parentForm.controls.price.value.incentives">
+        <span class="input-currency left" [ngClass]="{'dollar': (parentForm.value.currency === 'AUD' ||
+                                                                  parentForm.value.currency === 'USD' ||
+                                                                  parentForm.value.currency === 'NZD' ||
+                                                                  parentForm.value.currency === 'SGD') && (focusHalf || parentForm.value.price.halfDay),
+                                                      'eur': parentForm.value.currency === 'EUR' && (focusHalf || parentForm.value.price.halfDay),
+                                                      'gbp': parentForm.value.currency === 'GBP' && (focusHalf || parentForm.value.price.halfDay),
+                                                      'aed': parentForm.value.currency === 'AED' && (focusHalf || parentForm.value.price.halfDay) }">
+          <input matInput type="number" placeholder="Price per half day" formControlName="halfDay" (focus)="focusHalf = true" (blur)="focusHalf = false" [required]="parentForm.controls.price.value.incentives">
+        </span>
+      </mat-form-field>
+      <mat-form-field class="price-day" min="0" [class.hide]="!parentForm.controls.price.value.incentives">
+        <span class="input-currency left" [ngClass]="{'dollar': (parentForm.value.currency === 'AUD' ||
+                                                                  parentForm.value.currency === 'USD' ||
+                                                                  parentForm.value.currency === 'NZD' ||
+                                                                  parentForm.value.currency === 'SGD') && (focusDay || parentForm.value.price.day),
+                                                      'eur': parentForm.value.currency === 'EUR' && (focusDay || parentForm.value.price.day),
+                                                      'gbp': parentForm.value.currency === 'GBP' && (focusDay || parentForm.value.price.day),
+                                                      'aed': parentForm.value.currency === 'AED' && (focusDay || parentForm.value.price.day) }">
+          <input matInput type="number" placeholder="Price per day" formControlName="day" (focus)="focusDay = true" (blur)="focusDay = false" [required]="parentForm.controls.price.value.incentives">
+        </span>
+      </mat-form-field>
+      <div class="incentives">
+        <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives </mat-checkbox><mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="You can set fixed prices for half or full day terms to encourage longer bookings." matTooltipPosition="after">info</mat-icon>
       </div>
-      <div fxFlex="50%">
-        <mat-form-field fxFlex="100%">
-          <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" required>
-            <mat-option *ngFor="let term of terms" [value]="term.value">
-              {{ term.display }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+
+
+      <mat-form-field class="minimum-term">
+        <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" required>
+          <mat-option *ngFor="let term of terms" [value]="term.value">
+            {{ term.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
     </div>
   </div>
 </ng-container>

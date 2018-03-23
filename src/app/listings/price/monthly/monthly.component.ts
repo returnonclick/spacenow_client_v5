@@ -23,9 +23,9 @@ export class MonthlyComponent implements AddPriceComponent {
 
   terms = [
     { value: 1, display: '1 month'},
-    { value: 2, display: '2 months'},
     { value: 3, display: '3 months'},
-    { value: 4, display: '4 months'}
+    { value: 6, display: '6 months'},
+    { value: 12, display: '12 months'}
   ]
 
   constructor(

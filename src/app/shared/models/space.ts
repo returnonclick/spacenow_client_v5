@@ -75,7 +75,7 @@ export class TaxDetails extends Object {
   name:    string = 'none'
   country: string = ''
   constructor(model: any = null) {
-    super(model)
+    super()
     if(model) {
       this.percent = model.percent || null
       this.name    = model.name || 'none'
@@ -89,7 +89,7 @@ export class Price extends Object {
   incentives:  boolean = false
   
   constructor(model: any = null) {
-    super(model)
+    super()
     if(model) {
       this.price       = model.price || null
       this.minimumTerm = model.minimumTerm || 1

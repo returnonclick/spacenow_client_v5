@@ -82,6 +82,7 @@ export class CheckoutComponent {
             price += spacePrice.price * item.bookingDates.length
 
           totalPrice += price
+          // tax        += price * (spacePrice.tax.percent / 100.0)
         }
 
         this.costBreakdown = [

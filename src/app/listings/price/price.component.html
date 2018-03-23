@@ -2,7 +2,7 @@
 <form [formGroup]="priceForm" (ngSubmit)="onSubmit()" novalidate>
   <div class="price">
     <div class="title">
-      <span style="font-size: 60px">Space price</span>
+      <span style="font-size: 60px;line-height: 60px;">Space price</span>
     </div>
     <div class="content">
       <mat-form-field class="unit">
@@ -41,11 +41,17 @@
           </mat-select>
         </mat-form-field>
 
-        <div class="taxValue" *ngIf="priceForm.controls.tax.value.name !== '' && priceForm.controls.tax.value.country">
+        <div class="taxValue" *ngIf="priceForm.controls.tax.value.name !== 'none' && priceForm.controls.tax.value.country">
           <span>{{ priceForm.controls.tax.value.percent }} %</span>
         </div>
 
       </ng-container >
+      <div class="info-box">
+        <div id="help-box" fxFlex="100%" fxLayout="row" fxLayoutAlign="space-between" [ngStyle]="{'visibility': closeHelp ? 'hidden' : 'none' }" *ngIf="priceForm.controls.tax.value.name !== 'none'">
+          <span id="help-font">Taxes VAT/GST will be added to your set {{priceForm.value.priceUnit}} rental price in accordance to your jurisdiction.</span>
+          <div fxLayoutAlign="center center"><mat-icon id="help-icon" (click)="closeHelp = true">close</mat-icon></div>
+        </div>
+      </div>
 
     </div>
     <div class="actions">

@@ -23,12 +23,14 @@ export class ImageComponent {
   listing: Space
   valid: boolean
   storagePath: string = `/images/listings/{$listingID}/{$imageID}/{IMAGE_SIZE.JPG}`
-  images: Array<ImageData> = new Array()
+  images: Array<any> = new Array()
+  countImages: any = 0
 
   constructor(private _store: Store<fromRoot.State>,
               private router: Router
   ) {
     this.valid = false
+    this.countImages = 3
 
     this.listing$ = this._store.select( fromRoot.selectCurrentListing )
     this.listing$.subscribe(listing => {
@@ -39,19 +41,18 @@ export class ImageComponent {
         if (this.listing.images.length > 0)
           this.images = this.listing.images
 
-        if (this.images.length >= 3)
+        if (this.images.length >= 3){
           this.valid = true
+          this.countImages = 1
+        }
       }
     })
 
   }
 
   getImage(event) {
-    this.images.push(event.path)
-    if (this.images.length >= 3)
-      this.valid = true
-    else
-      this.valid = false
+    this.images.push(event)
+    this.checkImagesCount()
   }
 
   remove(image) {
@@ -60,6 +61,29 @@ export class ImageComponent {
       this.valid = true
     else
       this.valid = false
+
+    this.checkImagesCount()
+    
+  }
+
+  checkImagesCount() {
+    if (this.images.length >= 3) {
+      this.countImages = 1
+      this.valid = true
+    } else {
+      this.valid = false
+    }
+
+    if (this.images.length === 2) 
+      this.countImages = 1
+    if (this.images.length === 1) 
+      this.countImages = 2
+    if (this.images.length === 0) 
+      this.countImages = 3
+  }
+
+  getCountArray(num) {
+    return new Array(num); 
   }
 
   onSubmit() {
@@ -68,13 +92,13 @@ export class ImageComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, { images: this.images } ))
     }
 
-    this.router.navigate(['app/listings', this.listing.id, 'terms'])
+    this.router.navigate(['listing', this.listing.id, 'terms'])
 
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['app/listings', this.listing.id, 'description'])
+    this.router.navigate(['listing', this.listing.id, 'description'])
   }
   
 }

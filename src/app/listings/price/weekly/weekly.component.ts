@@ -25,7 +25,12 @@ export class WeeklyComponent implements AddPriceComponent {
     { value: 1, display: '1 week'},
     { value: 2, display: '2 weeks'},
     { value: 3, display: '3 weeks'},
-    { value: 4, display: '4 weeks'}
+    { value: 4, display: '4 weeks'},
+    { value: 5, display: '5 weeks'},
+    { value: 6, display: '6 weeks'},
+    { value: 9, display: '9 weeks'},
+    { value: 12, display: '12 weeks'}
+    
   ]
 
   constructor(
