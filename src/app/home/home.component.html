@@ -3,8 +3,8 @@
   <div class="inner">
     <h2>Find any space<br> anytime<br> anywhere</h2>
     <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="sn-icon search"></div>
       <mat-form-field>
-        <mat-icon matPrefix>search</mat-icon>
         <input type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event)">
       </mat-form-field>
     </form>
@@ -26,15 +26,13 @@
   </section>
 
   <!-- SECTION TWO -->
-  <!-- <section id="section-two">
+  <section id="section-two">
     
-    <h2 class="right">Any space 
-    by the hour
-    day or month</h2>
+    <h2 class="right">Latest spaces</h2>
 
-    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
+    <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailAustralia$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
-  </section> -->
+  </section>
 
   <!-- SECTION THREE -->
   <!-- <section id="section-three">
@@ -99,25 +97,21 @@
   </section>  -->
 
   <!-- SECTION SIX -->
-  <!-- <section id="section-six">
+  <section id="section-six">
     
-    <h2 class="left">Any space 
-      by the hour
-      day or month</h2>
+    <h2 class="left">Spaces in United Arab Emirates</h2>
 
-    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
+    <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailUnitedArabEmirates$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
   
-  </section> -->
+  </section>
 
   <!-- SECTION SEVEN -->
-  <!-- <section id="section-seven">
+  <section id="section-seven">
     
-    <h2 class="right">Any space 
-    by the hour
-    day or month</h2>
+    <h2 class="right">Spaces in New Zealand</h2>
 
-    <gen-slider [component]="sliderFeaturedComponent" [items]="data" perPage="1" style="--totalItems: 8; --perPage: 1;"></gen-slider>
+    <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailNewZealand$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
-  </section> -->
+  </section>
 
 </div>

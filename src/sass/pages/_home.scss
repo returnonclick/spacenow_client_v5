@@ -29,14 +29,14 @@
             &::after {
                 
                 content: "\E5C8";
-                right: -40px;
+                right: 0px;
             }
         }
 
         &.right::before {
             
             content: "\E5C4";
-            left: -80px;
+            left: 0px;
         }
     }
 
@@ -85,6 +85,7 @@
         > :first-child {
             grid-column: 3 / span 1 ;
             grid-row: 1 / 2;
+            padding: 30px 50px;
 
             @include respond-to('phone-wide') {
                 grid-column: 1 /2 ;

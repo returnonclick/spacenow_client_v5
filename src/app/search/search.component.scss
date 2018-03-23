@@ -1,6 +1,13 @@
+@import
+  '~sass/abstracts/mixins';
+
 :host {
+  --numColumns: 2;
+  --hover: #6cde93;
+  --gridSpace: 20px;
+
   display: block;
-  margin: 20px;
+  margin: var(--gridSpace);
   margin-bottom: 0;
 }
 
@@ -8,7 +15,7 @@
   display: grid;
   grid-template-columns: repeat(2, calc(100% / 2 - 10px));
   grid-template-rows: auto 1fr;
-  grid-gap: 20px;
+  grid-gap: var(--gridSpace);
 
   height: calc(100vh - 170px);
   overflow: hidden;
@@ -35,9 +42,6 @@
   }
 
   .search-results {
-    --hover: #6cde93;
-    --gridSpace: 20px;
-    --numColumns: 2;
     grid-row: 2 / 3;
     grid-column: 1 / 2;
 
@@ -55,3 +59,33 @@
     height: 100%;
   }
 }
+
+
+@include respond-to('sm') {
+
+  .search-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-gap: var(--gridSpace);
+  }
+
+}
+
+@include respond-to('xs') {
+
+  .search-container {
+    
+    .search-results {
+  
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: var(--gridSpace);
+  
+      overflow: scroll;
+  
+    }
+
+  }
+
+}
+

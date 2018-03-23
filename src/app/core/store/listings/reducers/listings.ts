@@ -20,8 +20,6 @@ export const initialState: State = listingAdapter.getInitialState({
     selectedListingId: null
 });
 
-
-
 export function reducer(
     state = initialState,
     action: actions.ListingActions

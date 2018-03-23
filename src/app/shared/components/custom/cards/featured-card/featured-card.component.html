@@ -1,32 +1,32 @@
-<mat-card>
+<mat-card [ngStyle]="{'background': 'url(' + data.images[imageIndex] + ')'}">
     <mat-card-header>
         <span class="stamp" *ngIf="data.isNew">new</span>
-        <div class="nav-slider">
-            <button mat-icon-button>
-                <i class="material-icons">lens</i>
+        <div class="nav-slider" *ngIf="data.images">
+            <button mat-icon-button (click)="imageIndex = 0">
+                <i class="material-icons">{{ imageIndex === 0 ? 'lens' : 'panorama_fish_eye' }}</i>
             </button>
-            <button mat-icon-button>
-                <i class="material-icons">panorama_fish_eye</i>
+            <button mat-icon-button (click)="imageIndex = 1">
+                <i class="material-icons">{{ imageIndex === 1 ? 'lens' : 'panorama_fish_eye' }}</i>
             </button>
-            <button mat-icon-button>
-                <i class="material-icons">panorama_fish_eye</i>
+            <button mat-icon-button (click)="imageIndex = 2">
+                <i class="material-icons">{{ imageIndex === 2 ? 'lens' : 'panorama_fish_eye' }}</i>
             </button>
         </div>
     </mat-card-header>
     <mat-card-content>
       <i class="material-icons">favorite_border</i>
-      <h4>sharespace</h4>
-      <h2>Open share space desk</h2>
-      <h4>Khalidiya</h4>
+      <h4>{{data.category}}</h4>
+      <h2>{{data.title | slice:0:16}}</h2>
+      <h4>{{data.ownerDisplayName}}</h4>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button class="primary">coworking</button>
+        <button mat-raised-button class="primary">{{data.currency}}${{data.price}} {{data.priceUnit}}</button>
     </mat-card-actions>
 </mat-card>
-<div class="ratings">
+<!-- <div class="ratings">
     <i class="material-icons">star_rate</i>
     <i class="material-icons">star_rate</i>
     <i class="material-icons">star_rate</i>
     <i class="material-icons">star_rate</i>
     <i class="material-icons">star_rate</i>
-</div>
+</div> -->

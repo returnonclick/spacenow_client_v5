@@ -14,6 +14,7 @@
   box-shadow: none !important;
 
   transition: all 0.5s ease;
+  z-index: 0;
 
   > img {
     border-radius: calc(var(--gap) / 6);
@@ -26,6 +27,7 @@
     right: 0;
     margin-right: var(--gap);
     margin-top: calc(var(--gap) / 2);
+    z-index: 1;
 
     > .mat-icon-button {
       width: auto;

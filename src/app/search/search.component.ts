@@ -3,10 +3,10 @@ import { FormBuilder,  FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
-import { AgmMap } from '@agm/core'
+import { AgmMap, AgmMarker } from '@agm/core'
 import { } from 'googlemaps'
 
-import { Space } from '@shared/models/space'
+import { ListingShortDetail } from '@shared/models/listing-short-detail'
 
 import * as fromRoot from '@core/store'
 import * as searchActions from '@core/store/search/actions/search'
@@ -27,7 +27,7 @@ export class SearchComponent {
   latitude:  number = -33.9108137
   longitude: number = 151.1960078
 
-  results$:   Observable<Space[]>
+  results$:   Observable<ListingShortDetail[]>
   isLoading$: Observable<boolean>
 
   form:      FormGroup
@@ -51,6 +51,7 @@ export class SearchComponent {
       this.map.mapReady,
     ).subscribe(([queryParams, map]) => {
       if(queryParams && map) {
+        //this.deleteMarkers(map)
         this.name      = queryParams.name ? decodeURIComponent(queryParams.name): this.name
         this.radius    = +queryParams.radius || this.radius
         this.latitude  = +queryParams.latitude || this.latitude
@@ -71,7 +72,7 @@ export class SearchComponent {
       if(searchResults && map) {
         this.markerMap = {}
         for(let result of searchResults) {
-          let markerLatLng = new google.maps.LatLng(this.latitude + result.address.latitude, this.longitude + result.address.longitude);
+          let markerLatLng = new google.maps.LatLng(result.geopoint.latitude, result.geopoint.longitude);
           let thisLoc      = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map:       this.nativeMap,

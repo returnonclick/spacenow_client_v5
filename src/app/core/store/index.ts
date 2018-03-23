@@ -32,6 +32,7 @@ import * as fromUsers                 from '@core/store/users/reducers/users'
 import * as fromUsersProfile          from '@core/store/users-profile/reducers/users-profile'
 import * as fromLayouts               from '@core/store/layouts/reducers/layouts'
 import * as fromListings              from '@core/store/listings/reducers/listings'
+import * as fromListingsShortDetail   from '@core/store/listings-short-detail/reducers/listing-short-detail'
 import * as fromCategories            from '@core/store/categories/reducers/categories'
 import * as fromSearch                from '@core/store/search/reducers/search'
 import * as fromSpaces                from '@core/store/spaces/reducers/spaces'
@@ -50,6 +51,7 @@ export interface State {
   usersProfile:             fromUsersProfile.State
   layouts:                  fromLayouts.State
   listings:                 fromListings.State
+  listingsShortDetail:      fromListingsShortDetail.State
   categories:               fromCategories.State
   search:                   fromSearch.State
   spaces:                   fromSpaces.State
@@ -71,6 +73,7 @@ export const reducers: ActionReducerMap<State> = {
   usersProfile:             fromUsersProfile.reducer,
   layouts:                  fromLayouts.reducer,
   listings:                 fromListings.reducer,
+  listingsShortDetail:      fromListingsShortDetail.reducer,
   categories:               fromCategories.reducer,
   spaces:                   fromSpaces.reducer,
   search:                   fromSearch.reducer,
@@ -245,6 +248,25 @@ export const getIsListingLoading = createSelector(
   getListingsState,
   (state) => state.loading
 )
+
+
+/**
+ * Listings Reducers
+ */
+
+export const getListingsShortDetailState = createFeatureSelector<fromListingsShortDetail.State>('listingsShortDetail')
+
+export const getListingsShortDetailEntitiesState = createSelector(
+  getListingsShortDetailState,
+  (state) => state
+)
+
+export const {
+  selectIds:      getListingsShortDetailIds,
+  selectEntities: getListingsShortDetailEntities,
+  selectAll:      getAllListingsShortDetail,
+  selectTotal:    getTotalListingsShortDetail
+} = fromListingsShortDetail.listingShortDetailAdapter.getSelectors(getListingsShortDetailEntitiesState)
 
 
  /**

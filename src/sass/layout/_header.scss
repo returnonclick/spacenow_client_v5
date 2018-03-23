@@ -52,9 +52,14 @@ header {
         }
 
         .search-form {
+            display: flex;
             grid-column: 1 / span 2;
             @include respond-to('phone-wide') {
                 grid-column: 1 / 2;
+            }
+
+            .sn-icon {
+                @include sn-icon(1, 1, 50);
             }
         }
 
@@ -75,7 +80,7 @@ header {
 
             .mat-input-infix {
 
-                border-bottom: 1px solid $color__pastel_green;
+                border-bottom: 2px solid $color__pastel_green;
 
                 .mat-input-placeholder {
                     color: $color__pastel_green;

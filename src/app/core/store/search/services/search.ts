@@ -2,138 +2,46 @@ import { Injectable } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { AngularFirestore } from 'angularfire2/firestore'
 import { Observable } from 'rxjs'
+import * as firebase from 'firebase/app'
 
-import { Space } from '@shared/models/space'
+import { ListingShortDetail } from '@shared/models/listing-short-detail'
 
 import * as fromRoot from '@core/store'
+import * as  geohash from 'ngeohash'
 
 @Injectable()
 export class SearchService {
 
-  spaces$: Observable<Space[]>
-
-  spaces: any[] = [
-    {
-      id: 'aRticTvSPf23265gUOZn',
-      name: 'Newtown Office',
-      images: [
-        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
-        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
-        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
-        'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-      address: {
-        latitude: (Math.random() - 0.5) / 100.0,
-        longitude: (Math.random() - 0.5) / 100.0,
-      },
-    },
-    {
-      id: 'DSnaaofV7ai42AFIXiLp',
-      name: 'Newtown Office',
-      images: [
-        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg'
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-      address: {
-        latitude: (Math.random() - 0.5) / 100.0,
-        longitude: (Math.random() - 0.5) / 100.0,
-      },
-    },
-    {
-      id: 'CbqprxXGgdg4Nnib0U5A',
-      name: 'Newtown Office',
-      images: [
-        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg'
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-      address: {
-        latitude: (Math.random() - 0.5) / 100.0,
-        longitude: (Math.random() - 0.5) / 100.0,
-      },
-    },
-    {
-      id: 'IOHN8NV2O13ZYiedoxkk',
-      name: 'Newtown Office',
-      images: [
-        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
-        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
-        'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
-        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-      address: {
-        latitude: (Math.random() - 0.5) / 100.0,
-        longitude: (Math.random() - 0.5) / 100.0,
-      },
-    },
-    {
-      id: '06Eb1dBXlCUhdmHNPLzq',
-      name: 'Newtown Office',
-      images: [
-        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1'
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-      address: {
-        latitude: (Math.random() - 0.5) / 100.0,
-        longitude: (Math.random() - 0.5) / 100.0,
-      },
-    },
-    {
-      id: 'mV6SxkAoMr6JFkcW5Wle',
-      name: 'Newtown Office',
-      images: [
-        'https://ycdn.space/h/2012/09/001-contemporary-office-space.jpg',
-        'https://s7d4.scene7.com/is/image/roomandboard/parsons_189554_17e_g?$str_g$&size=760,480&scl=1',
-        'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg',
-        'http://www.proxsen.com/media/img/nice-spaces-office-space-modern-workplace-space-in-california-architecture-workplace.jpg',
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-      address: {
-        latitude: (Math.random() - 0.5) / 100.0,
-        longitude: (Math.random() - 0.5) / 100.0,
-      },
-    },
-    {
-      id: 'e1tkzwW9BBVyqC3Bpvgr',
-      name: 'Newtown Office',
-      images: [
-        'https://ycdn.space/h/2012/09/003-contemporary-office-space.jpg'
-      ],
-      price: '40 AUD',
-      priceUnit: 'day',
-      details: 'Multiple spaces',
-      address: {
-        latitude: (Math.random() - 0.5) / 100.0,
-        longitude: (Math.random() - 0.5) / 100.0,
-      },
-    },
-  ]
+  ref: string = `listings-short-detail`
+  geopoint: firebase.firestore.GeoPoint
 
   constructor(
     public afs: AngularFirestore,
     public store: Store<fromRoot.State>
-  ) {
-    this.spaces$ = this.store.select(fromRoot.getAllListings)
-  }
+  ) {}
 
   public query(params: any = null) {
-    return Observable.of(this.spaces).delay(3000)
-    // return this.spaces$.map(spaces =>
-    //   spaces.filter(x => x)
-    // )
+
+    return this.afs.collection<ListingShortDetail>(this.ref).valueChanges().map(
+      listings => listings.filter(
+        listing => this.distFrom(+params.latitude, +params.longitude, listing.geopoint.latitude, listing.geopoint.longitude) < params.radius
+      )
+    )
+
   }
+
+  public distFrom(lat1, lng1, lat2, lng2) {
+    let earthRadius = 6371; // miles (or 6371.0 kilometers)
+    let dLat = (lat2-lat1) * Math.PI / 180;
+    let dLng = (lng2-lng1) * Math.PI / 180;
+    let sindLat = Math.sin(dLat / 2);
+    let sindLng = Math.sin(dLng / 2);
+    let a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+            * Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    let dist = earthRadius * c;
+
+    return dist;
+    }
 
 }

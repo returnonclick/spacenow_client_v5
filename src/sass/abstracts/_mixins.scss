@@ -6,9 +6,21 @@ $breakpoints: (
     "tablet":       (max-width: 768px),
     "tablet-wide":  (max-width: 1024px),
     "desktop":      (max-width: 1248px),
-    "desktop-wide": (max-width: 1440px)
+    "desktop-wide": (max-width: 1440px),
+    "xs": (max-width: 599px),
+    "sm": (max-width: 959px),
+    "md": (max-width: 1279px),
+    "lg": (max-width: 1919px),
+    "xl": (max-width: 5000px),
+    "lt-sm": (max-width: 599px),
+    "lt-md": (max-width: 959px),
+    "lt-lg": (max-width: 1279px),
+    "lt-xl": (max-width: 1919px),
+    "gt-xs": (min-width: 600px),
+    "gt-sm": (min-width: 960px),
+    "gt-md": (min-width: 1280px),
+    "gt-lg": (min-width: 1920px),
 );
-
 /// Responsive breakpoint manager
 /// @access public
 /// @param {String} $breakpoint - Breakpoint

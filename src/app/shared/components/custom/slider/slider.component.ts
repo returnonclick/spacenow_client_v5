@@ -57,11 +57,11 @@ export class SliderComponent {
     
     if (this.items.length === 0)
       return
-    
-    console.log(this.items)
 
     this._el.nativeElement.style.setProperty('--totalItems', this.items.length)
+    this.container.clear()
     this.slider     = this.container.element.nativeElement.parentNode
+
     this.totalPages = this.items.length - Math.ceil(1.0 * (this._el.nativeElement.offsetWidth / 320)) + 2//Math.ceil(1.0 * this.items.length / this.perPage)
     let factory     = this._factoryResolver.resolveComponentFactory(this.component)
 

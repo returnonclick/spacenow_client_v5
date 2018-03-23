@@ -62,6 +62,7 @@
     "material-design-icons": "^3.0.1",
     "moment": "^2.17.1",
     "ng2-toastr": "^4.1.2",
+    "ngeohash": "^0.6.0",
     "ngrx-store-localstorage": "^5.0.0",
     "ngx-perfect-scrollbar": "^5.3.1",
     "node-sass": "^4.7.2",

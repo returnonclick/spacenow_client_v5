@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore'
-import { Space } from '@shared/models/space';
+import { Space } from '@shared/models/space'
 
 @Injectable()
 export class ListingService {

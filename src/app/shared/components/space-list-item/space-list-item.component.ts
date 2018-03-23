@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core'
 import { Router } from '@angular/router'
 
-import { Space } from '@models/space'
+import { ListingShortDetail } from '@shared/models/listing-short-detail'
 
 @Component({
   selector: 'sn-space-list-item',
@@ -11,7 +11,7 @@ import { Space } from '@models/space'
 })
 export class SpaceListItemComponent {
 
-  @Input() space:          Space   = null
+  @Input() space:          ListingShortDetail   = null
   @Input() showOptions:    boolean = true
   imageIndex:              number  = 0
 
