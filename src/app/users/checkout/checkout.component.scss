@@ -28,6 +28,23 @@ section#checkout {
     h4 {
       margin-top: 28px;
     }
+
+    ol {
+      counter-reset: c;
+
+      > li {
+        list-style-position: inside;
+        text-indent: -1em;
+        margin: 1em 2em;
+
+        &:before {
+          content: counter(c, decimal);
+          counter-increment: c;
+          padding-right: 0.2em;
+        }
+      }
+    }
+
   }
 
   .confirm-user {
