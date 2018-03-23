@@ -17,15 +17,15 @@ const templates = new EmailTemplate({
 var spacenow = '"Spacenow" <noreply@spacenow-bca9c.firebaseapp.com>'
 
 
-const serviceAccount = require("./service-account-v5.json");
+// const serviceAccount = require("./service-account-v5.json");
 const BUCKET_NAME = "gs://spacenow-bca9c.appspot.com";
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: "gs://spacenow-bca9c.appspot.com/",
-  databaseURL: "https://spacenow-bca9c.firebaseio.com"
+// admin.initializeApp({
+// //   credential: admin.credential.cert(serviceAccount),
+//   storageBucket: "gs://spacenow-bca9c.appspot.com/",
+//   databaseURL: "https://spacenow-bca9c.firebaseio.com"
 
-});
+// });
 
 /**
 * New User - Welcome email
@@ -214,8 +214,7 @@ function sendEmail(template, context, from, email, subject) {
             from: from,
             to: email,
             html: html,
-            subject: subject,
-            // Attachment: fileName,
+            subject: subject
         }).then(() => {
             console.log('Email Template:', template + ', ' + 'send to', email);
             // return true
@@ -252,13 +251,13 @@ function formatDate(d: number, fromFmt: string = null, toFmt: string = 'DD-MM-YY
 }
 
 
-pdfGenerator("test.pdf");
+// pdfGenerator("test.pdf");
 
-function pdfGenerator(fileName) {
-  let fs = require('fs');
-  let pdf = require('html-pdf');
-  let html = fs.readFileSync(__dirname + '/(new)invoice.html', 'utf8')
-  let options = {format: 'Letter'};
+// function pdfGenerator(fileName) {
+//   let fs = require('fs');
+//   let pdf = require('html-pdf');
+//   let html = fs.readFileSync(__dirname + '/(new)invoice.html', 'utf8')
+//   let options = {format: 'Letter'};
 
   /*
    *   pdf.create(html, options).toFile('./pdf/test.pdf', function(err, res) {
@@ -267,24 +266,24 @@ function pdfGenerator(fileName) {
    *   });
    *  */
 
-  pdf.create(html).toBuffer(function(err, buffer) {
-    uploadFile(fileName, buffer)
-  });
-}
+//   pdf.create(html).toBuffer(function(err, buffer) {
+//     uploadFile(fileName, buffer)
+//   });
+// }
 
-function uploadFile(fileName, buffer) {
-  const bucket = admin.storage().bucket();
-  const file = bucket.file('pdf/' + fileName);
-  file.save(buffer, ((error) => {
-              if (error) {
-                // return res.status(500).send('Unable to upload file.');
-                console.log("Unable to upload file");
-              }
-              // return res.status(200).send('Uploaded');
-              console.log("file uploaded");
-              let pdfFile = "https://storage.googleapis.com/" + BUCKET_NAME +
-                  "/pdf/" + fileName;
-              // sendEmail(pdfFile);
-            }));
-}
+// function uploadFile(fileName, buffer) {
+//   const bucket = admin.storage().bucket();
+//   const file = bucket.file('pdf/' + fileName);
+//   file.save(buffer, ((error) => {
+//               if (error) {
+//                 // return res.status(500).send('Unable to upload file.');
+//                 console.log("Unable to upload file");
+//               }
+//               // return res.status(200).send('Uploaded');
+//               console.log("file uploaded");
+//               let pdfFile = "https://storage.googleapis.com/" + BUCKET_NAME +
+//                   "/pdf/" + fileName;
+//               // sendEmail(pdfFile);
+//             }));
+// }
 //# sourceMappingURL=index.js.map
