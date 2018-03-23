@@ -20,13 +20,20 @@ section#checkout {
     section {
       padding: 16px 0;
 
-      a {
-        display: block;
-
-        &:before {
-          content: '+';
-        }
+      strong {
+        font-weight: 600;
       }
+    }
+
+    h4 {
+      margin-top: 28px;
+    }
+  }
+
+  .confirm-user {
+    textarea {
+      width: 100%;
+      resize: none;
     }
   }
 
@@ -111,16 +118,23 @@ section#checkout {
       font-size: 14px;
 
       tr {
+        --tdPadding: 4px 4px;
+        td {
+          padding: var(--tdPadding);
+
+          &:nth-child(2) {
+            text-align: right;
+          }
+        }
+
         &:not(:last-child) {
           border-bottom: 1px solid rgba(48, 48, 48, 0.2);
         }
-      }
 
-      td {
-        padding: 4px;
-
-        &:nth-child(2) {
-          text-align: right;
+        &:last-child {
+          --tdPadding: 8px 4px;
+          font-size: 1.5em;
+          font-weight: 500;
         }
       }
     }

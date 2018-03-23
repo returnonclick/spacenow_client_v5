@@ -45,7 +45,7 @@ export function reducer(
         }
 
         case actions.REMOVED: {
-            return userAdapter.removeOne(action.payload.uid, { 
+            return userAdapter.removeOne(action.payload.uid, {
                 ...state,
                 selectedUserId: state.selectedUserId,
                 loading: false

@@ -97,6 +97,17 @@
           }
         }
       }
+
+      > #overview-cancellations {
+        li {
+          margin: 12px 0;
+
+          &:before {
+            content: '\2022';
+            font-weight: 600;
+          }
+        }
+      }
     }
 
     #space-review {
@@ -197,7 +208,7 @@
       overflow: hidden;
       background-color: white;
       position: relative;//sticky;
-      top: -373px; //10px;
+      top: -343px; //10px;
 
       .space-host {
         display: grid;

@@ -4,47 +4,229 @@
       <mat-tab label="review license">
         <h2>Review Contract</h2>
         <section>
-          <h4>General Rules</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
-            <a>more</a>
-          </p>
+          <h3>General Rules</h3>
+          <ng-container *ngFor="let item of (cart$ | async)">
+            <h4>{{ spaces[item.spaceId].title }}</h4>
+            <p gen-folding-p>{{ spaces[item.spaceId].rules || 'Host did not specify rules for this Space' }}</p>
+          </ng-container>
         </section>
         <section>
-          <h4>The License</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
-            <a>more</a>
-          </p>
+          <h3>Terms &amp; Conditions</h3>
+          <div gen-folding-div>
+            <p>
+              <strong>Terms of Use.</strong> The Host agrees that is has reviewed and agrees to be bound the Terms of Use.
+            </p>
+            <p>
+              <strong>Use of the Service.</strong> The Host warrants, that if it is using the Service on behalf of a company, other entity,
+              or organization it is acting on behalf of and authorized to bind that company, entity, or organization to the
+              terms and conditions of this Agreement. In particular but without limiting the warranty, that is has the right
+              to grant a license for the Space on the terms of a Space License Agreement. The Host agrees to respond promptly
+              and completely to requests for any additional information from Spacenow that it in its sole discretion deems
+              necessary to confirm it has the authority to bind and act on behalf on the that other party's behalf. In addition
+              to the termination provisions of the Terms of Use, Spacenow may also terminate your access to the Service if it has
+              reason to believe that you have breached this warranty and do not have the requisite authority.
+            </p>
+            <p>
+              <strong>Transactions Between Guests and Hosts for Booking Space.</strong> Any agreement between a Host and a Guest is in the terms
+              of the Space License Agree, of such other license agreement as the Host and the Guest enter into and that it is not a
+              party to that agreement.
+            </p>
+            <p>
+              <strong>Host Policies. As a Host, you agree you are solely responsible for ensuring:</strong>
+            </p>
+            <ol>
+              <li>
+                The Space is maintained in good an tenantable repair and in compliance with all applicable laws, regulations, local
+                authority requirements, building codes, and any other applicable requirements;
+              </li>
+              <li>
+                The Space is clean, tidy, and ready for use at the start of any Reservation;
+              </li>
+              <li>
+                The booking of the Space through the Service does not violate any lease, mortgage, or other agreements relating to
+                or secured over or registered in respect of the Space or the Building or any applicable laws, regulations, local
+                authority requirements, building codes, and any other applicable requirements;
+              </li>
+              <li>
+                The Guest is provided with the correct and up to date Space Rules; and
+              </li>
+              <li>
+                If a reservation is to begin at a specified time or on a specified date, that the Space is available to the Guest at
+                that time or on that date. In the event that Space is not available to the Guest at that time or on that date, you
+                shall make available to the Guest at the originally scheduled time and date another space in the same building of
+                equal or larger size and similar configuration for the same Fee.
+              </li>
+            </ol>
+            <p>
+              <strong>Fees.</strong> As a Host, you are solely responsible for establishing the Fees to be charged to Guests, for the Space through the
+              Service. Changes to the Fees in respect of an Hourly Reservation will not affect the amount billed for Hour Reservations
+              that have already been booked, even if such Hourly Reservations have not yet begun. Changes to the Fees for Monthly
+              Reservations will not affect the amount billed during the Term for Monthly Reservations that have already been booked.
+              For Renewals, changes to the FEes for Monthly Reservations will take effect the first full month beginning at least 30 days
+              after the change is made through the Service to enable us to amend the Profile for Space. Notifying the Guest directly is not
+              sufficient and will not increase the Fee through the Service.
+            </p>
+            <p>
+              <strong>Billing Options.</strong> Under the Host Billing Options chosen by you, Spacenow Services will collect on your behalf as your limited
+              payment collection agent the Fees Collected:
+            </p>
+            <ol>
+              <li>
+                For Hourly Reservations, Daily Reservations, Weekyl Reservations, and Monthly Reservations the Fees that were (a) completed
+                or (b) cancelled but not fully refunded under the Cancellation and Refund Policy;
+              </li>
+              <li>
+                For Deposits, if any required by you in respect of a Monthly Reservation, the portion of the Deposit claimed by the Host through
+                the Service within 30 days after the termination date of the applicable Reservation;
+              </li>
+              <li>
+                Spacenow will pay you the difference between the Fees Collected and Service Charges within 15 days after the end of month in
+                which the Fees were collected except for Monthly Reservations that start or renew on the first dat of the mont, Spacenow will
+                pay the Host the Amount Dues withint 15 days after the start of the month.
+              </li>
+            </ol>
+            <p>
+              <strong>Change to Billing Options.</strong> The Host can choose to convert a Guest from Spacenow Billing Option to the Host Billing
+              Option for Hourly reservations, provided that a separate written contractual agreement exists between the Guest and the Host at the time of
+              the Reservation. Spacenow reserves the right to reset the Guest to the Spacenow Billing Option if the Host cannot provide evidence of such
+              contractual written agreement. A Guest may not be originated by more than one Host. Spacenow shall determin at its sole discretion if a Guest
+              is a Host Originated Guest or not.
+            </p>
+            <p>
+              <strong>Pricing Policy.</strong> The Pricing Policy of Spacenow is a follows:
+            </p>
+            <ol>
+              <li>
+                Spacenow will be entitled to charge you:
+                <ol>
+                  <li>
+                    for Bookings lasting less that one month (31 days) with Spacenow Originated Guests:
+                    <ol>
+                      <li>
+                        40% of the Fees for the first Reservation for a Guest for a particular Space; and
+                      </li>
+                      <li>
+                        30% of the Fees for the second Reservation for a Guest for the same Space; and
+                      </li>
+                      <li>
+                        20% of the Fees for the third Reservation for a Guest for the same Space; and
+                      </li>
+                      <li>
+                        10% of the Fees for all subsequent Reservations for a Guest for the same Space.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    For each Reservation with Host Originated Guests or Spacenow Originated Guests through the Spacenow Marketing Link 10% of the Fees
+                    Collected in respect of such Space.
+                  </li>
+                  <li>
+                    There will be no Service Charge for Reservations booked and billed directly by the Host or for Reservations cancelled and fully
+                    refunded under the terms of the Cancellation and Refund Policy.
+                  </li>
+                  <li>
+                    For each Reservation exceeding 1 month (31 days or more) 10% of the Fees Collected.
+                  </li>
+                  <li>
+                    There will be no Service Charge for Monthly Reservations cancelled and fully refunded under the terms of the Cancellation and Refund
+                    Policy
+                  </li>
+                </ol>
+              </li>
+              <li>
+                If a Guest enters into a separate license agreement with you for use of your Space for a month or longer under the following conditions:
+                <ol>
+                  <li>
+                    The Guest has clicked on the Spacenow profile for your Space in the past 6 months; or
+                  </li>
+                  <li>
+                    The Guest has had a prior Monthly Reservation at your Space that terminated within the past 6 months, the Host agrees to pay Spacenow
+                    a Service Charge of 10% of the amounts payable by the Guest under such agreement for up to 12 months after the commencement of such
+                    agreement.
+                  </li>
+                </ol>
+              </li>
+              <li>
+                Spacenow will invoice the Host directly for all Service Charges owing to it.
+              </li>
+            </ol>
+            <p>
+              <strong>Coupons.</strong> A Coupon reduces the amount of Fees collected from the Guest by Spacenow by the value of the discount. Coupons
+              are not available for Monthly Reservations. Coupons may either be Spacenow Coupons or Host Coupons. Coupons may, at the sole discretion of
+              Spacenow, be applicable to all Spaces or to a particular group of Spaces. When calculating the amount payable to the Host:
+            </p>
+            <ol>
+              <li>
+                Spacenow will add back the full value of the discount for each Reservation where a Spacenow Coupon is redeemed; or
+              </li>
+              <li>
+                Reduce the Fees collected used as a basis for the Service Charge by the value of the discount for a Host Coupon.
+              </li>
+            </ol>
+            <p>
+              <strong>Taxes.</strong> You agree to pay all applicable Taxes in connection with your use of Spacenow provision of the Service. Specifically, you
+              are responsible for any GST or similar sales or value-added taxes or charges imposed by any government entity in connection with your use or Spacenow's
+              provision of the Service.
+            </p>
+            <p>
+              <strong>Service Charges.</strong> The Service Charges and other matters set out in the Pricing Policy are applicable in the state or commonwealth in
+              which the Space is located and charged in accordance with the type of Reservation. You agree to pay the Service Charges. If the Service Charges exceed
+              the Fees collected, Spacenow will invoice the Host for any amount owed by the HOst and the Host shall pay such amounts within 15 days after invoicing.
+              Spacenow reserves the right to withhold payment to your account of any amounts otherwise due to us under these Host Terms, or any amounts due as a result
+              of a breach of these Host Terms by you, pending the reasonable investigation by Spacenow of such breach. In addition, Spacenow may withhold or deduct from
+              amounts to be paid to a Host in connection with these Host Terms any charges or fees that are disputed or otherwise not paid by a Guest or a credit card
+              company or other payment provider, and Spacenow may charge you (and you shall pay) any such amounts in the event that Spacenow has already paid such amounts
+              to you.
+            </p>
+            <p>
+              <strong>Updated information.</strong> To ensure proper payment, you are solely responsible for providing and maintaining accurate contact and payment
+              information associated with your User Account, which includes without limitation applicable tax information such as your ABN, and you shall keep complete and
+              accurate records regarding Space usage and payment by Guests. Spacenow may audit such records upon reasonable notice to confirm proper payment hereunder and
+              otherwise confirm compliance with these Host Terms. If Spacenow believes that it is obligated to obtain tax information and you do not provide this information
+              after being requested to do so, Spacenow may withhold your payments until you provide this information or confirm in a manner that is satisfactory to Spacenow
+              that you are not a person or entity from whom Spacenow is required to obtain tax information. Any bank fees arising from any error or omission in your
+              payment information or contact information may be deducted from your payments. If you dispute any payment made hereunder, you must notify Spacenow in writing
+              within 30 days of any such payment; failure to so notify Spacenow shall result in the waiver by you of any claim relating to any such disputed payment.
+            </p>
+            <p>
+              <strong>Feedback.</strong> Both Guests and Hosts may submit feedback to the Service following the completion of a Space booking. You acknowledge and agree
+              that other Users may publicly post ratings and reviews of you or your Space, as applicable, and that Spacenow may, but is not obligated to, monitor such
+              postings and is not responsible in any manner for such ratings and reviews, and you release Spacenow from any and all claims, causes of actions, obligations,
+              or liabilities arising from or relation to such ratings and reviews.
+            </p>
+            <p>
+              <strong>Additional Representations and Warranties.</strong> In addition to any other representations and warranties in the Terms of Use, you represent and
+              warrant that:
+            </p>
+            <ol>
+              <li>
+                Any Space you offer for booking through our Services is free of any known defects or conditions that would pose a hazard to or risk the safety of any Guest; and
+              </li>
+              <li>
+                You have sufficient rights in and to the Space to participate in the Service as a Host, including any applicable permits, and your participation in the Service
+                as a Host will not violate or result in the breach of any agreement between you and any third party, including any lease agreement or other agreement relating
+                to the Space.
+              </li>
+            </ol>
+            <p>
+              <strong>Definitions.</strong> Capitalized terms used and otherwise defined in this agreement shall have the meaning set out in the Dictionary.
+            </p>
+            <p>
+              <strong>Entire Agreement.</strong> This agreement and the Terms of Use Constitute the entire agreement between the Host and the Guest regarding the use of the
+              Space and supersedes any prior agreements between the Host and Guest relating to the Guest's use of the Space.
+            </p>
+          </div>
         </section>
         <button mat-raised-button (click)="agreeToContract()">Agree and Continue</button>
       </mat-tab>
       <mat-tab label="about you">
         <h2>Almost there...</h2>
-        <section>
-          <mat-form-field>
+        <section class="confirm-user">
+          <!-- <mat-form-field>
             <input matInput [matDatepicker]="birthday" placeholder="Birthday">
             <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
             <mat-datepicker #birthday></mat-datepicker>
-          </mat-form-field>
+          </mat-form-field> -->
           <h3>Add any notes for this business expense</h3>
           <mat-form-field [floatLabel]="false">
             <textarea matInput placeholder="Type here..."></textarea>

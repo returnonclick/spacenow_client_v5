@@ -42,7 +42,7 @@ export class PaymentComponent {
     this.firestoreBooking.createdOn     = new Date()
     this.firestoreBooking.finalPrice    = this.amount
     this.firestoreBooking.currency      = this.currency
-    this.firestoreBooking.paymentStatus = 'PAID'
+    this.firestoreBooking.paymentStatus = 'pending'
     this.firestoreBooking.spaceBookings = this.cart
   }
 

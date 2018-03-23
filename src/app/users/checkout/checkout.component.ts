@@ -20,7 +20,7 @@ import * as spaceActions from '@core/store/spaces/actions/space'
   selector: 'sn-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: [ './checkout.component.scss' ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CheckoutComponent {
 
@@ -70,7 +70,7 @@ export class CheckoutComponent {
       this.cart$,
       this.spaces$
     ).subscribe(([cart, spaces]) => {
-      if(cart.length > 1 && Object.keys(spaces).length > 1) {
+      if(cart.length > 0 && Object.keys(spaces).length > 0) {
         let totalPrice = 0
         let tax        = 0
         for(let item of cart) {
@@ -134,7 +134,7 @@ export class CheckoutComponent {
     })
   }
 
-  clearCart(cart: BookingSpace[]) {
+  clearCart() {
     let lastDeleted = this.cart
 
     this._store.dispatch(new cartActions.Clear)

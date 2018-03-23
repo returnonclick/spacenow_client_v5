@@ -44,6 +44,15 @@ import { SpaceEffects } from '@core/store/spaces/effects/space'
 import { SearchService } from '@core/store/search/services/search'
 import { SearchEffects } from '@core/store/search/effects/search'
 
+import { AmenityService } from '@core/store/amenities/services/amenity'
+import { AmenityEffects } from '@core/store/amenities/effects/amenity'
+
+import { CategoryService } from '@core/store/categories/services/category'
+import { CategoryEffects } from '@core/store/categories/effects/category'
+
+import { UserService } from '@core/store/users/services/user'
+import { UserEffects } from '@core/store/users/effects/user'
+
 const COMPONENTS = [
   HomeComponent,
   SearchComponent,
@@ -51,10 +60,12 @@ const COMPONENTS = [
 ]
 
 const SERVICES = [
+  AmenityService,
+  CategoryService,
   SpaceService,
-  SearchService
+  SearchService,
+  UserService,
 ]
-
 
 @NgModule({
   declarations: [
@@ -79,8 +90,11 @@ const SERVICES = [
     }),
 
     EffectsModule.forFeature([
+      AmenityEffects,
+      CategoryEffects,
       SpaceEffects,
-      SearchEffects
+      SearchEffects,
+      UserEffects,
     ]),
 
     AngularFireModule.initializeApp(environment.firebase),

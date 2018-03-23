@@ -37,9 +37,9 @@ export class GeneralBookingComponent implements OnInit {
         Validators.required,
         Validators.min(1)
       ]) ],
-      duration: [ 1, Validators.compose([
+      duration: [ 0, Validators.compose([
         Validators.required,
-        Validators.min(1)
+        Validators.min(this.space.price.minimumTerm)
       ]) ],
     })
   }
