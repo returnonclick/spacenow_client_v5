@@ -1,13 +1,5 @@
 // GRID AREAS 
-@import
-    '~sass/abstracts/mixins';
-
-:host {
-  display: flex;
-  flex-direction: column;
-  max-width: 1170px;
-  margin: 0 auto;
-}
+@import '~sass/abstracts/mixins';
 
 .title {
   margin: 40px 0;
@@ -31,36 +23,54 @@
   grid-area: back-button;
 }
 
+.address {
+  display: grid;
+  grid-template-columns: 2fr 8fr 2fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    ". title ."
+    ". content ."
+    ". actions .";
+}
+
 .address .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr 3fr;
+  grid-template-columns: 2fr 4fr 6fr;
   grid-template-rows: auto;
   grid-template-areas: 
     "back-button next-button .";
 }
 
-// @include respond-to('ld.md') {
+@media screen and (max-width:1024px) {
+
+  .address {
+    grid-template-columns: 1fr 10fr 1fr;
+  }
     
-// }
+}
 
-// @media screen and (max-width:599px) {
+@media screen and (max-width:599px) {
 
-//   .address .actions {
-//     grid-template-columns: 1fr;
-//     grid-template-areas: 
-//       "back-button"
-//       "next-button";
-//   }
+  .address {
+    grid-template-columns: 0fr 12fr 0fr;
+  }
 
-//   .next-button {
-//     grid-area: next-button;
-//   }
+  .address .actions {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "next-button"
+      "back-button";
+  }
+
+  .next-button {
+    grid-area: next-button;
+  }
   
-//   .back-button {
-//     grid-area: back-button;
-//   }
+  .back-button {
+    grid-area: back-button;
+  }
   
-// }
+}
 /* END GRID CSS TITLE */
 
 .input-container-full {

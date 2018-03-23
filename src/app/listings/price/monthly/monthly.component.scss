@@ -47,3 +47,77 @@
 .input-currency.right:before {
   right: 5px;
 }
+
+// Grid 
+.price-value {
+  width: 90%;
+  grid-area: price-value;
+}
+
+.minimum-term {
+  grid-area: minimum-term;
+}
+
+.price-six {
+  width: 90%;
+  grid-area: price-six;
+}
+
+.price-year {
+  width: 90%;
+  grid-area: price-year;
+}
+
+.incentives {
+  grid-area: incentives;
+}
+
+.price {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "price-value minimum-term"
+    "price-six ."
+    "price-year ."
+    "incentives incentives";
+}
+
+@media screen and (max-width:599px) {
+
+  .price {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+      "price-value"
+      "minimum-term"
+      "price-six"
+      "price-year"
+      "incentives";
+  }
+  
+  .price-value {
+    width: 100%;
+    grid-area: price-value;
+  }
+  
+  .minimum-term {
+    grid-area: minimum-term;
+  }
+  
+  .price-six {
+    width: 100%;
+    grid-area: price-six;
+  }
+  
+  .price-year {
+    width: 100%;
+    grid-area: price-year;
+  }
+  
+  .incentives {
+    grid-area: incentives;
+  }
+
+}

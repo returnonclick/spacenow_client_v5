@@ -60,7 +60,7 @@ export class TermComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.termForm.value ))
     }
 
-    this.router.navigate(['app/my_spaces'])
+    this.router.navigate(['users/my-spaces'])
   }
   
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html

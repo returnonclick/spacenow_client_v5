@@ -24,7 +24,7 @@
 /* GRID CSS TITLE */
 .terms {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;;
+  grid-template-columns: 2fr 8fr 2fr;
   grid-template-rows: auto;
   grid-template-areas: 
     ". title ."
@@ -41,7 +41,7 @@
 
 .terms .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr 4fr;
+  grid-template-columns: 2fr 4fr 6fr;
   grid-template-rows: auto;
   grid-template-areas: 
     "back-button next-button .";
@@ -50,25 +50,22 @@
 @media screen and (max-width:1024px) {
 
   .terms {
-      grid-template-columns:  1fr 9fr 1fr;
+    grid-template-columns: 1fr 10fr 1fr;
   }
 
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:599px) {
 
-  .terms .actions {
-    grid-template-columns: 1fr 2fr 3fr;
+  .terms {
+    grid-template-columns: 0fr 12fr 0fr;
   }
 
-}
-
-@media screen and (max-width:425px) {
-
   .terms .actions {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-      "back-button next-button";
+      "next-button"
+      "back-button";
   }
 
   .next-button {
@@ -77,6 +74,10 @@
   
   .back-button {
     grid-area: back-button;
+  }
+
+  textarea {
+    height: 600px !important;
   }
 
 }

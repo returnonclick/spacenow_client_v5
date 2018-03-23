@@ -1,41 +1,39 @@
 <ng-container [formGroup]="parentForm">
   <div formGroupName="price">
-    <div fxLayout="row">
-      <div fxFlex="50%" fxLayout="column">
-        <mat-form-field fxFlex="100%" style="padding-right: 23px">
-          <span class="input-currency left" [ngClass]="{'dollar': (parentForm.value.currency === 'AUD' ||
-                                                                     parentForm.value.currency === 'USD' ||
-                                                                     parentForm.value.currency === 'NZD' ||
-                                                                     parentForm.value.currency === 'SGD') && (focus || parentForm.value.price.price),
-                                                          'eur': parentForm.value.currency === 'EUR' && (focus || parentForm.value.price.price),
-                                                          'gbp': parentForm.value.currency === 'GBP' && (focus || parentForm.value.price.price),
-                                                          'aed': parentForm.value.currency === 'AED' && (focus || parentForm.value.price.price) }">
-            <input matInput type="number" min="0" placeholder="Price per month" formControlName="price" (focus)="focus = true" (blur)="focus = false" required>
-          </span>
-        </mat-form-field>
-        <mat-form-field fxFlex="100%" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
-          <span class="input-currency right" [ngClass]="{'percent': focusSem || parentForm.value.price.sixMonths}">
-            <input matInput type="number" min="0" placeholder="Price per six months" formControlName="sixMonths" (focus)="focusSem = true" (blur)="focusSem = false" [required]="parentForm.controls.price.value.incentives">
-          </span>
-        </mat-form-field>
-        <mat-form-field fxFlex="100%" style="padding-right: 23px" [class.hide]="!parentForm.controls.price.value.incentives">
-          <span class="input-currency right" [ngClass]="{'percent': focusYear || parentForm.value.price.year }">
-            <input matInput type="number" min="0" placeholder="Price per year" formControlName="year" (focus)="focusYear = true" (blur)="focusYear = false" [required]="parentForm.controls.price.value.incentives">
-          </span>
-        </mat-form-field>
-        <div fxLayout="row">
-          <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives </mat-checkbox><mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="You can set fixed prices for half or full day terms to encourage longer bookings." matTooltipPosition="after">info</mat-icon>
-        </div>
+    <div class="price">
+      <mat-form-field class="price-value">
+        <span class="input-currency left" [ngClass]="{'dollar': (parentForm.value.currency === 'AUD' ||
+                                                                    parentForm.value.currency === 'USD' ||
+                                                                    parentForm.value.currency === 'NZD' ||
+                                                                    parentForm.value.currency === 'SGD') && (focus || parentForm.value.price.price),
+                                                        'eur': parentForm.value.currency === 'EUR' && (focus || parentForm.value.price.price),
+                                                        'gbp': parentForm.value.currency === 'GBP' && (focus || parentForm.value.price.price),
+                                                        'aed': parentForm.value.currency === 'AED' && (focus || parentForm.value.price.price) }">
+          <input matInput type="number" min="0" placeholder="Price per month" formControlName="price" (focus)="focus = true" (blur)="focus = false" required>
+        </span>
+      </mat-form-field>
+      <mat-form-field class="price-six" [class.hide]="!parentForm.controls.price.value.incentives">
+        <span class="input-currency right" [ngClass]="{'percent': focusSem || parentForm.value.price.sixMonths}">
+          <input matInput type="number" min="0" placeholder="Price per six months" formControlName="sixMonths" (focus)="focusSem = true" (blur)="focusSem = false" [required]="parentForm.controls.price.value.incentives">
+        </span>
+      </mat-form-field>
+      <mat-form-field class="price-year" [class.hide]="!parentForm.controls.price.value.incentives">
+        <span class="input-currency right" [ngClass]="{'percent': focusYear || parentForm.value.price.year }">
+          <input matInput type="number" min="0" placeholder="Price per year" formControlName="year" (focus)="focusYear = true" (blur)="focusYear = false" [required]="parentForm.controls.price.value.incentives">
+        </span>
+      </mat-form-field>
+      <div class="incentives">
+        <mat-checkbox type="checkbox" formControlName="incentives">Add term incentives </mat-checkbox><mat-icon style="font-size: 14px; margin-left: 5px" matTooltip="You can set fixed prices for half or full day terms to encourage longer bookings." matTooltipPosition="after">info</mat-icon>
       </div>
-      <div fxFlex="50%">
-        <mat-form-field fxFlex="100%">
-          <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" required>
-            <mat-option *ngFor="let term of terms" [value]="term.value">
-              {{ term.display }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+    
+      <mat-form-field>
+        <mat-select placeholder="Minimum Term" name="minimumTerm" formControlName="minimumTerm" required>
+          <mat-option *ngFor="let term of terms" [value]="term.value">
+            {{ term.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
     </div>
   </div>
 </ng-container>

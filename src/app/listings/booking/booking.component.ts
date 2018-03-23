@@ -34,9 +34,8 @@ export class BookingComponent {
 
 
   bookingTypes = [
-    "Instant booking",
-    "Request booking",
-    "Manunal enquiries"
+    { display: "Instant booking", value: 'instantly' },
+    { display: "Request booking", value: 'request' }
   ]
   
   openingHours = [

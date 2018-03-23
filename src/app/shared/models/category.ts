@@ -14,7 +14,7 @@ export class Category extends Object {
   slug:           string = ''
   order:          number = 100
   amenities:      string[] = []
-  specifications: string[] = []
+  specifications: Object[] = []
 
   constructor( model: any = null ) {
     super()

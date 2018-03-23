@@ -34,3 +34,43 @@
 .aed::before {
   content: 'د.إ'
 }
+
+// Grid 
+.price-value {
+  width: 90%;
+  grid-area: price-value;
+}
+
+.minimum-term {
+  grid-area: minimum-term;
+}
+
+.price {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "price-value minimum-term";
+}
+
+@media screen and (max-width:599px) {
+
+  .price {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+      "price-value"
+      "minimum-term";
+  }
+  
+  .price-value {
+    width: 100%;
+    grid-area: price-value;
+  }
+  
+  .minimum-term {
+    grid-area: minimum-term;
+  }
+
+}

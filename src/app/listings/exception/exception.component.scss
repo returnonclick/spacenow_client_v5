@@ -24,24 +24,17 @@
 /* GRID CSS TITLE */
 .exception {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 8fr 2fr;
   grid-template-rows: auto;
   grid-template-areas: 
     ". title ."
     ". content ."
     ". actions .";
-  align-items: space-between;
-}
-
-.exception .content {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
 }
 
 .exception .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr 4fr;
+  grid-template-columns: 2fr 4fr 6fr;
   grid-template-rows: auto;
   grid-template-areas: 
     "back-button next-button .";
@@ -50,25 +43,22 @@
 @media screen and (max-width:1024px) {
 
   .exception {
-      grid-template-columns:  1fr 9fr 1fr;
+    grid-template-columns: 1fr 10fr 1fr;
   }
 
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:599px) {
 
-  .exception .actions {
-    grid-template-columns: 1fr 2fr 3fr;
+  .exception {
+    grid-template-columns: 0fr 12fr 0fr;
   }
-  
-}
-
-@media screen and (max-width:425px) {
 
   .exception .actions {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-      "back-button next-button";
+      "next-button"
+      "back-button";
   }
 
   .next-button {
@@ -77,6 +67,20 @@
   
   .back-button {
     grid-area: back-button;
+  }
+
+  .dates-background {
+    margin-bottom: 30px !important;
+  }
+
+  #to-span {
+    margin-bottom: 30px !important;
+  }
+
+  #box-exception {
+    border: 1px solid #c1c1c1;
+    padding: 10px;
+    border-radius: 5px;
   }
 
 }
@@ -90,4 +94,9 @@
 
 .delete-button {
   color: #6cde93;
+}
+
+.disable-add {
+  pointer-events: none;
+  color: grey;
 }

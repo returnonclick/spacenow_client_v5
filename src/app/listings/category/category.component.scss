@@ -21,18 +21,12 @@
 /* GRID CSS TITLE */
 .category {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 8fr 2fr;
   grid-template-areas: 
     ". title ."
     ". content ."
     ". actions .";
   align-items: space-between;
-}
-
-.category .content {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
 }
 
 .category .content .items {
@@ -43,7 +37,7 @@
 
 .category .actions {
   display: grid;
-  grid-template-columns: 2fr 5fr;
+  grid-template-columns: 4fr 8fr;
   grid-template-rows: auto;
   grid-template-areas: 
       "next-button .";
@@ -51,25 +45,21 @@
 
 // Responsive classes
 @media screen and (max-width:1024px) {
+  
+    .category {
+      grid-template-columns: 1fr 10fr 1fr;
+    }
+      
+  }
+  
+@media screen and (max-width:599px) {
 
   .category {
-      grid-template-columns: 1fr 9fr 1fr;
+    grid-template-columns: 0fr 12fr 0fr;
   }
-
-}
-
-@media screen and (max-width:768px) {
-
-  .category .actions {
-    grid-template-columns: 2fr 3fr;
-  }
-
-}
-
-@media screen and (max-width:425px) {
 
   .category .content .items {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 
   .category .actions {
@@ -81,7 +71,7 @@
   .next-button {
     grid-area: next-button;
   }
-
+  
 }
 /* END GRID CSS TITLE */
 

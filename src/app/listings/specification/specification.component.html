@@ -6,13 +6,13 @@
       <span style="font-size: 60px;line-height: 60px;">Space specifications</span>
     </div>
     <div class="content">
-        <div formGroupName="specifications">
-          <div *ngFor="let spec of categorySpecs; let i = index">
-            <mat-form-field class="items">
-              <input matInput type="number" min="0" placeholder="{{spec.name}}" formControlName="{{spec.slug}}" [required]="i === 0">
-            </mat-form-field>
-          </div>
+      <div formGroupName="specifications">
+        <div *ngFor="let spec of categorySpecs; let i = index" class="items">
+          <mat-form-field class="input-container-full">
+            <input matInput type="number" min="0" placeholder="{{spec.name}}" formControlName="{{spec.slug}}" [required]="i === 0">
+          </mat-form-field>
         </div>
+      </div>
     </div>
 
     <div class="actions">

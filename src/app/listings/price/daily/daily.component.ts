@@ -25,7 +25,9 @@ export class DailyComponent implements AddPriceComponent {
     { value: 1, display: '1 day'},
     { value: 2, display: '2 days'},
     { value: 3, display: '3 days'},
-    { value: 4, display: '4 days'}
+    { value: 4, display: '4 days'},
+    { value: 5, display: '5 days'},
+    { value: 10, display: '10 days'}
   ]
 
   constructor(

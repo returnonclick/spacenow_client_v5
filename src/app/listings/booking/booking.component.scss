@@ -24,7 +24,7 @@
 /* GRID CSS TITLE */
 .booking {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 8fr 2fr;
   grid-template-rows: auto;
   grid-template-areas: 
     ". title ."
@@ -33,15 +33,9 @@
   align-items: space-between;
 }
 
-.booking .content {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-}
-
 .booking .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr 4fr;
+  grid-template-columns: 2fr 4fr 6fr;
   grid-template-rows: auto;
   grid-template-areas: 
     "back-button next-button .";
@@ -50,25 +44,22 @@
 @media screen and (max-width:1024px) {
 
   .booking {
-      grid-template-columns:  1fr 9fr 1fr;
+    grid-template-columns: 1fr 10fr 1fr;
   }
 
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:599px) {
+
+  .booking {
+    grid-template-columns: 0fr 12fr 0fr;
+  }
 
   .booking .actions {
-    grid-template-columns: 1fr 2fr 3fr;
-  }
-
-}
-
-@media screen and (max-width:425px) {
-
-  .address .actions {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-      "back-button next-button";
+      "next-button"
+      "back-button";
   }
 
   .next-button {

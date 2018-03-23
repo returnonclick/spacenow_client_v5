@@ -6,44 +6,44 @@
       <span style="font-size: 60px;line-height: 60px;">Dates Closed</span>
     </div>
     <div class="content" fxFlexLayout="column">
-      <div fxFlexLayout="row" fxLayoutGap="20px">
-        <mat-form-field fxFlex="20%">
+      <div fxFlexLayout="row" fxLayoutAlign="space-between" fxLayoutWrap="wrap">
+        <mat-form-field fxFlex="20%" fxFlex.lt-sm="40%">
           <input matInput readonly [matDatepicker]="picker" placeholder="From" formControlName="fromDate" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker> 
         </mat-form-field>
         <div fxFlex="5%" fxLayoutAlign="center center"><span>to</span></div>
-        <mat-form-field fxFlex="20%">
+        <mat-form-field fxFlex="20%" fxFlex.lt-sm="40%">
           <input matInput readonly [matDatepicker]="pickerTo" placeholder="To" formControlName="toDate" [min]="exceptionForm.value.availability.fromDate" >
           <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
           <mat-datepicker #pickerTo></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field fxFlex="30%">
+        <mat-form-field fxFlex="30%" fxFlex.lt-sm="80%">
           <input matInput formControlName="note" placeholder="Note" maxlength="30">
         </mat-form-field>
         <div fxFlex="10%" style="padding: 22px 0;">
-          <button mat-button 
+          <a
                   (click)="addExceptionDate()" 
                   type="button"
-                  [disabled]="exceptionForm.controls.availability.invalid">
+                  [ngClass]="{'disable-add': exceptionForm.controls.availability.invalid}">
             Add
-          </button>
+          </a>
         </div>
       </div>
     
       <!-- Show list of added exceptions -->
-      <div *ngFor="let day of exceptionDays" fxFlexLayout="row" fxLayoutGap="20px" style="margin-bottom: 10px">
+      <div *ngFor="let day of exceptionDays" fxFlexLayout="row" fxLayoutAlign="space-between" fxLayoutWrap="wrap" id="box-exception" style="margin-bottom: 20px;">
 
-          <span fxFlex="20%" class="dates-background">{{day.fromDate | date: 'd MMMM, yyyy'}} </span>
+          <span fxFlex="20%" fxFlex.lt-sm="40%" class="dates-background">{{day.fromDate | date: 'd MMMM, yyyy'}} </span>
 
-          <div fxFlex="5%" fxLayoutAlign="center center"><span>to</span></div>
+          <div fxFlex="5%" fxLayoutAlign="center center" id="to-span"><span>to</span></div>
 
-          <span fxFlex="20%" class="dates-background"> {{day.toDate | date: 'd MMMM, yyyy'}}</span>
+          <span fxFlex="20%" fxFlex.lt-sm="40%" class="dates-background"> {{day.toDate | date: 'd MMMM, yyyy'}}</span>
         
-          <div fxFlex="30%"><span style="width: 100%">{{ day.note }}</span></div>
+          <div fxFlex="30%" fxFlex.lt-sm="80%"><span style="width: 100%">{{ day.note }}</span></div>
 
-          <button fxFlex="10%" class="add-button" mat-icon-button (click)="deleteExceptionDay(day)" type="button" style="margin-left: 20%;">
+          <button fxFlex="10%" class="add-button" mat-icon-button (click)="deleteExceptionDay(day)" type="button">
             <mat-icon class="delete-button">delete_forever</mat-icon>
           </button>
 
