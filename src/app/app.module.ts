@@ -22,6 +22,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr' // For notification
 
 // TT. Required for material animation
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { BraintreeModule } from '@app/braintree/braintree.module'
 
 import { SharedModule } from '@shared/shared.module'
 import { CoreModule } from '@core/core.module'
@@ -37,6 +38,7 @@ import { AuthGuard } from '@core/store/auth/services'
 import { HomeComponent } from './home/home.component'
 import { SearchComponent } from './search/search.component'
 import { SpaceComponent } from './space/space.component'
+
 import { CheckoutComponent } from '@app/checkout/checkout.component'
 import { PaymentComponent } from '@app/checkout/payment/payment.component'
 
@@ -52,6 +54,15 @@ import { SearchEffects } from '@core/store/search/effects/search'
 import { ListingShortDetailService } from '@core/store/listings-short-detail/services/listing-short-detail'
 import { ListingShortDetailEffects } from '@core/store/listings-short-detail/effects/listing-short-detail'
 
+import { AmenityEffects } from '@core/store/amenities/effects/amenity'
+import { AmenityService } from '@core/store/amenities/services/amenity'
+
+import { UserService } from '@core/store/users/services/user'
+import { UserEffects } from '@core/store/users/effects/user'
+
+import { CartEffects } from '@core/store/cart/effects/cart'
+import { CartService } from '@core/store/cart/services/cart'
+
 const COMPONENTS = [
   HomeComponent,
   SearchComponent,
@@ -63,10 +74,13 @@ const COMPONENTS = [
 const SERVICES = [
   CategoryService,
   ListingShortDetailService,
+  AmenityService,
+  CartService,
+  CategoryService,
   SpaceService,
-  SearchService
+  SearchService,
+  UserService,
 ]
-
 
 @NgModule({
   declarations: [
@@ -82,7 +96,7 @@ const SERVICES = [
     BrowserAnimationsModule, // TT. required for material2/animation
     SharedModule,
     CoreModule.forRoot(),
-    
+
     AgmCoreModule.forRoot({
       apiKey: environment.googleApi,
       libraries: [
@@ -91,25 +105,28 @@ const SERVICES = [
     }),
 
     EffectsModule.forFeature([
-      CategoryEffects,
+      AmenityEffects,
       ListingShortDetailEffects,
+      CartEffects,
+      CategoryEffects,
       SpaceEffects,
-      SearchEffects
+      SearchEffects,
+      UserEffects,
     ]),
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
-    
+
     ToastModule.forRoot(),
-    
+
     AppRoutingModule,
 
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
+    BraintreeModule,
     // StoreRouterConnectingModule,
-    
 
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 

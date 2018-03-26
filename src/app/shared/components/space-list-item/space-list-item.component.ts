@@ -22,7 +22,7 @@ export class SpaceListItemComponent {
   handleClick(src) {
     switch(src) {
       case 'view':
-        this._router.navigate([ 'app', 'space', this.space.id ])
+        this._router.navigate([ 'space', this.space.id ])
         break;
        case 'favorite':
         console.log('favorite', this.space.id)

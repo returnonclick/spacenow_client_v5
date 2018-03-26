@@ -1,11 +1,11 @@
-/* 
+/*
  * MODEL NAME
  * CategoryModel
- * 
+ *
  * IMPORTED MODELS
- * 
+ *
  * Path to firebase: `/categories`
- * 
+ *
  *  */
 
 import { ImageData } from "@shared/models/image-data";
@@ -22,18 +22,23 @@ export class Category extends Object {
   specifications: Object[] = []
 
   constructor( model: any = null ) {
+
     super()
-    if ( model ) {
+
+    if(model) {
 
       this.id             = model.id || ''
       this.name           = model.name || ''
       this.slug           = model.slug || ''
       this.order          = model.order || 100
-      this.amenities      = model.amenities || ''
-      this.specifications = model.specifications || 100
+      this.amenities      = model.amenities || []
+      this.specifications = model.specifications || []
+      this.icon           = model.icon || []
+      this.description    = model.description || ''
+      this.image          = new ImageData(model.image || null)
 
     }
 
   }
+  
 }
-

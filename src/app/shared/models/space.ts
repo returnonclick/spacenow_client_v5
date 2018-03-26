@@ -53,13 +53,13 @@ export class Space extends Object {
       this.priceUnit      = model.priceUnit || 'daily'
       this.categoryId     = model.categoryId || null
       this.amenityIds     = model.amenityIds || []
-      this.address        = model.address || new Address()
-      this.availability   = model.availability || new Availability()
+      this.address        = new Address(model.address || null)
+      this.availability   = new Availability(model.availability || null)
       this.status         = model.status || ListingStatus.DRAFT
       this.createdAt      = model.createdAt || new Date()
       this.currency       = model.currency || 'AUD'
       this.tax            = new TaxDetails(model.tax || null)
-      this.specifications = model.specifications || null
+      this.specifications = model.specifications || []
     }
   }
 }
@@ -71,9 +71,11 @@ export enum ListingStatus {
   DELETED = 'deleted'
 }
 export class TaxDetails extends Object {
+
   percent: number = null
   name:    string = 'none'
   country: string = ''
+  
   constructor(model: any = null) {
     super()
     if(model) {
@@ -84,10 +86,11 @@ export class TaxDetails extends Object {
   }
 }
 export class Price extends Object {
-  price:       number =  null
-  minimumTerm: number = 1
+
+  price:       number  = null
+  minimumTerm: number  = 1
   incentives:  boolean = false
-  
+
   constructor(model: any = null) {
     super()
     if(model) {
@@ -98,8 +101,10 @@ export class Price extends Object {
   }
 }
 export class Hourly extends Price {
+
   halfDay: number = null
   day:     number = null
+
   constructor(model: any = null) {
     super(model)
     if(model) {
@@ -109,7 +114,9 @@ export class Hourly extends Price {
   }
 }
 export class Daily extends Price {
+
   week: number = null
+
   constructor(model: any = null) {
     super(model)
     if(model) {
@@ -118,7 +125,9 @@ export class Daily extends Price {
   }
 }
 export class Weekly extends Price {
+
   month: number = null
+
   constructor(model: any = null) {
     super(model)
     if(model) {
@@ -127,8 +136,10 @@ export class Weekly extends Price {
   }
 }
 export class Monthly extends Price {
+
   sixMonths: number = null
   year:      number = null
+
   constructor(model: any = null) {
     super(model)
     if(model) {

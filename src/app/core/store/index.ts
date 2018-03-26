@@ -222,7 +222,7 @@ export const getListingEntitiesState = createSelector(
 )
 
 export const getSelectedListingId = (state: fromListings.State) => state.selectedListingId
-export const selectCurrentListingId = createSelector(getListingsState, getSelectedListingId) 
+export const selectCurrentListingId = createSelector(getListingsState, getSelectedListingId)
 
 export const selectListingEntities = createSelector(getListingsState, (listingsState) => listingsState.entities)
 export const selectCurrentListing = createSelector(

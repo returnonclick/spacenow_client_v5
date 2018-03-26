@@ -20,12 +20,39 @@ section#checkout {
     section {
       padding: 16px 0;
 
-      a {
-        display: block;
+      strong {
+        font-weight: 600;
+      }
+    }
+
+    h4 {
+      margin-top: 28px;
+    }
+
+    ol {
+      counter-reset: c;
+
+      > li {
+        list-style-position: inside;
+        text-indent: -1em;
+        margin: 1em 2em;
 
         &:before {
-          content: '+';
+          content: counter(c, decimal);
+          counter-increment: c;
+          padding-right: 0.2em;
         }
+      }
+    }
+
+  }
+
+  .confirm-user {
+    mat-form-field {
+      width: 100%;
+
+      textarea {
+        resize: none;
       }
     }
   }
@@ -99,22 +126,35 @@ section#checkout {
       display: block;
     }
 
+    .clear-cart {
+      font-weight: 400;
+      margin-top: 16px;
+      width: 100%;
+    }
+
     > .price-breakdown {
       margin-top: 16px;
       width: 100%;
       font-size: 14px;
 
       tr {
+        --tdPadding: 4px 4px;
+        td {
+          padding: var(--tdPadding);
+
+          &:nth-child(2) {
+            text-align: right;
+          }
+        }
+
         &:not(:last-child) {
           border-bottom: 1px solid rgba(48, 48, 48, 0.2);
         }
-      }
 
-      td {
-        padding: 4px;
-
-        &:nth-child(2) {
-          text-align: right;
+        &:last-child {
+          --tdPadding: 8px 4px;
+          font-size: 1.5em;
+          font-weight: 500;
         }
       }
     }

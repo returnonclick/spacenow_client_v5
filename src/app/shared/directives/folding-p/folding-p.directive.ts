@@ -19,6 +19,7 @@ export class FoldingPDirective {
       let btn              = document.createElement('a')
       btn.style.display    = "block"
       btn.style.paddingTop = "8px"
+      btn.style.cursor     = "pointer"
       let btnText          = document.createTextNode('+ more')
       btn.addEventListener('click', () => {
         this._isOpen = !this._isOpen
@@ -36,7 +37,5 @@ export class FoldingPDirective {
       this._el.nativeElement.appendChild(btn)
     }
   }
-
-
 
 }

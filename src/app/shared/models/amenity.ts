@@ -1,9 +1,9 @@
-/* 
+/*
  * MODEL NAME
  * Amenity
- * 
+ *
  * Path to firebase: `/amenities`
- * 
+ *
  *  */
 
 export class Amenity extends Object {

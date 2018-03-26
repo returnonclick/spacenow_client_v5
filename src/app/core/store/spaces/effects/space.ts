@@ -21,7 +21,7 @@ export class SpaceEffects {
     map(action => {
       return {
         type:    `[Spaces] ${action.type}`,
-        payload: action.doc.data()
+        payload: new Space(action.doc.data())
       }
     })
   )
@@ -32,7 +32,9 @@ export class SpaceEffects {
     switchMap(action => this._service.select(action.ids)),
     mergeMap(actions => actions),
     map(action =>
-      new actions.Added(<Space>action.payload.data())
+      new actions.Added(
+        new Space(action.payload.data())
+      )
     )
   )
 
@@ -44,7 +46,7 @@ export class SpaceEffects {
     map(change => {
       return {
         type:    `[Spaces] ${change.type}`,
-        payload: change.doc.data()
+        payload: new Space(change.doc.data())
       }
     })
   )

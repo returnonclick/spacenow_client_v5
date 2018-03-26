@@ -1,12 +1,17 @@
 import { NgModule }           from '@angular/core'
 import { CommonModule }       from '@angular/common';
 import { FlexLayoutModule }   from '@angular/flex-layout'
-import { ReactiveFormsModule, 
+import { ReactiveFormsModule,
          FormsModule }        from '@angular/forms'
 
 import { StoreModule }        from '@ngrx/store'
 import { EffectsModule }      from '@ngrx/effects'
 
+import { CheckoutEffects } from '@core/store/checkout/effects/checkout'
+import { CheckoutService } from '@core/store/checkout/services/checkout'
+
+import { CategoryEffects } from '@core/store/categories/effects/category'
+import { CategoryService } from '@core/store/categories/services/category'
 
 import { UserService }        from '@core/store/users/services/user'
 import { UserEffects }        from '@core/store/users/effects/user'
@@ -38,13 +43,18 @@ const MODULES = [
   FormsModule,
   UsersRoutingModule,
   EffectsModule.forFeature([
-    UserEffects, UserProfileEffects
-  ]),
+    CategoryEffects,
+    CheckoutEffects,
+    UserEffects,
+    UserProfileEffects,
+  ])
 ]
 
 const SERVICES = [
+  CategoryService,
+  CheckoutService,
   UserService,
-  UserProfileService
+  UserProfileService,
 ]
 
 @NgModule({

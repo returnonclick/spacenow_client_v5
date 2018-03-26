@@ -17,6 +17,7 @@ import { AgmCoreModule } from '@agm/core';
 import { GoogleAddressDirective } from '@shared/directives/google-address/google-address.directive'
 import { FoldingPDirective } from '@shared/directives/folding-p/folding-p.directive'
 import { ClickOutsideDirective } from '@shared/utils/click-outside.directive'
+import { FoldingDivDirective } from '@shared/directives/folding-div/folding-div.directive'
 
 import {
   ForgotPasswordComponent,
@@ -71,7 +72,8 @@ const COMPONENTS = [
 const DIRECTIVES = [
   GoogleAddressDirective,
   FoldingPDirective,
-  ClickOutsideDirective
+  ClickOutsideDirective,
+  FoldingDivDirective,
 ]
 
 const MODULES = [

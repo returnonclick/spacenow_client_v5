@@ -20,7 +20,7 @@ import * as spaceActions from '@core/store/spaces/actions/space'
   selector: 'sn-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: [ './checkout.component.scss' ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CheckoutComponent {
 
@@ -35,12 +35,13 @@ export class CheckoutComponent {
   categories: Dictionary<Category>
   spaces:     Dictionary<Space>
 
+  cart:                BookingSpace[]
   costBreakdown:       any[]
-  hasAgreed:           boolean      = false
-  hasConfirmedDetails: boolean      = false
-  lastDeleted:         BookingSpace = null
+  hasAgreed:           boolean = false
+  hasConfirmedDetails: boolean = false
   loadPayments:        any
-  snackBarDuration:    number       = 1000
+  snackBarDuration:    number  = 1000
+  totalPrice:          number  = 0
 
   constructor(
     private _store: Store<fromRoot.State>,
@@ -55,6 +56,7 @@ export class CheckoutComponent {
     })
 
     this.cart$.subscribe(cart => {
+      this.cart = cart
       this._store.dispatch(new spaceActions.Select(
         cart.map(item => item.spaceId)
       ))
@@ -69,12 +71,12 @@ export class CheckoutComponent {
       this.cart$,
       this.spaces$
     ).subscribe(([cart, spaces]) => {
-      if(cart.length > 1 && Object.keys(spaces).length > 1) {
+      if(cart.length > 0 && Object.keys(spaces).length > 0) {
         let totalPrice = 0
         let tax        = 0
         for(let item of cart) {
           let space      = spaces[item.spaceId]
-          let spacePrice = space.price[space.priceUnit] as Price
+          let spacePrice = space.price
           let price      = 0
           if(space.priceUnit == 'hourly')
             price += spacePrice.price * (item.bookingDates[0].toHour - item.bookingDates[0].fromHour)
@@ -82,9 +84,10 @@ export class CheckoutComponent {
             price += spacePrice.price * item.bookingDates.length
 
           totalPrice += price
-          // tax        += price * (spacePrice.tax.percent / 100.0)
+          tax        += price * (space.tax.percent / 100.0)
         }
 
+        this.totalPrice = totalPrice + tax
         this.costBreakdown = [
           {
             name: 'Accomodation',
@@ -96,7 +99,7 @@ export class CheckoutComponent {
           },
           {
             name: 'Total',
-            value: totalPrice + tax
+            value: this.totalPrice
           }
         ]
       }
@@ -123,13 +126,27 @@ export class CheckoutComponent {
   }
 
   removeItem(cartItem: BookingSpace) {
-    this.lastDeleted = cartItem
+    let lastDeleted = cartItem
     this._store.dispatch(new cartActions.Remove(cartItem.spaceId))
 
     this._snackbar.open('Listing deleted from cart', 'Undo' , {
       duration: this.snackBarDuration * 10,
     }).onAction().subscribe(() => {
-      this._store.dispatch(new cartActions.Add(this.lastDeleted))
+      this._store.dispatch(new cartActions.Add(lastDeleted))
+    })
+  }
+
+  clearCart() {
+    let lastDeleted = this.cart
+
+    this._store.dispatch(new cartActions.Clear)
+
+    this._snackbar.open('Cart cleared', 'Undo', {
+      duration: this.snackBarDuration * 10,
+    }).onAction().subscribe(() => {
+      lastDeleted.forEach(item => {
+        this._store.dispatch(new cartActions.Add(item))
+      })
     })
   }
 
@@ -145,7 +162,7 @@ export class CheckoutComponent {
   }
 
   viewSpace(spaceId) {
-    window.open(`/app/space/${spaceId}`)
+    window.open(`/space/${spaceId}`)
   }
 
   formatDate(d: Date, fromFmt: string = null, toFmt: string = 'DD MMM YYYY') {

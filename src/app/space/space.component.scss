@@ -32,8 +32,12 @@
       display: flex;
       flex-direction: row;
 
-      a:before {
-        content: '+';
+      a {
+        cursor: pointer;
+
+        &:before {
+          content: '+';
+        }
       }
 
       li {
@@ -90,6 +94,17 @@
         a {
           &:before {
             content: '+';
+          }
+        }
+      }
+
+      > #overview-cancellations {
+        li {
+          margin: 12px 0;
+
+          &:before {
+            content: '\2022';
+            font-weight: 600;
           }
         }
       }
@@ -187,14 +202,13 @@
   }
 
   #aside {
-    position: relative;
-    top: -369px;
-
     #space-booking {
       box-shadow: 0 0 20px 0 rgba(48, 48, 48, 0.2);
       border-radius: 12px;
       overflow: hidden;
       background-color: white;
+      position: relative;//sticky;
+      top: -343px; //10px;
 
       .space-host {
         display: grid;
@@ -279,12 +293,6 @@
           align-self: center;
         }
       }
-    }
-
-    &.sticky {
-      position: sticky;
-      top: 20px;
-      // border: 3px solid red;
     }
   }
 

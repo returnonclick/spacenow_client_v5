@@ -1,10 +1,10 @@
 
 export class Availability extends Object{
 
-  bookingType:   string = null
-  leadTime:      number = 1
-  openingTime:   OpeningTime = new OpeningTime()
-  isOpen247:     boolean = false
+  bookingType:   string         = null
+  leadTime:      number         = 1
+  openingTime:   OpeningTime    = new OpeningTime()
+  isOpen247:     boolean        = false
   exceptionDays: ExceptionDay[] = []
 
   constructor( model: any = null ) {
@@ -18,46 +18,43 @@ export class Availability extends Object{
       this.exceptionDays    = (model.exceptionDays || []).map(day => new ExceptionDay(day))
 
     }
-
   }
 
 }
 
 export class ExceptionDay extends Object {
 
-  fromDate: Date 
-  toDate: Date
-  note: string
+  fromDate: Date
+  toDate:   Date
+  note:     string
 
   constructor( model: any = null ) {
     super()
     if ( model ) {
 
       this.fromDate = model.fromDate || null
-      this.toDate = model.toDate || null
-      this.note = model.note || ''
-
+      this.toDate   = model.toDate || null
+      this.note     = model.note || ''
     }
 
   }
 
 }
 
-export class OpeningDay extends Object {
-  startHour: number = 0
-  closeHour: number = 0
-  startMinute: number = 0 // not gonna be used yet
-  closeMinute: number = 0 // not gonna be used yet
-  isOpen: boolean = true
+export class OpeningDay {
+  startHour:   number  = 0
+  closeHour:   number  = 0
+  startMinute: number  = 0 // not gonna be used yet
+  closeMinute: number  = 0 // not gonna be used yet
+  isOpen:      boolean = true
 
   constructor(model: any = null) {
-    super()
     if(model) {
-      this.startHour = model.startHour || 0
-      this.closeHour = model.clostHour || 0
-      this.startMinute = model.startMinute || 0 
+      this.startHour   = model.startHour || 0
+      this.closeHour   = model.clostHour || 0
+      this.startMinute = model.startMinute || 0
       this.closeMinute = model.closeMinute || 0
-      this.isOpen = model.isOpen || true
+      this.isOpen      = model.isOpen || true
     }
   }
 
@@ -86,4 +83,5 @@ export class OpeningTime extends Object {
       this.sat = new OpeningDay(model.sat) || new OpeningDay()
     }
   }
+
 }

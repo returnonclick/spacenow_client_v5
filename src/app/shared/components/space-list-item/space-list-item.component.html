@@ -12,11 +12,11 @@
           <i class="material-icons">{{ imageIndex === 2 ? 'lens' : 'panorama_fish_eye' }}</i>
       </button>
   </div>
-  <mat-card-content (click)="handleClick('view')">
+  <mat-card-content>
     <p class="category"><img src=""> 3 | <img src=""> {{space.category}}</p>
-    <h3 class="title">{{ space.name }}</h3>
-    <p class="price">From <span>{{ space.price }}</span> {{ space.priceUnit }}</p>
-    <p class="location">{{ space.fullAddress }}</p>
+    <h3 class="title">{{ space.title }}</h3>
+    <p class="price">From <span>{{ space.price.price }}</span> a {{ space.priceUnit }}</p>
+    <p class="location">{{ space.description.length > 150 ? space.description.substr(0, 150).trim() + '&hellip;' : space.description }}</p>
   </mat-card-content>
 </mat-card>
 

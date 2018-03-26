@@ -1,9 +1,9 @@
-/* 
+/*
  * MODEL NAME
  * Specification
- * 
+ *
  * Path to firebase: `/listing-specifications`
- * 
+ *
  *  */
 
 export class ListingSpecification extends Object {

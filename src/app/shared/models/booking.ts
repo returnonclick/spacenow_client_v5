@@ -1,3 +1,19 @@
+class BookingRequest {
+  id:           string       = ''
+  createdOn:    Date         = new Date()
+  userId:       string       = ''
+  spaceBooking: BookingSpace = null
+
+  constructor(model: any = null) {
+    if(model) {
+      this.id           = model.id
+      this.createdOn    = model.createdOn
+      this.userId       = model.userId
+      this.spaceBooking = new BookingSpace(model.spaceBooking)
+    }
+  }
+}
+
 class Booking {
   id:            string         = ''
   userId:        string         = ''
@@ -6,6 +22,8 @@ class Booking {
   currency:      string         = ''
   paymentStatus: string         = ''
   bookingStatus: string         = ''
+  userNotes:     string         = ''
+  hostNotes:     string         = ''
   cancellation:  Cancellation   = null
   spaceBookings: BookingSpace[] = []
 
@@ -18,6 +36,8 @@ class Booking {
       this.currency      = model.currency                       || ''
       this.paymentStatus = model.paymentStatus                  || ''
       this.bookingStatus = model.bookingStatus                  || ''
+      this.userNotes     = model.userNotes                      || ''
+      this.hostNotes     = model.hostNotes                      || ''
       this.cancellation  = new Cancellation(model.cancellation) || null
       this.spaceBookings = (model.spaceBookings || []).map(booking => new BookingSpace(booking))
     }
@@ -65,6 +85,7 @@ class BookingDate {
 }
 
 export {
+  BookingRequest,
   Booking,
   Cancellation,
   BookingSpace,
@@ -72,6 +93,7 @@ export {
 }
 
 export default [
+  BookingRequest,
   Booking,
   Cancellation,
   BookingSpace,
