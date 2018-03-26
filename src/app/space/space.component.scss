@@ -1,3 +1,6 @@
+@import
+  '~sass/abstracts/mixins';
+
 :host {
   height: 100%;
   display: grid;
@@ -10,7 +13,14 @@
 #hero-image-container {
   height: 600px;
   overflow: hidden;
-  object-fit: cover;
+  width: 100%;
+
+  > img {
+    object-position: 50% 50%;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
 }
 
 #space-section {
@@ -228,6 +238,7 @@
         .host-badge {
           grid-row: 2 / 3;
           grid-column: 1 / 2;
+          max-width: 175px;
 
           span {
             display: block;
@@ -304,5 +315,46 @@
 
   > agm-map {
     height: 400px;
+  }
+}
+
+@include respond-to('md') {
+  #hero-image-container {
+    height: 300px;
+  }
+
+  #space-section {
+    --gridGap: 20px;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto;
+    margin-top: -40px;
+
+    #aside {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+
+      #space-booking {
+        position: initial;
+        top: initial;
+      }
+    }
+
+    #space-description {
+      grid-row: 2 / 3;
+      grid-column: 1 / 2;
+
+      .description-navigator {
+        display: none;
+      }
+    }
+  }
+}
+
+@include respond-to('sm') {
+  #space-section {
+    font-size: 0.9em;
+    line-height: 1.7em;
+    margin-left: 20px;
+    margin-right: 20px;
   }
 }
