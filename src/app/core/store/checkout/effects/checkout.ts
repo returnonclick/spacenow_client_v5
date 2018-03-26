@@ -6,6 +6,7 @@ import { map, switchMap, catchError } from 'rxjs/operators'
 import { CheckoutService } from '@core/store/checkout/services/checkout'
 
 import * as actions from '@core/store/checkout/actions/checkout'
+import * as cartActions from '@core/store/cart/actions/cart'
 
 @Injectable()
 export class CheckoutEffects {
@@ -18,6 +19,12 @@ export class CheckoutEffects {
     catchError(err =>
       Observable.of(new actions.CheckoutFail(err))
     ),
+  )
+
+  @Effect()
+  success$ = this._actions$.pipe(
+    ofType<actions.CheckoutSuccess>(actions.CHECKOUT_SUCCESS),
+    map(actions => new cartActions.Clear)
   )
 
   constructor(
