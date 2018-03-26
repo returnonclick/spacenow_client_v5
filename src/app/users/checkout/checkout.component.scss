@@ -48,9 +48,12 @@ section#checkout {
   }
 
   .confirm-user {
-    textarea {
+    mat-form-field {
       width: 100%;
-      resize: none;
+
+      textarea {
+        resize: none;
+      }
     }
   }
 

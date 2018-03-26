@@ -6,6 +6,8 @@ class Booking {
   currency:      string         = ''
   paymentStatus: string         = ''
   bookingStatus: string         = ''
+  userNotes:     string         = ''
+  hostNotes:     string         = ''
   cancellation:  Cancellation   = null
   spaceBookings: BookingSpace[] = []
 
@@ -18,6 +20,8 @@ class Booking {
       this.currency      = model.currency                       || ''
       this.paymentStatus = model.paymentStatus                  || ''
       this.bookingStatus = model.bookingStatus                  || ''
+      this.userNotes     = model.userNotes                      || ''
+      this.hostNotes     = model.hostNotes                      || ''
       this.cancellation  = new Cancellation(model.cancellation) || null
       this.spaceBookings = (model.spaceBookings || []).map(booking => new BookingSpace(booking))
     }

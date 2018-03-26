@@ -37,10 +37,11 @@ export class CheckoutComponent {
 
   cart:                BookingSpace[]
   costBreakdown:       any[]
-  hasAgreed:           boolean      = false
-  hasConfirmedDetails: boolean      = false
+  hasAgreed:           boolean = false
+  hasConfirmedDetails: boolean = false
   loadPayments:        any
-  snackBarDuration:    number       = 1000
+  snackBarDuration:    number  = 1000
+  totalPrice:          number  = 0
 
   constructor(
     private _store: Store<fromRoot.State>,
@@ -86,6 +87,7 @@ export class CheckoutComponent {
           tax        += price * (space.tax.percent / 100.0)
         }
 
+        this.totalPrice = totalPrice + tax
         this.costBreakdown = [
           {
             name: 'Accomodation',
@@ -97,7 +99,7 @@ export class CheckoutComponent {
           },
           {
             name: 'Total',
-            value: totalPrice + tax
+            value: this.totalPrice
           }
         ]
       }

@@ -6,8 +6,10 @@
         <section>
           <h3>General Rules</h3>
           <ng-container *ngFor="let item of (cart$ | async)">
-            <h4>{{ spaces[item.spaceId].title }}</h4>
-            <p gen-folding-p>{{ spaces[item.spaceId].rules || 'Host did not specify rules for this Space' }}</p>
+            <ng-container *ngIf="spaces[item.spaceId]">
+              <h4>{{ spaces[item.spaceId].title }}</h4>
+              <p gen-folding-p>{{ spaces[item.spaceId].rules || 'Host did not specify rules for this Space' }}</p>
+            </ng-container>
           </ng-container>
         </section>
         <section>
@@ -228,12 +230,12 @@
             <mat-datepicker #birthday></mat-datepicker>
           </mat-form-field> -->
           <h3>Add any notes for this business expense</h3>
-          <mat-form-field [floatLabel]="false">
-            <textarea matInput placeholder="Type here..."></textarea>
+          <mat-form-field>
+            <textarea #userNotes matInput placeholder="Type here..."></textarea>
           </mat-form-field>
           <h3>Say hi to your host, and your reason for the stay</h3>
-          <mat-form-field [floatLabel]="false">
-            <textarea matInput placeholder="Hi! Nice to meet you..."></textarea>
+          <mat-form-field>
+            <textarea #hostNotes matInput placeholder="Hi! Nice to meet you..."></textarea>
           </mat-form-field>
         </section>
         <button mat-raised-button (click)="confirmDetails()">Confirm and Continue</button>
@@ -242,7 +244,10 @@
         <sn-payment
           *ngIf="pLoadPayments | async"
           [cart]="(cart$ | async)"
-          [customerId]="(user$ | async).uid">
+          [customer]="(user$ | async)"
+          [amount]="totalPrice"
+          [userNotes]="userNotes.value"
+          [hostNotes]="hostNotes.value">
         </sn-payment>
       </mat-tab>
     </mat-tab-group>

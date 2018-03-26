@@ -7,6 +7,9 @@ import { ReactiveFormsModule,
 import { StoreModule }        from '@ngrx/store'
 import { EffectsModule }      from '@ngrx/effects'
 
+import { CheckoutEffects } from '@core/store/checkout/effects/checkout'
+import { CheckoutService } from '@core/store/checkout/services/checkout'
+
 import { CategoryEffects } from '@core/store/categories/effects/category'
 import { CategoryService } from '@core/store/categories/services/category'
 
@@ -46,6 +49,7 @@ const MODULES = [
   UsersRoutingModule,
   EffectsModule.forFeature([
     CategoryEffects,
+    CheckoutEffects,
     UserEffects,
     UserProfileEffects,
   ]),
@@ -54,6 +58,7 @@ const MODULES = [
 
 const SERVICES = [
   CategoryService,
+  CheckoutService,
   UserService,
   UserProfileService,
 ]
