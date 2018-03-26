@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Booking Cancellation</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        
+        .body {
+            color: #163839;
+            font-size: 20px;
+            align-content: center;
+            margin: 0 auto;
+            vertical-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+        }
+
+        #container {
+            width: 960px;
+            align-content: center;
+            margin: 0 auto;
+            vertical-align: center;
+
+        }
+
+        #intro {
+            text-align: left;
+            font-size: 20px;
+            color: #163839;
+            width: 960px ;
+
+        }
+   
+        #intro h2{
+            text-align: left;
+            font-size: 28px;
+
+        }     
+        #footer  {
+            text-align: center;
+            font-size: 10px;
+            color: #163839;
+            width: 960px ;
+            align-self: center;
+            background-color: #E9E9E9;
+            font-size: 14px;
+           
+        }
+
+        #footer ul {
+            padding:0;
+
+        }
+        
+        #footer ul li {
+            display: inline-block;
+            list-style-type: none;
+        }
+
+        #listing {
+            color: #163839;
+            font-size: 20px;
+            text-align: left;
+            width: 960px ;
+            
+        }
+
+        #listing h2 {
+            font-size: 28px;
+            text-align: left;
+        }
+
+        #text {
+            font-size: 20px;
+            width: 960px ;
+        }
+
+        /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+
+        /* Thanks to Eric Lepetit @ericlepetitsf) for help troubleshooting */
+
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+            /* iPhone 6 and 6+ */
+            .email-container {
+                min-width: 375px !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="background-color: #E9E9E9;" class="body">
+
+    <table id="container">
+
+        <tr style="background-color: #E9E9E9;" height="210">
+            <td  align="center">
+
+                <table>
+                    <tr>
+                        <td>
+                            <img width="220px" style="display:block" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fspacenow_logo.jpg?alt=media&token=525e40f3-b778-4c73-b773-f9e299b441bd"
+                                alt="Spacenow">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="background-color: #FFF" align="center">
+            <td>
+                <img width="70%" src="{{listing.images[0]}}" alt="images">
+            </td>
+        </tr>
+
+        <tr style="background-color: #FFF">
+            <td style="padding:70px">
+                <table id="intro">
+                    <tr>
+                        <td>
+                            <h1>
+                                <b>YOUR REQUEST HAS BEEN DECLINED</b>
+                            </h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <hr color="#E4E4E4"></hr>
+                            <br>
+                            <p>Hi
+                                <b>{{userData.displayName}}</b>,
+                                <br>We’re sorry, your bookings request has been declined. The good news is that we work hard
+                                to ensure you have lots of other exciting spaces nearby to choose from! Follow the links
+                                below to see other options we’ve found that fit your search:</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h2>Listing Details</h2>
+                        </td>
+                    </tr>
+                </table>
+
+                <table id="listing">
+                    <tr>
+                        <td>
+                            <h3>Title:</h3>
+                        </td>
+                        <td>
+                            <span>{{listing.title}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Price:</h3>
+                        </td>
+                        <td>
+                            <span>{{listing.price.price}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Address:</h3>
+                        </td>
+                        <td>
+                            <span>{{listing.address.full_name}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Category:</h3>
+                        </td>
+                        <td>
+                            <span>{{ cateData.name }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Capacity:</h3>
+                        </td>
+                        <td>
+                            <span>{{ listing.specifications.capacity }}</span>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table id="text">
+                    <tr>
+                        <td>
+                            <hr color="#E4E4E4"></hr>
+                            <br>
+                            <h1>Don't worry we've got some great spaces for you to choose from</h1>
+                            <br>
+                            <p>Not what you’re looking for?? Give us a shout!!</p>
+                            <p>We are always keen to match our guests with the perfect type of space, and our listing gurus
+                                are waiting to hear from you!! Let us know how we can help you secure the right space, reach
+                                out to us directly at
+                                <br/>
+                                <br>
+                                <a href="mailto: info@spacenow.com.au"
+                                style="color: #6cde93 !important">info@spacenow.com.au
+                                </a>or
+                                <a href="call: 1300127120"
+                                style="color: #6cde93 !important">1300 127 120
+                                </a>
+                            </p>
+                            <br>
+                            <p>Sincerely,
+                                <br/>
+                                <font color="#6cde93">Spacenow Team</font>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+
+                <table id="footer">
+                    <tr>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://www.facebook.com/spacenowaustralia/" target="_blank">
+                                        <img width="70px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Ffacebook-icon.jpg?alt=media&token=9a8ef1e5-5f6a-4033-a442-b33a999705da">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.linkedin.com/company/17945312" target="_blank">
+                                        <img width="70px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Flinkedin-icon.jpg?alt=media&token=b8c2273d-6801-4bd2-b0e6-e265eeb535cb">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://plus.google.com/+SpaceNowSurryHills" target="_blank">
+                                        <img width="70px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fgoogleplus-icon.jpg?alt=media&token=52a0990b-3d9a-4871-ad28-475e355e66db">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/spacenow_aus" target="_blank">
+                                        <img width="70px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2FTwitter-icon.jpg?alt=media&token=0b60b2fe-61db-420f-8cff-b8ae33bedc2d">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/spacenowaustralia/" target="_blank">
+                                        <img width="70px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2FInstagram-icon.jpg?alt=media&token=e59b4de2-baca-428d-9f8d-62b7ac5854c6">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/channel/UCIq-FZwLqPS81bASw2EksTA/featured" target="_blank">
+                                        <img width="70px" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2FYoutube-icon.jpg?alt=media&token=4c116203-38b3-4779-9249-693f108218d3">
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <p>
+                                You received this email because you are subscripted to Spacenow Email notification from Spacenow. Update your email preferences
+                                to chose the type of emails you receive.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
