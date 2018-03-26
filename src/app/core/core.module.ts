@@ -10,7 +10,6 @@ import { AuthService } from '@core/store/auth/services'
 import { AuthEffects } from '@core/store/auth/effects/auth'
 
 import { 
-  ImageUploadService,
   NotifyService
 } from './services/'
 
@@ -30,7 +29,6 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         AuthService,
-        ImageUploadService,
         NotifyService
       ]
     }

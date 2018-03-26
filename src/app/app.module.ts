@@ -37,6 +37,8 @@ import { AuthGuard } from '@core/store/auth/services'
 import { HomeComponent } from './home/home.component'
 import { SearchComponent } from './search/search.component'
 import { SpaceComponent } from './space/space.component'
+import { CheckoutComponent } from '@app/checkout/checkout.component'
+import { PaymentComponent } from '@app/checkout/payment/payment.component'
 
 import { CategoryService } from '@core/store/categories/services/category'
 import { CategoryEffects } from '@core/store/categories/effects/category'
@@ -53,7 +55,9 @@ import { ListingShortDetailEffects } from '@core/store/listings-short-detail/eff
 const COMPONENTS = [
   HomeComponent,
   SearchComponent,
-  SpaceComponent
+  SpaceComponent,
+  CheckoutComponent,
+  PaymentComponent
 ]
 
 const SERVICES = [

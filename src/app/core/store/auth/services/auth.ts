@@ -14,7 +14,6 @@ import * as actions from '@core/store/auth/actions/auth'
 import * as fromRoot from '@core/store'
 import { User } from '@shared/models/user'
 import { UserData } from '@shared/models/user-data'
-import { UserProfile } from '@shared/models/user-profile'
 import { Contact } from '@shared/models/contact'
 
 @Injectable()

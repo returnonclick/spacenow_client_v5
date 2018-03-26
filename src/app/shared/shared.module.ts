@@ -15,8 +15,8 @@ import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLL
 import { AgmCoreModule } from '@agm/core';
 
 import { GoogleAddressDirective } from '@shared/directives/google-address/google-address.directive'
-import { ImageUploadDirective } from '@shared/directives/image-resize-upload/image-upload.directive'
 import { FoldingPDirective } from '@shared/directives/folding-p/folding-p.directive'
+import { ClickOutsideDirective } from '@shared/utils/click-outside.directive'
 
 import {
   ForgotPasswordComponent,
@@ -39,7 +39,6 @@ import {
   LayoutNoFooterComponent,
   LoadingComponent,
   LoadingOverlayComponent,
-  ImageUploadComponent,
   GeneralBookingComponent,
   HourlyBookingComponent,
 } from './components'
@@ -65,15 +64,14 @@ const COMPONENTS = [
   LayoutNoFooterComponent,
   LoadingComponent,
   LoadingOverlayComponent,
-  ImageUploadComponent,
   GeneralBookingComponent,
   HourlyBookingComponent,
 ]
 
 const DIRECTIVES = [
-  ImageUploadDirective,
   GoogleAddressDirective,
   FoldingPDirective,
+  ClickOutsideDirective
 ]
 
 const MODULES = [

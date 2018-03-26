@@ -16,25 +16,27 @@
  * 
  * */
 
+import { BusinessProfile } from "@shared/models/business-profile";
 import { Card } from '@shared/models/card'
 import { Contact } from '@shared/models/contact'
 import { ImageData } from '@shared/models/image-data'
 
 export class Profile extends Object {
 
-  uid:          string    = ''          
-  contact:      Contact   = new Contact()
-  cards:        Card[]    = new Array()
-
+  uid:              string           = ''          
+  contact:          Contact          = new Contact()
+  cards:            Card[]           = new Array()
+  businessProfile:  BusinessProfile  = new BusinessProfile()
   constructor( model: any = null ) {
 
-    super(model)
+    super()
 
     if ( model ) {
 
-      this.uid      = model.uid
-      this.contact  = model.contact
-      this.cards    = model.cards
+      this.uid             = model.uid
+      this.contact         = model.contact
+      this.cards           = model.cards
+      this.businessProfile = model.businessProfile
     
     }
 

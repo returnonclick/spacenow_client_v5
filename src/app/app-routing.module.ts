@@ -15,6 +15,8 @@ import { AuthGuard } from '@core/store/auth/services';
 import { HomeComponent } from '@app/home/home.component';
 import { SearchComponent } from '@app/search/search.component';
 import { SpaceComponent } from '@app/space/space.component';
+import { CheckoutComponent } from '@app/checkout/checkout.component'
+import { PaymentComponent } from '@app/checkout/payment/payment.component'
 
 const appRoutes: Routes = [
   {
@@ -25,7 +27,6 @@ const appRoutes: Routes = [
         path: '', 
         component: HomeComponent
       },
-      { path: 'space', component: SpaceComponent },
       { path: 'space/:id', component: SpaceComponent },
     ]
   },
@@ -41,7 +42,9 @@ const appRoutes: Routes = [
     component: LayoutNoFooterComponent,
     //canActivate: [AuthGuard],
     children: [
-      { path: '', loadChildren: '@app/listings/listings.module#ListingModule'}
+      { path: '', loadChildren: '@app/listings/listings.module#ListingModule'},
+      { path: 'checkout', component: CheckoutComponent},
+      { path: 'payment', component: PaymentComponent}
     ]
   },
   {
