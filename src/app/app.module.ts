@@ -53,6 +53,9 @@ import { CategoryEffects } from '@core/store/categories/effects/category'
 import { UserService } from '@core/store/users/services/user'
 import { UserEffects } from '@core/store/users/effects/user'
 
+import { CartEffects } from '@core/store/cart/effects/cart'
+import { CartService } from '@core/store/cart/services/cart'
+
 const COMPONENTS = [
   HomeComponent,
   SearchComponent,
@@ -61,6 +64,7 @@ const COMPONENTS = [
 
 const SERVICES = [
   AmenityService,
+  CartService,
   CategoryService,
   SpaceService,
   SearchService,
@@ -91,6 +95,7 @@ const SERVICES = [
 
     EffectsModule.forFeature([
       AmenityEffects,
+      CartEffects,
       CategoryEffects,
       SpaceEffects,
       SearchEffects,

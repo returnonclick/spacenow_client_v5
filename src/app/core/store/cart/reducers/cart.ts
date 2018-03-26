@@ -6,7 +6,8 @@ import { BookingSpace } from '@models/booking'
 import * as actions from '@core/store/cart/actions/cart'
 
 export interface State extends EntityState<BookingSpace> {
-  error: any
+  isLoading: boolean,
+  error:     any,
 }
 
 export const cartAdapter: EntityAdapter<BookingSpace> = createEntityAdapter<BookingSpace>({
@@ -15,7 +16,8 @@ export const cartAdapter: EntityAdapter<BookingSpace> = createEntityAdapter<Book
 })
 
 export const initialState: State = cartAdapter.getInitialState({
-  error: null
+  isLoading: false,
+  error:     null,
 })
 
 export function reducer(
@@ -34,6 +36,29 @@ export function reducer(
 
     case actions.CLEAR: {
       return cartAdapter.removeAll(state)
+    }
+
+    case actions.REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+        error:     null,
+      }
+    }
+
+    case actions.REQUEST_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+      }
+    }
+
+    case actions.REQUEST_FAIL: {
+      return {
+        ...state,
+        isLoading: false,
+        error:     action.error,
+      }
     }
 
     default: {

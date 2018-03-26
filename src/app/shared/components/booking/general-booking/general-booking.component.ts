@@ -6,8 +6,9 @@ import { Observable } from 'rxjs'
 
 import * as moment from 'moment'
 
-import { BookingSpace, BookingDate } from '@models/booking'
+import { BookingRequest, BookingSpace, BookingDate } from '@models/booking'
 import { Space } from '@models/space'
+import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
 import * as cartActions from '@core/store/cart/actions/cart'
@@ -21,14 +22,20 @@ export class GeneralBookingComponent implements OnInit {
 
   @Input() space: Space
 
-  form:    FormGroup
-  minDate: Date = new Date()
+  form:           FormGroup
+  minDate:        Date = new Date()
+  user:           User
 
   constructor(
     private _fb:       FormBuilder,
     private _store:    Store<fromRoot.State>,
     private _snackBar: MatSnackBar,
-  ) { }
+  ) {
+    this._store.select(fromRoot.getAuthUser).subscribe(user => {
+      if(user)
+        this.user = user
+    })
+  }
 
   ngOnInit() {
     this.form = this._fb.group({
@@ -93,12 +100,24 @@ export class GeneralBookingComponent implements OnInit {
       }
     }
 
-    this._store.dispatch(new cartActions.Add(bookingSpace))
-    let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
-    snackBar.onAction().subscribe(() => {
-      window.open('/users/checkout')
-      snackBar.dismiss()
-    })
+    let bookingType = this.space.availability.bookingType
+    if(bookingType == 'instantly') {
+      this._store.dispatch(new cartActions.Add(bookingSpace))
+      let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
+      snackBar.onAction().subscribe(() => {
+        window.open('/users/checkout')
+        snackBar.dismiss()
+      })
+    }
+    else if(bookingType == 'request') {
+      let request = new BookingRequest({
+        createdOn:    new Date(),
+        userId:       this.user.uid,
+        spaceBooking: bookingSpace
+      })
+      this._store.dispatch(new cartActions.Request(request))
+      let snackBar = this._snackBar.open('Request sent to host')
+    }
   }
 
   // this one is a closure: a function that returns a function with the context

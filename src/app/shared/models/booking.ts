@@ -1,3 +1,19 @@
+class BookingRequest {
+  id:           string       = ''
+  createdOn:    Date         = new Date()
+  userId:       string       = ''
+  spaceBooking: BookingSpace = null
+
+  constructor(model: any = null) {
+    if(model) {
+      this.id           = model.id
+      this.createdOn    = model.createdOn
+      this.userId       = model.userId
+      this.spaceBooking = new BookingSpace(model.spaceBooking)
+    }
+  }
+}
+
 class Booking {
   id:            string         = ''
   userId:        string         = ''
@@ -69,6 +85,7 @@ class BookingDate {
 }
 
 export {
+  BookingRequest,
   Booking,
   Cancellation,
   BookingSpace,
@@ -76,6 +93,7 @@ export {
 }
 
 export default [
+  BookingRequest,
   Booking,
   Cancellation,
   BookingSpace,

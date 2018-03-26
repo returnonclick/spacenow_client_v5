@@ -6,8 +6,9 @@ import { Store } from '@ngrx/store'
 import * as moment from 'moment'
 
 import { OpeningDay } from '@models/availability'
-import { BookingSpace, BookingDate } from '@models/booking'
+import { BookingRequest, BookingSpace, BookingDate } from '@models/booking'
 import { Space } from '@models/space'
+import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
 import * as cartActions from '@core/store/cart/actions/cart'
@@ -21,16 +22,22 @@ export class HourlyBookingComponent {
 
   @Input() space: Space
 
-  form:         FormGroup
-  fromHourList: any[]
-  toHourList:   any[]
-  minDate:      Date = new Date()
+  form:           FormGroup
+  fromHourList:   any[]
+  toHourList:     any[]
+  minDate:        Date = new Date()
+  user:           User
 
   constructor(
     private _fb:       FormBuilder,
     private _store:    Store<fromRoot.State>,
     private _snackBar: MatSnackBar,
-  ) { }
+  ) {
+    this._store.select(fromRoot.getAuthUser).subscribe(user => {
+      if(user)
+        this.user = user
+    })
+  }
 
   ngOnInit() {
     this.form = this._fb.group({
@@ -70,12 +77,24 @@ export class HourlyBookingComponent {
       })
     ]
 
-    this._store.dispatch(new cartActions.Add(bookingSpace))
-    let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
-    snackBar.onAction().subscribe(() => {
-      window.open('/users/checkout')
-      snackBar.dismiss()
-    })
+    let bookingType = this.space.availability.bookingType
+    if(bookingType == 'instantly') {
+      this._store.dispatch(new cartActions.Add(bookingSpace))
+      let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
+      snackBar.onAction().subscribe(() => {
+        window.open('/users/checkout')
+        snackBar.dismiss()
+      })
+    }
+    else if(bookingType == 'request') {
+      let request = new BookingRequest({
+        createdOn:    new Date(),
+        userId:       this.user.uid,
+        spaceBooking: bookingSpace,
+      })
+      this._store.dispatch(new cartActions.Request(request))
+      let snackBar = this._snackBar.open('Request sent to host')
+    }
   }
 
   generateHours(start, end) {
