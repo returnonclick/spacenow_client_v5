@@ -51,7 +51,6 @@ export class SearchComponent {
       this.map.mapReady,
     ).subscribe(([queryParams, map]) => {
       if(queryParams && map) {
-        //this.deleteMarkers(map)
         this.name      = queryParams.name ? decodeURIComponent(queryParams.name): this.name
         this.radius    = +queryParams.radius || this.radius
         this.latitude  = +queryParams.latitude || this.latitude

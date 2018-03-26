@@ -207,8 +207,9 @@
       border-radius: 12px;
       overflow: hidden;
       background-color: white;
-      position: relative;//sticky;
-      top: -343px; //10px;
+      position: sticky;
+      top: 10px;
+      margin-top: -343px; 
 
       .space-host {
         display: grid;

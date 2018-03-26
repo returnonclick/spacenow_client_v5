@@ -44,11 +44,12 @@
 
     > .category {
 
+      display: flex;
       background-color: #ffffff;
       border: 1px solid var(--color__oslo_gray);
       border-radius: var(--gap);
       margin-top: calc(var(--gap-negative) * 2);
-      padding: calc(var(--gap) / 3);
+      padding: calc(var(--gap) / 3) calc(var(--gap) / 3) 0;
       width: fit-content;
 
       position: absolute;
@@ -200,4 +201,12 @@
       --textColor: var(--hover);
     }
   }
+}
+
+.si-icon {
+  margin-top: calc(var(--gap) / 5 * -1);
+}
+
+.si-capacity {
+  @include sn-icon(8, 2, 35);
 }

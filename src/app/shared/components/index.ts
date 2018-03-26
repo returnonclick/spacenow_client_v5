@@ -16,7 +16,8 @@ import {
   InputCardComponent,
   SliderComponent,
   TableComponent,
-  TableSelectorComponent
+  TableSelectorComponent,
+  VideoPlayerComponent
 } from './custom'
 
 import {
@@ -51,6 +52,7 @@ export {
   SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
+  VideoPlayerComponent,
   LayoutComponent,
   LayoutNoFooterComponent,
   LoadingComponent,
@@ -77,6 +79,7 @@ export default {
   SpaceListItemComponent,
   TableComponent,
   TableSelectorComponent,
+  VideoPlayerComponent,
   LayoutComponent,
   LayoutNoFooterComponent,
   LoadingComponent,

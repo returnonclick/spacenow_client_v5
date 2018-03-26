@@ -9,6 +9,7 @@ import { InputCardComponent } from './input-card/input-card.component'
 import { SliderComponent } from './slider/slider.component'
 import { TableComponent } from './table/table.component'
 import { TableSelectorComponent } from './table-sel/table-sel.component'
+import { VideoPlayerComponent } from './video-player/video-player.component'
 
 
 export {
@@ -23,7 +24,8 @@ export {
   InputCardComponent,
   SliderComponent,
   TableComponent,
-  TableSelectorComponent
+  TableSelectorComponent,
+  VideoPlayerComponent
 }
 
 export default {
@@ -38,5 +40,6 @@ export default {
   InputCardComponent,
   SliderComponent,
   TableComponent,
-  TableSelectorComponent
+  TableSelectorComponent,
+  VideoPlayerComponent
 }

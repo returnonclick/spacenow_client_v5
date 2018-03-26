@@ -13,10 +13,10 @@
       </button>
   </div>
   <mat-card-content>
-    <p class="category"><img src=""> 3 | <img src=""> {{space.category}}</p>
+    <p class="category"><span class="si-icon si-capacity"></span> {{space.capacity}} |  <span class="si-icon si-capacity"></span><img src=""> {{space.category}}</p>
     <h3 class="title">{{ space.title }}</h3>
-    <p class="price">From <span>{{ space.price.price }}</span> a {{ space.priceUnit }}</p>
-    <p class="location">{{ space.description.length > 150 ? space.description.substr(0, 150).trim() + '&hellip;' : space.description }}</p>
+    <p class="price">From <span>${{ space.price }}</span> {{ space.priceUnit }}</p>
+    <p class="location">{{ space.fullAddress }}</p>
   </mat-card-content>
 </mat-card>
 

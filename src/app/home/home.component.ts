@@ -1,4 +1,4 @@
-import { Component }              from '@angular/core'
+import { Component, Inject, Injectable }              from '@angular/core'
 import { FormBuilder,  
          FormGroup, 
          Validators }             from '@angular/forms'
@@ -20,6 +20,8 @@ import * as listingShortDetailActions        from '@core/store/listings-short-de
 import { switchMap, map }         from 'rxjs/operators';
 import { Subscription }           from 'rxjs';
 import { filter } from 'rxjs/operator/filter';
+import { MatDialog } from '@angular/material';
+import { VideoPlayerComponent } from '@app/shared/components/custom/video-player/video-player.component';
 
 @Component({
   selector: 'sn-home',
@@ -50,7 +52,8 @@ export class HomeComponent {
     private _fb:     FormBuilder,
     private _store:  Store<fromRoot.State>,
     private _router: Router,
-    private _route:  ActivatedRoute
+    private _route:  ActivatedRoute,
+    public _dialog: MatDialog,
   ){
     this.categories$ = this._store.pipe(
       select(fromRoot.getAllCategories)
@@ -112,7 +115,15 @@ export class HomeComponent {
       longitude:    [ this.longitude ],
     })
   }
-
+  
+  openVideo() {
+    let dialogRef = this._dialog.open(VideoPlayerComponent, {
+      data: 'https://www.youtube.com/embed/Nyw7ytSKbus?rel=0&controls=0&showinfo=0&autoplay=1', 
+      panelClass: 'dialog-reset',
+      width: '100vw',
+      height: '80vh'
+    })
+  }
   
   // data: Array<any> = [{
   //   isNew: true,
