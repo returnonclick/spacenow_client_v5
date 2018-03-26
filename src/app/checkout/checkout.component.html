@@ -224,18 +224,13 @@
       <mat-tab label="about you">
         <h2>Almost there...</h2>
         <section class="confirm-user">
-          <!-- <mat-form-field>
-            <input matInput [matDatepicker]="birthday" placeholder="Birthday">
-            <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
-            <mat-datepicker #birthday></mat-datepicker>
-          </mat-form-field> -->
           <h3>Add any notes for this business expense</h3>
           <mat-form-field>
-            <textarea #userNotes matInput placeholder="Type here..."></textarea>
+            <textarea #userNotes matInput matTextareaAutosize matAutosizeMinRows="3" placeholder="Type here..."></textarea>
           </mat-form-field>
           <h3>Say hi to your host, and your reason for the stay</h3>
           <mat-form-field>
-            <textarea #hostNotes matInput placeholder="Hi! Nice to meet you..."></textarea>
+            <textarea #hostNotes matInput matTextareaAutosize matAutosizeMinRows="3" placeholder="Hi! Nice to meet you..."></textarea>
           </mat-form-field>
         </section>
         <button mat-raised-button (click)="confirmDetails()">Confirm and Continue</button>
