@@ -27,6 +27,7 @@ export class Profile extends Object {
   contact:         Contact         = new Contact()
   cards:           Card[]          = []
   businessProfile: BusinessProfile = new BusinessProfile()
+  aboutMe:         string          = ''
 
   constructor(model: any = null) {
     super()
@@ -35,6 +36,7 @@ export class Profile extends Object {
       this.contact         = new Contact(model.contact)
       this.cards           = (model.cards || []).map(card => new Card(card))
       this.businessProfile = new BusinessProfile(model.businessProfile)
+      this.aboutMe         = model.aboutMe
     }
   }
 
