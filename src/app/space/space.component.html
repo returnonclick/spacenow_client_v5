@@ -166,10 +166,11 @@
         </div>
         <div class="host-bio">
           <h4 class="host-name">{{ owner?.displayName }}</h4>
-          <p class="host-introduction">
-            My partner and I are two professionals who enjoy life and living in one of the most beautiful and culturally
-            diverse cities int he world. We love food and wine, nature, dancing, gin and tonics, travelling, and meeting new people.
-          </p>
+          <ng-container *ngIf="ownerProfile?.aboutMe">
+            <p class="host-introduction">
+              {{ ownerProfile?.aboutMe }}
+            </p>
+          </ng-container>
           <a>contact {{ owner?.displayName }}</a>
           <div class="host-social">
             <a href="#"><i class="fab fa-facebook-square fa-2x"></i></a>
