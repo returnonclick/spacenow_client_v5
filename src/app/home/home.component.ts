@@ -1,4 +1,12 @@
-import { Component, Inject, Injectable }              from '@angular/core'
+import { Component, Inject, Injectable, HostListener, ElementRef }              from '@angular/core'
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
+
 import { FormBuilder,  
          FormGroup, 
          Validators }             from '@angular/forms'
@@ -23,6 +31,7 @@ import { Subscription }           from 'rxjs';
 import { filter } from 'rxjs/operator/filter';
 import { MatDialog } from '@angular/material';
 import { VideoPlayerComponent } from '@app/shared/components/custom/video-player/video-player.component';
+import { georgeAnimation } from "@shared/animations/animations";
 
 @Component({
   selector: 'sn-home',
@@ -31,7 +40,7 @@ import { VideoPlayerComponent } from '@app/shared/components/custom/video-player
 })
 
 export class HomeComponent {
-  
+
   form:   FormGroup
   name:   string = ''
   radius: number = 20
@@ -44,20 +53,20 @@ export class HomeComponent {
   listingsShortDetailNewZealand$: Observable<ListingShortDetail[]>
   listingsShortDetailIndonesia$: Observable<ListingShortDetail[]>
   testimonials: Array<any>
-  //Indonesia
-  //United Arab Emirates
 
   sliderComponent: any = CardComponent
   sliderFeaturedComponent: any = FeaturedCardComponent
   sliderTestimonialComponent: any = TestimonialComponent
   gallerySize: number
+  airplane: any
 
   constructor(
     private _fb:     FormBuilder,
     private _store:  Store<fromRoot.State>,
     private _router: Router,
     private _route:  ActivatedRoute,
-    public _dialog: MatDialog,
+    public _dialog:  MatDialog,
+    public el:       ElementRef
   ){
     this.categories$ = this._store.pipe(
       select(fromRoot.getAllCategories)
@@ -90,7 +99,6 @@ export class HomeComponent {
       author: 'Jason Leppa',
       position: 'Gasoline Motor Co.'
     }]
-    console.log(window.screen.width)
     this.gallerySize = window.screen.width
   }
 
@@ -99,6 +107,11 @@ export class HomeComponent {
     this._store.dispatch(new categoryActions.Query())
     this._store.dispatch(new listingShortDetailActions.Query())
     this.createForm()
+    window.addEventListener('scroll', this.scroll, true);
+  }
+
+  ngAfterViewInit(){
+    this.airplane = document.getElementById('airplane');
   }
 
   selectedAddress(address) {
@@ -141,5 +154,15 @@ export class HomeComponent {
       height: '80vh'
     })
   }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.scroll, true);
+  }
+
+  
+  
+  scroll = (): void => {
+  };
+
 }
 

@@ -22,3 +22,23 @@ export let fadeInAnimation = trigger('fadeInAnimation', [
     }))
   ]),
 ]);
+
+export let georgeAnimation = trigger('georgeAnimation', [
+
+  transition('* => *', [
+    style({
+      transform: "translateX(0)"
+    }),
+    animate('7000ms ease-in-out', style({
+      transform: "translateX(-100%)"
+    }))
+  ])
+  // state('left', style({
+  //   transform: "translateX(0)"
+  // })),
+  // state('right',   style({
+  //   transform: "translateX(-100%)"
+  // })),
+  // transition('left => right', animate('7000ms ease-out')),
+  // transition('right => left', animate('7000ms ease-in'))
+]);

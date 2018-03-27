@@ -1,5 +1,8 @@
 @import
     '~sass/abstracts/mixins';
+:root {
+    --gap: 30px;
+}
 
 :host {
     display: grid;
@@ -8,7 +11,23 @@
     grid-row-start: 1;
     grid-row-end: 3;
 
-	grid-row-gap: 100px;
+    grid-row-gap: 100px;
+    
+    .title {
+        display: flex;
+        flex-flow: row;
+        padding: 0 var(--gap);
+
+        &.right {
+            text-align: right;
+        }
+
+        &.left {
+            text-align: left;
+        }
+
+    }
+
 }
 
 .si-icon {
@@ -25,6 +44,13 @@
     @include sn-icon(10, 4, 50);
     @include respond-to('phone-wide') {
         @include sn-icon(10, 4, 35);
+    }
+}
+
+.si-left {
+    @include sn-icon(9, 4, 50);
+    @include respond-to('phone-wide') {
+        @include sn-icon(9, 4, 35);
     }
 }
 

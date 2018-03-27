@@ -43,10 +43,10 @@
 
     #section-one {
 
-        align-items: center;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        justify-items: center;
+        justify-items: end;
+        align-items: center;
 
         @include respond-to('phone-wide') {
             grid-template-columns: 1fr;
@@ -74,24 +74,16 @@
 
     #section-two {
 
-        align-items: center;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        justify-items: center;
-
+        
         @include respond-to('phone-wide') {
             grid-template-columns: 1fr;
         }
 
-        > .title {
-            grid-column: 3 / span 1 ;
+        > :first-child {
+            grid-column: 3 / 4;
             grid-row: 1 / 2;
-
-            @include respond-to('phone-wide') {
-                grid-column: 1 /2 ;
-                grid-row: 1 / 2;
-            }
-
         }
 
         > :last-child {
@@ -111,14 +103,15 @@
 
         display: grid;
         grid-template-columns: 1fr;
-        justify-items: center;
-        text-align: center;
         grid-template-rows: minmax(600px, auto);
 
         > div {
-
             grid-column: 1 /2;
             grid-row: 1 / 2;
+
+            img {
+                transform: translateX();
+            }
 
         }
 
@@ -170,10 +163,9 @@
 
     #section-six {
 
-        align-items: center;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        justify-items: center;
+        justify-items: end;
 
         > :first-child {
             grid-column: 1 / 2;
@@ -190,23 +182,12 @@
 
     #section-seven {
 
-        align-items: center;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        justify-items: center;
 
         > :first-child {
             grid-column: 3 / 4;
             grid-row: 1 / 2;
-
-            &.right {
-                padding-left: 50px;
-            }
-
-            &.left {
-                padding-right: 50px;
-            }
-
         }
 
         > :last-child {

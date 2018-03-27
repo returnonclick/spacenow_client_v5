@@ -21,7 +21,7 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store'
 import { ToastModule } from 'ng2-toastr/ng2-toastr' // For notification
 
 // TT. Required for material animation
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BraintreeModule } from '@app/braintree/braintree.module'
 
 import { SharedModule } from '@shared/shared.module'

@@ -16,21 +16,23 @@
 
   <!-- SECTION ONE -->
   <section id="section-one">
-    
-    <h2 class="title right">Any space<br>
-    by the hour<br>
-    day or month</h2>
-
+    <div class="title right">
+        <h2>Any space<br>
+          by the hour<br>
+          day or month</h2>
+      <div class="si-icon-small si-right"></div>
+    </div>
+  
     <gen-slider [component]="sliderComponent" [items]="categories$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
   </section>
 
   <!-- SECTION TWO -->
   <section id="section-two">
-    
-    <div class="si-icon si-left"></div>
-    <h2 class="title left">Latest <br>spaces</h2>
-
+    <div class="title">
+      <div class="si-icon-small si-left"></div>
+      <h2>Latest <br>spaces</h2>
+    </div>
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailAustralia$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
   </section>
@@ -38,7 +40,7 @@
   <!-- SECTION THREE -->
   <section id="section-three">
     <div class="video">
-        <img src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Fgeorge-plane.png?alt=media&token=c519b037-69c2-4adc-9dd0-3a05f11d7fe4" alt="">
+        <img id="airplane" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Fgeorge-plane.png?alt=media&token=c519b037-69c2-4adc-9dd0-3a05f11d7fe4" alt="">
     </div>
     <div class="video-description">
       <h2>How Spacenow<br>Works</h2>
@@ -85,8 +87,10 @@
 
   <!-- SECTION SIX -->
   <section id="section-six">
-    
-    <h2 class="title right">Spaces in <br>UAE</h2>
+    <div class="title right">
+      <h2>Spaces in<br>UAE</h2>
+      <div class="si-icon-small si-right"></div>
+    </div>
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailUnitedArabEmirates$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
   
@@ -94,8 +98,11 @@
 
   <!-- SECTION SEVEN -->
   <section id="section-seven">
+    <div class="title left">
+      <div class="si-icon-small si-left"></div>
+      <h2>Spaces in<br>New Zealand</h2>
+    </div>
     
-    <h2 class="title left">Spaces in <br>New Zealand</h2>
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailNewZealand$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
