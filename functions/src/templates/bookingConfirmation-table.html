@@ -153,7 +153,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <hr style="background-color: #CCC; height: 1px; border: 0;">
+                            <hr color="#E4E4E4"></hr>
                             <br>
                             <p>Hi
                                 <b>{{userData.displayName}}</b>,
@@ -162,7 +162,6 @@
                     </tr>
                 </table>
 
-                <hr style="background-color: #CCC; height: 1px; border: 0;">
                 <p style="font-size: 28px;">
                     <strong>Listing Details</strong>
                 </p>
@@ -208,21 +207,21 @@
                     <tr>
                         <td align="left">
                             <strong>Start Time:</strong>
-                            <span style="margin-left: 20px;">{{ date[0].date }}, {{date[0].fromHour}}
+                            <span style="margin-left: 20px;">{{ bookingDates[1].date }}, {{bookingDates[1].fromHour}}
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>End Time:</strong>
-                            <span style="margin-left: 20px;">{{ date[0].date }}, {{date[0].fromHour}}
+                            <span style="margin-left: 23px;">{{ bookingDates[daysTot].date }}, {{bookingDates[1].toHour}}
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Price:</strong>
-                            <span style="margin-left: 51px;"> $ {{booking.finalPrice}} AUD</span>
+                            <span style="margin-left: 56px;"> AUD ${{booking.finalPrice}}</span>
                         </td>
                     </tr>
                     <tr>

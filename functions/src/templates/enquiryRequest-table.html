@@ -3,11 +3,10 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Booking Confirmation</title>
+    <title>Enquiry Request</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-
         .body {
             color: #163839;
             font-size: 20px;
@@ -35,6 +34,7 @@
             color: #163839;
             width: 960px;
 
+
         }
 
         #intro h2 p {
@@ -44,6 +44,10 @@
         }
 
         #listing {
+            width: 960px;
+        }
+
+        #enquiry {
             width: 960px;
         }
 
@@ -86,7 +90,7 @@
             -ms-user-select: none;
             user-select: none;
             border: 1px solid transparent;
-            padding: 12px 90px;
+            padding: 12px 20px;
             font-size: 1rem;
             text-decoration: none;
             border-radius: .75rem;
@@ -143,86 +147,102 @@
                     <tr>
                         <td>
                             <h1>
-                                <b>YOUR SPACE IS NOW LIVE
-                                    </b>
+                                <b>YOU'VE RECEIVED A NEW BOOKING ENQUIRY</b>
                             </h1>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <hr style="background-color: #CCC; height: 1px; border: 0;">
+                            <hr color="#E4E4E4"></hr>
                             <br>
                             <p>Hi
-                                <b>{{userData.displayName}}</b>,
-                                <br>Congratulations, your space is now active.</p>
+                                <b>{{hostData.displayName}}</b>,
+                                <br>You have a new booking enquiry.</p>
                         </td>
                     </tr>
                 </table>
+
                 <p style="font-size: 28px;">
                     <strong>Listing Details</strong>
                 </p>
-                <table id="listing">
-                        <tr>
-                            <td>
-                                <h3>Title:</h3>
-                            </td>
-                            <td>
-                                <span>{{listing.title}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3>Price:</h3>
-                            </td>
-                            <td>
-                                <span>{{listing.price.price}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3>Address:</h3>
-                            </td>
-                            <td>
-                                <span>{{listing.address.full_name}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3>Category:</h3>
-                            </td>
-                            <td>
-                                <span>{{ cateData.name }}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3>Capacity:</h3>
-                            </td>
-                            <td>
-                                <span>{{ listing.specifications.capacity }}</span>
-                            </td>
-                        </tr>
-                    </table>
+                <table id="listing" align="center">
+                    <tr>
+                        <td align="left">
+                            <strong>Title:</strong>
+                            <span style="margin-left: 77px;"> {{listing.title}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>Price:</strong>
+                            <span style="margin-left: 57px;"> $ {{listing.price.price}} AUD</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>Address:</strong>
+                            <span style="margin-left: 47px;"> {{listing.address.full_name}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>Category:</strong>
+                            <span style="margin-left: 37px;"> {{cateData.name }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>Capacity:</strong>
+                            <span style="margin-left: 38px;"> {{ listing.specifications.capacity }}</span>
+                        </td>
+                    </tr>
+                </table>
                 <br>
+                <hr style="background-color: #CCC; height: 1px; border: 0;">
+                <br>
+                <p style="font-size: 28px;">
+                    <strong>Enquiry Details</strong>
+                </p>
+                <table id="enquiry" align="center">
+                    <tr>
+                        <td align="left">
+                            <strong>Guest Name:</strong>
+                            <span style="margin-left: 22px;">{{ guestData.displayName }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>Guest e-mail:</strong>
+                            <span style="margin-left: 20px;">{{ guestData.email }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <strong>Guest phone:</strong>
+                            <span style="margin-left: 20px;"> {{guestData.phoneNumber}}</span>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+
                 <table id="text">
                     <tr>
                         <td>
                             <hr color="#E4E4E4"></hr>
                             <br>
-                            <h2><b>What's Next?</b></h2>
+                            <h2>What's Next?</h2>
                             <br>
-                            <p>Now that your space is live, why not help us in getting the word out? Sharing your space directly on social media by using the button below.</p>
-                            <p>Then watch the bookings roll in.</p>
+                            <p>1. Contact the potential guest using the details above, or contact your Spacenow account manager.</p>
+                            <p>2. Manage how you receive enquiries and bookings under the ‘Manage My Listings’ page, or by clicking the button below.</p>
                             <br/>
                             <br>
 
                             <table width="100%" align="center" style="margin-top: 24px;margin-bottom: 24px;">
                                 <tr align="center">
                                     <td align="center">
-                                        <a href="{{Share}}" target="_blank" class="btn">Share</a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="{{View}}" target="_blank" class="btn">View</a>
+                                        <a href="{{paymentLink}}" target="_blank" class="btn">Manage Listings</a>
                                     </td>
                                 </tr>
                             </table>

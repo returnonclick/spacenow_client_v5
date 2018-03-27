@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -232,33 +233,33 @@
             <h1 class="title">YOUR REQUEST HAS BEEN APPROVED</h1>
             <hr color="#E4E4E4"></hr>
             <br>
-            <p>Hi <b>{{displayName}}</b>, <br>
+            <p>Hi <b>{{userData.displayName}}</b>, <br>
                 IMPORTANT: To finalise your booking please click on the “Booking Confirmation” button below.</p><br>
             
             <div class="info-space">
                 <h1>Listing Details</h1>
                 <h2>Title:</h2>
-                <span>{{listings.titlle}}</span><br>
+                <span>{{listing.title}}</span><br>
                 <h2>Price:</h2>
-                <span>{{listings.price}}</span><br>
+                <span>{{listing.price.price}}</span><br>
                 <h2>Address:</h2>
-                <span>{{listings.aaddress}}</span><br>
+                <span>{{listings.address.full_name}}</span><br>
                 <h2>Category:</h2>
-                <span>{{listings.category}}</span><br>
+                <span>{{cateData.name}}</span><br>
                 <h2>Capacity:</h2>
-                <span>{listings.capacity}}</span><br>
+                <span>{listing.specifications.capacity}}</span><br>
                 <h1>Booking Details</h1>
                 <h2>Start Time:</h2>
-                <span>{{startTime}}</span>
+                <span>{{bookingDates[0].date}}, {{bookingDates[0].fromHour}}</span>
                 <br>
                 <h2>End Time:</h2>
-                <span>{{endTime}}</span>
+                <span>{{bookingDates[daysTot].date}}, {{bookingDates[0].fromHour}}</span>
                 <br>
                 <h2>Price:</h2>
-                <span>{{price}}</span>
+                <span>AUD ${{booking.finalPrice}}</span>
                 <br>
                 <h2>Guests:</h2>
-                <span>{{guests}}</span>
+                <span>{{booking.spaceBookings[0].numGuests}}</span>
             </div>
             <br><br><br>
             <p><b>What's Next?</b> <br>
