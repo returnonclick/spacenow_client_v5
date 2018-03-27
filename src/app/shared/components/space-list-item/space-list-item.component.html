@@ -1,6 +1,6 @@
 
 <mat-card class="space-card">
-  <img (click)="handleClick('view')" width="100%" [src]="space.images ? space.images[imageIndex] : space.imageUrl"/>
+  <img (click)="handleClick('view')" width="100%" [src]="space.images ? space.images[imageIndex] : ''"/>
   <div class="nav-slider" *ngIf="space.images">
       <button mat-icon-button (click)="imageIndex = 0">
           <i class="material-icons">{{ imageIndex === 0 ? 'lens' : 'panorama_fish_eye' }}</i>

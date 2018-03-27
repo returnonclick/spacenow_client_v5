@@ -20,6 +20,7 @@ export class WeeklyComponent implements AddPriceComponent {
 
   @Input() inPriceI: Weekly
   @Input() parentForm: FormGroup
+  focus: boolean
 
   terms = [
     { value: 1, display: '1 week'},

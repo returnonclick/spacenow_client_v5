@@ -20,7 +20,9 @@ export class MonthlyComponent implements AddPriceComponent {
 
   @Input() inPriceI: Monthly
   @Input() parentForm: FormGroup
-
+  focus: boolean
+  focusSem: boolean
+  focusYear: boolean
   terms = [
     { value: 1, display: '1 month'},
     { value: 3, display: '3 months'},

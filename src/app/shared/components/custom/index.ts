@@ -8,7 +8,6 @@ import { ImageDataComponent } from "./image-data/image-data.component"
 import { InputCardComponent } from './input-card/input-card.component'
 import { SliderComponent } from './slider/slider.component'
 import { TableComponent } from './table/table.component'
-import { TableSelectorComponent } from './table-sel/table-sel.component'
 import { TestimonialComponent } from './testimonial/testimonial.component'
 import { VideoPlayerComponent } from './video-player/video-player.component'
 
@@ -25,7 +24,6 @@ export {
   InputCardComponent,
   SliderComponent,
   TableComponent,
-  TableSelectorComponent,
   TestimonialComponent,
   VideoPlayerComponent
 }
@@ -42,7 +40,6 @@ export default {
   InputCardComponent,
   SliderComponent,
   TableComponent,
-  TableSelectorComponent,
   TestimonialComponent,
   VideoPlayerComponent
 }

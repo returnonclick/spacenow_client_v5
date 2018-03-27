@@ -37,7 +37,7 @@ const appRoutes: Routes = [
   {
     path: 'listing',
     component: LayoutNoFooterComponent,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       { path: '', loadChildren: '@app/listings/listings.module#ListingModule'},
     ]
@@ -61,7 +61,7 @@ const appRoutes: Routes = [
   { path: 'register', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
-  { path: 'page-not-found', component:  SignInComponent}
+  { path: 'page-not-found', redirectTo: ''}
 ]
 
 

@@ -14,6 +14,7 @@ export class ListingShortDetail {
     price:            number                      = 0
     priceUnit:        string                      = ''
     title:            string                      = ''
+    capacity:         string                      = ''
 
     constructor(model: any = null) {
 
@@ -29,7 +30,8 @@ export class ListingShortDetail {
             this.ownerDisplayName = model.ownerDisplayName 
             this.price            = model.price            
             this.priceUnit        = model.priceUnit        
-            this.title            = model.title            
+            this.title            = model.title
+            this.capacity         = model.capacity            
 
         }
 

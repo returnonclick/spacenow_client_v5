@@ -20,6 +20,9 @@ export class HourlyComponent implements AddPriceComponent {
 
   @Input() inPriceI: Hourly
   @Input() parentForm: FormGroup
+  focus: boolean
+  focusHalf: boolean
+  focusDay: boolean
 
   terms = [
     { value: 1, display: '1 hour'},

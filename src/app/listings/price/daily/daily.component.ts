@@ -20,6 +20,7 @@ export class DailyComponent implements AddPriceComponent {
 
   @Input() inPriceI: Daily
   @Input() parentForm: FormGroup
+  focus: boolean
 
   terms = [
     { value: 1, display: '1 day'},
