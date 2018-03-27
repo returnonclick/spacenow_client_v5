@@ -16,25 +16,31 @@
  *
  * */
 
-import { BusinessProfile } from '@shared/models/business-profile'
-import { Card } from '@shared/models/card'
-import { Contact } from '@shared/models/contact'
-import { ImageData } from '@shared/models/image-data'
+import { BankAccount } from '@models/bank-account'
+import { BusinessProfile } from '@models/business-profile'
+import { Card } from '@models/card'
+import { Contact } from '@models/contact'
+import { ImageData } from '@models/image-data'
 
-export class Profile extends Object {
+export class Profile {
 
   uid:             string          = ''
-  contact:         Contact         = new Contact()
+  aboutMe:         string          = ''
+  bankAccounts:    BankAccount[]   = []
+  businessProfile: BusinessProfile = null
   cards:           Card[]          = []
-  businessProfile: BusinessProfile = new BusinessProfile()
+  contact:         Contact         = null
+  coverUrl:        ImageData       = null
 
   constructor(model: any = null) {
-    super()
     if(model) {
       this.uid             = model.uid
-      this.contact         = new Contact(model.contact)
-      this.cards           = (model.cards || []).map(card => new Card(card))
+      this.aboutMe         = model.aboutMe
+      this.bankAccounts    = (model.bankAccounts || []).map(account => new BankAccount(account))
       this.businessProfile = new BusinessProfile(model.businessProfile)
+      this.cards           = (model.cards || []).map(card => new Card(card))
+      this.contact         = new Contact(model.contact)
+      this.coverUrl        = new ImageData(model.coverUrl)
     }
   }
 

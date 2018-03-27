@@ -8,12 +8,14 @@ import { Observable } from 'rxjs'
 
 import { Amenity } from '@models/amenity'
 import { Category } from '@models/category'
+import { Profile } from '@models/profile'
 import { Space } from '@models/space'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
 import * as amenityActions from '@core/store/amenities/actions/amenity'
 import * as categoryActions from '@core/store/categories/actions/category'
+import * as profileActions from '@core/store/users-profile/actions/user-profile'
 import * as spaceActions from '@core/store/spaces/actions/space'
 import * as userActions from '@core/store/users/actions/user'
 
@@ -32,12 +34,13 @@ export class SpaceComponent {
   owner$:         Observable<Dictionary<User>>
   spaces$:        Observable<Dictionary<Space>>
 
-  fragment:       string = ''
-  latitude:       number = 0
-  longitude:      number = 0
-  owner:          User   = null
-  space:          Space  = null
-  spaceId:        string = ''
+  fragment:       string  = ''
+  latitude:       number  = 0
+  longitude:      number  = 0
+  owner:          User    = null
+  ownerProfile:   Profile = null
+  space:          Space   = null
+  spaceId:        string  = ''
 
   constructor(
     private _store:  Store<fromRoot.State>,
@@ -59,11 +62,17 @@ export class SpaceComponent {
         this.latitude = +this.space.address.latitude
         this.longitude = +this.space.address.longitude
 
-        if(owner[this.space.ownerUid])
+        if(owner[this.space.ownerUid]) {
           this.owner = owner[this.space.ownerUid]
+          this._store.dispatch(new profileActions.Query(this.owner.uid))
+        }
         else
           this._store.dispatch(new userActions.QueryOne(this.space.ownerUid))
       }
+    })
+    this._store.select(fromRoot.getSelectedUserProfile).subscribe(profile => {
+      if(profile)
+        this.ownerProfile = profile
     })
   }
 

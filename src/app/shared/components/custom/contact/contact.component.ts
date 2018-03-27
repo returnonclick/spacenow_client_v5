@@ -33,7 +33,7 @@ export class ContactComponent {
 
   setContact(contact: Contact) {
     const contactFG = this._fb.group({
-      username: contact.email,
+      email: contact.email,
       firstName: contact.firstName,
       lastName: contact.lastName,
       gender: contact.gender,

@@ -1,6 +1,6 @@
 <form [formGroup]="openingDayForm">
   <!-- <div fxLayout="row" fxLayoutAlign="space-between center"> -->
-    <div fxFlex="100%" fxLayout="row" fxLayoutAlign="space-between center"  fxLayoutWrap="wrap">
+    <div fxFlex="100%" fxLayout="row wrap" fxLayoutAlign="space-between center">
       <span fxFlex="10%">{{weekday}}</span>
       <mat-slide-toggle fxFlex="30%" fxFlex.lt-sm="25%" #slider
         formControlName = "isOpen"

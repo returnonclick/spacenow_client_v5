@@ -23,8 +23,8 @@ export class HourlyBookingComponent {
   @Input() space: Space
 
   form:           FormGroup
-  fromHourList:   any[]
-  toHourList:     any[]
+  fromHourList:   any[] = []
+  toHourList:     any[] = []
   minDate:        Date = new Date()
   user:           User
 

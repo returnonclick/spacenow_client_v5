@@ -5,21 +5,21 @@ header {
     min-height: 700px;
     align-items: center;
 
-    background: $color__white url('/assets/images/layout/header.jpg');
+    background: $color__white url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Fhero-image.png?alt=media&token=c65f28b7-b689-441c-9bc9-35edd453f5d1');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 90vh;
-        background: linear-gradient($color__gable_green, transparent);
-        z-index: 1;
-    }
+    // &::after {
+    //     content: '';
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     height: 90vh;
+    //     background: linear-gradient($color__gable_green, transparent);
+    //     z-index: 1;
+    // }
 
     .inner {
         grid-column: 2 / span 12;
@@ -59,6 +59,7 @@ header {
             }
 
             .sn-icon {
+                color: #FFF;
                 @include sn-icon(1, 1, 50);
             }
         }
@@ -72,7 +73,7 @@ header {
                 margin-right: 10px;
 
                 .mat-icon {
-                    color: $color__pastel_green;
+                    color: #FFF;
                     font-size: 40px;
                 }
 
@@ -80,16 +81,16 @@ header {
 
             .mat-input-infix {
 
-                border-bottom: 2px solid $color__pastel_green;
+                border-bottom: 4px solid #FFF;
 
                 .mat-input-placeholder {
-                    color: $color__pastel_green;
+                    color: #FFF;
                     font-size: 25px;
                     top: 10px;
                 }
 
                 input {
-                    color: $color__pastel_green;
+                    color: #FFF;
                     font-size: 25px;
                 }
 

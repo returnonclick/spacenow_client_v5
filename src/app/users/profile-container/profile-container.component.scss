@@ -3,11 +3,11 @@
     --gap: 30px;
     --color__pastel_green: #6cde93;
     --color__gable_green: #173839;
-    
+
     grid-gap: var(--gap);
     grid-template-columns: 1fr 6fr;
     grid-template-rows: auto;
-    grid-template-areas: 
+    grid-template-areas:
     "navigation content";
 
     .navigation {
@@ -54,9 +54,10 @@
             display: grid;
             grid-gap: var(--gap);
             grid-template-columns: 3fr 2fr;
-            grid-template-rows: auto;
-            grid-template-areas: 
-            "required picture";
+            grid-template-rows: auto 1fr;
+            grid-template-areas:
+              "required picture"
+              "required aboutme";
 
             .required {
                 grid-area: required;
@@ -80,6 +81,22 @@
 
                 }
 
+            }
+
+            .about-me {
+                grid-area: aboutme;
+
+                mat-form-field {
+                    width: 100%;
+
+                    textarea {
+                        resize: none;
+                    }
+                }
+
+                button {
+                    width: 100%;
+                }
             }
 
         }

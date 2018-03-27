@@ -3,7 +3,7 @@
   <div class="inner">
     <h2>Find any space<br> anytime<br> anywhere</h2>
     <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-      <div class="sn-icon search"></div>
+      <div class="si-icon-small si-search"></div>
       <mat-form-field>
         <input type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event)">
       </mat-form-field>
@@ -17,8 +17,8 @@
   <!-- SECTION ONE -->
   <section id="section-one">
     
-    <h2 class="left">Any space 
-    by the hour
+    <h2 class="title right">Any space<br>
+    by the hour<br>
     day or month</h2>
 
     <gen-slider [component]="sliderComponent" [items]="categories$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
@@ -28,27 +28,24 @@
   <!-- SECTION TWO -->
   <section id="section-two">
     
-    <h2 class="right">Latest spaces</h2>
+    <div class="si-icon si-left"></div>
+    <h2 class="title left">Latest <br>spaces</h2>
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailAustralia$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
   </section>
 
   <!-- SECTION THREE -->
-  <!-- <section id="section-three">
-    <div>
-        <iframe src="https://www.youtube.com/embed/Nyw7ytSKbus?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="video"></iframe>
+  <section id="section-three">
+    <div class="video">
+        <img src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Fgeorge-plane.png?alt=media&token=c519b037-69c2-4adc-9dd0-3a05f11d7fe4" alt="">
     </div>
-    <div>
-      <h3>our story</h3>
-      <h2>Let us help you 
-      find the right
-      space to grow
-      your business</h2>
-      <p>Arash
-      CEO of spacenow</p>
+    <div class="video-description">
+      <h2>How Spacenow<br>Works</h2>
+      <div class="si-icon si-play" (click)="openVideo()"></div>
+      <caption>Watch Video</caption>
     </div>
-  </section> -->
+  </section>
 
   <!-- SECTION FOUR -->
   <section id="section-four" class="grid">
@@ -57,33 +54,39 @@
       <p>Spacenow are the global pionners of the 'Activated Space Economy'. We active a near limitless range of under-utilised spaces by connecting hosts with guests all around the world. By removing the middleman, individuals gain the opportunity to access unique flexible rentals; and hosts can start monetising their spare space. Unlike other share-spaces platforms, Spacenow redefines 'commercial space' by expanding the constraints of the traditional definition, to make available a wide variety of spaces to almost anyone around the world. Join the sharing economy today and start sharing with Spacenow.</p>
       <div class="perc">
         <mat-card>
-            <mat-card-content>
-              <div class="sn-icons"></div>
-              <h4>Locate</h4>
-              <p>Search for space by location</p>
-            </mat-card-content>
-          </mat-card>
-          <mat-card>
-              <mat-card-content>
-                <h4>Refine</h4>
-                <p>Select your category, price and other specifications</p>
-              </mat-card-content>
-            </mat-card>
-            <mat-card>
-                <mat-card-content>
-                  
-                  <h4>Book</h4>
-                  <p>Book now to move on</p>
-                </mat-card-content>
-              </mat-card>
+          <mat-card-content>
+            <div class="si-icon si-locate"></div>
+            <h4>Locate</h4>
+            <p>Search for space by location</p>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
+              <div class="si-icon si-refine"></div>
+            <h4>Refine</h4>
+            <p>Select your category, price and other specifications</p>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
+              <div class="si-icon si-book"></div>
+            <h4>Book</h4>
+            <p>Book now to move on</p>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </section> 
 
+  <!-- SECTION FIVE -->
+  <section id="section-five">
+      <gen-slider [component]="sliderTestimonialComponent" [itemSize]="gallerySize" [items]="testimonials" perPage="1" style="--perPage: 1;"></gen-slider>
+  </section>
+
   <!-- SECTION SIX -->
   <section id="section-six">
     
-    <h2 class="left">Spaces in United Arab Emirates</h2>
+    <h2 class="title right">Spaces in <br>UAE</h2>
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailUnitedArabEmirates$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
   
@@ -92,7 +95,7 @@
   <!-- SECTION SEVEN -->
   <section id="section-seven">
     
-    <h2 class="right">Spaces in New Zealand</h2>
+    <h2 class="title left">Spaces in <br>New Zealand</h2>
 
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailNewZealand$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 

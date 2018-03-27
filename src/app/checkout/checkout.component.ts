@@ -103,6 +103,22 @@ export class CheckoutComponent {
           }
         ]
       }
+      else {
+        this.costBreakdown = [
+          {
+            name: 'Accomodation',
+            value: 0
+          },
+          {
+            name: 'Tax',
+            value: 0
+          },
+          {
+            name: 'Total',
+            value: 0
+          }
+        ]
+      }
     })
   }
 
