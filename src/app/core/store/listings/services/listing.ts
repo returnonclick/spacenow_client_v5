@@ -24,13 +24,14 @@ export class ListingService {
   }
 
   public create(listing: Space) {
-    var data = Object.assign({}, listing)
+    var data = JSON.parse(JSON.stringify(listing))//Object.assign({}, listing)
     // const cRef = this.afs.firestore.collection(this.ref).doc()
     data.id = listing.id
     // return this.afs.collection<Listing>(this.ref).doc(cRef.id).set(data)
     return this.afs.collection<Space>(this.ref).doc(listing.id).set(data)
       .then(() =>{
-          return data.id 
+        console.log(data)
+        return data.id 
       })
       .catch(error =>{
         console.log(error)

@@ -6,7 +6,7 @@
       <span style="font-size: 60px;line-height: 60px;">Dates Closed</span>
     </div>
     <div class="content" fxFlexLayout="column">
-      <div fxFlexLayout="row" fxLayoutAlign="space-between" fxLayoutWrap="wrap">
+      <div fxFlexLayout="row wrap" fxLayoutAlign="space-between">
         <mat-form-field fxFlex="20%" fxFlex.lt-sm="40%">
           <input matInput readonly [matDatepicker]="picker" placeholder="From" formControlName="fromDate" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -23,17 +23,17 @@
           <input matInput formControlName="note" placeholder="Note" maxlength="30">
         </mat-form-field>
         <div fxFlex="10%" style="padding: 22px 0;">
-          <a
-                  (click)="addExceptionDate()" 
-                  type="button"
-                  [ngClass]="{'disable-add': exceptionForm.controls.availability.invalid}">
+          <a (click)="addExceptionDate()" 
+              type="button"
+              [ngClass]="{'disable-add': exceptionForm.controls.availability.invalid}"
+              style="cursor: pointer">
             Add
           </a>
         </div>
       </div>
     
       <!-- Show list of added exceptions -->
-      <div *ngFor="let day of exceptionDays" fxFlexLayout="row" fxLayoutAlign="space-between" fxLayoutWrap="wrap" id="box-exception" style="margin-bottom: 20px;">
+      <div *ngFor="let day of exceptionDays" fxFlexLayout="row wrap" fxLayoutAlign="space-between" id="box-exception" style="margin-bottom: 20px;">
 
           <span fxFlex="20%" fxFlex.lt-sm="40%" class="dates-background">{{day.fromDate | date: 'd MMMM, yyyy'}} </span>
 

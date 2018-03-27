@@ -17,6 +17,9 @@ import { HostTermComponent } from './host-terms/host-term.component'
 import { PrivacyComponent } from './privacy/privacy.component'
 import { RefundPolicyComponent } from './refund-policy/refund.component'
 import { AboutComponent } from './about/about.component'
+import { HelpComponent } from './help/help.component'
+import { QuestionComponent } from './help/question/question.component'
+import { TopQuestionComponent } from './help/top-question/top-question.component'
 
 
 const COMPONENTS = [
@@ -25,7 +28,10 @@ const COMPONENTS = [
   HostTermComponent,
   PrivacyComponent,
   RefundPolicyComponent,
-  AboutComponent
+  AboutComponent,
+  HelpComponent,
+  QuestionComponent,
+  TopQuestionComponent
 ]
 
 const ENTRY_COMPONENTS = [

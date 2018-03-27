@@ -9,7 +9,7 @@
 
    
 
-    <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="start">
+    <div fxLayout="row wrap" fxLayoutAlign="start">
 
       <div *ngFor="let image of images" class="container">
         <img class="image-data" style="background-size: cover" [ngStyle]="{ 'background-image': 'url(' + image.imageURL + ')'}">

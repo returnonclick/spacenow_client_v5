@@ -1,0 +1,127 @@
+#header-img {
+  position: relative;
+  width: 100%;
+  height: 400px; 
+}
+
+#text-image {
+  position: absolute;
+  top: 250px;
+  width: 100%;
+  color: white !important;
+  text-align: center;
+  font-size: 40px !important;
+}
+
+.divider-help {
+  height: 1px;
+  display: block;
+  background-color: #6cde93;
+} 
+
+.circular-border {
+  color: #bfbfbf;
+  border: solid;
+  border-radius: 20px;
+  border-width: 2px;
+  width: 33px;
+  font-size: 20px;
+}
+
+.circular-border span {
+  margin-left: 30%;
+}
+
+.wrapper-left {
+  padding: 6%;
+  padding-left: 10%;
+}
+
+.circular-border {
+  color: #bfbfbf;
+  border: solid;
+  border-radius: 20px;
+  border-width: 2px;
+  width: 33px;
+  font-size: 20px;
+}
+
+.circular-border span {
+  margin-left: 30%;
+}
+
+.wrapper-items { 
+  padding-top: 5%;
+  padding-right: 15%;
+}
+
+.divider-help {
+  height: 1px;
+  display: block;
+  background-color: #6cde93;
+} 
+
+#button-signup {
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  text-align: center;
+  margin-top: 41%;
+  margin-left: 24%;
+}
+
+#image {
+  position: relative;
+  display: inline;
+  max-width: 100%;
+
+  padding-right: 0px;
+  padding-left: 0px;
+/*  height: 72vh;*/
+ display: flex;
+  background-size: cover;
+}
+
+#over-image {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  max-width: 40%;
+  cursor: pointer;
+}
+
+ #parent-images {
+  display: inline-block;
+  position:relative;
+}
+
+#background {
+  background-color: #6cde93;
+  position: absolute;
+  width: 22%;
+  max-width: 22%;
+  right: 0;
+  
+  min-height: 520px;
+  max-height: 1000px;
+}
+
+#hand {
+  background: url("https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Ficono-4-200x200.jpg?alt=media&token=694f4bed-bb8d-422a-9ca5-1ed36ec5a648") no-repeat;
+  background-size: contain;
+  position: absolute;
+  width: 418px;
+  height: 653px;
+  left: 68%;
+  max-height: 500px;
+  right: 0;
+  margin-top: 1%;
+}
+
+.btn-help-page {
+  width: 200px;
+  height: 124px;
+  margin-top: 400px;
+  margin-left: 9%;
+  position: absolute;
+}
