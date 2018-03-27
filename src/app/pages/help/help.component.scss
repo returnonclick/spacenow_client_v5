@@ -1,0 +1,137 @@
+
+/* GRID CSS HELP PAGE */
+.help-page {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    ". img-items ."
+    ". sq-items ."
+    ". list-items .";
+}
+
+.help-page .img-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  justify-content: end;
+}
+
+.help-page .sq-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+.help-page .list-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "column-one column-two";
+}
+
+.img-items { grid-area: img-items; }
+.sq-items { grid-area: sq-items; }
+.list-items { grid-area: list-items; }
+.column-one { grid-area: column-one; }
+.column-two { grid-area: column-two; }
+
+@media screen and (max-width:1024px) {
+  .help-page {
+    grid-template-columns: 1fr 5fr 1fr;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .help-page .img-items {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .help-page .sq-items {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width:599px) {
+  .help-page {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+      "img-items"
+      "sq-items"
+      "list-items";
+  }
+  
+  .help-page .img-items {
+    grid-template-columns: 1fr;
+  }
+  
+  .help-page .sq-items {
+    grid-template-columns: 1fr;
+  }
+  
+  .help-page .list-items {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "column-one"
+      "column-two";
+  }
+
+  .img-items { grid-area: img-items; }
+  .sq-items { grid-area: sq-items; }
+  .list-items { grid-area: list-items; }
+  .column-one { grid-area: column-one; }
+  .column-two { grid-area: column-two; }
+
+}
+/* END GRID CSS HELP PAGE */
+
+.m-40 { margin: 40px }
+.m-70 { margin: 70px }
+.ml-40 { margin-left: 40px }
+.pb-5 { padding-bottom: 5px }
+.pb-10 { padding-bottom: 10px }
+.pb-20 { padding-bottom: 20px }
+.pb-100 { padding-bottom: 100px }
+.pl-2 { padding-left: 2px }
+
+
+.border-box {
+  border: solid 3px #6cde93;
+  padding: 8%;
+}
+
+.wrapper-icons {
+  padding: 8% 2%;
+  text-align: center;
+}
+
+.wraper-box{
+  padding: 1%;
+}
+
+.text-box {
+  text-align: center;
+  margin-top: 4%;
+  color: #173839;
+} 
+
+#header-img {
+  position: relative;
+  width: 100%;
+  height: 400px; 
+}
+
+#text-image {
+  position: absolute;
+  top: 250px;
+  width: 100%;
+  color: white !important;
+  text-align: center;
+  font-size: 40px !important;
+}
+
+.text-icons {
+  color:  #173839;
+}
