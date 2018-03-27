@@ -3,7 +3,7 @@
     <mat-tab-group>
       <mat-tab label="review license">
         <h2>Review Contract</h2>
-        <section>
+        <section *ngIf="(cart$ | async).length > 0">
           <h3>General Rules</h3>
           <ng-container *ngFor="let item of (cart$ | async)">
             <ng-container *ngIf="spaces[item.spaceId]">
@@ -224,18 +224,13 @@
       <mat-tab label="about you">
         <h2>Almost there...</h2>
         <section class="confirm-user">
-          <!-- <mat-form-field>
-            <input matInput [matDatepicker]="birthday" placeholder="Birthday">
-            <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
-            <mat-datepicker #birthday></mat-datepicker>
-          </mat-form-field> -->
           <h3>Add any notes for this business expense</h3>
           <mat-form-field>
-            <textarea #userNotes matInput placeholder="Type here..."></textarea>
+            <textarea #userNotes matInput matTextareaAutosize matAutosizeMinRows="3" placeholder="Type here..."></textarea>
           </mat-form-field>
           <h3>Say hi to your host, and your reason for the stay</h3>
           <mat-form-field>
-            <textarea #hostNotes matInput placeholder="Hi! Nice to meet you..."></textarea>
+            <textarea #hostNotes matInput matTextareaAutosize matAutosizeMinRows="3" placeholder="Hi! Nice to meet you..."></textarea>
           </mat-form-field>
         </section>
         <button mat-raised-button (click)="confirmDetails()">Confirm and Continue</button>
@@ -301,7 +296,7 @@
           </mat-accordion>
         </ng-template>
       </div>
-      <button mat-button class="clear-cart" color="warn" (click)="clearCart()">Remove All</button>
+      <button mat-button class="clear-cart" color="warn" (click)="clearCart()" [disabled]="(cart$ | async).length < 1">Remove All</button>
       <table class="price-breakdown">
         <tbody>
           <tr *ngFor="let item of costBreakdown">

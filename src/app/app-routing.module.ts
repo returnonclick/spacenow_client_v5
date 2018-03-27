@@ -40,8 +40,6 @@ const appRoutes: Routes = [
     //canActivate: [AuthGuard],
     children: [
       { path: '', loadChildren: '@app/listings/listings.module#ListingModule'},
-      { path: 'checkout', component: CheckoutComponent},
-      { path: 'payment', component: PaymentComponent}
     ]
   },
   {

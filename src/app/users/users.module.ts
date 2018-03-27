@@ -7,6 +7,7 @@ import { ReactiveFormsModule,
 import { StoreModule }        from '@ngrx/store'
 import { EffectsModule }      from '@ngrx/effects'
 
+
 import { CheckoutEffects } from '@core/store/checkout/effects/checkout'
 import { CheckoutService } from '@core/store/checkout/services/checkout'
 
@@ -20,19 +21,24 @@ import { UserProfileEffects } from '@core/store/users-profile/effects/user-profi
 
 import { SharedModule }       from '@shared/shared.module'
 
+import { BraintreeModule } from '@app/braintree/braintree.module'
 import { UsersRoutingModule }         from '@app/users/users-routing.module'
 import { ProfileDetailComponent }     from "@app/users/profile-detail/profile-detail.component"
 import { ProfileContainerComponent }  from '@app/users/profile-container/profile-container.component'
 import { SpacesComponent }            from '@app/users/spaces/spaces.component'
 import { CalendarComponent }          from '@app/users/calendar/calendar.component'
 import { FavoritesComponent }         from '@app/users/favorites/favorites.component'
+import { CheckoutComponent } from '@app/checkout/checkout.component'
+import { PaymentComponent } from '@app/checkout/payment/payment.component'
 
 const COMPONENTS = [
   CalendarComponent,
   FavoritesComponent,
   ProfileDetailComponent,
   ProfileContainerComponent,
-  SpacesComponent
+  SpacesComponent,
+  CheckoutComponent,
+  PaymentComponent,
 ]
 
 const MODULES = [
@@ -47,7 +53,8 @@ const MODULES = [
     CheckoutEffects,
     UserEffects,
     UserProfileEffects,
-  ])
+  ]),
+  BraintreeModule,
 ]
 
 const SERVICES = [
