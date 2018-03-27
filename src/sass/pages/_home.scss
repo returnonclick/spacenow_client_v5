@@ -76,7 +76,7 @@
 
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        
+
         @include respond-to('phone-wide') {
             grid-template-columns: 1fr;
         }
