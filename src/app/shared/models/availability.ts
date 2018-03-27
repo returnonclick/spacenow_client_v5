@@ -51,7 +51,7 @@ export class OpeningDay {
   constructor(model: any = null) {
     if(model) {
       this.startHour   = model.startHour || 0
-      this.closeHour   = model.clostHour || 0
+      this.closeHour   = model.closeHour || 0
       this.startMinute = model.startMinute || 0
       this.closeMinute = model.closeMinute || 0
       this.isOpen      = model.isOpen || true
@@ -70,7 +70,7 @@ export class OpeningTime extends Object {
   thu: OpeningDay = new OpeningDay()
   fri: OpeningDay = new OpeningDay()
   sat: OpeningDay = new OpeningDay()
-  
+
   constructor(model: any = null) {
     super()
     if(model) {
