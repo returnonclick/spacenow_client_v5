@@ -17,10 +17,10 @@
  * */
 
 import { BankAccount } from '@models/bank-account'
-import { BusinessProfile } from '@shared/models/business-profile'
-import { Card } from '@shared/models/card'
-import { Contact } from '@shared/models/contact'
-import { ImageData } from '@shared/models/image-data'
+import { BusinessProfile } from '@models/business-profile'
+import { Card } from '@models/card'
+import { Contact } from '@models/contact'
+import { ImageData } from '@models/image-data'
 
 export class Profile {
 

@@ -44,8 +44,10 @@ export class ProfileContainerComponent {
       }
     })
     this.userProfile$.subscribe(profile => {
-      if(profile)
+      if(profile) {
         this.profile = profile
+        this.aboutMeForm.get('aboutMe').setValue(this.profile.aboutMe)
+      }
     })
    }
 
