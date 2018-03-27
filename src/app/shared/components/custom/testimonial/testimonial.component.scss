@@ -1,0 +1,40 @@
+@import
+  '~sass/abstracts/variables',
+  '~sass/abstracts/mixins';
+
+:host {
+
+  color: white;
+  width: 100vw;
+
+  > div {
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    height: 80vh;
+
+    > .inner {
+      width: 50%;
+
+      > h3 {
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+    }
+
+    @include respond-to('sm') {
+      > .inner {
+        width: 80%;
+      }
+    }
+
+  }
+
+  .testimonial {
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+}

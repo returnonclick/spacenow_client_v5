@@ -10,8 +10,9 @@ import { Observable }             from 'rxjs/Observable'
 
 import { CardComponent, 
          FeaturedCardComponent }  from '@shared/components/custom/cards'
+import { TestimonialComponent }   from "@shared/components/custom"
 import { Category }               from '@shared/models/category'
-import { ListingShortDetail }     from '@app/shared/models/listing-short-detail';
+import { ListingShortDetail }     from '@app/shared/models/listing-short-detail'
 
 import * as fromRoot              from '@core/store'
 import * as actions               from '@core/store/layouts/actions/layout'
@@ -42,11 +43,14 @@ export class HomeComponent {
   listingsShortDetailUnitedArabEmirates$: Observable<ListingShortDetail[]>
   listingsShortDetailNewZealand$: Observable<ListingShortDetail[]>
   listingsShortDetailIndonesia$: Observable<ListingShortDetail[]>
+  testimonials: Array<any>
   //Indonesia
   //United Arab Emirates
 
   sliderComponent: any = CardComponent
   sliderFeaturedComponent: any = FeaturedCardComponent
+  sliderTestimonialComponent: any = TestimonialComponent
+  gallerySize: number
 
   constructor(
     private _fb:     FormBuilder,
@@ -74,7 +78,20 @@ export class HomeComponent {
       .map(listings => listings
       .filter(listing => listing.countryName === 'Indonesia')
     )
-    
+    this.testimonials = [{
+      background: 'https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Ftestimonial-01.jpg?alt=media&token=3f12acd5-bca4-4a8d-92ee-c9fe467cbcff',
+      testimonial: 'Spacenow has allowed me to share my restaurant in down time and make a profit',
+      author: 'John Maks',
+      position: 'CEO of Burger Joint'
+    },
+    {
+      background: 'https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Ftestimonial-02.jpg?alt=media&token=086e4aa2-ba79-4570-902d-01d832673767',
+      testimonial: 'Our showroom can be used as a big event space or even as a gallery. Spacenow allows people from all different industries to use their space for whatever their need.',
+      author: 'Jason Leppa',
+      position: 'Gasoline Motor Co.'
+    }]
+    console.log(window.screen.width)
+    this.gallerySize = window.screen.width
   }
 
   ngOnInit() {
@@ -124,12 +141,5 @@ export class HomeComponent {
       height: '80vh'
     })
   }
-  
-  // data: Array<any> = [{
-  //   isNew: true,
-  //   icon: 'add',
-  //   button: 'Coworking',
-  //   description: 'First test with description'
-  // }]
 }
 
