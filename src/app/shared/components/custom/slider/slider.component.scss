@@ -61,8 +61,8 @@
 
   .gen-slider-pages {
     display: grid;
-    padding: 20px;
-    grid-template-columns: repeat(var(--totalItems), 320px);
+    //padding: 20px;
+    grid-template-columns: repeat(var(--totalItems), auto);
     grid-gap: 20px;
     transition: all 1s ease;
   }

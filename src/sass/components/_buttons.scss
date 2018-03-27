@@ -23,7 +23,7 @@ $button-radius: 2 * $button-padding-lr;
         border: 1px solid mat-color($primary, default-contrast, 1) !important;
 
         &:hover {
-            background: transparent;
+            background: mat-color($primary, default-contrast, 1) !important;
             color: mat-color($primary, 50, 1) !important;
         }
 
@@ -34,7 +34,7 @@ $button-radius: 2 * $button-padding-lr;
             border: 1px solid mat-color($primary, 50, 1) !important;
 
             &:hover {
-                background: transparent;
+                background: mat-color($primary, default-contrast, 1) !important;
                 color: mat-color($primary, 50, 1) !important;
             }
 
@@ -54,7 +54,8 @@ $button-radius: 2 * $button-padding-lr;
         border: 1px solid mat-color($primary, default-contrast, 1) !important;
 
         &:hover {
-            background: transparent;
+            color: mat-color($primary, default-contrast, 1) !important;
+            background: mat-color($primary, 50, 1);
         }
 
 
@@ -64,7 +65,8 @@ $button-radius: 2 * $button-padding-lr;
             border: 1px solid mat-color($primary, 50, 1) !important;
 
             &:hover {
-                background: transparent;
+                color: mat-color($primary, 50, 1) !important;
+                background: mat-color($primary, default-contrast, 1);
             }
 
         }

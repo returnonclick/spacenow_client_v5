@@ -113,6 +113,7 @@
         grid-template-columns: 1fr;
         justify-items: center;
         text-align: center;
+        grid-template-rows: minmax(600px, auto);
 
         > div {
 
@@ -124,6 +125,7 @@
         .video-description {
             display: grid;
             justify-items: center;
+            align-self: end;
         }
     }
 
@@ -156,6 +158,14 @@
 
         }
 
+    }
+
+    #section-five {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        justify-items: center;
+        text-align: center;
     }
 
     #section-six {
