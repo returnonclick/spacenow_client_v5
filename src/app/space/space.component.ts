@@ -88,7 +88,6 @@ export class SpaceComponent {
     this._route.params
       .takeUntil(this.stopper$)
       .subscribe(params => {
-        console.log('!!!', params)
         this.spaceId = params.id
         this._store.dispatch(new spaceActions.Select([ this.spaceId ]))
       })
