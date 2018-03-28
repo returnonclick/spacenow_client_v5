@@ -7,16 +7,16 @@ import {
   transition
 } from '@angular/animations';
 
-import { FormBuilder,  
-         FormGroup, 
+import { FormBuilder,
+         FormGroup,
          Validators }             from '@angular/forms'
-import { ActivatedRoute, 
+import { ActivatedRoute,
          Router }                 from '@angular/router'
 
 import { Store, select }          from '@ngrx/store'
 import { Observable }             from 'rxjs/Observable'
 
-import { CardComponent, 
+import { CardComponent,
          FeaturedCardComponent }  from '@shared/components/custom/cards'
 import { TestimonialComponent }   from "@shared/components/custom"
 import { Category }               from '@shared/models/category'
@@ -43,7 +43,7 @@ export class HomeComponent {
 
   form:   FormGroup
   name:   string = ''
-  radius: number = 20
+  radius: number = 5
   latitude:    number = -33.9108137
   longitude:    number = 151.1960078
 
@@ -145,10 +145,10 @@ export class HomeComponent {
       longitude:    [ this.longitude ],
     })
   }
-  
+
   openVideo() {
     let dialogRef = this._dialog.open(VideoPlayerComponent, {
-      data: 'https://www.youtube.com/embed/Nyw7ytSKbus?rel=0&controls=0&showinfo=0&autoplay=1', 
+      data: 'https://www.youtube.com/embed/Nyw7ytSKbus?rel=0&controls=0&showinfo=0&autoplay=1',
       panelClass: 'dialog-reset',
       width: '100vw',
       height: '80vh'
@@ -159,10 +159,7 @@ export class HomeComponent {
     window.removeEventListener('scroll', this.scroll, true);
   }
 
-  
-  
   scroll = (): void => {
   };
 
 }
-

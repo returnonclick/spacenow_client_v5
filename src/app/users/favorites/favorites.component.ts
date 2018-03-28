@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 
 import { Space } from '@models/space'
+import { ListingShortDetail } from '@models/listing-short-detail'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
@@ -15,7 +16,7 @@ import * as spaceActions from '@core/store/spaces/actions/space'
 })
 export class FavoritesComponent {
 
-  spaces$: Observable<Space[]>
+  spaces$: Observable<(Space | ListingShortDetail)[]>
   user$: Observable<User>
 
   constructor(
@@ -26,7 +27,7 @@ export class FavoritesComponent {
 
     this.user$.subscribe(user => {
       if(user) {
-        let userId = '585325298df3d98f5e2bd67c' // user.uid
+        let userId = '5850a08878c201ab444c1127' // TODO: user.uid
         this._store.dispatch(
           new spaceActions.Filter([ 'ownerUid', '==', userId ])
         )

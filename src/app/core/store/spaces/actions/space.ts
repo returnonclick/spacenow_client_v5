@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store'
 
-import { Space } from '@shared/models/space'
+import { Space } from '@models/space'
+import { ListingShortDetail } from '@models/listing-short-detail'
 
 export const ALL      = '[Spaces] all'
 export const SELECT   = '[Spaces] select'
@@ -20,27 +21,33 @@ export class All implements Action {
 
 export class Select implements Action {
   readonly type = SELECT
-  constructor(public ids: string[]) { }
+  constructor(
+    public ids:     string[],
+    public isShort: boolean = false
+  ) { }
 }
 
 export class Filter implements Action {
   readonly type = FILTER
-  constructor(public params: any[]) {}
+  constructor(
+    public params: any[],
+    public isShort: boolean = false
+  ) { }
 }
 
 export class Added implements Action {
   readonly type = ADDED
-  constructor(public payload: Space) { }
+  constructor(public payload: Space | ListingShortDetail) { }
 }
 
 export class Modified implements Action {
   readonly type = MODIFIED
-  constructor(public payload: Space) { }
+  constructor(public payload: Space | ListingShortDetail) { }
 }
 
 export class Removed implements Action {
   readonly type = REMOVED
-  constructor(public payload: Space) { }
+  constructor(public payload: Space | ListingShortDetail) { }
 }
 
 export class Success implements Action {

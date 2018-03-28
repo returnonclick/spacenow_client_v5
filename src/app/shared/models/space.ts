@@ -2,26 +2,29 @@ import { Address } from '@models/address'
 import { Availability } from '@models/availability'
 import { ListingSpecification } from '@models/listing-specification'
 import { ImageData } from '@models/image-data'
+
 export class Space extends Object {
-  id:             string                  = null
-  ref:            string                  = null
-  ownerUid:       string                  = null
-  title:          string                  = ''
-  description:    string                  = ''
-  rules:          string                  = ''
-  tags:           string[]                = []
-  images:         ImageData[]             = []
-  price:          Price                   = new Price() 
-  priceUnit:      string                  = 'daily'
-  categoryId:     string                  = null
-  amenityIds:     string[]                = []
-  address:        Address                 = new Address()
-  specifications: ListingSpecification[]  = []
-  availability:   Availability            = new Availability()
-  status:         ListingStatus           = ListingStatus.DRAFT
-  createdAt:      Date                    = new Date()
-  currency:       string                  = 'AUD'
-  tax:            TaxDetails              = new TaxDetails()
+
+  id:             string                 = null
+  ref:            string                 = null
+  ownerUid:       string                 = null
+  title:          string                 = ''
+  description:    string                 = ''
+  rules:          string                 = ''
+  tags:           string[]               = []
+  images:         ImageData[]            = []
+  price:          Price                  = new Price()
+  priceUnit:      string                 = 'daily'
+  categoryId:     string                 = null
+  amenityIds:     string[]               = []
+  address:        Address                = new Address()
+  specifications: ListingSpecification[] = []
+  availability:   Availability           = new Availability()
+  status:         ListingStatus          = ListingStatus.DRAFT
+  createdAt:      Date                   = new Date()
+  currency:       string                 = 'AUD'
+  tax:            TaxDetails             = new TaxDetails()
+
   constructor(model: any = null) {
     super()
     if(model) {
@@ -34,10 +37,10 @@ export class Space extends Object {
       this.tags          = model.tags || []
       this.images        = model.images || []
       switch(model.priceUnit || 'daily') {
-        case 'hourly':  
+        case 'hourly':
           this.price = new Hourly(model.price)
           break
-        case 'daily': 
+        case 'daily':
           this.price = new Daily(model.price)
           break
         case 'weekly':
@@ -62,7 +65,9 @@ export class Space extends Object {
       this.specifications = model.specifications || []
     }
   }
+
 }
+
 export enum ListingStatus {
   DRAFT   = 'draft',
   PENDING = 'pending',
@@ -70,12 +75,13 @@ export enum ListingStatus {
   HIDDEN  = 'hidden',
   DELETED = 'deleted'
 }
+
 export class TaxDetails extends Object {
 
   percent: number = null
   name:    string = 'none'
   country: string = ''
-  
+
   constructor(model: any = null) {
     super()
     if(model) {
@@ -84,7 +90,9 @@ export class TaxDetails extends Object {
       this.country = model.country || ''
     }
   }
+
 }
+
 export class Price extends Object {
 
   price:       number  = null
@@ -99,7 +107,9 @@ export class Price extends Object {
       this.incentives  = model.incentives || false
     }
   }
+
 }
+
 export class Hourly extends Price {
 
   halfDay: number = null
@@ -112,7 +122,9 @@ export class Hourly extends Price {
       this.day     = model.day || null
     }
   }
+
 }
+
 export class Daily extends Price {
 
   week: number = null
@@ -123,7 +135,9 @@ export class Daily extends Price {
       this.week = model.week || null
     }
   }
+
 }
+
 export class Weekly extends Price {
 
   month: number = null
@@ -134,7 +148,9 @@ export class Weekly extends Price {
       this.month = model.month || null
     }
   }
+
 }
+
 export class Monthly extends Price {
 
   sixMonths: number = null
@@ -147,4 +163,5 @@ export class Monthly extends Price {
       this.year      = model.year || null
     }
   }
+
 }

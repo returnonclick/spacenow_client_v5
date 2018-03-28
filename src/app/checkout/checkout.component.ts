@@ -9,6 +9,7 @@ import * as moment from 'moment'
 import { BookingSpace } from '@models/booking'
 import { Category } from '@models/category'
 import { Space, Price } from '@models/space'
+import { ListingShortDetail } from '@models/listing-short-detail'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
@@ -28,12 +29,12 @@ export class CheckoutComponent {
 
   cart$:         Observable<BookingSpace[]>
   categories$:   Observable<Dictionary<Category>>
-  spaces$:       Observable<Dictionary<Space>>
+  spaces$:       Observable<Dictionary<Space | ListingShortDetail>>
   user$:         Observable<User>
   pLoadPayments: Promise<boolean>
 
   categories: Dictionary<Category>
-  spaces:     Dictionary<Space>
+  spaces:     Dictionary<Space|ListingShortDetail>
 
   cart:                BookingSpace[]
   costBreakdown:       any[]
@@ -75,7 +76,7 @@ export class CheckoutComponent {
         let totalPrice = 0
         let tax        = 0
         for(let item of cart) {
-          let space      = spaces[item.spaceId]
+          let space      = spaces[item.spaceId] as Space
           let spacePrice = space.price
           let price      = 0
           if(space.priceUnit == 'hourly')

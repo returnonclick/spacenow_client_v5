@@ -15,7 +15,6 @@ export class SearchService {
   constructor(private _afs: AngularFirestore) { }
 
   public query(params: any = null) {
-    console.log(params)
     return this._afs.collection<ListingShortDetail>(this.ref)
       .valueChanges()
       .map(listings =>

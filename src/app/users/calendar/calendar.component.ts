@@ -24,7 +24,7 @@ export class CalendarComponent {
     private _store: Store<fromRoot.State>
   ) {
     this.calendar$ = this._store.select(fromRoot.getAllSpaces).map(spaces => {
-      let calendar = spaces.reduce((acc, curr) => {
+      let calendar = spaces.reduce((acc, curr: Space) => {
         let d = curr.createdAt || curr['created']
         let dateMoment = moment()
         if(typeof d === 'string') {

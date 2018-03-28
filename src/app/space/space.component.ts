@@ -1,15 +1,16 @@
 import { AgmMap } from '@agm/core'
-import { Component, HostListener, ViewChild } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Dictionary } from '@ngrx/entity/src/models'
 import { Store } from '@ngrx/store'
-import {} from 'googlemaps'
+import { } from 'googlemaps'
 import { Observable } from 'rxjs'
 
 import { Amenity } from '@models/amenity'
 import { Category } from '@models/category'
 import { Profile } from '@models/profile'
 import { Space } from '@models/space'
+import { ListingShortDetail } from '@models/listing-short-detail'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
@@ -32,7 +33,7 @@ export class SpaceComponent {
   categories$:    Observable<Dictionary<Category>>
   isLoadingPage$: Observable<boolean>
   owner$:         Observable<Dictionary<User>>
-  spaces$:        Observable<Dictionary<Space>>
+  spaces$:        Observable<Dictionary<Space | ListingShortDetail>>
 
   fragment:       string  = ''
   latitude:       number  = 0
@@ -58,7 +59,7 @@ export class SpaceComponent {
       this.owner$,
     ).subscribe(([spaces, owner]) => {
       if(spaces[this.spaceId]) {
-        this.space = spaces[this.spaceId]
+        this.space = spaces[this.spaceId] as Space
         this.latitude = +this.space.address.latitude
         this.longitude = +this.space.address.longitude
 
