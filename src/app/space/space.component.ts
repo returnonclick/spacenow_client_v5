@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Dictionary } from '@ngrx/entity/src/models'
 import { Store } from '@ngrx/store'
 import { } from 'googlemaps'
-import { Observable } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 
 import { Amenity } from '@models/amenity'
 import { Category } from '@models/category'
@@ -34,6 +34,7 @@ export class SpaceComponent {
   isLoadingPage$: Observable<boolean>
   owner$:         Observable<Dictionary<User>>
   spaces$:        Observable<Dictionary<Space | ListingShortDetail>>
+  stopper$:       Subject<boolean>
 
   fragment:       string  = ''
   latitude:       number  = 0
@@ -53,24 +54,27 @@ export class SpaceComponent {
     this.isLoadingPage$ = this._store.select(fromRoot.isLoadingSpaces)
     this.owner$         = this._store.select(fromRoot.getUserEntities)
     this.spaces$        = this._store.select(fromRoot.getSpaceEntities)
+    this.stopper$       = new Subject()
 
     Observable.combineLatest(
       this.spaces$,
       this.owner$,
-    ).subscribe(([spaces, owner]) => {
-      if(spaces[this.spaceId]) {
-        this.space = spaces[this.spaceId] as Space
-        this.latitude = +this.space.address.latitude
-        this.longitude = +this.space.address.longitude
+    ).takeUntil(this.stopper$)
+      .subscribe(([spaces, owner]) => {
+        if(spaces[this.spaceId]) {
+          this.space     = spaces[this.spaceId] as Space
+          this.latitude  = +this.space.address.latitude
+          this.longitude = +this.space.address.longitude
 
-        if(owner[this.space.ownerUid]) {
-          this.owner = owner[this.space.ownerUid]
-          this._store.dispatch(new profileActions.Query(this.owner.uid))
+          if(owner[this.space.ownerUid]) {
+            this.owner = owner[this.space.ownerUid]
+            this._store.dispatch(new profileActions.Query(this.owner.uid))
+          }
+          else
+            this._store.dispatch(new userActions.QueryOne(this.space.ownerUid))
         }
-        else
-          this._store.dispatch(new userActions.QueryOne(this.space.ownerUid))
-      }
-    })
+      })
+
     this._store.select(fromRoot.getSelectedUserProfile).subscribe(profile => {
       if(profile)
         this.ownerProfile = profile
@@ -80,14 +84,20 @@ export class SpaceComponent {
   ngOnInit() {
     this._store.dispatch(new amenityActions.Query)
     this._store.dispatch(new categoryActions.Query)
-    this._route.params.subscribe(params => {
-      this.spaceId = params.id
-      this._store.dispatch(new spaceActions.Select([ this.spaceId ]))
-    })
+
+    this._route.params
+      .takeUntil(this.stopper$)
+      .subscribe(params => {
+        console.log('!!!', params)
+        this.spaceId = params.id
+        this._store.dispatch(new spaceActions.Select([ this.spaceId ]))
+      })
+
     this._route.fragment.subscribe(fragment => {
       this.fragment = fragment
       this.jumpToSection()
     })
+
     Observable.combineLatest(
       this.map.mapReady,
       this.spaces$,
@@ -102,6 +112,11 @@ export class SpaceComponent {
         })
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.stopper$.next(false)
+    this.stopper$.complete()
   }
 
   mapPriceUnit() {
