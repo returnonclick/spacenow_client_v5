@@ -21,18 +21,18 @@ export class SearchComponent {
 
   @ViewChild(AgmMap) map: AgmMap
 
-  zoom:      number = 16
-  name:      string = ''
-  radius:    number = 20
-  latitude:  number = -33.9108137
-  longitude: number = 151.1960078
+  zoom:       number                                    = 16
+  name:       string                                    = ''
+  radius:     number                                    = 5
+  latitude:   number                                    = -33.9108137
+  longitude:  number                                    = 151.1960078
 
   results$:   Observable<ListingShortDetail[]>
   isLoading$: Observable<boolean>
 
-  form:      FormGroup
-  nativeMap: google.maps.Map = null
-  markerMap: { [spaceId: string]: google.maps.Marker }
+  form:       FormGroup
+  nativeMap:  google.maps.Map                           = null
+  markerMap:  { [spaceId: string]: google.maps.Marker } = {}
 
   constructor(
     private _fb:     FormBuilder,
@@ -68,17 +68,16 @@ export class SearchComponent {
       this.results$,
       this.map.mapReady,
     ).subscribe(([searchResults, map]) => {
+      this._clearMarkers()
       if(searchResults && map) {
-        this.markerMap = {}
         for(let result of searchResults) {
-          let markerLatLng = new google.maps.LatLng(result.geopoint.latitude, result.geopoint.longitude);
-          let thisLoc      = new google.maps.Marker({
-            animation: google.maps.Animation.DROP,
-            map:       this.nativeMap,
-            position:  markerLatLng,
-            icon:      'assets/icons/spacenow_icon_01.svg',
+          let latLng = new google.maps.LatLng(result.geopoint.latitude, result.geopoint.longitude);
+          let marker      = new google.maps.Marker({
+            map:      this.nativeMap,
+            position: latLng,
+            icon:     'assets/icons/spacenow_icon_01.svg',
           })
-          this.markerMap[result.id] = thisLoc
+          this.markerMap[result.id] = marker
         }
       }
     })
@@ -109,6 +108,23 @@ export class SearchComponent {
     })
   }
 
+  toggleHover(space, enterFlag) {
+    let marker: google.maps.Marker = this.markerMap[space.id]
+    if(enterFlag)
+      marker.setIcon('assets/icons/spacenow_icon_02.svg')
+    else
+      marker.setIcon('assets/icons/spacenow_icon_01.svg')
+  }
+
+  private _clearMarkers() {
+    let markerIds = Object.keys(this.markerMap)
+    for(let markerId of markerIds) {
+      let marker = this.markerMap[markerId]
+      marker.setMap(null)
+      delete this.markerMap[markerId]
+    }
+  }
+
   private _updateForm() {
     this.form = this._fb.group({
       name:      [ this.name, Validators.required ],
@@ -116,14 +132,6 @@ export class SearchComponent {
       latitude:  [ this.latitude ],
       longitude: [ this.longitude ],
     })
-  }
-
-  toggleHover(space, enterFlag) {
-    let marker: google.maps.Marker = this.markerMap[space.id]
-    if(enterFlag)
-      marker.setIcon('assets/icons/spacenow_icon_02.svg')
-    else
-      marker.setIcon('assets/icons/spacenow_icon_01.svg')
   }
 
 }

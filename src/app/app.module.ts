@@ -95,7 +95,8 @@ const SERVICES = [
     AgmCoreModule.forRoot({
       apiKey: environment.googleApi,
       libraries: [
-        'places'
+        'places',
+        'geometry',
       ]
     }),
 

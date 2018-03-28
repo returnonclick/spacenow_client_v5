@@ -1,47 +1,35 @@
 import { Injectable } from '@angular/core'
-import { Store } from '@ngrx/store'
 import { AngularFirestore } from 'angularfire2/firestore'
 import { Observable } from 'rxjs'
+import { } from 'googlemaps'
+
 import * as firebase from 'firebase/app'
 
 import { ListingShortDetail } from '@shared/models/listing-short-detail'
-
-import * as fromRoot from '@core/store'
-import * as  geohash from 'ngeohash'
 
 @Injectable()
 export class SearchService {
 
   ref: string = `listings-short-detail`
-  geopoint: firebase.firestore.GeoPoint
 
-  constructor(
-    public afs: AngularFirestore,
-    public store: Store<fromRoot.State>
-  ) {}
+  constructor(private _afs: AngularFirestore) { }
 
   public query(params: any = null) {
-
-    return this.afs.collection<ListingShortDetail>(this.ref).valueChanges().map(
-      listings => listings.filter(
-        listing => this.distFrom(+params.latitude, +params.longitude, listing.geopoint.latitude, listing.geopoint.longitude) < params.radius
+    console.log(params)
+    return this._afs.collection<ListingShortDetail>(this.ref)
+      .valueChanges()
+      .map(listings =>
+        listings.filter(listing => {
+            let p1 = new google.maps.LatLng(+params.latitude, +params.longitude)
+            let p2 = new google.maps.LatLng(listing.geopoint.latitude, listing.geopoint.longitude)
+            return this.distBetween(p1, p2) <= (params.radius * 1000)
+          }
+        )
       )
-    )
-
   }
 
-  public distFrom(lat1, lng1, lat2, lng2) {
-    let earthRadius = 6371; // miles (or 6371.0 kilometers)
-    let dLat = (lat2-lat1) * Math.PI / 180;
-    let dLng = (lng2-lng1) * Math.PI / 180;
-    let sindLat = Math.sin(dLat / 2);
-    let sindLng = Math.sin(dLng / 2);
-    let a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-            * Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180);
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    let dist = earthRadius * c;
-
-    return dist;
-    }
+  public distBetween(p1: google.maps.LatLng, p2: google.maps.LatLng) {
+    return google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
+  }
 
 }
