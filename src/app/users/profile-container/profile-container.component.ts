@@ -31,10 +31,13 @@ export class ProfileContainerComponent {
     private _store: Store<fromRoot.State>,
     private _fb:    FormBuilder,
   ) {
-
     this.isLoading$   = this._store.pipe(select(fromRoot.getIsLoadingProfile))
     this.userProfile$ = this._store.pipe(select(fromRoot.getSelectedUserProfile))
     this.authUser$    = this._store.pipe(select(fromRoot.getAuthUser))
+
+    this.aboutMeForm = this._fb.group({
+      aboutMe: [ '' ]
+    })
 
     this.authUser$.subscribe(user => {
       if(user) {
@@ -53,10 +56,6 @@ export class ProfileContainerComponent {
 
   ngOnInit() {
     this._store.dispatch(new layoutActions.SetLogoGreen())
-
-    this.aboutMeForm = this._fb.group({
-      aboutMe: [ '' ]
-    })
   }
 
   getImage(event) {
