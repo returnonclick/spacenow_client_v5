@@ -16,8 +16,8 @@ export class FeaturedCardComponent {
 
   ngOnInit() {
 
-    const imageUrl = 'http://backgroundcheckall.com/wp-content/uploads/2017/12/background-paisagens-2.jpg'
-    
+    const imageUrl = 'https://backgroundcheckall.com/wp-content/uploads/2017/12/background-paisagens-2.jpg'
+
     this.images[0] = imageUrl
     this.images[1] = imageUrl
     this.images[2] = imageUrl
