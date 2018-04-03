@@ -179,30 +179,6 @@
   }
 }
 
-.mat-menu-panel {
-  --textColor: #4d6364;
-  --hover: #6cde93;
-
-  background: white;
-  border: 1px solid var(--hover);
-
-  .mat-menu-item {
-    color: var(--textColor) !important;
-    background-color: transparent !important;
-    border: unset;
-    padding: 0 20px !important;
-    font-size: 18px !important;
-    font-weight: 200;
-    line-height: unset;
-    text-transform: capitalize;
-
-    &:hover {
-      text-decoration: underline;
-      --textColor: var(--hover);
-    }
-  }
-}
-
 .si-icon {
   margin-top: calc(var(--gap) / 5 * -1);
 }
