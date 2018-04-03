@@ -37,29 +37,10 @@
   padding-left: 10%;
 }
 
-.circular-border {
-  color: #bfbfbf;
-  border: solid;
-  border-radius: 20px;
-  border-width: 2px;
-  width: 33px;
-  font-size: 20px;
-}
-
-.circular-border span {
-  margin-left: 30%;
-}
-
 .wrapper-items { 
   padding-top: 5%;
   padding-right: 15%;
 }
-
-.divider-help {
-  height: 1px;
-  display: block;
-  background-color: #6cde93;
-} 
 
 #button-signup {
   position: absolute;
@@ -98,30 +79,28 @@
 #background {
   background-color: #6cde93;
   position: absolute;
-  width: 22%;
-  max-width: 22%;
-  right: 0;
-  
+  width: 20%;
+  max-width: 20%;
   min-height: 520px;
   max-height: 1000px;
+  margin-left: 204px;
 }
 
 #hand {
-  background: url("https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Ficono-4-200x200.jpg?alt=media&token=694f4bed-bb8d-422a-9ca5-1ed36ec5a648") no-repeat;
-  background-size: contain;
-  position: absolute;
+  position: relative;
   width: 418px;
   height: 653px;
-  left: 68%;
+  left: 0;
   max-height: 500px;
   right: 0;
   margin-top: 1%;
+  bottom: 0;
 }
 
 .btn-help-page {
   width: 200px;
   height: 124px;
-  margin-top: 400px;
-  margin-left: 9%;
+  margin-top: -7%;
+  margin-left: 10%;
   position: absolute;
 }

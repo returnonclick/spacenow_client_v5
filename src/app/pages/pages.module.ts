@@ -20,6 +20,9 @@ import { AboutComponent } from './about/about.component'
 import { HelpComponent } from './help/help.component'
 import { QuestionComponent } from './help/question/question.component'
 import { TopQuestionComponent } from './help/top-question/top-question.component'
+import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.component'
+import { GettingStartedComponent } from './help/getting-started/getting-started.component'
+import { NewComponent } from './help/new/new.component'
 
 
 const COMPONENTS = [
@@ -31,7 +34,10 @@ const COMPONENTS = [
   AboutComponent,
   HelpComponent,
   QuestionComponent,
-  TopQuestionComponent
+  TopQuestionComponent,
+  AboutSpacenowComponent,
+  GettingStartedComponent,
+  NewComponent
 ]
 
 const ENTRY_COMPONENTS = [

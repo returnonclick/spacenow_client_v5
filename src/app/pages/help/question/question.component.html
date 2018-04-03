@@ -3,80 +3,119 @@
   <p id="text-image">Help Centre</p>
 </div>
 
-<div id="article" fxHide [fxHide.lt-sm]="true">
-  
-    <div class="container" style="padding: 20px" fxLayout="row">
-      <div fxFlex="70%" fxLayout="column">
-        <router-outlet></router-outlet>
-      </div>
-      <div fxLayout="column" style="padding-top: 30px; width: 30%;">
-        <div > <!-- ng-repeat="article in vm.articles" -->
-          <a routerLink="" style="text-decoration: none">
-            <span>Each article title</span>
-          </a>
+<div id="article" [fxHide.lt-md]="true">
+  <div class="grid">
+    <div class="wrapper">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="70%" fxLayout="column" style="padding: 40px 0">
+          <router-outlet></router-outlet>
         </div>
-      </div>
-      
-    </div>
-    <div class="divider-help"></div>
-    <div fxLayout="row" fxHide [fxHide.lt-sm]="true">
-      <div fxLayout="column" style="padding-bottom: 30px; padding-top: 30px;" fxFlex="70%">
-        
-        <div style="padding: 80px; margin-left: 7%;" fxFlex="70%">
-          <div class="row padding-20">
-            <h1>How Spacenow Works</h1>
+        <div fxFlex="20%" fxLayout="column" style=" margin: 40px 0">
+          <div >
+            <a routerLink="../questions/top-questions" style="text-decoration: none">
+              <span>Top User Questions</span>
+            </a>
           </div>
-          <div fxLayout="row">
-            <div fxFlex="10%" >
-              <p class="circular-border"><span>1</span></p>
-            </div>
-            <div fxFlex="90%">
-              <h5>Search</h5>
-              <p>Search amongst the hundred of spaces we have to find your ideal space in the area you want to work in.</p>
-            </div>
+          <div >
+            <a routerLink="../questions/about-spacenow" style="text-decoration: none">
+              <span>About Spacenow</span>
+            </a>
           </div>
-          <div fxLayout="row">
-            <div fxFlex="10%" >
-              <p class="circular-border"><span>2</span></p>
-            </div>
-            <div fxFlex="90%">
-              <h5>Book</h5>
-              <p>Book your space for the time and dates you're after, you'll receive a booking confirmation or a reply from the host once the booking is confirmed.</p>
-            </div>
+          <div>
+            <a routerLink="../questions/getting-started" style="text-decoration: none">
+              <span>Getting started</span>
+            </a>
           </div>
-          <div fxLayout="row">
-            <div fxFlex="10%">
-              <p class="circular-border"><span>3</span></p>
-            </div>
-            <div fxFlex="90%">
-              <h5>Arrive & enjoy</h5>
-              <p>You're ready to go! Show up the time you booked for, enjoy your space! Once the booking is over you can leave feedback about your experience for others to see.</p>
-            </div>
+          <div>
+            <a routerLink="../questions/new" style="text-decoration: none">
+              <span>What's New?</span>
+            </a>
+          </div>
+          <div>
+            <a routerLink="../questions/popular" style="text-decoration: none">
+              <span>Popular Topics</span>
+            </a>
+          </div>
+          <div>
+            <a routerLink="../questions/setup-listing" style="text-decoration: none">
+              <span>How to set up a listing</span>
+            </a>
+          </div>
+          <div>
+            <a routerLink="../questions/about-bookings" style="text-decoration: none">
+              <span>About bookings</span>
+            </a>
+          </div>
+          <div>
+            <a routerLink="../questions/how-works" style="text-decoration: none">
+              <span>How it works</span>
+            </a>
           </div>
         </div>
-      </div>
-      <div fxFlex="30%">
-        <div id="background"></div>
-        <div id="hand" style="background: url('./modules/articles/client/img/mano-transparente-418×653.png') no-repeat; background-size: contain"></div>
-        <a data-ng-if="!vm.authentication.user" ui-sref="authentication.signup">
-          <div class="btn-help-page" style="background: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Fbuton355x124.jpg?alt=media&token=217f3b49-3ef6-498f-9e10-b9ea0f6fb44a') no-repeat; background-size: contain"></div>
-        </a>
-        <a data-ng-if="vm.authentication.user" ui-sref="listings.advancedSearch">
-          <div class="btn-help-page" style="background: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Fbuton355x124-search.png?alt=media&token=1530a464-5876-4a1e-8720-a140ade6dbaa') no-repeat; background-size: contain"></div>
-        </a>
       </div>
     </div>
   </div>
-  <!-- <div class="hidden-md-up-help p-20" ng-init="vm.switch = true">
-    <div class="container hidden-md-up margin-top-40 margin-bottom-40">
-      <div ng-if="vm.switch" class="margin-top-40 margin-bottom-40"><h4><a class="hidden-md-up" data-ui-sref="help.home"><i class="fa fa-chevron-left" aria-hidden="true"></i></a><strong> FAQ's</strong></h4></div>
-      <div ng-if="!vm.switch" class="margin-top-40 margin-bottom-40"><h4><a ng-click="vm.switch = true" class="hidden-md-up"><i class="fa fa-chevron-left" aria-hidden="true"></i></a><strong> FAQ's</strong></h4></div>
-      <div ng-if="vm.switch" ng-click="vm.switch = false" ng-repeat="article in vm.articles">
-        <a data-ui-sref="help.article.view({ articleId: article._id })" style="text-decoration: none">
-          <p style="color:#484848; font-size: 17px" ng-class="{'selection': $state.params.articleId == article._id}">{{ article.title }}</p>
+  <div class="divider-help"></div>
+  <div fxLayout="row" [fxHide.lt-md]="true">
+    <div fxLayout="column" style="padding-bottom: 30px; padding-top: 30px;" fxFlex="70%" fxFlex.lt-md="100%">
+      
+      <div style="padding: 80px; margin-left: 7%;" fxFlex="100%">
+        <div class="row padding-20">
+          <h1>How Spacenow Works</h1>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex="10%" >
+            <p class="circular-border"><span>1</span></p>
+          </div>
+          <div fxFlex="90%">
+            <h3>Search</h3>
+            <p>Search amongst the hundred of spaces we have to find your ideal space in the area you want to work in.</p>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex="10%" >
+            <p class="circular-border"><span>2</span></p>
+          </div>
+          <div fxFlex="90%">
+            <h3>Book</h3>
+            <p>Book your space for the time and dates you're after, you'll receive a booking confirmation or a reply from the host once the booking is confirmed.</p>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex="10%">
+            <p class="circular-border"><span>3</span></p>
+          </div>
+          <div fxFlex="90%">
+            <h3>Arrive & enjoy</h3>
+            <p>You're ready to go! Show up the time you booked for, enjoy your space! Once the booking is over you can leave feedback about your experience for others to see.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="30%" [fxHide.lt-md]="true">
+      <div id="background"></div>
+      <div id="hand" style="background: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Fmano-transparente-418%C3%97653.png?alt=media&token=ab336556-a77c-486a-9f45-53a5f0ae20c3') no-repeat; background-size: contain"></div>
+      <!-- <a data-ng-if="!vm.authentication.user" ui-sref="authentication.signup">
+        <div class="btn-help-page" style="background: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Fbuton355x124.jpg?alt=media&token=217f3b49-3ef6-498f-9e10-b9ea0f6fb44a') no-repeat; background-size: contain"></div>
+      </a> -->
+      <a routerLink="../../search">
+        <div class="btn-help-page" style="background: url('https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Fbuton355x124-search.png?alt=media&token=1530a464-5876-4a1e-8720-a140ade6dbaa') no-repeat; background-size: contain"></div>
+      </a>
+    </div>
+  </div>
+</div>
+<div style="padding: 20px" [fxHide.gt-sm]="true">
+  <div class="grid">
+    <div class="wrapper">
+      <div *ngIf="switch" class="margin-top-40 margin-bottom-40"><h4><a routerLink="home"><i class="fa fa-chevron-left" aria-hidden="true"></i></a><strong> FAQ's</strong></h4></div>
+      <div *ngIf="!switch" class="margin-top-40 margin-bottom-40"><h4><a ng-click="switch = true"><i class="fa fa-chevron-left" aria-hidden="true"></i></a><strong> FAQ's</strong></h4></div>
+      <div *ngIf="switch" (click)="switch = false">
+        <a routerLink="" style="text-decoration: none">
+          <p style="color:#484848; font-size: 17px">Titulo 1</p>
         </a><hr>
       </div>
-      <div ng-if="!vm.switch" class="col-md-12"><ui-view/></div>
+      <div *ngIf="!switch"><router-outlet></router-outlet></div>
     </div>
-  </div> -->
+  </div>
+</div>
   

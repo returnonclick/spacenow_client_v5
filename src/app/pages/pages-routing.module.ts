@@ -8,8 +8,11 @@ import { PrivacyComponent } from './privacy/privacy.component'
 import { RefundPolicyComponent } from './refund-policy/refund.component'
 import { AboutComponent } from './about/about.component'
 import { HelpComponent } from './help/help.component'
-import { TopQuestionComponent } from './help/top-question/top-question.component'
 import { QuestionComponent } from './help/question/question.component'
+import { TopQuestionComponent } from './help/top-question/top-question.component'
+import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.component'
+import { GettingStartedComponent } from './help/getting-started/getting-started.component'
+import { NewComponent } from './help/new/new.component'
 
  
 const routes: Routes = [
@@ -24,11 +27,12 @@ const routes: Routes = [
         { path: 'privacy', component: PrivacyComponent },
         { path: 'refund-policy', component: RefundPolicyComponent },
         { path: 'about', component: AboutComponent },
-        { path: 'help', component: HelpComponent },
-        { path: 'questions', component: QuestionComponent,
+        { path: 'help', component: HelpComponent,
           children: [
-            { path: 'top', component: TopQuestionComponent },
-            // { path: 'top', component: TopQuestionComponent },
+            { path: 'top-questions', component: TopQuestionComponent },
+            { path: 'about-spacenow', component: AboutSpacenowComponent },
+            { path: 'getting-started', component: GettingStartedComponent },
+            { path: 'new', component: NewComponent },
             { path: '', redirectTo: 'top', pathMatch: 'full' }
           ]    
         }

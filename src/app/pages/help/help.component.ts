@@ -7,6 +7,10 @@ import { Component } from '@angular/core'
 })
 
 export class HelpComponent {
- 
+
+  topQuestion: boolean = false;
+
+  constructor(){}
+
 }
  
