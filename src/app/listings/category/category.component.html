@@ -9,15 +9,15 @@
         <mat-radio-button *ngFor="let category of categories$ | async" [value]="category.id" style="padding:5px">
           <ul [ngSwitch]="category.slug">
         
-            <li *ngSwitchCase="'office-space'" matTooltip="Dedicated office space for lease." matTooltipPosition="right">
+            <li *ngSwitchCase="'office'" matTooltip="Dedicated office space for lease." matTooltipPosition="right">
               {{category.name}} 
               <mat-icon style="font-size: 13px">info</mat-icon>
             </li>
-            <li *ngSwitchCase="'co-working-space'" matTooltip="Spaces that offer creative & collaborative environments for people to work together." matTooltipPosition="right">
+            <li *ngSwitchCase="'coworking'" matTooltip="Spaces that offer creative & collaborative environments for people to work together." matTooltipPosition="right">
               {{category.name}} 
               <mat-icon style="font-size: 13px">info</mat-icon>
             </li>
-            <li *ngSwitchCase="'desk_only'" matTooltip="Single or multiple desks within an office. Not a coworking environment." matTooltipPosition="right">
+            <li *ngSwitchCase="'desk'" matTooltip="Single or multiple desks within an office. Not a coworking environment." matTooltipPosition="right">
               {{category.name}} 
               <mat-icon style="font-size: 13px">info</mat-icon>
             </li>
@@ -25,14 +25,15 @@
               {{category.name}} 
               <mat-icon style="font-size: 13px">info</mat-icon>
             </li>
-            <li *ngSwitchCase="'event-space'" matTooltip="General purpose event space." matTooltipPosition="right">
-              {{category.name}} 
-            </li>
-            <li *ngSwitchCase="'function-space'" matTooltip="Dedicated function spaces catered towards receptions, dinners, etc." matTooltipPosition="right">
+            <li *ngSwitchCase="'event'" matTooltip="General purpose event space." matTooltipPosition="right">
               {{category.name}} 
               <mat-icon style="font-size: 13px">info</mat-icon>
             </li>
-            <li *ngSwitchCase="'unique-spaces'" matTooltip="Spaces that don’t really fit into any of the other categories." matTooltipPosition="right">
+            <li *ngSwitchCase="'function'" matTooltip="Dedicated function spaces catered towards receptions, dinners, etc." matTooltipPosition="right">
+              {{category.name}} 
+              <mat-icon style="font-size: 13px">info</mat-icon>
+            </li>
+            <li *ngSwitchCase="'unique'" matTooltip="Spaces that don’t really fit into any of the other categories." matTooltipPosition="right">
               {{category.name}} 
               <mat-icon style="font-size: 13px">info</mat-icon>
             </li>

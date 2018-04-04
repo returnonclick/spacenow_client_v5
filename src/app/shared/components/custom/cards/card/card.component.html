@@ -1,11 +1,12 @@
 <mat-card>
     <mat-card-content>
-      <p class="stamp" *ngIf="data.isNew">new</p>
-      <i class="material-icons">group_add</i>
-      <button mat-raised-button>{{data.name}}</button>
+        <p class="stamp" *ngIf="data.isNew">new</p>
+        <p *ngIf="!data.isNew"></p>
+        <i [ngClass]="data.slug  + '-100'" class="icon-card"> </i>
+        <button mat-raised-button>{{data.name}}</button>
     </mat-card-content>
 </mat-card>
 <div class="card-bottom">
-    <i class="material-icons">group_add</i>
-    <span>{{data.description}}</span>
+    <i [ngClass]="data.slug + '-50'" class="icon-bottom"></i>
+    <p style="display: inline">{{data.description}}</p>
 </div>

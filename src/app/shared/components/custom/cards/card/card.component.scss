@@ -1,6 +1,7 @@
 @import
   '~sass/abstracts/variables',
-  '~sass/abstracts/mixins';
+  '~sass/abstracts/mixins',
+  '~sass/abstracts/icons';
 
 :host {
 
@@ -72,4 +73,19 @@
 
   }
 
+}
+
+.icon-card {
+  // -webkit-filter: brightness(30%);
+  filter: brightness(30%);
+  margin-top: 80px !important;
+}
+
+.icon-card:before {
+  width: 100px;
+  height: 100px;
+}
+
+.icon-bottom:before {
+  height: 40px !important;
 }
