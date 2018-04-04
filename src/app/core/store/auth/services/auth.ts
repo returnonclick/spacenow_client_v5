@@ -14,6 +14,7 @@ import * as actions from '@core/store/auth/actions/auth'
 import * as fromRoot from '@core/store'
 import { User } from '@shared/models/user'
 import { UserData } from '@shared/models/user-data'
+import { Profile } from '@shared/models/profile'
 import { Contact } from '@shared/models/contact'
 
 @Injectable()
@@ -52,7 +53,9 @@ export class AuthService {
   }
 
   signUp(username, password) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(username, password)
+    return this.afAuth.auth.createUserWithEmailAndPassword(username, password).then(
+      data =>  this.updateUserData(data) 
+    )
   }
 
   sendEmailVerification() {
@@ -71,10 +74,16 @@ export class AuthService {
   private updateUserData(auth: any, credential?: any) {
 
     const userRef: AngularFirestoreDocument<User> = this._afs.collection<User>(`users`).doc(`${auth.uid}`)
-    
+    const userProfileRef: AngularFirestoreDocument<Profile> = this._afs.collection<Profile>(`users-profile`).doc(`${auth.uid}`)
+     
     const data: User = new User(auth)
+    const contact: Contact = new Contact()
+    let userProfile: Profile = new Profile()
+    userProfile.uid = data.uid
+    userProfile.contact = contact
 
     userRef.set(Object.assign({}, data))
+    userProfileRef.set(Object.assign({}, userProfile))
 
   }
 
