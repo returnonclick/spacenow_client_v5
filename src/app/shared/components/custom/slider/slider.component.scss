@@ -6,6 +6,15 @@
   grid-template-columns: auto 1fr auto;
   grid-template-rows: 1fr;
 
+  &:hover {
+    >.gen-nav {
+      > i {
+        opacity: 1;
+        transition: opacity .5s;
+      }
+    }
+  }
+
   > .gen-nav {
     display: flex;
     justify-content: center;
