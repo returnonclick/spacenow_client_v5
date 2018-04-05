@@ -27,9 +27,8 @@ export class SpacesComponent {
 
     this.user$.subscribe(user => {
       if(user) {
-        let userId = '5850a08878c201ab444c1127' // TODO: user.uid
         this._store.dispatch(
-          new spaceActions.Filter(['ownerUid', '==', userId], true)
+          new spaceActions.Filter(['ownerUid', '==', user.uid], true)
         )
       }
     })

@@ -52,22 +52,23 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate((event) => {
 /**
 * Listing Approved email
 */
-// exports.createNewListing = functions.firestore
-//     .document('listings/{id}')
-//     .onCreate(event => {
-//         const listing = event.data.data()
-//         return getUser(listing.ownerUid)
-//             .then(doc => {
-//                 const hostData = doc.data()
-//                 return getCategories(listing.categoryId)
-//                     .then((docCat) => {
-//                         const cateData = docCat.data()
-//                         let subject = 'Spacenow: Your space is now live.'
-//                         var context = { listing, hostData, cateData }
-//                         sendEmail('listingToApprove-table.html', context, spacenow, hostData.email, subject)
-//                     }).catch(error => { console.log(error) })
-//             }).catch(error => { console.log(error) })
-//     })
+exports.createNewListing = functions.firestore
+    .document('listings/{id}')
+    .onCreate(event => {
+        const listing = event.data.data()
+        inputShortDetailSpace(listing.id , listing)
+        return getUser(listing.ownerUid)
+            .then(doc => {
+                const hostData = doc.data()
+                return getCategories(listing.categoryId)
+                    .then((docCat) => {
+                        const cateData = docCat.data()
+                        let subject = 'Spacenow: Your space is now live.'
+                        var context = { listing, hostData, cateData }
+                        sendEmail('listingToApprove-table.html', context, spacenow, hostData.email, subject)
+                    }).catch(error => { console.log(error) })
+            }).catch(error => { console.log(error) })
+    })
 
 // /**
 // * Listing Active email
@@ -77,6 +78,7 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate((event) => {
 //     .onUpdate(event => {
 //         const listing = event.data.data()
 //         const listingPrevious = event.data.previous.data()
+//         inputShortDetailSpace(listing.id , listing) 
 //         if (listing.status !== listingPrevious.status) {
 //             return getCategories(listing.categoryId)
 //                 .then((docCat) => {
@@ -244,7 +246,9 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate((event) => {
 //             }).catch(error => { console.log(error) })
 //     })
 
-
+function inputShortDetailSpace(id, data) {
+    return admin.firestore().collection('listings-short-detail').doc(`${id}`).set(data)
+}
 
 function getSpace(id) {
     return admin.firestore().collection('listings').doc(`${id}`).get()

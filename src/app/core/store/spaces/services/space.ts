@@ -8,7 +8,7 @@ import { ListingShortDetail } from '@models/listing-short-detail'
 @Injectable()
 export class SpaceService {
 
-  private _ref:      string = `v4-listings` // TODO: change to appropriate path
+  private _ref:      string = `listings` // TODO: change to appropriate path
   private _shortRef: string = `listings-short-detail`
 
   constructor(private afs: AngularFirestore) { }
