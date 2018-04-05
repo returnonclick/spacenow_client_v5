@@ -13,14 +13,14 @@
             </button>
         </div>
     </mat-card-header>
-    <mat-card-content [routerLink]="'space/' + data.id">
+    <mat-card-content [routerLink]="'space/' + data.id" style="cursor: pointer">
       <i class="material-icons">favorite_border</i>
       <h4>{{data.category}}</h4>
       <h2>{{data.title | slice:0:16}}</h2>
       <h4>{{data.ownerDisplayName}}</h4>
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button class="primary">{{data.currency}}${{data.price}} {{data.priceUnit}}</button>
+    <mat-card-actions [routerLink]="'space/' + data.id" style="cursor: pointer">
+        <button mat-raised-button class="slider">{{data.currency}} ${{data.price | number: '1.0-0'}} {{data.priceUnit}}</button>
     </mat-card-actions>
 </mat-card>
 <!-- <div class="ratings">

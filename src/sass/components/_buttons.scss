@@ -71,6 +71,13 @@ $button-radius: 2 * $button-padding-lr;
 
         }
 
+        &.slider {
+            color: mat-color($primary, default-contrast, 1) !important;
+            background: mat-color($primary, 50, 1);
+            border: 1px solid mat-color($primary, 50, 1) !important;
+
+        }
+
         &[disabled] {
 
             border: 1px solid rgba(0,0,0,.12) !important;
