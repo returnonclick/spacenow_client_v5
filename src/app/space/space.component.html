@@ -162,7 +162,7 @@
       <h2>Your host</h2>
       <div class="host-details">
         <div class="host-image">
-          <img src="https://cbsnews2.cbsistatic.com/hub/i/r/2017/05/11/759f70c0-804e-4afa-8493-f80fc1b09ab3/thumbnail/620x350/f1625b916682d938a132af464524193a/istock-526142422.jpg">
+          <img src="{{ owner?.photoURL }}">
         </div>
         <div class="host-bio">
           <h4 class="host-name">{{ owner?.displayName }}</h4>
@@ -189,7 +189,7 @@
           <span>Trusted</span>
         </div>
         <div class="host-avatar">
-          <img src="https://cbsnews2.cbsistatic.com/hub/i/r/2017/05/11/759f70c0-804e-4afa-8493-f80fc1b09ab3/thumbnail/620x350/f1625b916682d938a132af464524193a/istock-526142422.jpg" />
+          <img src="{{ owner?.photoURL }}">
         </div>
         <!-- <div class="host-rating">
           <mat-icon color="primary">star</mat-icon>
@@ -201,7 +201,7 @@
       </div>
       <div class="space-price">
         <span class="currency">{{ space?.currency }}</span>
-        <span class="price">{{ space?.price.price }}</span> a
+        <span class="price">${{ space?.price.price }}</span> a
         <span class="unit">{{ mapPriceUnit() }}</span>
       </div>
       <div class="booking-form">
