@@ -16,6 +16,7 @@ import * as fromRoot from '@core/store'
 import * as cartActions from '@core/store/cart/actions/cart'
 import * as categoryActions from '@core/store/categories/actions/category'
 import * as spaceActions from '@core/store/spaces/actions/space'
+import * as layoutActions from '@core/store/layouts/actions/layout'
 
 @Component({
   selector: 'sn-checkout',
@@ -76,16 +77,18 @@ export class CheckoutComponent {
         let totalPrice = 0
         let tax        = 0
         for(let item of cart) {
-          let space      = spaces[item.spaceId] as Space
-          let spacePrice = space.price
-          let price      = 0
-          if(space.priceUnit == 'hourly')
-            price += spacePrice.price * (item.bookingDates[0].toHour - item.bookingDates[0].fromHour)
-          else
-            price += spacePrice.price * item.bookingDates.length
+          let space = spaces[item.spaceId] as Space
+          if(space) {
+            let spacePrice = space.price
+            let price      = 0
+            if(space.priceUnit == 'hourly')
+              price += spacePrice.price * (item.bookingDates[0].toHour - item.bookingDates[0].fromHour)
+            else
+              price += spacePrice.price * item.bookingDates.length
 
-          totalPrice += price
-          tax        += price * (space.tax.percent / 100.0)
+            totalPrice += price
+            tax        += price * (space.tax.percent / 100.0)
+          }
         }
 
         this.totalPrice = totalPrice + tax
@@ -125,6 +128,7 @@ export class CheckoutComponent {
 
   ngOnInit() {
     this._store.dispatch(new categoryActions.Query)
+    this._store.dispatch(new layoutActions.SetLogoGreen)
 
     this.matTabs.selectedTabChange.subscribe(event => {
       if(!this.hasAgreed && event.index > 0) {

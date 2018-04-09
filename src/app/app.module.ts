@@ -97,7 +97,8 @@ const SERVICES = [
       libraries: [
         'places',
         'geometry',
-      ]
+      ],
+      language: "en-AU",
     }),
 
     EffectsModule.forFeature([

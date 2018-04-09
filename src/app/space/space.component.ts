@@ -56,6 +56,7 @@ export class SpaceComponent {
     this.spaces$        = this._store.select(fromRoot.getSpaceEntities)
     this.stopper$       = new Subject()
 
+  
     Observable.combineLatest(
       this.spaces$,
       this.owner$,
@@ -76,6 +77,7 @@ export class SpaceComponent {
       })
 
     this._store.select(fromRoot.getSelectedUserProfile).subscribe(profile => {
+    
       if(profile)
         this.ownerProfile = profile
     })
@@ -84,6 +86,7 @@ export class SpaceComponent {
   ngOnInit() {
     this._store.dispatch(new amenityActions.Query)
     this._store.dispatch(new categoryActions.Query)
+    this._store.dispatch(new userActions.Query)
 
     this._route.params
       .takeUntil(this.stopper$)

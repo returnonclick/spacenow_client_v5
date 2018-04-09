@@ -1,3 +1,5 @@
+import { ListingShortDetail } from "./models/listing-short-detail"
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
@@ -56,16 +58,13 @@ exports.createNewListing = functions.firestore
     .document('listings/{id}')
     .onCreate(event => {
         const listing = event.data.data()
-        inputShortDetailSpace(listing.id , listing)
         return getUser(listing.ownerUid)
             .then(doc => {
                 const hostData = doc.data()
                 return getCategories(listing.categoryId)
                     .then((docCat) => {
                         const cateData = docCat.data()
-                        let subject = 'Spacenow: Your space is now live.'
-                        var context = { listing, hostData, cateData }
-                        sendEmail('listingToApprove-table.html', context, spacenow, hostData.email, subject)
+                        inputShortDetailSpace(listing, cateData , hostData)
                     }).catch(error => { console.log(error) })
             }).catch(error => { console.log(error) })
     })
@@ -73,30 +72,39 @@ exports.createNewListing = functions.firestore
 // /**
 // * Listing Active email
 // */
-// exports.activeListing = functions.firestore
-//     .document('listings/{id}')
-//     .onUpdate(event => {
-//         const listing = event.data.data()
-//         const listingPrevious = event.data.previous.data()
-//         inputShortDetailSpace(listing.id , listing) 
-//         if (listing.status !== listingPrevious.status) {
-//             return getCategories(listing.categoryId)
-//                 .then((docCat) => {
-//                     const cateData = docCat.data()
-//                     return getUser(listing.ownerUid)
-//                         .then(doc => {
-//                             const hostData = doc.data()
-//                             let subject = 'Spacenow: Your space is now live.'
-//                             var context = { listing, hostData, cateData }
-//                             sendEmail('listingActive-table.html', context, spacenow, hostData.email, subject)
-//                         }).catch(error => { console.log(error) })
-//                 })
-//                 .catch(error => {
-//                     console.error('There was an error while sending the email:', error)
-//                 })
-//                 .catch(error => { console.log(error) })
-//         }
-//     })
+exports.activeListing = functions.firestore
+    .document('listings/{id}')
+    .onUpdate(event => {
+        const listing = event.data.data()
+        const listingPrevious = event.data.previous.data()
+
+            return getCategories(listing.categoryId)
+                .then((docCat) => {
+                    const cateData = docCat.data()
+                    return getUser(listing.ownerUid)
+                        .then(doc => {
+                            const hostData = doc.data()
+
+                            inputShortDetailSpace(listing, cateData , hostData)
+
+                            switch (listing.status) {  
+                                case 'pending':
+                                    var subject = 'Spacenow: Your space is now live.'
+                                    var context = { listing, hostData, cateData }
+                                    sendEmail('listingToApprove-table.html', context, spacenow, hostData.email, subject)
+                                case 'active':
+                                    var subject = 'Spacenow: Your space is now live.'
+                                    var context = { listing, hostData, cateData } 
+                                    sendEmail('listingActive-table.html', context, spacenow, hostData.email, subject) 
+                            }    
+                        }).catch(error => { console.log(error) })
+                })
+                .catch(error => {
+                    console.error('There was an error while sending the email:', error)
+                })
+                .catch(error => { console.log(error) })
+        }
+    )
 /**
 * Booking Request email
 */
@@ -246,8 +254,27 @@ exports.createNewListing = functions.firestore
 //             }).catch(error => { console.log(error) })
 //     })
 
-function inputShortDetailSpace(id, data) {
-    return admin.firestore().collection('listings-short-detail').doc(`${id}`).set(data)
+function inputShortDetailSpace(listing, cateData, hostData) {
+    let shortData = new ListingShortDetail
+    
+    shortData.id = listing.id
+    shortData.title = listing.title
+    shortData.countryName = listing.address.country
+    shortData.currency = listing.currency
+    shortData.fullAddress = listing.address.full_name
+    shortData.priceUnit = listing.priceUnit
+    shortData.price = listing.price.price
+    shortData.category = cateData.name
+    shortData.geopoint = listing.address
+    shortData.images = listing.images
+    shortData.ownerDisplayName = hostData.displayName
+    shortData.categorySlug = cateData.slug || null
+    shortData.status = listing.status
+    shortData.capacity = listing.specifications.capacity || null
+
+    const data = Object.assign({},shortData)
+    console.log(data)
+    admin.firestore().collection('listings-short-detail').doc(`${shortData.id}`).set(data)
 }
 
 function getSpace(id) {
