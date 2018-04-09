@@ -7,6 +7,7 @@ export const ALL      = '[Spaces] all'
 export const SELECT   = '[Spaces] select'
 export const FILTER   = '[Spaces] filter'
 
+export const ADD_MANY = '[Spaces] add many'
 export const ADDED    = '[Spaces] added'
 export const MODIFIED = '[Spaces] modified'
 export const REMOVED  = '[Spaces] removed'
@@ -33,6 +34,12 @@ export class Filter implements Action {
     public params: any[],
     public isShort: boolean = false
   ) { }
+}
+
+export class AddMany implements Action {
+  readonly type = ADD_MANY
+
+  constructor(public payload: (Space | ListingShortDetail)[]) { }
 }
 
 export class Added implements Action {
@@ -64,6 +71,7 @@ export type SpaceActions
   = All
   | Select
   | Filter
+  | AddMany
   | Added
   | Modified
   | Removed

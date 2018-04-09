@@ -37,6 +37,10 @@ export function reducer(
       })
     }
 
+    case actions.ADD_MANY: {
+      return spaceAdapter.addMany(action.payload, state)
+    }
+
     case actions.ADDED: {
       return spaceAdapter.addOne(action.payload, state)
     }

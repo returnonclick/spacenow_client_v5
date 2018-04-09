@@ -17,5 +17,5 @@
   <mat-form-field class="num-guests">
     <input matInput type="number" min="0" placeholder="Guests" formControlName="numGuests">
   </mat-form-field>
-  <button mat-raised-button [disabled]="form.invalid || form.pristine">Book</button>
+  <button mat-raised-button [disabled]="form.invalid || form.pristine">{{ space.availability.bookingType == 'instantly' ? 'Book' : 'Request Booking' }}</button>
 </form>
