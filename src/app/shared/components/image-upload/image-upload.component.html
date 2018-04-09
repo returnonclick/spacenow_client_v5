@@ -1,0 +1,119 @@
+<div id="image-upload-section">
+  <div *ngIf="(imageDataListObservable | async)?.length > 0" 
+    id="image-card-container" 
+    fxLayout="row wrap" 
+    fxLayoutGap="20px" 
+    fxLayoutAlign="start start">
+    <mat-card *ngFor="let imageData of uploadedImageDataList" 
+      fxFlex="300px" 
+      class="image-card">
+      <!-- Uploaded Image Actions -->
+      <div class="card-action-container">
+        <button mat-icon-button 
+          [matMenuTriggerFor]="imageCardMenu" 
+          (click)="$event.preventDefault()" 
+          class="card-action-button">
+          <mat-icon class="card-action-icon">more_horiz</mat-icon>
+        </button>
+        <mat-menu #imageCardMenu="matMenu" class="card-action-menu">
+          <!-- <button mat-menu-item> -->
+          <!--   <span>Make feature photo</span> -->
+          <!-- </button> -->
+          <!-- <button mat-menu-item disabled> -->
+          <!--   <span>Make cover photo</span> -->
+          <!-- </button> -->
+          <!-- <button mat-menu-item disabled> -->
+          <!--   <span>Crop</span> -->
+          <!-- </button> -->
+          <button mat-menu-item 
+            class="card-action-menu-item"
+            (click)="deleteImageFile('listings', spaceID, 'images', imageData)">
+            <span>Remove photo</span>
+          </button>
+          <button mat-menu-item 
+            class="card-action-menu-item"
+            (click)="toggleImageTitleInput(imageData.imageTitle)">
+            <span>Change image title</span>
+          </button>
+        </mat-menu>
+      </div>
+      <!-- <img mat-card-image [src]="imageURL" class="uploaded-image"> -->
+      <div class="uploaded-image-container">
+        <img [src]="imageData.imageURL" class="uploaded-image">
+      </div>
+
+      <mat-card-title class="image-title">
+        <div *ngIf="!(isShowImageTitleInput | async)">
+          {{ imageData.imageTitle }}
+        </div>
+        <div *ngIf="(isShowImageTitleInput | async) && ((imageTitleToEdit | async) == imageData.imageTitle)"
+          fxLayout="row" fxLayoutAlign="space-between center"
+          class="edit-title-container">
+          <mat-form-field class="full-width" fxFlex="85%">
+              <input matInput placeholder="Title" value="" 
+                class="edit-title-input"
+                matTextareaAutosize
+                [(ngModel)]="imageTitle" 
+                [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          <button [disabled]="(imageTitle.length < 5)" 
+            fxFlex="10%"
+            mat-icon-button
+            class="sn-button-small"
+            color="primary" (click)="updateImageData('listings', spaceID, 'images', imageData, imageTitle)">
+            <mat-icon>done</mat-icon>
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card>  
+  </div>
+
+  <div id="image-input-container" *ngIf="(uploadStatus | async) == 'complete' || (uploadStatus | async) == null">
+    <input class="inputfile" type="file" image-upload name="file" id="file"
+        (resizedImage)="getResizedImage($event)"
+        [allowedExtensions]="allowedExtensions"
+        [resizeOptions]="desktopSize">
+    <label for="file">Upload more photo's</label>
+  </div>
+
+  <div *ngIf="(uploadStatus | async) == 'loading'" class="image-loading">
+    <mat-spinner></mat-spinner>
+    <span>Loading...</span>
+  </div>
+
+  <div *ngIf="(uploadStatus | async) == 'engaged'">
+    <mat-card class="mat-elevation-z0">
+        <mat-card-content>
+
+          <!-- Image to upload -->
+          <div id="upload-image-container">
+            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center" >
+              <div fxFlex="49%" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                <div fxFlex="100px">
+                  <img [src]="toUploadImage?.resized.dataURL" width="100" [hidden]="!toUploadImage">
+                </div>
+                <mat-form-field class="full-width" fxFlex>
+                    <input matInput placeholder="Title" value="" 
+                      matTextareaAutosize
+                      [(ngModel)]="imageTitle" 
+                      [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div fxFlex="49%" fxLayout="row" fxLayoutAlign="space-between center">
+                <button [disabled]="!toUploadImage || (imageTitle.length < 5)" mat-raised-button fxFlex="49%"
+                   class="sn-button"
+                  color="primary" (click)="uploadImageFile('listings', spaceID, 'images', toUploadImage, imageTitle)">Upload
+                </button>
+                <button  mat-raised-button fxFlex="49%"
+                   class="sn-button"
+                  color="primary" (click)="cancelUpload()">Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+

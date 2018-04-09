@@ -15,6 +15,7 @@ import { ContainerComponent } from '@app/pages/container/container.component'
 import { TermComponent } from '@app/pages/terms/term.component'
 import { HostTermComponent } from './host-terms/host-term.component'
 import { PrivacyComponent } from './privacy/privacy.component'
+import { DictionaryComponent } from './dictionary/dictionary.component'
 import { RefundPolicyComponent } from './refund-policy/refund.component'
 import { AboutComponent } from './about/about.component'
 import { HelpComponent } from './help/help.component'
@@ -30,6 +31,7 @@ const COMPONENTS = [
   TermComponent,
   HostTermComponent,
   PrivacyComponent,
+  DictionaryComponent,
   RefundPolicyComponent,
   AboutComponent,
   HelpComponent,

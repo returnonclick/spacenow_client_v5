@@ -1,6 +1,6 @@
 
 <mat-card class="space-card">
-  <img (click)="handleClick('view')" width="100%" [src]="space.images ? space.images[imageIndex] : ''"/>
+  <img (click)="handleClick('view')" width="100%" [src]="space.images ? space.images[imageIndex].imageURL : ''"/>
   <div class="nav-slider" *ngIf="space.images">
       <button mat-icon-button (click)="imageIndex = 0">
           <i class="material-icons">{{ imageIndex === 0 ? 'lens' : 'panorama_fish_eye' }}</i>
@@ -13,7 +13,7 @@
       </button>
   </div>
   <mat-card-content>
-    <p class="category"><span class="si-icon si-capacity"></span> {{space.capacity}} |  <span class="si-icon si-capacity"></span><img src=""> {{space.category}}</p>
+    <p class="category"><span class="si-icon si-capacity"></span>{{space.capacity}}<span style="margin: 0 10px"> | </span> <span class="si-icon" [ngClass]="space.categorySlug + '-35'"></span>{{space.category}}</p>
     <h3 class="title">{{ space.title }}</h3>
     <p class="price">From <span>${{ space.price }}</span> {{ space.priceUnit }}</p>
     <p class="location">{{ space.fullAddress }}</p>

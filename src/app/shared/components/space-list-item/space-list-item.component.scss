@@ -1,5 +1,6 @@
 @import
-  '~sass/abstracts/mixins';
+  '~sass/abstracts/mixins',
+  '~sass/abstracts/icons';
 
 .space-card {
 
@@ -180,6 +181,8 @@
 }
 
 .si-icon {
+  width: 40px;
+  height: 40px;
   margin-top: calc(var(--gap) / 5 * -1);
 }
 

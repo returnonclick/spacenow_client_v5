@@ -5,6 +5,7 @@ import { ContainerComponent } from './container/container.component'
 import { TermComponent } from './terms/term.component'
 import { HostTermComponent } from './host-terms/host-term.component'
 import { PrivacyComponent } from './privacy/privacy.component'
+import { DictionaryComponent } from './dictionary/dictionary.component'
 import { RefundPolicyComponent } from './refund-policy/refund.component'
 import { AboutComponent } from './about/about.component'
 import { HelpComponent } from './help/help.component'
@@ -25,6 +26,7 @@ const routes: Routes = [
         { path: 'terms', component: TermComponent },
         { path: 'host-terms', component: HostTermComponent },
         { path: 'privacy', component: PrivacyComponent },
+        { path: 'dictionary', component: DictionaryComponent },
         { path: 'refund-policy', component: RefundPolicyComponent },
         { path: 'about', component: AboutComponent },
         { path: 'help', component: HelpComponent,

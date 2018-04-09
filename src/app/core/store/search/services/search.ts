@@ -19,7 +19,7 @@ export class SearchService {
       .valueChanges()
       .map(listings =>
         listings.filter(listing => {
-            if(typeof listing.geopoint !== 'undefined') {
+            if(listing.status === 'active') {
               let p1 = new google.maps.LatLng(+params.latitude, +params.longitude)
               let p2 = new google.maps.LatLng(listing.geopoint.latitude, listing.geopoint.longitude)
               return this.distBetween(p1, p2) <= (params.radius * 1000)

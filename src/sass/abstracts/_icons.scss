@@ -121,6 +121,127 @@
 }
 
 
+// Icons x80
+
+.advertising-80 {
+  @include sn-icon(1, 2, 80);
+}
+
+.desk-80 {
+  @include sn-icon(2, 2, 80);
+}
+
+.event-80 {
+  @include sn-icon(3, 2, 80);
+}
+
+.studio-80 {
+  @include sn-icon(4, 2, 80);
+}
+
+.popup-retail-80 {
+  @include sn-icon(5, 2, 80);
+}
+
+.hospitality-80 {
+  @include sn-icon(6, 2, 80);
+}
+
+.fitness-80 {
+  @include sn-icon(7, 2, 80);
+}
+
+.coworking-80 {
+  @include sn-icon(8, 2, 80);
+}
+
+.meeting-room-80 {
+  @include sn-icon(9, 2, 80);
+}
+
+.function-80 {
+  @include sn-icon(10, 2, 80);
+}
+
+.retail-80 {
+  @include sn-icon(11, 2, 80);
+}
+
+.kitchen-80 {
+  @include sn-icon(12, 2, 80);
+}
+
+.unique-80 {
+  @include sn-icon(13, 2, 80);
+}
+
+.production-studio-80 {
+  @include sn-icon(14, 2, 80);
+}
+
+.wedding-venues-80 {
+  @include sn-icon(15, 2, 80);
+}
+
+.yoga-pilates-80 {
+  @include sn-icon(16, 2, 80);
+}
+
+.office-80 {
+  @include sn-icon(17, 2, 80);
+}
+
+.music-studio-80 {
+  @include sn-icon(18, 2, 80);
+}
+
+.medical-consulting-80 {
+  @include sn-icon(19, 2, 80);
+}
+
+.carpark-80 {
+  @include sn-icon(20, 2, 80);
+}
+
+.warehouse-80 {
+  @include sn-icon(21, 2, 80);
+}
+
+.industrial-80 {
+  @include sn-icon(22, 2, 80);
+}
+
+.market-stalls-80 {
+  @include sn-icon(23, 2, 80);
+}
+
+.home-office-80 {
+  @include sn-icon(24, 2, 80);
+}
+
+.remedial-sports-80 {
+  @include sn-icon(26, 2, 80);
+}
+.storage-80 {
+  @include sn-icon(27, 2, 80);
+}
+.shared-office-80 {
+  @include sn-icon(25, 2, 80);
+}
+
+.conference-room-80 {
+  @include sn-icon(28, 2, 80);
+}
+
+.marinas-80 {
+  @include sn-icon(29, 2, 80);
+}
+
+.food-truck-80 {
+  @include sn-icon(30, 2, 80);
+}
+
+
 // Icons x50
 .advertising-50 {
   @include sn-icon(1, 2, 50);
@@ -241,124 +362,123 @@
 }
 
 
-// Icons x80
-
-.advertising-80 {
-  @include sn-icon(1, 2, 80);
+// Icons x35
+.advertising-35 {
+  @include sn-icon(1, 2, 35);
 }
 
-.desk-80 {
-  @include sn-icon(2, 2, 80);
+.desk-35 {
+  @include sn-icon(2, 2, 35);
 }
 
-.event-80 {
-  @include sn-icon(3, 2, 80);
+.event-35 {
+  @include sn-icon(3, 2, 35);
 }
 
-.studio-80 {
-  @include sn-icon(4, 2, 80);
+.studio-35 {
+  @include sn-icon(4, 2, 35);
 }
 
-.popup-retail-80 {
-  @include sn-icon(5, 2, 80);
+.popup-retail-35 {
+  @include sn-icon(5, 2, 35);
 }
 
-.hospitality-80 {
-  @include sn-icon(6, 2, 80);
+.hospitality-35 {
+  @include sn-icon(6, 2, 35);
 }
 
-.fitness-80 {
-  @include sn-icon(7, 2, 80);
+.fitness-35 {
+  @include sn-icon(7, 2, 35);
 }
 
-.coworking-80 {
-  @include sn-icon(8, 2, 80);
+.coworking-35 {
+  @include sn-icon(8, 2, 35);
 }
 
-.meeting-room-80 {
-  @include sn-icon(9, 2, 80);
+.meeting-room-35 {
+  @include sn-icon(9, 2, 35);
 }
 
-.function-80 {
-  @include sn-icon(10, 2, 80);
+.function-35 {
+  @include sn-icon(10, 2, 35);
 }
 
-.retail-80 {
-  @include sn-icon(11, 2, 80);
+.retail-35 {
+  @include sn-icon(11, 2, 35);
 }
 
-.kitchen-80 {
-  @include sn-icon(12, 2, 80);
+.kitchen-35 {
+  @include sn-icon(12, 2, 35);
 }
 
-.unique-80 {
-  @include sn-icon(13, 2, 80);
+.unique-35 {
+  @include sn-icon(13, 2, 35);
 }
 
-.production-studio-80 {
-  @include sn-icon(14, 2, 80);
+.production-studio-35 {
+  @include sn-icon(14, 2, 35);
 }
 
-.wedding-venues-80 {
-  @include sn-icon(15, 2, 80);
+.wedding-venues-35 {
+  @include sn-icon(15, 2, 35);
 }
 
-.yoga-pilates-80 {
-  @include sn-icon(16, 2, 80);
+.yoga-pilates-35 {
+  @include sn-icon(16, 2, 35);
 }
 
-.office-80 {
-  @include sn-icon(17, 2, 80);
+.office-35 {
+  @include sn-icon(17, 2, 35);
 }
 
-.music-studio-80 {
-  @include sn-icon(18, 2, 80);
+.music-studio-35 {
+  @include sn-icon(18, 2, 35);
 }
 
-.medical-consulting-80 {
-  @include sn-icon(19, 2, 80);
+.medical-consulting-35 {
+  @include sn-icon(19, 2, 35);
 }
 
-.carpark-80 {
-  @include sn-icon(20, 2, 80);
+.carpark-35 {
+  @include sn-icon(20, 2, 35);
 }
 
-.warehouse-80 {
-  @include sn-icon(21, 2, 80);
+.warehouse-35 {
+  @include sn-icon(21, 2, 35);
 }
 
-.industrial-80 {
-  @include sn-icon(22, 2, 80);
+.industrial-35 {
+  @include sn-icon(22, 2, 35);
 }
 
-.market-stalls-80 {
-  @include sn-icon(23, 2, 80);
+.market-stalls-35 {
+  @include sn-icon(23, 2, 35);
 }
 
-.home-office-80 {
-  @include sn-icon(24, 2, 80);
+.home-office-35 {
+  @include sn-icon(24, 2, 35);
 }
 
-.remedial-sports-80 {
-  @include sn-icon(26, 2, 80);
+.remedial-sports-35 {
+  @include sn-icon(26, 2, 35);
 }
-.storage-80 {
-  @include sn-icon(27, 2, 80);
+.storage-35 {
+  @include sn-icon(27, 2, 35);
 }
-.shared-office-80 {
-  @include sn-icon(25, 2, 80);
-}
-
-.conference-room-80 {
-  @include sn-icon(28, 2, 80);
+.shared-office-35 {
+  @include sn-icon(25, 2, 35);
 }
 
-.marinas-80 {
-  @include sn-icon(29, 2, 80);
+.conference-room-35 {
+  @include sn-icon(28, 2, 35);
 }
 
-.food-truck-80 {
-  @include sn-icon(30, 2, 80);
+.marinas-35 {
+  @include sn-icon(29, 2, 35);
+}
+
+.food-truck-35 {
+  @include sn-icon(30, 2, 35);
 }
 
 
