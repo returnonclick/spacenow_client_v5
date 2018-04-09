@@ -91,6 +91,11 @@ export class HomeComponent {
       .filter(listing => listing.countryName === 'Indonesia')
       .filter(listing => listing.status === 'active')
     )
+
+    // this._store.dispatch(
+    //   new listingShortDetailActions.Filter(['countryName', '==', 'Indonesia'], true)
+    // )
+
     this.testimonials = [{
       background: 'https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Ftestimonial-01.jpg?alt=media&token=3f12acd5-bca4-4a8d-92ee-c9fe467cbcff',
       testimonial: 'Spacenow has allowed me to share my restaurant in down time and make a profit',
