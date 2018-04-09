@@ -76,12 +76,16 @@ export class CheckoutComponent {
         let totalPrice = 0
         let tax        = 0
         for(let item of cart) {
+          console.log(cart)
+          console.log(spaces)
           let space      = spaces[item.spaceId] as Space
           let spacePrice = space.price
           let price      = 0
           if(space.priceUnit == 'hourly')
             price += spacePrice.price * (item.bookingDates[0].toHour - item.bookingDates[0].fromHour)
           else
+          console.log('item.bookingDates.length = ',item.bookingDates.length)
+          console.log('spacePrice', spacePrice)
             price += spacePrice.price * item.bookingDates.length
 
           totalPrice += price

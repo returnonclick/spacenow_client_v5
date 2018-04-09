@@ -5,7 +5,7 @@ import { User } from '@shared/models/user';
 @Injectable()
 export class UserService {
 
-  ref: string = `v4-users`
+  ref: string = `users`
 
   constructor( public afs: AngularFirestore ) {
   }
