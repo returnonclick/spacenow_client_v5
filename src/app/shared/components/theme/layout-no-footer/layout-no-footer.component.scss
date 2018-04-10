@@ -2,17 +2,16 @@
   '~sass/abstracts/mixins';
 
 .mat-drawer-content {
-
-    display: grid !important;
-
+  display: grid !important;
+  grid-template-rows: auto 0 1fr;
 }
 
 .sm-facebook {
-    height: 50px;
-    width: 50px;
-    @include sn-icon(5, 1, 70);
+  height: 50px;
+  width: 50px;
+  @include sn-icon(5, 1, 70);
 }
 
 .sm-linkedin {
-    @include sn-icon(6, 1, 70);
+  @include sn-icon(6, 1, 70);
 }

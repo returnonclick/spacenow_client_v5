@@ -9,6 +9,7 @@ import { User } from '@shared/models/user'
 import { UserService } from '@core/store/users/services'
 
 import * as actions from '@core/store/users/actions/user'
+import * as authActions from '@core/store/auth/actions/auth'
 
 @Injectable()
 export class UserEffects {
@@ -59,10 +60,10 @@ export class UserEffects {
                     id: action.payload.doc.id,
                     ...action.payload.doc.data(),
                 }
-            } 
-        } )  
-    )  
-    
+            }
+        } )
+    )
+
     @Effect()
     public create$: Observable<Action> = this.actions$.pipe(
         ofType<actions.Create>(actions.CREATE),
@@ -76,7 +77,11 @@ export class UserEffects {
         ofType<actions.Update>(actions.UPDATE),
         switchMap(data => Observable.fromPromise(this.userService.update(data.id, data.changes))
         ),
-        map(() => new actions.Success())
+        map(() => [
+          new actions.Success(),
+          new authActions.GetUser(),
+        ]),
+        mergeMap(actions => actions),
     )
 
     @Effect()

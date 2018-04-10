@@ -7,6 +7,7 @@ import { ListingShortDetail } from '@models/listing-short-detail'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
+import * as layoutActions from '@core/store/layouts/actions/layout'
 import * as spaceActions from '@core/store/spaces/actions/space'
 
 @Component({
@@ -32,6 +33,10 @@ export class SpacesComponent {
         )
       }
     })
+  }
+
+  ngOnInit() {
+    this._store.dispatch(new layoutActions.SetLogoGreen)
   }
 
 }

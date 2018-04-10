@@ -17,9 +17,19 @@
     transition: all .5s ease-in;
     margin: 0 !important;
 
-    // &:hover {
-    //   --background-color: linear-gradient(rgba($color__pastel_green, .0), rgba($color__pastel_green, .0));
-    // }
+    &:hover {
+      --background-color: linear-gradient(rgba($color__pastel_green, .0), rgba($color__pastel_green, .0));
+
+      mat-card-content {
+        button {
+          color: #173839 !important;
+          background-color: #6cde93;
+        }
+      }
+      .icon-card {
+        display: none;
+      }
+    }
 
     mat-card-content {
 

@@ -5,7 +5,7 @@
     <button mat-icon-button (click)="closeSidenav()" class="closeMenu">
         <mat-icon aria-label="Close sidenav icon">arrow_forward</mat-icon>
     </button>
-    
+
     <ng-container *ngIf="sidenavComponent === 'sign-in'">
         <gen-sign-in></gen-sign-in>
     </ng-container>
@@ -17,11 +17,11 @@
     </ng-container>
 
     <!-- <router-outlet name="sidenav"></router-outlet> -->
-    
+
   </mat-drawer>
 
   <mat-drawer-content>
-  
+
     <!-- Nav -->
     <nav id="main-nav">
       <a routerLink="/" class="logo" [ngClass]="logo$ | async"></a>
@@ -39,7 +39,7 @@
         <button mat-menu-item routerLink="/listing/category">List a space</button>
         <button mat-menu-item (click)="openSidenav(); setSidenavLogin();">Log in</button>
         <button mat-menu-item (click)="openSidenav(); setSidenavRegister();">Sign up</button>
-      </mat-menu> 
+      </mat-menu>
       <a href="#" (click)="openSidenav(); setSidenavLogin();" class="hidden-tablet">Log in</a>
       <a href="#" (click)="openSidenav(); setSidenavRegister();" class="hidden-tablet">Sign up</a>
     </ng-template>
@@ -58,9 +58,7 @@
         <button mat-menu-item routerLink="/users/my-spaces">Manage Bookings</button>
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="signOut()">Logout</button>
-      </mat-menu> 
-    
-    
+      </mat-menu>
     </ng-template>
 
     <router-outlet></router-outlet>
@@ -95,7 +93,7 @@
         </ul>
       </div>
     </footer>
-   
+
   </mat-drawer-content>
 
 </mat-drawer-container>

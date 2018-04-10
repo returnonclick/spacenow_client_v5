@@ -41,6 +41,7 @@ export class SliderComponent {
   @Input() autoPlay:      boolean = false
   @Input() autoPlayDelay: number  = 3000
   @Input() itemSize:      number  = 320
+  @Input() arrowsTopPos:  number  = 0
 
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef
 

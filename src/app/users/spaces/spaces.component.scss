@@ -1,8 +1,12 @@
+@import '~sass/abstracts/mixins';
+
 :host {
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 24px;
 }
 
 .space-list {
@@ -13,5 +17,12 @@
   display: grid;
   grid-template-columns: repeat(var(--numColumns), calc(100% / var(--numColumns) - var(--gridSpace)));
   grid-gap: var(--gridSpace);
-  margin-top: 20px;
+
+  @include respond-to('md') {
+    --numColumns: 2;
+  }
+
+  @include respond-to('sm') {
+    --numColumns: 1;
+  }
 }

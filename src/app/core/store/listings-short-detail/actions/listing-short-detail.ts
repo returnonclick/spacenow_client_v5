@@ -32,4 +32,3 @@ export type ListingShortDetailActions =
     | Added
     | Success
     | Fail
-

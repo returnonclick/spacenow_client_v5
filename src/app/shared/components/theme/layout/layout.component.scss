@@ -2,30 +2,28 @@
   '~sass/abstracts/mixins';
 
 .mat-drawer-content {
-
-    display: grid !important;
-
+  display: grid !important;
 }
 
 .sm-facebook {
-    height: 50px;
-    width: 50px;
-    @include sn-icon(5, 1, 50);
-    @include respond-to('phone-wide') {
-        @include sn-icon(5, 1, 35);
-    }
+  height: 50px;
+  width: 50px;
+  @include sn-icon(5, 1, 50);
+  @include respond-to('phone-wide') {
+    @include sn-icon(5, 1, 35);
+  }
 }
 
 .sm-linkedin {
-    @include sn-icon(6, 1, 50);
-    @include respond-to('phone-wide') {
-        @include sn-icon(6, 1, 35);
-    }
+  @include sn-icon(6, 1, 50);
+  @include respond-to('phone-wide') {
+    @include sn-icon(6, 1, 35);
+  }
 }
 
 .sm-twitter {
-    @include sn-icon(1, 1, 50);
-    @include respond-to('phone-wide') {
-        @include sn-icon(1, 1, 35);
-    }
+  @include sn-icon(1, 1, 50);
+  @include respond-to('phone-wide') {
+    @include sn-icon(1, 1, 35);
+  }
 }
