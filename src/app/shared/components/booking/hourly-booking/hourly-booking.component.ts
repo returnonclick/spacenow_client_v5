@@ -41,15 +41,18 @@ export class HourlyBookingComponent {
 
   ngOnInit() {
     this.form = this._fb.group({
-      date: [ new Date(), Validators.required ],
-      fromHour: [ '', Validators.required ],
-      toHour: [ '', Validators.required ],
+      date:      [ new Date(), Validators.required ],
+      fromHour:  [ '', Validators.required ],
+      toHour:    [ '', Validators.required ],
       numGuests: [ 0, Validators.compose([
         Validators.required,
         Validators.min(1)
       ]) ]
     }, {
-      validator: timeValidator
+      validator: [
+        timeValidator,
+        minTimeValidator(this.space.price.minimumTerm),
+      ]
     })
 
     this.form.get('date').valueChanges.subscribe(date => {
@@ -129,9 +132,21 @@ export class HourlyBookingComponent {
 
 }
 
-function timeValidator(fg: FormGroup): { [key: string]: boolean } {
+const timeValidator = (fg: FormGroup): { [key: string]: boolean } => {
   if(fg.get('fromHour').value > fg.get('toHour').value)
     return { 'invalidTimeRange': true }
 
   return null
+}
+
+const minTimeValidator = (minTime: number) => {
+  return (fg: FormGroup): { [key: string]: boolean } => {
+    let fromHour = fg.get('fromHour').value
+    let toHour = fg.get('toHour').value
+
+    if(toHour - fromHour < minTime)
+      return { 'lessThanMinTime': true }
+
+    return null
+  }
 }

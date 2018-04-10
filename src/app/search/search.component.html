@@ -18,7 +18,6 @@
       <sn-space-list-item
         *ngFor="let space of results$ | async"
         [space]="space"
-        [showOptions]="false"
         (mouseenter)="toggleHover(space, true)"
         (mouseleave)="toggleHover(space, false)">
       </sn-space-list-item>

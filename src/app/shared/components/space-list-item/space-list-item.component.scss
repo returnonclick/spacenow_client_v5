@@ -6,19 +6,32 @@
 
   // Black and White Colors
 
-  --color__mischka: #dedfe5;
-  --color__oslo_gray: #8c9199;
-  --color__pastel_green: #6cde93;
+  --color_mischka: #dedfe5;
+  --color_oslo_gray: #8c9199;
+  --color_pastel_green: #6cde93;
+  --border_color: transparent;
   --gap: 30px;
-  --gap-negative: -30px;
-
-  box-shadow: none !important;
 
   transition: all 0.5s ease;
   z-index: 0;
 
-  > img {
-    border-radius: calc(var(--gap) / 6);
+  box-shadow: 0 0 20px 0 rgba(48, 48, 48, 0.2) !important;
+  padding: 16px !important;
+  border: 2px solid var(--border_color);
+  border-radius: 8px !important;
+  cursor: pointer;
+  height: 100%;
+
+  > .image-container {
+    border-radius: 12px;
+    overflow: hidden;
+    height: 300px;
+    > img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
   }
 
   > .nav-slider {
@@ -34,7 +47,7 @@
       width: auto;
       .material-icons {
         font-size: 14px;
-        color: var(--color__pastel_green);
+        color: var(--color_pastel_green);
       }
     }
   }
@@ -44,18 +57,22 @@
     padding: 0px !important;
 
     > .category {
-
       display: flex;
       background-color: #ffffff;
-      border: 1px solid var(--color__oslo_gray);
+      border: 1px solid var(--color_oslo_gray);
       border-radius: var(--gap);
-      margin-top: calc(var(--gap-negative) * 2);
-      padding: calc(var(--gap) / 3) calc(var(--gap) / 3) 0;
-      width: fit-content;
+      margin-top: -60px;
+      padding: 4px 12px;
 
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+
+      > :not(:last-child) {
+        padding-right: 8px;
+        margin-right: 8px;
+        border-right: 2px solid var(--color_oslo_gray);
+      }
 
     }
 
@@ -65,125 +82,32 @@
     }
 
     > .price {
-
       font-size: calc(var(--gap) / 1.5);
-
       > span {
-        color: var(--color__pastel_green);
+        color: var(--color_pastel_green);
         font-size: var(--gap);
       }
-
     }
 
     > .location {
-      
       font-weight: 300;
-
     }
 
   }
-
-}
-
-
-.space-container {
-  --borderColor: transparent;
-
-  padding: 20px;
-  border: 2px solid var(--borderColor);
-  transition: all 0.5s ease;
-  box-shadow: 0 20px 40px 0 #dddddd;
-  height: 100%;
 
   &:hover {
-    --borderColor: var(--hover);
-  }
-}
-
-.space-item {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: repeat(4, auto);
-  grid-gap: 16px;
-  align-items: start;
-  color: #4d6364;
-  cursor: pointer;
-
-  .space-image {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    grid-template-rows: repeat(3, 1fr);
-    height: 230px;
-    border-radius: 8px;
-    overflow-y: hidden;
-
-    > .featured-image {
-      grid-column: 1 / 4;
-      grid-row: 1 / 4;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    > .over-image {
-      --bgColor: 210, 210, 210;
-      --alpha: 0.7;
-
-      z-index: 10;
-      margin: auto 10px;
-      background-color: #{'rgba(var(--bgColor), var(--alpha)) !important;'};
-      border: unset;
-      padding: 0 !important;
-      color: #173839 !important;
-
-      &:hover {
-        --bgColor: 190, 190, 190;
-      }
-
-      &.space-is-favorite {
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-      }
-
-      &.space-options {
-        grid-column: 3 / 4;
-        grid-row: 1 / 2;
-      }
-
-      &.prev-image {
-      grid-column: 1 / 2;
-        grid-row: 2 / 3;
-      }
-
-      &.next-image {
-        grid-column: 3 / 4;
-        grid-row: 2 / 3;
-      }
-    }
+    --border_color: var(--color_pastel_green);
   }
 
-  .space-name {
-    margin: 0;
-  }
-
-  .space-price {
-    margin: 0;
-
-    > .price {
-      color: var(--hover);
-    }
-  }
-
-  .space-desc {
-    font-size: 0.8em;
-    line-height: 1.2em;
-  }
 }
 
 .si-icon {
-  width: 40px;
-  height: 40px;
-  margin-top: calc(var(--gap) / 5 * -1);
+  height: auto;
+  width: auto;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
 }
 
 .si-capacity {
