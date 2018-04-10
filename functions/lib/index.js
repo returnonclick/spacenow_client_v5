@@ -57,7 +57,7 @@ exports.createNewListing = functions.firestore
         return getCategories(listing.categoryId)
             .then((docCat) => {
             const cateData = docCat.data();
-            inputShortDetailSpace(listing, cateData, hostData);
+            updateShortDetailSpace(listing, cateData, hostData);
         }).catch(error => { console.log(error); });
     }).catch(error => { console.log(error); });
 });
@@ -75,17 +75,18 @@ exports.activeListing = functions.firestore
         return getUser(listing.ownerUid)
             .then(doc => {
             const hostData = doc.data();
-            inputShortDetailSpace(listing, cateData, hostData);
-            switch (listing.status) {
-                case 'pending':
-                    var subject = 'Spacenow: Your space is now live.';
-                    var context = { listing, hostData, cateData };
-                    sendEmail('listingToApprove-table.html', context, spacenow, hostData.email, subject);
-                case 'active':
-                    var subject = 'Spacenow: Your space is now live.';
-                    var context = { listing, hostData, cateData };
-                    sendEmail('listingActive-table.html', context, spacenow, hostData.email, subject);
-            }
+            updateShortDetailSpace(listing, cateData, hostData);
+            // switch (listing.status) {  
+            //     case 'pending':
+            //         var subject = 'Spacenow: Your space is now live.'
+            //         var context = { listing, hostData, cateData }
+            //         // MISSING THE SPACENOW ADMIN EMAIL
+            //         sendEmail('listingToApprove-table.html', context, spacenow, hostData.email, subject)
+            //     case 'active':
+            //         var subject = 'Spacenow: Your space is now live.'
+            //         var context = { listing, hostData, cateData } 
+            //         sendEmail('listingActive-table.html', context, spacenow, hostData.email, subject) 
+            // }    
         }).catch(error => { console.log(error); });
     })
         .catch(error => {
@@ -139,13 +140,12 @@ exports.activeListing = functions.firestore
 //     .onUpdate(event => {
 //         const booking = event.data.data()
 //         const bookingPrevious = event.data.previous.data()
-//         // const spaceId = booking.spaceBookings.spaceId
+//         const spaceId = booking.spaceBookings.spaceId
 //         // RETIRAR spaceID HARDCODE
 //         //************************************* */
-//         const spaceId = 'QV18Xnq4nKkVqVOuSRwpb'
+//         // const spaceId = 'QV18Xnq4nKkVqVOuSRwpb'
 //         //************************************* */
 //         if (booking.bookingStatus !== bookingPrevious.bookingStatus) {
-//             // return getSpace(booking.spaceBookings[0].spaceId)
 //             return getSpace(spaceId)
 //                 .then((docListing) => {
 //                     const listing = docListing.data()
@@ -178,9 +178,12 @@ exports.activeListing = functions.firestore
 //                                             let subject = 'Unfortunately the host has declined your booking request.'
 //                                             var context = { booking, userData, listing, cateData }
 //                                             sendEmail('bookingCancellation-table.html', context, spacenow, userData.email, subject)
+//                                             let status = 'Canceled'
+//                                             updateBooking(booking, status)
 //                                         }).catch(error => console.error('There was an error while sending the email:', error))
 //                                 }).catch(error => console.error(error))
 //                         case 'Confirmed':
+//                             if (booking.paymentStatus == 'Paid')
 //                             return getUser(booking.userId)
 //                                 .then(doc => {
 //                                     const userData = doc.data()
@@ -201,6 +204,8 @@ exports.activeListing = functions.firestore
 //                                                         console.log(b)
 //                                                         sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject,"Invoice_guest.pdf")
 //                                                     }).catch(error => console.error(error))
+//                                                     let status = 'Completed'
+//                                                     updateBooking(booking, status)
 //                                                 }).catch(error => console.error('There was an error getCategories function', error))
 //                                         }).catch(error => console.error(error))
 //                                 }).catch(error => console.error(error))
@@ -236,7 +241,8 @@ exports.activeListing = functions.firestore
 //                 })
 //             }).catch(error => { console.log(error) })
 //     })
-function inputShortDetailSpace(listing, cateData, hostData) {
+// maintenance function /listings-short-detail Document
+function updateShortDetailSpace(listing, cateData, hostData) {
     let shortData = new listing_short_detail_1.ListingShortDetail;
     shortData.id = listing.id;
     shortData.title = listing.title;
@@ -253,7 +259,6 @@ function inputShortDetailSpace(listing, cateData, hostData) {
     shortData.status = listing.status;
     shortData.capacity = listing.specifications.capacity || null;
     const data = Object.assign({}, shortData);
-    console.log(data);
     admin.firestore().collection('listings-short-detail').doc(`${shortData.id}`).set(data);
 }
 function getSpace(id) {
@@ -264,6 +269,12 @@ function getUser(id) {
 }
 function getCategories(id) {
     return admin.firestore().collection('categories').doc(`${id}`).get();
+}
+function updateBooking(booking, status) {
+    let data = booking;
+    data.bookingStatus = status;
+    data.paymentStatus = status;
+    return admin.firestore().collection('bookings').doc(`${booking.id}`).set(data);
 }
 function sendEmail(template, context, from, email, subject) {
     templates.render(`${template}`, context, function (err, html) {
