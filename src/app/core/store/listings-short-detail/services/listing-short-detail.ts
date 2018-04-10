@@ -14,16 +14,9 @@ export class ListingShortDetailService {
   }
 
   public readAll() {
-    return this.afs.collection<ListingShortDetail>(this.ref).valueChanges()
+    let aus = this.afs.collection<ListingShortDetail>(this.ref, ref => ref.where('countryName', '==', 'Australia').where('status', '==', 'active').limit(30)).valueChanges()
+    let nz = this.afs.collection<ListingShortDetail>(this.ref, ref => ref.where('countryName', '==', 'New Zealand').where('status', '==', 'active').limit(30)).valueChanges()
+    let uae = this.afs.collection<ListingShortDetail>(this.ref, ref => ref.where('countryName', '==', 'United Arab Emirates').where('status', '==', 'active').limit(30)).valueChanges()
+    return Observable.merge(aus, uae, nz)
   }
-
-  // filter(params: any[]) {
-  //   return Observable.fromPromise(
-  //     this.afs.firestore.collection(this.ref)
-  //     .where(params[0], params[1], params[2])
-  //     .limit(30)
-  //     .get()
-  //     .then(snapshot => snapshot.docChanges)
-  //   )
-  // }
 }

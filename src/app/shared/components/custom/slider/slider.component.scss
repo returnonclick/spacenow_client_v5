@@ -38,12 +38,12 @@
       grid-row: 1 / 2;
     }
 
-    &:hover {
-      > i {
-        opacity: 1;
-        transition: opacity .5s;
-      }
-    }
+    // &:hover {
+    //   > i {
+    //     opacity: 1;
+    //     transition: opacity .5s;
+    //   }
+    // }
 
     > i {
       opacity: 0;
