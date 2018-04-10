@@ -24,13 +24,19 @@ export class AuthEffects {
     public getUser$: Observable<Action> = this.actions$.pipe(
         ofType<actions.GetUser>( actions.GET_USER ),
         switchMap(() => this.afAuth.authState),
-        map((user) => new actions.Success({user: new User(user)}))
+        switchMap(authState => this.authService.getUser(authState.uid)),
+        mergeMap(changes => changes),
+        map(action =>
+          new actions.Success({
+            user: new User(action.payload.doc.data())
+          })
+        )
     )
 
     @Effect()
     public signIn$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignIn>( actions.SIGN_IN ),
-        switchMap((data) => 
+        switchMap((data) =>
             this.authService.signIn(data.payload.username, data.payload.password)
             .then(() => new actions.GetUser())
             .catch((err) => new actions.Fail(err))
@@ -40,7 +46,7 @@ export class AuthEffects {
     @Effect()
     public signUp$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignUp>( actions.SIGN_UP ),
-        switchMap(data => 
+        switchMap(data =>
             this.authService.signUp(data.payload.username, data.payload.password)
             .then((user) => {
                 this.authService.sendEmailVerification()
@@ -53,7 +59,7 @@ export class AuthEffects {
     @Effect()
     public forgotPassword$: Observable<Action> = this.actions$.pipe(
         ofType<actions.ForgotPassword>( actions.FORGOT_PASSWORD ),
-        switchMap((data) => 
+        switchMap((data) =>
             this.authService.sendPasswordResetEmail(data.payload.email)
             .then(() => new actions.Success())
             .catch((err) => new actions.Fail(err))
@@ -63,7 +69,7 @@ export class AuthEffects {
     @Effect()
     public signInWithProvider$: Observable<Action> = this.actions$.pipe(
         ofType<actions.SignInWithProvider>( actions.SIGN_IN_WITH_PROVIDER ),
-        switchMap((data) => 
+        switchMap((data) =>
             this.authService.signInWithProvider(data.payload)
             .then(() => new actions.GetUser())
             .catch((err) => new actions.Fail(err))

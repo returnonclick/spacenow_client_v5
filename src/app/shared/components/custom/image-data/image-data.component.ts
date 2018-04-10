@@ -25,7 +25,7 @@ export class ImageDataComponent {
   // Images array to be outputed
   listImages: Array<ImageData>
 
-  // Main task 
+  // Main task
   task: AngularFireUploadTask
 
   // Progress monitoring
@@ -40,7 +40,10 @@ export class ImageDataComponent {
   // State for dropzone CSS toggling
   isHovering: boolean
 
-  constructor(private storage: AngularFireStorage, private db: AngularFirestore) { }
+  constructor(
+    private storage: AngularFireStorage,
+    private db: AngularFirestore
+  ) { }
 
   toggleHover(event: boolean) {
     this.isHovering = event
@@ -77,7 +80,7 @@ export class ImageDataComponent {
     return new Promise(resolve => {
 
       // Client-side validation example
-      if (file.type.split('/')[0] !== 'image') { 
+      if (file.type.split('/')[0] !== 'image') {
         console.error('unsupported file type :( ')
         return
       }
@@ -90,8 +93,7 @@ export class ImageDataComponent {
 
       // Progress monitoring
       this.percentage = this.task.percentageChanges()
-      
-      this.task.percentageChanges().subscribe( perc => console.log(perc))
+      // this.task.percentageChanges().subscribe( perc => console.log(perc))
 
       // Wait until observable is resolve
       this.task.downloadURL().subscribe(

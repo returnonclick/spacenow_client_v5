@@ -62,7 +62,7 @@ export class ProfileContainerComponent {
     this._store.dispatch(
       new userActions.Update(
         this.authUser.uid,
-        { photoURL: event.path }
+        { photoURL: event.imageURL }
       )
     )
   }
