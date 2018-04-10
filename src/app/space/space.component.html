@@ -47,8 +47,10 @@
         <ul class="ammenities-list">
           <ng-container *ngFor="let id of space.amenityIds">
             <li *ngIf="(amenities$ | async)[id]">
-              <mat-icon color="primary">{{ (amenities$ | async)[id].icon }}</mat-icon>
-              {{ (amenities$ | async)[id].name }}
+              <!-- <mat-icon color="primary">{{ (amenities$ | async)[id].icon }}</mat-icon> -->
+         
+              <i [ngClass]="(amenities$ | async)[id].slug + '-amen-35'"></i>
+              {{  (amenities$ | async)[id].name }} 
             </li>
           </ng-container>
         </ul>
