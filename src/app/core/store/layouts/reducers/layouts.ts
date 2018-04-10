@@ -48,18 +48,18 @@ export function reducer(
         ...state,
         sidenavComponent: 'sign-in'
       }
-    
+
     case LayoutActionTypes.SetSidenavRegister:
       return {
         ...state,
         sidenavComponent: 'register'
       }
-    
+
     case LayoutActionTypes.SetSidenavForgotPassword:
       return {
         ...state,
         sidenavComponent: 'forgot-password'
-      } 
+      }
 
     default:
       return state

@@ -46,8 +46,7 @@
 
     <!-- User logged in -->
     <ng-template #authenticated>
-      <!-- <a *ngIf="(authUser$ | async) as authUser" [routerLink]="[{ outlets: { sidenav: ['auth-menu'] } }]" routerLinkActive="active" (click)="openSidenav()"><img [src]="authUser.photoURL" class="userProfilePicture" width="50px"></a> -->
-      <button *ngIf="(authUser$ | async) as authUser" mat-icon-button [matMenuTriggerFor]="menu">
+      <button *ngIf="(authUser$ | async) as authUser" mat-icon-button [disableRipple]="true" [matMenuTriggerFor]="menu">
         <img [src]="authUser.photoURL" class="userProfilePicture" width="50px" height="50px">
       </button>
       <mat-menu #menu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">

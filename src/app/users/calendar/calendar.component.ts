@@ -9,6 +9,7 @@ import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
 import * as spaceActions from '@core/store/spaces/actions/space'
+import * as layoutActions from '@core/store/layouts/actions/layout'
 
 @Component({
   selector: 'sn-calendar',
@@ -61,6 +62,7 @@ export class CalendarComponent {
 
   ngOnInit() {
     this._store.dispatch(new spaceActions.All) // TODO: change to appropriate action
+    this._store.dispatch(new layoutActions.SetLogoGreen)
   }
 
 }

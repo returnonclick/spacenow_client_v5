@@ -3,13 +3,13 @@
     <img [src]="space.images[imageIndex] ? space.images[imageIndex].imageURL : ''"/>
   </div>
   <div class="nav-slider" *ngIf="space.images">
-    <button mat-icon-button (click)="imageIndex = 0; $event.stopPropagation()">
+    <button mat-icon-button [disableRipple]="true" (click)="imageIndex = 0; $event.stopPropagation()">
       <i class="material-icons">{{ imageIndex === 0 ? 'lens' : 'panorama_fish_eye' }}</i>
     </button>
-    <button mat-icon-button (click)="imageIndex = 1; $event.stopPropagation()">
+    <button mat-icon-button [disableRipple]="true" (click)="imageIndex = 1; $event.stopPropagation()">
       <i class="material-icons">{{ imageIndex === 1 ? 'lens' : 'panorama_fish_eye' }}</i>
     </button>
-    <button mat-icon-button (click)="imageIndex = 2; $event.stopPropagation()">
+    <button mat-icon-button [disableRipple]="true" (click)="imageIndex = 2; $event.stopPropagation()">
       <i class="material-icons">{{ imageIndex === 2 ? 'lens' : 'panorama_fish_eye' }}</i>
     </button>
   </div>
