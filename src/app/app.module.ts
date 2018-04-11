@@ -74,7 +74,7 @@ const SERVICES = [
   CategoryService,
   SpaceService,
   SearchService,
-  UserService,
+  UserService
 ]
 
 @NgModule({

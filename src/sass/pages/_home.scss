@@ -104,13 +104,15 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: minmax(600px, auto);
+        overflow-y: hidden;
 
         > div {
             grid-column: 1 /2;
             grid-row: 1 / 2;
+            position: relative;
 
             img {
-                transform: translateX();
+                position: absolute;
             }
 
         }
