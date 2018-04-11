@@ -10,7 +10,7 @@
       <div class="booking-type" fxFlex="25%" fxFlex.lt-md="20%" fxFlex.lt-sm="100%" fxLayout="column">
 
         <mat-form-field>
-          <mat-select placeholder="Booking System" name="booking-type" formControlName="bookingType" required>
+          <mat-select placeholder="Booking System" name="booking-type" formControlName="bookingType" required [disabled]="this.listing?.price.price === 0">
             <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType.value">
               {{ bookingType.display }} 
             </mat-option>

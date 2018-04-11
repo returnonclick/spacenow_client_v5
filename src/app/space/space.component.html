@@ -201,7 +201,10 @@
           <mat-icon color="primary">star_border</mat-icon>
         </div> -->
       </div>
-      <div class="space-price">
+      <div class="space-price" *ngIf="space?.price.price === 0">
+        <span class="currency">POA</span>
+      </div>
+      <div class="space-price" *ngIf="space?.price.price !== 0">
         <span class="currency">{{ space?.currency }}</span>
         <span class="price">${{ space?.price.price }}</span> a
         <span class="unit">{{ mapPriceUnit() }}</span>

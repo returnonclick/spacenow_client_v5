@@ -52,7 +52,6 @@ export class ExceptionComponent {
       if (listing) {
         this.listing = listing
         this.createForm()
-        console.log(new Space(this.listing))
       }
     })
 
