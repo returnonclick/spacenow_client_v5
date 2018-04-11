@@ -1,115 +1,114 @@
+#main-nav {
 
-    #main-nav {
+  --gap: 30px;
+  --color__pastel_green: $color__pastel_green;
 
-        --gap: 30px;
-        --color__pastel_green: $color__pastel_green;
-
-        @include respond-to('phone-wide') {
-            --gap: 20px;
-        }
-
-
-        align-items: center;
-        display: flex;
-        height: 110px;;
-        margin-top: 0;
-        padding: var(--gap);
-        text-align: right;
-
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 1;
-        grid-row-end: 2;
-        z-index: 2;
-
-        span {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        a.logo {
-            background-size: contain;
-            height: 50px;
-            width: 200px;
-
-            @include respond-to('phone-wide') {
-                height: 42px;
-                width: 150px;
-            }
-
-            &.logo-white {
-                background: url('/assets/images/logo/spacenow-logo-white.svg') no-repeat;
-            }
-
-            &.logo-green {
-                background: url('/assets/images/logo/spacenow-logo.svg') no-repeat;
-            }
-        }
-        
-        a {
-            font-size: 20px;
-            font-weight: 400;
-            text-transform: uppercase;
-            color: #fff;
-            
-            &:not(.logo) {
-                padding-left: var(--gap);
-                display: flex;
-                align-items: center;
-            }
-            
-        }
-        
-        a.list-your-space {
-            @include respond-to('phone-wide') {
-                display: none;
-            }
-        }
-
-        .mat-icon-button {
-
-            height: auto;
-            margin: 0 0 0 var(--gap);
-            width: auto;
-
-            img.userProfilePicture {
-                border-radius: 50%;
-                margin-left: 10px;
-            }
-
-        }
+  @include respond-to('phone-wide') {
+    --gap: 20px;
+  }
 
 
+  align-items: center;
+  display: flex;
+  height: 110px;;
+  margin-top: 0;
+  padding: var(--gap);
+  text-align: right;
 
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  z-index: 2;
+
+  span {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  a.logo {
+    background-size: contain;
+    height: 50px;
+    width: 200px;
+
+    @include respond-to('phone-wide') {
+      height: 42px;
+      width: 150px;
     }
 
-
-    .mat-drawer.mat-drawer-end {
-        -webkit-transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
-        transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+    &.logo-white {
+      background: url('/assets/images/logo/spacenow-logo-white.svg') no-repeat;
     }
 
-    .mat-menu-panel {
-
-        border: 1px solid $color__pastel_green !important;
-        // padding: 10px 15px;
-        @include mat-elevation(3);
-
-        .mat-menu-content {
-
-            padding: 5px;
-
-            .mat-menu-item {
-                
-                font-size: 20px;
-                color: #fff;
-                
-            }
-
-            .mat-divider {
-                margin: 5px;
-            }
-
-        }
-
+    &.logo-green {
+      background: url('/assets/images/logo/spacenow-logo.svg') no-repeat;
     }
+  }
+
+  a {
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: $color__white;
+
+    &:not(.logo) {
+      padding-left: var(--gap);
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  a.list-your-space {
+    @include respond-to('phone-wide') {
+      display: none;
+    }
+  }
+
+  .mat-icon-button {
+
+    height: auto;
+    margin: 0 0 0 var(--gap);
+    width: auto;
+
+    .image-container {
+      height: 50px;
+      width: 50px;
+      border-radius: 50px;
+      overflow: hidden;
+
+      > img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+    }
+
+  }
+
+}
+
+
+.mat-drawer.mat-drawer-end {
+  -webkit-transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+  transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+}
+
+.mat-menu-panel {
+  border: 1px solid $color__pastel_green !important;
+  // padding: 10px 15px;
+  @include mat-elevation(3);
+
+  .mat-menu-content {
+    padding: 5px;
+
+    .mat-menu-item {
+      font-size: 20px;
+      color: $color__white;
+    }
+
+    .mat-divider {
+      margin: 5px;
+    }
+  }
+}

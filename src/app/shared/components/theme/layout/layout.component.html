@@ -47,7 +47,9 @@
     <!-- User logged in -->
     <ng-template #authenticated>
       <button *ngIf="(authUser$ | async) as authUser" mat-icon-button [disableRipple]="true" [matMenuTriggerFor]="menu">
-        <img [src]="authUser.photoURL" class="userProfilePicture" width="50px" height="50px">
+        <div class="image-container">
+          <img [src]="authUser.photoURL" class="userProfilePicture">
+        </div>
       </button>
       <mat-menu #menu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
         <button mat-menu-item routerLink="/listing/category">List a space</button>

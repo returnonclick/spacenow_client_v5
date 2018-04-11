@@ -5,20 +5,20 @@
         <span class="input-currency left" [ngClass]="{'dollar': (parentForm.value.currency === 'AUD' ||
                                                                     parentForm.value.currency === 'USD' ||
                                                                     parentForm.value.currency === 'NZD' ||
-                                                                    parentForm.value.currency === 'SGD') && (focus || parentForm.value.price.price),
-                                                        'eur': parentForm.value.currency === 'EUR' && (focus || parentForm.value.price.price),
-                                                        'gbp': parentForm.value.currency === 'GBP' && (focus || parentForm.value.price.price),
-                                                        'aed': parentForm.value.currency === 'AED' && (focus || parentForm.value.price.price) }">
+                                                                    parentForm.value.currency === 'SGD') && (focus || parentForm.value.price.price === 0 || parentForm.value.price.price),
+                                                        'eur': parentForm.value.currency === 'EUR' && (focus || parentForm.value.price.price === 0 || parentForm.value.price.price),
+                                                        'gbp': parentForm.value.currency === 'GBP' && (focus || parentForm.value.price.price === 0 || parentForm.value.price.price),
+                                                        'aed': parentForm.value.currency === 'AED' && (focus || parentForm.value.price.price === 0 || parentForm.value.price.price) }">
           <input matInput type="number" min="0" placeholder="Price per month" formControlName="price" (focus)="focus = true" (blur)="focus = false" required>
         </span>
       </mat-form-field>
       <mat-form-field class="price-six" [class.hide]="!parentForm.controls.price.value.incentives">
-        <span class="input-currency right" [ngClass]="{'percent': focusSem || parentForm.value.price.sixMonths}">
+        <span class="input-currency right" [ngClass]="{'percent': focusSem || parentForm.value.price.sixMonths === 0 || parentForm.value.price.sixMonths}">
           <input matInput type="number" min="0" placeholder="Price per six months" formControlName="sixMonths" (focus)="focusSem = true" (blur)="focusSem = false" [required]="parentForm.controls.price.value.incentives">
         </span>
       </mat-form-field>
       <mat-form-field class="price-year" [class.hide]="!parentForm.controls.price.value.incentives">
-        <span class="input-currency right" [ngClass]="{'percent': focusYear || parentForm.value.price.year }">
+        <span class="input-currency right" [ngClass]="{'percent': focusYear || parentForm.value.price.year === 0 || parentForm.value.price.year }">
           <input matInput type="number" min="0" placeholder="Price per year" formControlName="year" (focus)="focusYear = true" (blur)="focusYear = false" [required]="parentForm.controls.price.value.incentives">
         </span>
       </mat-form-field>
