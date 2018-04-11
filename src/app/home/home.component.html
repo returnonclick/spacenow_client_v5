@@ -5,7 +5,7 @@
     <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <div class="si-icon-small si-search"></div>
       <mat-form-field>
-        <input type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event); onSubmit()">
+        <input class="txt-location" type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event); onSubmit()">
       </mat-form-field>
     </form>
   </div>

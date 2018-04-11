@@ -50,6 +50,7 @@
             font-size: 20px;
             font-weight: 400;
             text-transform: uppercase;
+            color: #fff;
             
             &:not(.logo) {
                 padding-left: var(--gap);
@@ -101,7 +102,7 @@
             .mat-menu-item {
                 
                 font-size: 20px;
-                color: $color__pastel_green;
+                color: #fff;
                 
             }
 
