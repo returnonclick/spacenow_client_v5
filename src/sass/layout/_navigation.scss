@@ -45,11 +45,13 @@
     }
   }
 
+  
+
   a {
     font-size: 20px;
     font-weight: 400;
     text-transform: uppercase;
-    color: $color__white;
+    color: $color__pastel_green;
 
     &:not(.logo) {
       padding-left: var(--gap);
