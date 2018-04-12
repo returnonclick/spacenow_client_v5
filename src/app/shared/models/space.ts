@@ -102,7 +102,7 @@ export class Price extends Object {
   constructor(model: any = null) {
     super()
     if(model) {
-      this.price       = model.price || null
+      this.price       = model.price === 0 ? 0 : model.price || null
       this.minimumTerm = model.minimumTerm || 1
       this.incentives  = model.incentives || false
     }

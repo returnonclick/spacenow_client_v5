@@ -35,7 +35,8 @@ export class BookingComponent {
 
   bookingTypes = [
     { display: "Instant booking", value: 'instantly' },
-    { display: "Request booking", value: 'request' }
+    { display: "Request booking", value: 'request' },
+    { display: "Manual enquiry", value: 'enquiry' }
   ]
   
   openingHours = [
@@ -135,6 +136,12 @@ export class BookingComponent {
         exceptionDays: []
       })
     })
+
+    // Set fixed booking type as 'enquiry' when price is '0'
+    if (this.listing.price.price === 0) {
+      let type = this.bookingForm.controls.availability.get('bookingType') as FormControl
+      type.setValue('enquiry')
+    }
 
     switch (this.listing.priceUnit) {
       case "hourly":

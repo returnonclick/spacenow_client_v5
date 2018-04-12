@@ -20,7 +20,12 @@
     </div>
     <h3 class="title">{{ space.title }}</h3>
     <p class="price">
-      From <span>${{ space.price }}</span> {{ space.priceUnit }}
+      <ng-container *ngIf="space.price !== 0">
+          From <span>${{ space.price }}</span> {{ space.priceUnit }}
+      </ng-container>
+      <ng-container *ngIf="space.price === 0">
+          <span>POA</span>
+      </ng-container>
     </p>
     <p class="location">
       {{ space.fullAddress }}

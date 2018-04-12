@@ -1,51 +1,57 @@
-import { Component, Inject, Injectable, HostListener, ElementRef }              from '@angular/core'
+import { Component, Inject, Injectable, HostListener, ElementRef, Renderer2 } from '@angular/core'
 import {
   trigger,
   state,
   style,
   animate,
   transition
-} from '@angular/animations';
+} from '@angular/animations'
 
-import { FormBuilder,
-         FormGroup,
-         Validators }             from '@angular/forms'
-import { ActivatedRoute,
-         Router }                 from '@angular/router'
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms'
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router'
 
-import { Store, select }          from '@ngrx/store'
-import { Observable }             from 'rxjs/Observable'
+import { Store, select } from '@ngrx/store'
+import { Observable } from 'rxjs/Observable'
 
-import { CardComponent,
-         FeaturedCardComponent }  from '@shared/components/custom/cards'
-import { TestimonialComponent }   from "@shared/components/custom"
-import { Category }               from '@shared/models/category'
-import { ListingShortDetail }     from '@app/shared/models/listing-short-detail'
+import {
+  CardComponent,
+  FeaturedCardComponent
+} from '@shared/components/custom/cards'
+import { TestimonialComponent } from "@shared/components/custom"
+import { Category } from '@shared/models/category'
+import { ListingShortDetail } from '@app/shared/models/listing-short-detail'
 
-import * as fromRoot              from '@core/store'
-import * as actions               from '@core/store/layouts/actions/layout'
-import * as categoryActions       from '@core/store/categories/actions/category'
-import * as listingShortDetailActions        from '@core/store/listings-short-detail/actions/listing-short-detail'
-import { switchMap, map }         from 'rxjs/operators';
-import { Subscription }           from 'rxjs';
-import { filter } from 'rxjs/operator/filter';
-import { MatDialog } from '@angular/material';
+import * as fromRoot from '@core/store'
+import * as actions from '@core/store/layouts/actions/layout'
+import * as categoryActions from '@core/store/categories/actions/category'
+import * as listingShortDetailActions from '@core/store/listings-short-detail/actions/listing-short-detail'
+import { switchMap, map } from 'rxjs/operators'
+import { Subscription } from 'rxjs'
+import { filter } from 'rxjs/operator/filter'
+import { MatDialog } from '@angular/material'
 import { VideoPlayerComponent } from '@app/shared/components/custom/video-player/video-player.component';
-import { georgeAnimation } from "@shared/animations/animations";
+import { georgeAnimation } from "@shared/animations/animations"
 
 @Component({
   selector: 'sn-home',
   templateUrl: './home.component.html',
-  styleUrls: [ './home.component.scss' ]
+  styleUrls: ['./home.component.scss']
 })
 
 export class HomeComponent {
 
-  form:   FormGroup
-  name:   string = ''
+  form: FormGroup
+  name: string = ''
   radius: number = 5
-  latitude:    number = -33.9108137
-  longitude:    number = 151.1960078
+  latitude: number = -33.9108137
+  longitude: number = 151.1960078
 
   categories$: Observable<Category[]>
   listingsShortDetailAustralia$: Observable<ListingShortDetail[]>
@@ -61,28 +67,29 @@ export class HomeComponent {
   airplane: any
 
   constructor(
-    private _fb:     FormBuilder,
-    private _store:  Store<fromRoot.State>,
+    private _fb: FormBuilder,
+    private _store: Store<fromRoot.State>,
     private _router: Router,
-    private _route:  ActivatedRoute,
-    public _dialog:  MatDialog,
-    public el:       ElementRef
-  ){
+    private _route: ActivatedRoute,
+    public _dialog: MatDialog,
+    public el: ElementRef,
+    public renderer: Renderer2
+  ) {
     this.categories$ = this._store.pipe(
       select(fromRoot.getAllCategories)
     )
     this.listingsShortDetailAustralia$ = this._store.select(fromRoot.getAllListingsShortDetail)
       .map(listings => listings
-      .filter(listing => listing.countryName === 'Australia')
-    )
+        .filter(listing => listing.countryName === 'Australia')
+      )
     this.listingsShortDetailUnitedArabEmirates$ = this._store.select(fromRoot.getAllListingsShortDetail)
       .map(listings => listings
-      .filter(listing => listing.countryName === 'United Arab Emirates')
-    )
+        .filter(listing => listing.countryName === 'United Arab Emirates')
+      )
     this.listingsShortDetailNewZealand$ = this._store.select(fromRoot.getAllListingsShortDetail)
       .map(listings => listings
-      .filter(listing => listing.countryName === 'New Zealand')
-    )
+        .filter(listing => listing.countryName === 'New Zealand')
+      )
 
     this.testimonials = [{
       background: 'https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Ftestimonial-01.jpg?alt=media&token=3f12acd5-bca4-4a8d-92ee-c9fe467cbcff',
@@ -104,11 +111,12 @@ export class HomeComponent {
     this._store.dispatch(new categoryActions.Query())
     this._store.dispatch(new listingShortDetailActions.Query())
     this.createForm()
-    window.addEventListener('scroll', this.scroll, true);
   }
 
-  ngAfterViewInit(){
-    this.airplane = document.getElementById('airplane');
+  ngAfterViewInit() {
+    window.addEventListener('scroll', this.scroll, true);
+    this.airplane = this.el.nativeElement.querySelector("#airplane");
+
   }
 
   selectedAddress(address) {
@@ -119,27 +127,27 @@ export class HomeComponent {
 
   onSubmit() {
     this.form.updateValueAndValidity()
-    if(this.form.invalid)
+    if (this.form.invalid)
       return
 
     let formVal = this.form.value
 
     this._router.navigate(['/search'], {
       queryParams: {
-        name:   encodeURIComponent(formVal.name),
+        name: encodeURIComponent(formVal.name),
         radius: formVal.radius,
-        latitude:    formVal.latitude,
-        longitude:    formVal.longitude
+        latitude: formVal.latitude,
+        longitude: formVal.longitude
       }
     })
   }
 
   private createForm() {
     this.form = this._fb.group({
-      name:   [ this.name, Validators.required ],
-      radius: [ this.radius, Validators.required ],
-      latitude:    [ this.latitude ],
-      longitude:    [ this.longitude ],
+      name: [this.name, Validators.required],
+      radius: [this.radius, Validators.required],
+      latitude: [this.latitude],
+      longitude: [this.longitude],
     })
   }
 
@@ -156,7 +164,9 @@ export class HomeComponent {
     window.removeEventListener('scroll', this.scroll, true);
   }
 
-  scroll = (): void => {
-  };
+  scroll = (event): void => {
+    console.log(event.target.scrollTop);
+    this.renderer.setStyle(this.airplane, 'left', `${event.target.scrollTop / 2.8}px`)
+  }
 
 }

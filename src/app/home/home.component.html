@@ -5,7 +5,7 @@
     <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <div class="si-icon-small si-search"></div>
       <mat-form-field>
-        <input type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event); onSubmit()">
+        <input class="txt-location" type="text" sn-google-address matInput placeholder="location" (getAddress)="selectedAddress($event); onSubmit()">
       </mat-form-field>
     </form>
   </div>
@@ -19,7 +19,8 @@
     <div class="title right">
         <h2>Any space<br>
           by the hour<br>
-          day or month</h2>
+          day or month
+        </h2>
       <div class="si-icon-small si-right"></div>
     </div>
   
@@ -31,7 +32,7 @@
   <section id="section-two">
     <div class="title">
       <div class="si-icon-small si-left"></div>
-      <h2>Latest <br>spaces</h2>
+      <h2>Latest <br>spaces<br><a href="search?name=&radius=20&latitude=&longitude=" class="view-all">view all</a></h2>
     </div>
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailAustralia$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
@@ -39,7 +40,7 @@
 
   <!-- SECTION THREE -->
   <section id="section-three">
-    <div class="video">
+    <div class="img" >
         <img id="airplane" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fhome%2Fgeorge-plane.png?alt=media&token=c519b037-69c2-4adc-9dd0-3a05f11d7fe4" alt="">
     </div>
     <div class="video-description">
@@ -88,7 +89,7 @@
   <!-- SECTION SIX -->
   <section id="section-six">
     <div class="title right">
-      <h2>Spaces in<br>UAE</h2>
+      <h2>Spaces in<br>UAE<br><a href="http://localhost:4200/search?name=Dubai%2520-%2520United%2520Arab%2520Emirates&radius=10&latitude=25.2048493&longitude=55.270782800000006" class="view-all">view all</a></h2>
       <div class="si-icon-small si-right"></div>
     </div>
 
@@ -100,7 +101,7 @@
   <section id="section-seven">
     <div class="title left">
       <div class="si-icon-small si-left"></div>
-      <h2>Spaces in<br>New Zealand</h2>
+      <h2>Spaces in<br>New Zealand<br><a href="search?name=Auckland%252C%2520New%2520Zealand&radius=20&latitude=-36.8484597&longitude=174.76333150000005" class="view-all">view all</a></h2>
     </div>
     
 

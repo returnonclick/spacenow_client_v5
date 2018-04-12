@@ -20,7 +20,14 @@
       <h4>{{data.ownerDisplayName}}</h4>
     </mat-card-content>
     <mat-card-actions [routerLink]="'space/' + data.id" style="cursor: pointer">
-        <button mat-raised-button class="slider">{{data.currency}} ${{data.price | number: '1.0-0'}} {{data.priceUnit}}</button>
+        <button mat-raised-button class="slider">
+            <ng-container *ngIf="data?.price !== 0">
+                {{ data.currency }} ${{ data.price | number: '1.0-0' }} {{ data.priceUnit }}
+            </ng-container>
+            <ng-container *ngIf="data?.price === 0">
+                <span>POA</span>
+            </ng-container>
+        </button>
     </mat-card-actions>
 </mat-card>
 <!-- <div class="ratings">

@@ -1,5 +1,12 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxFill>
-
+  <div class="btn-container">
+    <button mat-raised-button class="secondary" (click)="googleLogin()">
+      Google
+    </button>
+    <button mat-raised-button class="secondary" (click)="facebookLogin()">
+      Facebook
+    </button>
+  </div>
   <form #form="ngForm" (ngSubmit)="onSigninSubmit()" [formGroup]="signinForm" fxLayout="column" class="signinForm">
       <h1>Log In</h1>
       <h3>Complete for to log in</h3>
@@ -20,16 +27,6 @@
 
   </form>
 
-  <div class="btn-container">
-    <button mat-raised-button class="secondary" (click)="googleLogin()">
-      Google
-    </button>
-    <button mat-raised-button class="secondary " (click)="facebookLogin()">
-      Facebook
-    </button>
-    <!-- <button mat-raised-button class="secondary" (click)="linkedinLogin()">
-      Linkedin
-    </button> -->
-  </div>
+  
 
 </div>

@@ -1,7 +1,7 @@
 
 export class Availability extends Object{
 
-  bookingType:   string         = null
+  bookingType:   string         = 'instantly'
   leadTime:      number         = 1
   openingTime:   OpeningTime    = new OpeningTime()
   isOpen247:     boolean        = false
@@ -11,7 +11,7 @@ export class Availability extends Object{
     super()
     if ( model ) {
 
-      this.bookingType      = model.bookingType || null
+      this.bookingType      = model.bookingType || 'instantly'
       this.leadTime         = model.leadTime || 1
       this.openingTime      = new OpeningTime(model.openingTime) || new OpeningTime()
       this.isOpen247        = model.isOpen247 || false
@@ -43,7 +43,7 @@ export class ExceptionDay extends Object {
 
 export class OpeningDay {
   startHour:   number  = 0
-  closeHour:   number  = 0
+  closeHour:   number  = 23
   startMinute: number  = 0 // not gonna be used yet
   closeMinute: number  = 0 // not gonna be used yet
   isOpen:      boolean = true
@@ -51,7 +51,7 @@ export class OpeningDay {
   constructor(model: any = null) {
     if(model) {
       this.startHour   = model.startHour || 0
-      this.closeHour   = model.closeHour || 0
+      this.closeHour   = model.closeHour || 23
       this.startMinute = model.startMinute || 0
       this.closeMinute = model.closeMinute || 0
       this.isOpen      = model.isOpen || true
