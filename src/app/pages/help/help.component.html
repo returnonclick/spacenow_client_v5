@@ -1,7 +1,6 @@
-<header id="header" class="grid" style="margin-top: -110px; height: 500px !important; min-height: 500px !important"></header>
 <div class="grid">
 	<div class="wrapper">
-		<div class="title">
+		<div class="pb-60">
 			<h1 class="pb-20">Help</h1>
 			<h2>Browse by categories</h2>
 		</div>
@@ -36,96 +35,146 @@
 			<div fxFlex="24%" fxLayoutAlign="start center" fxLayout="column">
 				<a routerLink="new" class="border-box" [ngClass]="{'bg-green': whatsNew}" (click)="topQuestion = false; aboutSpacenow = false; gettingStarted = false; whatsNew = true">
 					<div class="content-box" fxLayout="column" fxLayoutAlign="center center">
-						<div class="si-icon si-star"></div>
-						<p class="text-box">What's New?</p>
+						<div class="si-icon si-tool"></div>
+						<p class="text-box">How it works</p>
 					</div>
 				</a>
 				<mat-icon *ngIf="whatsNew" class="arrow-box">keyboard_arrow_down</mat-icon>
 			</div>
 		</div>
 	
-		<div class="pb-40 pt-40" *ngIf="topQuestion || aboutSpacenow || gettingStarted || whatsNew">
+		<div class="pt-40" *ngIf="topQuestion || aboutSpacenow || gettingStarted || whatsNew">
 			<router-outlet></router-outlet>
+		</div>
+
+		<div class="my-60">
+			<h2 class="pb-60">Browse by topics</h2>
+
+			<!-- About bookings-->
+			<mat-accordion>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">How will my payments be processed? Will it be secure? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>Payment is extremely secure, and is processed through one of our merchants; they are Paypal, Braintree stripe & blockchain.</span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">Can I change my booking time/date before my booking? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>You can but you will lose the money you have paid. Be sure to review the <a href="https://www.spacenow.com.au/articles/59377b67d0a94633572df4ea" target="_blank"><u>Cancellation & Refunds Policy</u></a> for the relevant notice periods for changes and cancellations to bookings. </span>
+				</mat-expansion-panel>
+				<hr>
+			<!-- </mat-accordion> -->
+
+			<!-- How to set up a listing -->
+			<!-- <mat-accordion> -->
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">How do I list my space onto the site? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>To list your space with us, simply create an account by either signing into your Facebook/ Google account or create a new one with us. Proceed to, List Space. There you can enter details about the name, location, amenities available, price and availability of your space. To encourage more potential renters, we recommend you upload high quality accompanying pictures to showcase your space. Once you have filled out the form, click Submit and the Spacenow team will review your listing before it goes live on the site.</span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">How many pictures should I upload for my listing? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>We know every space is different, that’s why we recommend you upload as many pictures as you think accurately communicates the size, feel and quality of your space. We recommend between 3 & 12 high quality images. 3 is the minimum. </span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">What support will I get from Spacenow about listing difficulties? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>Phone and email support. Email us on support@spacenow.com.au or call us on 1300 720 464</span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">How many pictures should I upload for my listing? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>We know every space is different, that’s why we recommend you upload as many pictures as you think accurately communicates the size, feel and quality of your space. We recommend between 3 & 12 high quality images. 3 is the minimum.</span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">What is the cost of listing my space on Spacenow? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>Listing your space on Spacenow is completely FREE. Only after you have entered into a license agreement with a renter will Spacenow take a small percentage of the rent paid to you. Fees are outlined in the <a href="https://www.spacenow.com.au/articles/592f47558c1bdb7115786c94" target="_blank"><u>Host Terms</u></a>.</span>
+				</mat-expansion-panel>
+				<hr>
+			<!-- </mat-accordion> -->
+
+			<!-- Popular topics-->
+			<!-- <mat-accordion> -->
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">Why should I rent from Spacenow instead of the big coworking spaces? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>Spacenow lists a variety of spaces from dedicated desks to function rooms. Our hosts also range from big coworking spaces to everyday people and workers who have unused space and would like to meet new people. Finding a space with us means a greater variety in terms of location and prices.</span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">What’s the minimum and maximum amount of time I can rent a space? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>The terms for rental will be agreed between yourself and your host. We know everyone’s needs are different, that’s why there’s real flexibility for hosts and renters in terms of rental period. We have spaces available for hourly, daily, weekly, monthly or even longer rent. It really is down to your needs and the discretion of your host. </span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">I don't have time to respond to booking enquiries, is there an option for guests to book instantly? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>Yes there is. You can edit your space or when adding a new one select instant bookings to skip the enquiry or request bookings step.</span>
+				</mat-expansion-panel>
+				<hr>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">Can I Extend my license? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>Once your current license has expired, if it has an end date, you can renegotiate and re-enter the license agreement with the host. If there is no end date on the pre-existing license agreement it will continue until you or your host present an end of license notification to the other party.</span>
+				</mat-expansion-panel>
+				<hr>
+			<!-- </mat-accordion> -->
+
+			<!-- wht's new-->
+			<!-- <mat-accordion> -->
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<p class="heading-text">I don't have time to respond to booking enquiries, is there an option for guests to book instantly? </p>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<span>Yes there is. You can edit your space or when adding a new one select instant bookings to skip the manual or request bookings step.</span>
+				</mat-expansion-panel>
+				<hr>
+			</mat-accordion>
 		</div>
 
 	</div>
 </div>
-
-<!-- 
-<div class="help-page">
-	<div class="img-items m-70 ml-40">
-		<div style="text-align: center">
-			<a routerLink="../questions/top-questions">
-				<img style="width: 50%; height: 50%;" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Ficono-2-200x200.jpg?alt=media&token=1d146055-ff36-4892-8967-52ce0ab8bd6e">
-				<p class="text-icons">Top user questions</p>
-			</a>
-    </div>
-    <div style="text-align: center">
-			<a routerLink="../questions/about-spacenow">
-				<img style="width: 50%; height: 50%;" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Ficono-1-200x200.jpg?alt=media&token=978a7c1e-7f03-4d44-84bb-8c09989d2ff0">
-				<p class="text-icons">About Spacenow</p>
-			</a>
-    </div>
-    <div style="text-align: center">
-			<a routerLink="../questions/getting-started">
-				<img style="width: 50%; height: 50%;" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Ficono-3-200x200.jpg?alt=media&token=99a80587-5750-4666-976a-707a0ae4c239">
-				<p class="text-icons">Getting started</p>
-			</a>
-    </div>
-    <div style="text-align: center">
-			<a routerLink="../questions/new">
-				<img style="width: 50%; height: 50%;" src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Fpages%2Fhelp-pages%2Ficono-4-200x200.jpg?alt=media&token=694f4bed-bb8d-422a-9ca5-1ed36ec5a648">
-				<p class="text-icons">What's new</p>
-			</a>
-		</div>
-  </div>
-  
-	<div class="sq-items pb-100">
-		<div class="pb-10 pl-2">
-			<a routerLink="../questions/popular">
-				<div class="border-box">
-					<p class="text-box">Popular topics</p>
-				</div>
-			</a>
-    </div>
-    <div class="pb-10 pl-2">
-			<a routerLink="../questions/setup-listing">
-				<div class="border-box">
-					<p class="text-box">How to set up a listing</p>
-				</div>
-			</a>
-    </div>
-    <div class="pb-10 pl-2">
-			<a routerLink="../questions/about-bookings">
-				<div class="border-box">
-					<p class="text-box">About bookings</p>
-				</div>
-			</a>
-    </div>
-    <div class="pb-10 pl-2">
-			<a routerLink="../questions/how-works">
-				<div class="border-box">
-					<p class="text-box">How it works</p>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="list-items">
-		<div class="column-one pl-2 pb-20">
-			<strong><h3 class="pb-10">Latest news</h3></strong>
-			<p><a target="_blank">Five things to think about when choosing a workspace</a></p>
-			<p><a target="_blank">How to make yours listing stand out</a></p>
-			<p><a target="_blank">Space features checklist</a></p>
-			<p><a target="_blank">Why working from home isn't always the best idea</a></p>
-			<p><a target="_blank">Eight common misconceptions surrounding coworking</a></p>
-		</div>
-		<div class="column-two pl-2 pb-20">
-			<strong><h3 class="pb-10">Recommended articles</h3></strong>
-			<p><a routerLink="/pages/terms" target="_blank">Terms of service</a></p>
-			<p><a routerLink="/pages/host-terms" target="_blank">Host terms</a></p>
-			<p><a routerLink="/pages/privacy" target="_blank">Privacity policy</a></p>
-			<p><a routerLink="/pages/refund-policy" target="_blank">Cancelation and refund policy</a></p>
-			<p><a target="_blank">Dictionary</a></p>
-		</div>
-	</div>
-</div> -->
