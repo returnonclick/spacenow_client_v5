@@ -26,7 +26,7 @@
     <nav id="main-nav">
       <a routerLink="/" class="logo" [ngClass]="logo$ | async"></a>
       <span><!-- fill space --></span>
-      <a routerLink="/listing/category" class="hidden-tablet">List your space</a>
+      <a routerLink="/listing/category" class="hidden-tablet" style="color: white">List your space</a>
       <div *ngIf="isSignedIn$ | async; then authenticated else guest"></div>
     </nav>
 
@@ -36,12 +36,12 @@
         <mat-icon aria-label="Menu" style="color: white">menu</mat-icon>
       </button>
       <mat-menu #burguerMenu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
-        <button mat-menu-item routerLink="/listing/category">List a space</button>
-        <button mat-menu-item (click)="openSidenav(); setSidenavLogin();">Log in</button>
-        <button mat-menu-item (click)="openSidenav(); setSidenavRegister();">Sign up</button>
+        <button mat-menu-item routerLink="/listing/category" style="color: white">List a space</button>
+        <button mat-menu-item (click)="openSidenav(); setSidenavLogin();" style="color: white">Log in</button>
+        <button mat-menu-item (click)="openSidenav(); setSidenavRegister();" style="color: white">Sign up</button>
       </mat-menu>
-      <a href="#" (click)="openSidenav(); setSidenavLogin();" class="hidden-tablet">Log in</a>
-      <a href="#" (click)="openSidenav(); setSidenavRegister();" class="hidden-tablet">Sign up</a>
+      <a href="#" (click)="openSidenav(); setSidenavLogin();" class="hidden-tablet" style="color: white">Log in</a>
+      <a href="#" (click)="openSidenav(); setSidenavRegister();" class="hidden-tablet" style="color: white">Sign up</a>
     </ng-template>
 
     <!-- User logged in -->
@@ -51,7 +51,7 @@
           <img [src]="authUser.photoURL" class="userProfilePicture">
         </div>
       </button>
-      <mat-menu #menu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
+      <mat-menu #menu="matMenu" class="dropMenu" yPosition="below" xPosition="before" overlapTrigger="false">
         <button mat-menu-item routerLink="/listing/category">List a space</button>
         <button mat-menu-item routerLink="/users/my-spaces">My spaces</button>
         <button mat-menu-item routerLink="/users/my-profile">Profile</button>
