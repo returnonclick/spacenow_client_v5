@@ -31,7 +31,8 @@
   <section id="section-two">
     <div class="title">
       <div class="si-icon-small si-left"></div>
-      <h2>Latest <br>spaces</h2>
+      <h2>Latest <br>spaces</h2><br><br>
+      <div><a routerLink="search?name=Sydney%2520NSW%25202000%252C%2520Australia&radius=20&latitude=-33.8688197&longitude=151.20929550000005">View all</a></div>
     </div>
     <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailAustralia$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
