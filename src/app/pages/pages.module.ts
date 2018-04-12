@@ -19,11 +19,10 @@ import { DictionaryComponent } from './dictionary/dictionary.component'
 import { RefundPolicyComponent } from './refund-policy/refund.component'
 import { AboutComponent } from './about/about.component'
 import { HelpComponent } from './help/help.component'
-import { QuestionComponent } from './help/question/question.component'
 import { TopQuestionComponent } from './help/top-question/top-question.component'
 import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.component'
 import { GettingStartedComponent } from './help/getting-started/getting-started.component'
-import { NewComponent } from './help/new/new.component'
+import { HowWorksComponent } from './help/how-works/how-works.component'
 
 
 const COMPONENTS = [
@@ -35,11 +34,10 @@ const COMPONENTS = [
   RefundPolicyComponent,
   AboutComponent,
   HelpComponent,
-  QuestionComponent,
   TopQuestionComponent,
   AboutSpacenowComponent,
   GettingStartedComponent,
-  NewComponent
+  HowWorksComponent
 ]
 
 const ENTRY_COMPONENTS = [
