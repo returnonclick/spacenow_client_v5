@@ -165,7 +165,6 @@ export class HomeComponent {
   }
 
   scroll = (event): void => {
-    console.log(event.target.scrollTop);
     this.renderer.setStyle(this.airplane, 'left', `${event.target.scrollTop / 2.8}px`)
   }
 
