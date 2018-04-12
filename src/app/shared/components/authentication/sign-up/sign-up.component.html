@@ -1,5 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxFill>
 
+  <div class="btn-container">
+    <button mat-raised-button class="secondary" (click)="googleLogin()">
+      Google
+    </button>
+    <button mat-raised-button class="secondary" (click)="facebookLogin()">
+      Facebook
+    </button>
+    <!-- <button mat-raised-button class="secondary" (click)="linkedinLogin()">
+      Linkedin
+    </button> -->
+  </div>
+
   <form #form="ngForm" (ngSubmit)="onSignupSubmit()" [formGroup]="signupForm" fxLayout="column" class="signupForm">
     <h1>Sign up</h1>
     <h3>Complete for to log in</h3>
@@ -15,25 +27,12 @@
       <input matInput placeholder="Password (Confirm)" type="password" name="password-confirm" required formControlName="confirmPassword">
     </mat-form-field>
 
-    <mat-checkbox class="remember-me">I accept the <a href="#">terms and conditions.</a></mat-checkbox>
+    <mat-checkbox class="remember-me" required formControlName="termsCondition">I accept the <a href="#">terms and conditions.</a></mat-checkbox>
 
-  
     <button mat-raised-button [disabled]="!signupForm.valid" class="primary">Sign up</button>
       
     <p class="note">Already have an account?<br/> <a href="#" (click)="setSidenavLogin();">Sign in here</a></p>
 
   </form>
-
-  <div class="btn-container">
-    <button mat-raised-button class="secondary" (click)="googleLogin()">
-      Google
-    </button>
-    <button mat-raised-button class="secondary" (click)="facebookLogin()">
-      Facebook
-    </button>
-    <!-- <button mat-raised-button class="secondary" (click)="linkedinLogin()">
-      Linkedin
-    </button> -->
-  </div>
 
 </div>
