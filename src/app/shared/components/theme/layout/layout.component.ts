@@ -1,69 +1,66 @@
-import { Component, 
-  OnInit, ChangeDetectorRef }     from '@angular/core'
-import { Store, select }          from '@ngrx/store'
-import { AngularFireAuth }        from 'angularfire2/auth'
-import { Observable }             from 'rxjs'
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
+import { RouterStateSnapshot } from '@angular/router'
+import { Store, select } from '@ngrx/store'
+import { Observable } from 'rxjs'
 
-import user, { User }                   from '@shared/models/user'
+import { User }                   from '@models/user'
 
 import * as actions               from '@core/store/auth/actions/auth'
 import * as layoutActions         from '@core/store/layouts/actions/layout'
 import * as fromRoot              from '@core/store'
 
-import { RouterStateSnapshot } from '@angular/router';
-
 @Component({
   selector: 'gen-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  styleUrls: [ './layout.component.scss' ],
 })
 export class LayoutComponent {
 
-  authUser$: Observable<User>
-  isSignedIn$: Observable<boolean>
-  showSidenav$: Observable<boolean>
+  authUser$:         Observable<User>
+  isSignedIn$:       Observable<boolean>
+  showSidenav$:      Observable<boolean>
   sidenavComponent$: Observable<string>
-  sidenavComponent: string
-  logo$: Observable<string>
-  router$: Observable<RouterStateSnapshot>
+  logo$:             Observable<string>
+
+  sidenavComponent:  string
 
   constructor(
     private _store: Store<fromRoot.State>,
-    private afAuth: AngularFireAuth,
-    private cdRef: ChangeDetectorRef
+    private cdRef:  ChangeDetectorRef,
   ) {
-  }
+    this.authUser$         = this._store.select(fromRoot.getAuthUser)
+    this.isSignedIn$       = this._store.select(fromRoot.getIsSignedIn)
+    this.showSidenav$      = this._store.pipe(select(fromRoot.getShowSidenav))
+    this.sidenavComponent$ = this._store.pipe(select(fromRoot.getSidenavComponent))
+    this.logo$             = this._store.pipe(select(fromRoot.getLogo))
 
-  ngOnInit() {
-    this.authUser$ = this._store.select(fromRoot.getAuthUser)
-    this.isSignedIn$ = this._store.select(fromRoot.getIsSignedIn)
-    this.showSidenav$ = this._store.pipe(select(fromRoot.getShowSidenav));
-    this.sidenavComponent$ = this._store.pipe(select(fromRoot.getSidenavComponent));
-    this.sidenavComponent$.subscribe( (sidenavComponent) =>  this.sidenavComponent = sidenavComponent)
-    this.logo$ = this._store.pipe(select(fromRoot.getLogo));
+    this.sidenavComponent$.subscribe(sidenavComponent => {
+      this.sidenavComponent = sidenavComponent
+    })
   }
 
   ngAfterViewChecked() {
-    this.cdRef.detectChanges();
+    this.cdRef.detectChanges()
   }
 
   closeSidenav() {
-    this._store.dispatch(new layoutActions.CloseSidenav());
+    this._store.dispatch(new layoutActions.CloseSidenav)
   }
 
   openSidenav() {
-    this._store.dispatch(new layoutActions.OpenSidenav());
+    this._store.dispatch(new layoutActions.OpenSidenav)
   }
 
   setSidenavLogin() {
-    this._store.dispatch(new layoutActions.SetSidenavLogin());
+    this._store.dispatch(new layoutActions.SetSidenavLogin)
   }
 
   setSidenavRegister() {
-    this._store.dispatch(new layoutActions.SetSidenavRegister());
+    this._store.dispatch(new layoutActions.SetSidenavRegister)
   }
 
   signOut() {
-    this._store.dispatch(new actions.SignOut());
+    this._store.dispatch(new actions.SignOut)
   }
+
 }
