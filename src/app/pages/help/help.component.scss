@@ -94,11 +94,6 @@
   margin: 10%;
 }
 
-
-.mat-expansion-panel {
-  box-shadow: none !important;
-}
-
 hr {
   display: block;
   height: 1px;
@@ -113,6 +108,6 @@ hr {
   font-weight: 450;
 }
 
-.header-accordion > .mat-expansion-indicator:after {
-  color: white !important;
+mat-expansion-panel {
+  box-shadow: none !important;
 }

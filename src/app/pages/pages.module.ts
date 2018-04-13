@@ -23,6 +23,7 @@ import { TopQuestionComponent } from './help/top-question/top-question.component
 import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.component'
 import { GettingStartedComponent } from './help/getting-started/getting-started.component'
 import { HowWorksComponent } from './help/how-works/how-works.component'
+import { NewsComponent } from './news/news.component'
 
 
 const COMPONENTS = [
@@ -37,7 +38,8 @@ const COMPONENTS = [
   TopQuestionComponent,
   AboutSpacenowComponent,
   GettingStartedComponent,
-  HowWorksComponent
+  HowWorksComponent,
+  NewsComponent
 ]
 
 const ENTRY_COMPONENTS = [
