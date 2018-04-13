@@ -42,6 +42,7 @@ export class SliderComponent {
   @Input() autoPlayDelay: number  = 3000
   @Input() itemSize:      number  = 320
   @Input() arrowsTopPos:  number  = 0
+  @Input() orientation:   number  = 0
 
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef
 
@@ -64,7 +65,7 @@ export class SliderComponent {
     this.container.clear()
     this.slider     = this.container.element.nativeElement.parentNode
 
-    this.totalPages = this.items.length - Math.ceil(1.0 * (this._el.nativeElement.offsetWidth / this.itemSize)) + 2//Math.ceil(1.0 * this.items.length / this.perPage)
+    this.totalPages = this.items.length - Math.ceil(1.0 * (this._el.nativeElement.offsetWidth / this.itemSize) - 1) + 1//Math.ceil(1.0 * this.items.length / this.perPage)
     let factory     = this._factoryResolver.resolveComponentFactory(this.component)
 
     this.items.forEach(item => {
@@ -76,6 +77,13 @@ export class SliderComponent {
 
     if(this.autoPlay)
       Observable.timer(0, this.autoPlayDelay).subscribe(() => this.nextPage())
+
+    if(this.orientation === 1) {
+      //8475
+      //console.log(Math.ceil(1.0 * this._el.nativeElement.offsetWidth / this.itemSize) * 20 + 35)
+      //console.log((this.itemSize * this.items.length - ((Math.ceil(1.0 * this._el.nativeElement.offsetWidth / this.itemSize) - 2) * this.itemSize)) + Math.ceil(1.0 * this._el.nativeElement.offsetWidth / this.itemSize) * 20 + 35 )
+      this._renderer.setStyle(this.slider, 'transform', `translateX(${((this.itemSize * this.items.length - ((Math.ceil(1.0 * this._el.nativeElement.offsetWidth / this.itemSize) - 2) * this.itemSize)) + Math.ceil(1.0 * this._el.nativeElement.offsetWidth / this.itemSize) * 20 + 35) * -1}px)`)
+    }
   }
 
   applyTransition() {
