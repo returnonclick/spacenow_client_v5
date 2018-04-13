@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store'
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity'
 
-import { Space } from '@models/Space'
+import { Space } from '@models/space'
 import { ListingShortDetail } from '@models/listing-short-detail'
 
 import * as actions from '@core/store/spaces/actions/space'

@@ -34,7 +34,7 @@
       <div class="si-icon-small si-left"></div>
       <h2>Latest <br>spaces<br><a href="search?name=&radius=20&latitude=&longitude=" class="view-all">view all</a></h2>
     </div>
-    <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailAustralia$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
+    <gen-slider [orientation]="1" [component]="sliderFeaturedComponent" [items]="listingsShortDetailAustralia$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
   </section>
 
@@ -105,7 +105,7 @@
     </div>
     
 
-    <gen-slider [component]="sliderFeaturedComponent" [items]="listingsShortDetailNewZealand$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
+    <gen-slider [orientation]="1" [component]="sliderFeaturedComponent" [items]="listingsShortDetailNewZealand$ | async" perPage="1" style="--perPage: 1;"></gen-slider>
 
   </section>
 

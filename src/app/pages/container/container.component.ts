@@ -15,7 +15,6 @@ export class ContainerComponent {
   constructor(private _store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this._store.dispatch(new layoutActions.SetLogoGreen)
   }
 
 }
