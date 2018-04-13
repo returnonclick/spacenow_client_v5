@@ -15,27 +15,12 @@
   }
 }
 
-#hero-image {
-  display: block;
-  height: 500px;
-  width: 100%;
-  margin-top: -110px;
-  background-color: #c87130;
-
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center center;
-  }
-}
-
 #content {
   margin: var(--margin) auto 0;
   max-width: 1400px;
 
   > section {
-    margin: 40px;
+    margin-bottom: 40px;
   }
 }
 
