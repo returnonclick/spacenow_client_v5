@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core'
+import { Routes, RouterModule } from '@angular/router'
 
 import { ContainerComponent } from './container/container.component'
 import { TermComponent } from './terms/term.component'
@@ -14,37 +14,39 @@ import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.com
 import { GettingStartedComponent } from './help/getting-started/getting-started.component'
 import { HowWorksComponent } from './help/how-works/how-works.component'
 import { NewsComponent } from './news/news.component'
+import { WhyComponent } from './why/why.component'
 
- 
 const routes: Routes = [
-
   {
     path: '',
     component: ContainerComponent,
     children: [
-        { path: '', redirectTo: 'terms', pathMatch: 'full' },
-        { path: 'terms', component: TermComponent },
-        { path: 'host-terms', component: HostTermComponent },
-        { path: 'privacy', component: PrivacyComponent },
-        { path: 'dictionary', component: DictionaryComponent },
-        { path: 'refund-policy', component: RefundPolicyComponent },
-        { path: 'about', component: AboutComponent },
-        { path: 'news', component: NewsComponent },
-        { path: 'help', component: HelpComponent,
-          children: [
-            { path: 'top-questions', component: TopQuestionComponent },
-            { path: 'about-spacenow', component: AboutSpacenowComponent },
-            { path: 'getting-started', component: GettingStartedComponent },
-            { path: 'new', component: HowWorksComponent },
-            { path: '', redirectTo: 'top', pathMatch: 'full' }
-          ]    
-        }
-    ]
-  }
+      { path: '', redirectTo: 'terms', pathMatch: 'full' },
+      { path: 'terms', component: TermComponent },
+      { path: 'host-terms', component: HostTermComponent },
+      { path: 'privacy', component: PrivacyComponent },
+      { path: 'dictionary', component: DictionaryComponent },
+      { path: 'refund-policy', component: RefundPolicyComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'why', component: WhyComponent },
+      { path: 'news', component: NewsComponent },
+      {
+        path: 'help',
+        component: HelpComponent,
+        children: [
+          { path: 'top-questions', component: TopQuestionComponent },
+          { path: 'about-spacenow', component: AboutSpacenowComponent },
+          { path: 'getting-started', component: GettingStartedComponent },
+          { path: 'new', component: HowWorksComponent },
+          { path: '', redirectTo: 'top', pathMatch: 'full' }
+        ]
+      },
+    ],
+  },
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [ RouterModule.forChild(routes) ],
+  exports: [ RouterModule ],
 })
 export class PagesRoutingModule { }

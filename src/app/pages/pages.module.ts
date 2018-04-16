@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { EffectsModule } from '@ngrx/effects'
 
 import { PagesRoutingModule } from '@app/pages/pages-routing.module'
 
@@ -24,7 +23,7 @@ import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.com
 import { GettingStartedComponent } from './help/getting-started/getting-started.component'
 import { HowWorksComponent } from './help/how-works/how-works.component'
 import { NewsComponent } from './news/news.component'
-
+import { WhyComponent } from './why/why.component'
 
 const COMPONENTS = [
   ContainerComponent,
@@ -39,11 +38,11 @@ const COMPONENTS = [
   AboutSpacenowComponent,
   GettingStartedComponent,
   HowWorksComponent,
-  NewsComponent
+  NewsComponent,
+  WhyComponent,
 ]
 
-const ENTRY_COMPONENTS = [
-]
+const ENTRY_COMPONENTS = [ ]
 
 const MODULES = [
   MaterialModule,
@@ -51,8 +50,7 @@ const MODULES = [
   PagesRoutingModule
 ]
 
-const PIPES = [
-]
+const PIPES = [ ]
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
