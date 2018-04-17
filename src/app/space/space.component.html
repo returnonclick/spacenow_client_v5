@@ -214,11 +214,13 @@
         <ng-template #doneLoading>
           <sn-hourly-booking
             *ngIf="space?.priceUnit == 'hourly'"
-            [space]="space">
+            [space]="space"
+            [category]="(categories$ | async)[space?.categoryId]?.slug">
           </sn-hourly-booking>
           <sn-general-booking
             *ngIf="space?.priceUnit != 'hourly'"
-            [space]="space">
+            [space]="space"
+            [category]="(categories$ | async)[space?.categoryId]?.slug">
           </sn-general-booking>
         </ng-template>
       </div>

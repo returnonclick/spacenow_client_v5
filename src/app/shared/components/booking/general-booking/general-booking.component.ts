@@ -21,10 +21,13 @@ import * as cartActions from '@core/store/cart/actions/cart'
 export class GeneralBookingComponent implements OnInit {
 
   @Input() space: Space
+  @Input() category: string
 
   form:           FormGroup
   minDate:        Date = new Date()
   user:           User
+
+  guests:         any = []
 
   constructor(
     private _fb:       FormBuilder,
@@ -49,6 +52,19 @@ export class GeneralBookingComponent implements OnInit {
         Validators.min(this.space.price.minimumTerm)
       ]) ],
     })
+
+    // Set array for number of guests according to the capacity and category of a space
+    for(let i = 1; i <= this.space.specifications['capacity']; i++) {
+      if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
+        if ( i <= 10 )
+          this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
+        else if (i === 11)
+          this.guests.push({ display: '10+ Guests', value: this.space.specifications['capacity'] })
+      } else {
+        this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
+      }
+    }
+
   }
 
   mapPriceUnit() {
