@@ -75,13 +75,15 @@ export class CheckoutComponent {
     })
     Observable.combineLatest(
       this.cart$,
-      this.spaces$
-    ).subscribe(([cart, spaces]) => {
-      if(cart.length > 0 && Object.keys(spaces).length > 0) {
+      this.spaces$,
+      this.categories$,
+    ).subscribe(([cart, spaces, categories]) => {
+      if(cart.length > 0 && Object.keys(spaces).length > 0 && Object.keys(categories).length > 0) {
         let totalPrice = 0
         let tax        = 0
         for(let item of cart) {
-          let space = spaces[item.spaceId] as Space
+          let space    = spaces[item.spaceId] as Space
+          let spaceCat = categories[space.categoryId]
           if(space) {
             let spacePrice = space.price
             let price      = 0
@@ -90,41 +92,24 @@ export class CheckoutComponent {
             else
               price += spacePrice.price * item.bookingDates.length
 
+            price      *= (spaceCat.slug == 'desk_only' || spaceCat.slug == 'co-working-space') ? item.numGuests : 1
             totalPrice += price
             tax        += price * (space.tax.percent / 100.0)
           }
         }
 
-        this.totalPrice = totalPrice + tax
+        this.totalPrice    = totalPrice + tax
         this.costBreakdown = [
-          {
-            name: 'Accomodation',
-            value: totalPrice
-          },
-          {
-            name: 'Tax',
-            value: tax
-          },
-          {
-            name: 'Total',
-            value: this.totalPrice
-          }
+          { name: 'Accomodation', value: totalPrice },
+          { name: 'Tax', value: tax },
+          { name: 'Total', value: this.totalPrice },
         ]
       }
       else {
         this.costBreakdown = [
-          {
-            name: 'Accomodation',
-            value: 0
-          },
-          {
-            name: 'Tax',
-            value: 0
-          },
-          {
-            name: 'Total',
-            value: 0
-          }
+          { name: 'Accomodation', value: 0 },
+          { name: 'Tax', value: 0 },
+          { name: 'Total', value: 0 },
         ]
       }
     })

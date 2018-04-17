@@ -1,5 +1,4 @@
-@import
-  '~sass/abstracts/mixins';
+@import '~sass/abstracts/mixins';
 
 section#checkout {
   --gridGap: 40px;
@@ -66,73 +65,40 @@ section#checkout {
     border-radius: 8px;
     box-shadow: 0 0 20px 0 rgba(48, 48, 48, 0.2);
 
-    mat-expansion-panel {
-      --panelHeaderHeight: 36px;
+    > .space-breakdown {
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
 
-      .mat-expansion-panel-header {
+      ul {
+        padding-left: 16px;
+
+        li:before {
+          content: '\2022';
+          font-weight: 800;
+          margin-right: 8px;
+        }
+      }
+
+      > button {
         font-size: 14px;
-        height: var(--panelHeaderHeight) !important;
-
-        > .mat-content {
-          display: block;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          padding-right: 8px;
-          overflow: hidden;
-        }
+        font-weight: 400;
+        width: 100%;
+        margin-top: 12px;
       }
 
-      .mat-expansion-panel-content {
-        font-size: 12px;
-
-        > .mat-expansion-panel-body {
-          display: flex;
-          flex-direction: column;
-          padding: 16px 24px;
-
-          h4 {
-            margin-bottom: 8px;
-          }
-
-          h5 {
-            margin: 8px 0;
-          }
-
-          ul {
-            padding-left: 16px;
-
-            li:before {
-              content: '\2022';
-              font-weight: 800;
-              margin-right: 4px;
-            }
-          }
-        }
+      > span.none {
+        text-align: center;
+        display: block;
       }
 
-      .mat-action-row {
-        padding: 8px 8px 8px 24px;
-
-        > button {
-          font-size: 14px;
-          font-weight: 400;
-        }
+      .day-breakdown {
+        margin-top: 12px;
       }
 
-      &.mat-expanded {
-        --panelHeaderHeight: 52px;
+      &:first-child {
+        margin-top: 16px;
       }
-    }
-
-    > .space-breakdown > span {
-      text-align: center;
-      display: block;
-    }
-
-    .clear-cart {
-      font-weight: 400;
-      margin-top: 16px;
-      width: 100%;
     }
 
     > .price-breakdown {
