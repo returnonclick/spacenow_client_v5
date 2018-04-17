@@ -27,7 +27,8 @@ export class GeneralBookingComponent implements OnInit {
   minDate:        Date = new Date()
   user:           User
 
-  guests:         any = []
+  guests:          any = []
+  durationOptions: any = []
 
   constructor(
     private _fb:       FormBuilder,
@@ -57,14 +58,17 @@ export class GeneralBookingComponent implements OnInit {
     for(let i = 1; i <= this.space.specifications['capacity']; i++) {
       if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
         if ( i <= 10 )
-          this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
+          this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
         else if (i === 11)
-          this.guests.push({ display: '10+ Guests', value: this.space.specifications['capacity'] })
+          this.guests.push({ display: '10+ guests', value: this.space.specifications['capacity'] })
       } else {
-        this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
+        this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
       }
     }
 
+    for (let i = this.space.price.minimumTerm; i <= 20; i++) {
+      this.durationOptions.push({display: i === 1 ? i + ' ' + this.mapPriceUnit().replace('s', '') :  i + ' ' + this.mapPriceUnit(), value: i})
+    }
   }
 
   mapPriceUnit() {

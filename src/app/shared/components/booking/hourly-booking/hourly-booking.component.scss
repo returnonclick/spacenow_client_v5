@@ -1,3 +1,8 @@
+@import
+  '~sass/abstracts/variables',
+  '~sass/abstracts/mixins',
+  '~sass/abstracts/icons';
+
 form {
   --gridGap: 12px;
 
