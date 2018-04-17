@@ -9,13 +9,13 @@ import { AngularFireModule } from 'angularfire2'
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { AngularFireStorageModule } from 'angularfire2/storage'
-import { environment } from '../environments/environment'
+import { environment } from '@environments/environment'
 
 // @ngrx
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store'
+import { StoreRouterConnectingModule } from '@ngrx/router-store'
 
 // 3rd party packages
 import { ToastModule } from 'ng2-toastr/ng2-toastr' // For notification
@@ -57,8 +57,8 @@ import { AmenityService } from '@core/store/amenities/services/amenity'
 import { UserService } from '@core/store/users/services/user'
 import { UserEffects } from '@core/store/users/effects/user'
 
-import { CartEffects } from '@core/store/cart/effects/cart'
-import { CartService } from '@core/store/cart/services/cart'
+import { BookingEffects } from '@core/store/bookings/effects/booking'
+import { BookingService } from '@core/store/bookings/services/booking'
 
 const COMPONENTS = [
   HomeComponent,
@@ -70,17 +70,17 @@ const SERVICES = [
   CategoryService,
   ListingShortDetailService,
   AmenityService,
-  CartService,
+  BookingService,
   CategoryService,
   SpaceService,
   SearchService,
-  UserService
+  UserService,
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    ...COMPONENTS
+    ...COMPONENTS,
   ],
   imports: [
     CommonModule,
@@ -104,7 +104,7 @@ const SERVICES = [
     EffectsModule.forFeature([
       AmenityEffects,
       ListingShortDetailEffects,
-      CartEffects,
+      BookingEffects,
       CategoryEffects,
       SpaceEffects,
       SearchEffects,
@@ -128,8 +128,10 @@ const SERVICES = [
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 
   ],
-  providers: [AuthGuard, ...SERVICES],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthGuard,
+    ...SERVICES,
+  ],
+  bootstrap: [ AppComponent ]
 })
-
 export class AppModule { }

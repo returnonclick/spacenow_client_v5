@@ -1,0 +1,18 @@
+:host {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+mat-expansion-panel {
+
+  .mat-action-row {
+    padding: 8px 8px 8px 24px;
+
+    > button {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+
+}

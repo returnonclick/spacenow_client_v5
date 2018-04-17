@@ -1,0 +1,13 @@
+<h2>My Bookings</h2>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let booking of bookings">
+    <mat-expansion-panel-header>
+      {{ spaces[booking.spaceId]?.title }}
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button type="button" (click)="viewSpace(booking.spaceId)">View Space</button>
+      <button mat-button *ngIf="canCheckout(booking)" type="button" (click)="checkoutBooking(booking.id)">Checkout</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

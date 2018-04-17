@@ -4,13 +4,13 @@ import { Observable } from 'rxjs'
 
 import { User } from '@models/user'
 import { Profile } from '@models/profile'
-import { Booking, BookingSpace } from '@models/booking'
+import { Booking, PaymentStatus } from '@models/booking'
 import { PaymentBooking } from '@app/braintree/models/payment-booking'
 import { BraintreeUIComponent } from '@app/braintree/components/braintree-ui.component'
 
 import * as fromRoot from '@core/store'
-import * as checkoutActions from '@core/store/checkout/actions/checkout'
 import * as profileActions from '@core/store/users-profile/actions/user-profile'
+import * as bookingActions from '@core/store/bookings/actions/booking'
 
 @Component({
   selector: 'sn-payment',
@@ -20,17 +20,16 @@ import * as profileActions from '@core/store/users-profile/actions/user-profile'
 export class PaymentComponent {
 
   @ViewChild(BraintreeUIComponent) braintreeComponent: BraintreeUIComponent
-  @Input() cart:                                       BookingSpace[]
+  @Input() cart:                                       Booking[]
   @Input() customer:                                   User
   @Input() amount:                                     number
   @Input() userNotes:                                  string = ''
   @Input() hostNotes:                                  string = ''
 
-  firestoreBooking: Booking        = new Booking()
-  braintreeBooking: PaymentBooking = new PaymentBooking()
+  firestoreBooking: Booking
+  braintreeBooking: PaymentBooking
   currency:         string         = 'AUD'
   profile:          Profile
-
 
   constructor(private _store: Store<fromRoot.State>) {
     this._store.select(fromRoot.getUserProfileEntities).subscribe(profiles => {
@@ -44,28 +43,27 @@ export class PaymentComponent {
     this._store.dispatch(new profileActions.Query(this.customer.uid))
 
     this.prepareFireStore()
-    this._store.select(fromRoot.getCheckoutState).subscribe(state => {
-      if(!state.isLoading && state.bookingId) {
-        this.prepareBraintree(state.bookingId)
+    this._store.select(fromRoot.getBookingsState).subscribe(state => {
+      if(state.bookingId) {
+        this.prepareBraintree()
         this.braintreeComponent.initiatePayment()
       }
     })
   }
 
   prepareFireStore() {
-    this.firestoreBooking.userId        = this.customer.uid
-    this.firestoreBooking.createdOn     = new Date()
-    this.firestoreBooking.finalPrice    = this.amount
-    this.firestoreBooking.currency      = this.currency
-    this.firestoreBooking.paymentStatus = 'pending'
-    this.firestoreBooking.spaceBookings = this.cart
+    this.firestoreBooking = this.cart[0]
     this.firestoreBooking.userNotes     = this.userNotes
     this.firestoreBooking.hostNotes     = this.hostNotes
+    this.firestoreBooking.paymentStatus = PaymentStatus.AUTHORIZED
+    this.firestoreBooking.finalPrice    = this.amount
+    this.firestoreBooking.currency      = this.currency
   }
 
-  prepareBraintree(bookingId: string) {
+  prepareBraintree() {
+    this.braintreeBooking = new PaymentBooking()
     this.braintreeBooking.customerID = this.customer.uid
-    this.braintreeBooking.bookingID  = bookingId
+    this.braintreeBooking.bookingID  = this.firestoreBooking.id
     this.braintreeBooking.amount     = this.amount
     this.braintreeBooking.currency   = this.currency
 
@@ -80,7 +78,6 @@ export class PaymentComponent {
     this.braintreeBooking.billing.postalCode        = address.postal_code
     this.braintreeBooking.billing.countryCodeAlpha2 = address.countryCode
 
-    // this.braintreeBooking.customer.id = "testUserID123456"
     this.braintreeBooking.customer.firstName = this.profile.contact.firstName
     this.braintreeBooking.customer.lastName  = this.profile.contact.lastName
     this.braintreeBooking.customer.company   = this.profile.businessProfile.businessName
@@ -90,7 +87,7 @@ export class PaymentComponent {
   }
 
   checkout() {
-    this._store.dispatch(new checkoutActions.Checkout(this.firestoreBooking))
+    this._store.dispatch(new bookingActions.Checkout(this.firestoreBooking))
   }
 
 }

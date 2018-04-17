@@ -289,14 +289,12 @@
 
                 <mat-action-row>
                   <button mat-button type="button" (click)="viewSpace(cartItem.spaceId)">View space</button>
-                  <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>
                 </mat-action-row>
               </mat-expansion-panel>
             </ng-container>
           </mat-accordion>
         </ng-template>
       </div>
-      <button mat-button class="clear-cart" color="warn" (click)="clearCart()" [disabled]="(cart$ | async).length < 1">Remove All</button>
       <table class="price-breakdown">
         <tbody>
           <tr *ngFor="let item of costBreakdown">

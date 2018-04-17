@@ -5,14 +5,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 
 import { CoreModule } from '@core/core.module'
-import { AuthService } from '@core/store/auth/services/auth'
 import { FileSizePipe } from "@shared/pipes/file-size.pipe"
 import { DropZoneDirective } from "@shared/directives/drop-zone.directive"
 import { MaterialModule } from "@shared/material.module"
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
 
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule } from '@agm/core'
+
+import { environment } from '@environments/environment'
 
 import { GoogleAddressDirective } from '@shared/directives/google-address/google-address.directive'
 import { FoldingPDirective } from '@shared/directives/folding-p/folding-p.directive'
@@ -43,6 +44,7 @@ import {
   LoadingOverlayComponent,
   GeneralBookingComponent,
   HourlyBookingComponent,
+  PoaBookingComponent,
 } from './components'
 
 const COMPONENTS = [
@@ -69,6 +71,7 @@ const COMPONENTS = [
   LoadingOverlayComponent,
   GeneralBookingComponent,
   HourlyBookingComponent,
+  PoaBookingComponent,
 ]
 
 const DIRECTIVES = [
@@ -78,13 +81,11 @@ const DIRECTIVES = [
   FoldingDivDirective,
 ]
 
-const MODULES = [
-  MaterialModule
-]
+const MODULES = [ MaterialModule ]
 
 const PIPES = [
   FileSizePipe,
-  DropZoneDirective
+  DropZoneDirective,
 ]
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -102,9 +103,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CoreModule,
     PerfectScrollbarModule,
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyAOMhtcFm3WnFDUAsK7OfWOvpo3V0EtvBQ",
-      libraries: ["places"]
-    })
+      apiKey: environment.googleApi,
+      libraries: [ "places" ],
+      language: "en-AU",
+    }),
   ],
   declarations: [
     ...COMPONENTS,

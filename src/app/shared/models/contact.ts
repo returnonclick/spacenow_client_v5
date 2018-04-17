@@ -1,9 +1,9 @@
 // Based on E-Way contact model
 
-import { Address } from '@shared/models/address';
+import { Address } from '@shared/models/address'
 
 export class Contact extends Object{
-  
+
   title:          string          = ''                // (5)  The customer's title empty string allowed
   firstName:      string          = ''                // (50) The user's first name
   lastName:       string          = ''                // (50) The user's last name

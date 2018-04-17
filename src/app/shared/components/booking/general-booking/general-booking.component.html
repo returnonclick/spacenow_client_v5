@@ -1,14 +1,14 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form" *ngIf="space">
   <mat-form-field class="from-date">
-    <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="Start date" formControlName="date">
+    <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="Start date" formControlName="date" required>
     <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
     <mat-datepicker #fromDate></mat-datepicker>
   </mat-form-field>
   <mat-form-field class="num-guests">
-    <input matInput type="number" placeholder="# of guests" formControlName="numGuests">
+    <input matInput type="number" placeholder="# of guests" formControlName="numGuests" required>
   </mat-form-field>
   <mat-form-field class="duration">
-    <input matInput type="number" placeholder="# of {{ mapPriceUnit() }} (min. {{ space.price.minimumTerm }})" formControlName="duration">
+    <input matInput type="number" placeholder="# of {{ mapPriceUnit() }} (min. {{ space.price.minimumTerm }})" formControlName="duration" required>
   </mat-form-field>
   <button mat-raised-button type="submit" [disabled]="form.invalid || form.pristine">{{ space.availability.bookingType == 'instantly' ? 'Book' : 'Request Booking' }}</button>
 </form>

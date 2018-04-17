@@ -8,7 +8,7 @@
  *
  *  */
 
-import { ImageData } from "@shared/models/image-data";
+import { ImageData } from "@shared/models/image-data"
 
 export class Category extends Object {
   icon: number[][]
@@ -40,5 +40,5 @@ export class Category extends Object {
     }
 
   }
-  
+
 }

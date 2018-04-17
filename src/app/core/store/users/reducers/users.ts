@@ -1,27 +1,27 @@
-import { createSelector } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { createSelector } from '@ngrx/store'
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity'
 
-import { User } from '@shared/models/user';
-import * as actions from '@core/store/users/actions/user';
+import { User } from '@shared/models/user'
+import * as actions from '@core/store/users/actions/user'
 
 export interface State extends EntityState<User> {
-    loading: boolean
-    selectedUserId: string | null
+  loading: boolean
+  selectedUserId: string | null
 }
 
 export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>({
-    selectId: (obj: User) => obj.uid,
-    sortComparer: false,
+  selectId: (obj: User) => obj.uid,
+  sortComparer: false,
 })
 
 export const initialState: State = userAdapter.getInitialState({
-    loading: false,
-    selectedUserId: null
-});
+  loading: false,
+  selectedUserId: null
+})
 
 export function reducer(
-    state = initialState,
-    action: actions.UserActions
+  state = initialState,
+  action: actions.UserActions
 ): State {
     switch (action.type) {
 
@@ -53,10 +53,10 @@ export function reducer(
         }
 
         default: {
-            return state;
+            return state
         }
     }
 }
 
-export const getLoading = (state: State) => state.loading;
-export const getSelectedId = (state: State) => state.selectedUserId;
+export const getLoading = (state: State) => state.loading
+export const getSelectedId = (state: State) => state.selectedUserId

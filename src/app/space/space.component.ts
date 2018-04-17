@@ -142,7 +142,7 @@ export class SpaceComponent {
 
   jumpToSection() {
     try {
-      document.querySelector('#' + this.fragment).scrollIntoView();
+      document.querySelector('#' + this.fragment).scrollIntoView()
     }
     catch(e) { }
   }

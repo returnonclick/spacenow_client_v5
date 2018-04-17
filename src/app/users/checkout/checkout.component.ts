@@ -1,19 +1,20 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core'
 import { MatTabGroup, MatSnackBar } from '@angular/material'
+import { ActivatedRoute } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { Dictionary } from '@ngrx/entity/src/models'
-import { Observable } from 'rxjs'
+import { Subject, Observable } from 'rxjs'
 
 import * as moment from 'moment'
 
-import { BookingSpace } from '@models/booking'
+import { Booking } from '@models/booking'
 import { Category } from '@models/category'
-import { Space, Price } from '@models/space'
+import { Space } from '@models/space'
 import { ListingShortDetail } from '@models/listing-short-detail'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
-import * as cartActions from '@core/store/cart/actions/cart'
+import * as bookingActions from '@core/store/bookings/actions/booking'
 import * as categoryActions from '@core/store/categories/actions/category'
 import * as spaceActions from '@core/store/spaces/actions/space'
 import * as layoutActions from '@core/store/layouts/actions/layout'
@@ -28,16 +29,17 @@ export class CheckoutComponent {
 
   @ViewChild(MatTabGroup) matTabs: MatTabGroup
 
-  cart$:         Observable<BookingSpace[]>
+  cart$:         Observable<Booking[]>
   categories$:   Observable<Dictionary<Category>>
   spaces$:       Observable<Dictionary<Space | ListingShortDetail>>
+  stopper$:      Subject<boolean>
   user$:         Observable<User>
   pLoadPayments: Promise<boolean>
 
   categories: Dictionary<Category>
   spaces:     Dictionary<Space|ListingShortDetail>
 
-  cart:                BookingSpace[]
+  cart:                Booking[]
   costBreakdown:       any[]
   hasAgreed:           boolean = false
   hasConfirmedDetails: boolean = false
@@ -46,12 +48,14 @@ export class CheckoutComponent {
   totalPrice:          number  = 0
 
   constructor(
-    private _store: Store<fromRoot.State>,
+    private _route:    ActivatedRoute,
+    private _store:    Store<fromRoot.State>,
     private _snackbar: MatSnackBar,
   ) {
-    this.cart$         = this._store.select(fromRoot.getAllBookingSpaces)
+    this.cart$         = this._store.select(fromRoot.getAllBookings)
     this.categories$   = this._store.select(fromRoot.getCategoryEntities)
     this.spaces$       = this._store.select(fromRoot.getSpaceEntities)
+    this.stopper$      = new Subject()
     this.user$         = this._store.select(fromRoot.getAuthUser)
     this.pLoadPayments = new Promise((resolve, reject) => {
       this.loadPayments = resolve
@@ -130,6 +134,13 @@ export class CheckoutComponent {
     this._store.dispatch(new categoryActions.Query)
     this._store.dispatch(new layoutActions.SetLogoGreen)
 
+    this._route.params
+      .takeUntil(this.stopper$)
+      .subscribe(params => {
+        if(params.id)
+          this._store.dispatch(new bookingActions.Select(params.id))
+      })
+
     this.matTabs.selectedTabChange.subscribe(event => {
       if(!this.hasAgreed && event.index > 0) {
         this.matTabs.selectedIndex = 0
@@ -146,29 +157,9 @@ export class CheckoutComponent {
     })
   }
 
-  removeItem(cartItem: BookingSpace) {
-    let lastDeleted = cartItem
-    this._store.dispatch(new cartActions.Remove(cartItem.spaceId))
-
-    this._snackbar.open('Listing deleted from cart', 'Undo' , {
-      duration: this.snackBarDuration * 10,
-    }).onAction().subscribe(() => {
-      this._store.dispatch(new cartActions.Add(lastDeleted))
-    })
-  }
-
-  clearCart() {
-    let lastDeleted = this.cart
-
-    this._store.dispatch(new cartActions.Clear)
-
-    this._snackbar.open('Cart cleared', 'Undo', {
-      duration: this.snackBarDuration * 10,
-    }).onAction().subscribe(() => {
-      lastDeleted.forEach(item => {
-        this._store.dispatch(new cartActions.Add(item))
-      })
-    })
+  ngOnDestroy() {
+    this.stopper$.next(true)
+    this.stopper$.complete()
   }
 
   agreeToContract() {
