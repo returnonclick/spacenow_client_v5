@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const listing_short_detail_1 = require("./models/listing-short-detail");
+const booking_1 = require("./models/booking");
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
@@ -45,7 +46,7 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate((event) => {
     sendEmail('userNewWelcome.html', context, spacenow, userData.email, subject);
 });
 /**
-* Listing Approved email
+* Creating listings-short-detail document
 */
 exports.createNewListing = functions.firestore
     .document('listings/{id}')
@@ -62,7 +63,7 @@ exports.createNewListing = functions.firestore
     }).catch(error => { console.log(error); });
 });
 // /**
-// * Listing Active email
+// * Listing Active email / Listing Approved email
 // */
 exports.activeListing = functions.firestore
     .document('listings/{id}')
@@ -135,85 +136,86 @@ exports.activeListing = functions.firestore
 /**
 * Booking Payment Request email // Booking Cancellation Request email //  Booking Confirmation Request email // Host Confirmation
 */
-// exports.actionsBooking = functions.firestore
-//     .document('bookings/{id}')
-//     .onUpdate(event => {
-//         const booking = event.data.data()
-//         const bookingPrevious = event.data.previous.data()
-//         const spaceId = booking.spaceBookings.spaceId
-//         // RETIRAR spaceID HARDCODE
-//         //************************************* */
-//         // const spaceId = 'QV18Xnq4nKkVqVOuSRwpb'
-//         //************************************* */
-//         if (booking.bookingStatus !== bookingPrevious.bookingStatus) {
-//             return getSpace(spaceId)
-//                 .then((docListing) => {
-//                     const listing = docListing.data()
-//                     switch (booking.bookingStatus) {
-//                         case 'Approved':
-//                             return getUser(booking.userId)
-//                                 .then((docUser) => {
-//                                     const userData = docUser.data()
-//                                     return getCategories(listing.categoryId)
-//                                         .then((docCat) => {
-//                                             const cateData = docCat.data()
-//                                             convertDate(booking.spaceBookings[0].bookingDates)
-//                                                 .then(dates => {
-//                                                     let bookingDates = new Object([])
-//                                                     bookingDates = dates
-//                                                     let daysTot: number = booking.spaceBookings[0].bookingDates.length                              
-//                                                     var context = { booking, userData, listing, cateData, bookingDates, daysTot }
-//                                                     let subject = 'Your booking request has been approved.'
-//                                                     sendEmail('bookingConfirmation-table.html', context, spacenow, userData.email, subject)
-//                                                 }).catch(error => console.error('There was an error while sending the email:', error))
-//                                         }).catch(error => console.error(error))
-//                                 }).catch(error => console.error(error))
-//                         case 'Declined':
-//                             return getUser(booking.userId)
-//                                 .then(doc => {
-//                                     const userData = doc.data()
-//                                     return getCategories(listing.categoryId)
-//                                         .then((docCat) => {
-//                                             const cateData = docCat.data()
-//                                             let subject = 'Unfortunately the host has declined your booking request.'
-//                                             var context = { booking, userData, listing, cateData }
-//                                             sendEmail('bookingCancellation-table.html', context, spacenow, userData.email, subject)
-//                                             let status = 'Canceled'
-//                                             updateBooking(booking, status)
-//                                         }).catch(error => console.error('There was an error while sending the email:', error))
-//                                 }).catch(error => console.error(error))
-//                         case 'Confirmed':
-//                             if (booking.paymentStatus == 'Paid')
-//                             return getUser(booking.userId)
-//                                 .then(doc => {
-//                                     const userData = doc.data()
-//                                     return getUser(listing.ownerUid)
-//                                         .then(hostDoc => {
-//                                             const hostData = hostDoc.data()
-//                                             return getCategories(listing.categoryId)
-//                                                 .then((docCat) => {
-//                                                     const cateData = docCat.data()
-//                                                     let subject = 'Your space has been booked and you have a new guest coming for the below space.'
-//                                                     let guestSubject = 'Congratulations your booking has been confirmed for the below space.'
-//                                                     const context = { booking, hostData, listing, userData, cateData }
-//                                                     pdfGenerator('Invoice_host.pdf',context).then(pdfFile => {
-//                                                         console.log('pdfFile = ',pdfFile)
-//                                                         sendEmailInvoice('bookingHostConfirmation-table.html', context, spacenow, hostData.email, subject,booking.id+'_Invoice.pdf', pdfFile)
-//                                                     }).catch(error => console.error(error))
-//                                                     pdfGenerator("Invoice_guest.pdf",context).then(b => {
-//                                                         console.log(b)
-//                                                         sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject,"Invoice_guest.pdf")
-//                                                     }).catch(error => console.error(error))
-//                                                     let status = 'Completed'
-//                                                     updateBooking(booking, status)
-//                                                 }).catch(error => console.error('There was an error getCategories function', error))
-//                                         }).catch(error => console.error(error))
-//                                 }).catch(error => console.error(error))
-//                     }
-//                 })
-//                 .catch(error => console.log(error))
-//         }
-//     })
+exports.actionsBooking = functions.firestore
+    .document('bookings/{id}')
+    .onUpdate(event => {
+    let booking = new booking_1.Booking;
+    booking = event.data.data();
+    console.log(typeof booking);
+    console.log('spaceBooking', typeof booking.spaceBookings);
+    const bookingPrevious = event.data.previous.data();
+    // RETIRAR spaceID HARDCODE
+    //************************************* */
+    // const spaceId = 'QV18Xnq4nKkVqVOuSRwpb'
+    //************************************* */
+    if (booking.bookingStatus !== bookingPrevious.bookingStatus) {
+        return getSpace(booking.spaceBookings)
+            .then((docListing) => {
+            const listing = docListing.data.data();
+            console.log('listing', listing);
+            switch (booking.bookingStatus) {
+                case 'Approved':
+                    return getUser(booking.userId)
+                        .then((docUser) => {
+                        const userData = docUser.data();
+                        return getCategories(listing.categoryId)
+                            .then((docCat) => {
+                            const cateData = docCat.data();
+                            convertDate(booking.spaceBookings[0].bookingDates)
+                                .then(dates => {
+                                let bookingDates = new Object([]);
+                                bookingDates = dates;
+                                let daysTot = booking.spaceBookings[0].bookingDates.length;
+                                var context = { booking, userData, listing, cateData, bookingDates, daysTot };
+                                let subject = 'Your booking request has been approved.';
+                                sendEmail('bookingConfirmation-table.html', context, spacenow, userData.email, subject);
+                            }).catch(error => console.error('There was an error while sending the email:', error));
+                        }).catch(error => console.error(error));
+                    }).catch(error => console.error(error));
+                case 'Declined':
+                    return getUser(booking.userId)
+                        .then(doc => {
+                        const userData = doc.data();
+                        console.log('categoryId', listing.categoryId);
+                        return getCategories(listing.categoryId)
+                            .then((docCat) => {
+                            const cateData = docCat.data();
+                            let subject = 'Unfortunately the host has declined your booking request.';
+                            var context = { booking, userData, listing, cateData };
+                            sendEmail('bookingCancellation-table.html', context, spacenow, userData.email, subject);
+                            let status = 'Canceled';
+                            updateBooking(booking, status);
+                        }).catch(error => console.error('There was an error while sending the email:', error));
+                    }).catch(error => console.error(error));
+                case 'Confirmed':
+                    return getUser(booking.userId)
+                        .then(doc => {
+                        const userData = doc.data();
+                        return getUser(listing.ownerUid)
+                            .then(hostDoc => {
+                            const hostData = hostDoc.data();
+                            return getCategories(listing.categoryId)
+                                .then((docCat) => {
+                                const cateData = docCat.data();
+                                let subject = 'Your space has been booked and you have a new guest coming for the below space.';
+                                let guestSubject = 'Congratulations your booking has been confirmed for the below space.';
+                                const context = { booking, hostData, listing, userData, cateData };
+                                pdfGenerator('Invoice_host.pdf', context).then(pdfFile => {
+                                    sendEmailInvoice('bookingHostConfirmation-table.html', context, spacenow, hostData.email, subject, booking.id + '_Invoice.pdf', pdfFile);
+                                }).catch(error => console.error(error));
+                                pdfGenerator("Invoice_guest.pdf", context).then(pdfFileGuest => {
+                                    sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject, booking.id + 'Invoice_guest.pdf', pdfFileGuest);
+                                }).catch(error => console.error(error));
+                                let status = 'Completed';
+                                updateBooking(booking, status);
+                            }).catch(error => console.error('There was an error getCategories function', error));
+                        }).catch(error => console.error(error));
+                    }).catch(error => console.error(error));
+            }
+        })
+            .catch(error => console.log(error));
+    }
+});
 /**
 * Enquiry Request
 */
@@ -354,9 +356,9 @@ function pdfGenerator(fileName, context) {
             //   console.log(res);  // { filename: '/app/businesscard.pdf' }
             // });
             pdf.create(html, options).toBuffer(function (err, buffer) {
-                console.log('This is a buffer:', Buffer.isBuffer(buffer));
-                console.log('Buffer = ', buffer);
-                console.log('error = ', err);
+                // console.log('This is a buffer:', Buffer.isBuffer(buffer))
+                // console.log('Buffer = ', buffer)
+                // console.log('error = ',err) ;
                 if (!err) {
                     uploadFile(fileName, buffer).then(pdfFile => {
                         console.log('pdfFile = ', pdfFile);

@@ -20,10 +20,14 @@ import * as bookingActions from '@core/store/bookings/actions/booking'
 export class GeneralBookingComponent {
 
   @Input() space: Space
+  @Input() category: string
 
   form:           FormGroup
   minDate:        Date = new Date()
   user:           User
+
+  guests:          any = []
+  durationOptions: any = []
 
   constructor(
     private _fb:       FormBuilder,
@@ -48,6 +52,22 @@ export class GeneralBookingComponent {
         Validators.min(this.space.price.minimumTerm),
       ]) ],
     })
+
+    // Set array for number of guests according to the capacity and category of a space
+    for(let i = 1; i <= this.space.specifications['capacity']; i++) {
+      if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
+        if ( i <= 10 )
+          this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
+        else if (i === 11)
+          this.guests.push({ display: '10+ guests', value: this.space.specifications['capacity'] })
+      } else {
+        this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
+      }
+    }
+
+    for (let i = this.space.price.minimumTerm; i <= 20; i++) {
+      this.durationOptions.push({display: i === 1 ? i + ' ' + this.mapPriceUnit().replace('s', '') :  i + ' ' + this.mapPriceUnit(), value: i})
+    }
   }
 
   mapPriceUnit() {

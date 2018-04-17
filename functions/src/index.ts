@@ -1,4 +1,5 @@
 import { ListingShortDetail } from "./models/listing-short-detail"
+import { Booking, BookingSpace } from "./models/booking"
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -151,17 +152,22 @@ exports.activeListing = functions.firestore
 exports.actionsBooking = functions.firestore
     .document('bookings/{id}')
     .onUpdate(event => {
-        const booking = event.data.data()
+        let booking = new Booking
+         booking  = event.data.data()
+        console.log(typeof booking)
+        console.log('spaceBooking',typeof booking.spaceBookings)
         const bookingPrevious = event.data.previous.data()
-        const spaceId = booking.spaceBookings.spaceId
+        
+
         // RETIRAR spaceID HARDCODE
         //************************************* */
         // const spaceId = 'QV18Xnq4nKkVqVOuSRwpb'
         //************************************* */
         if (booking.bookingStatus !== bookingPrevious.bookingStatus) {
-            return getSpace(spaceId)
+            return getSpace(booking.spaceBookings)
                 .then((docListing) => {
-                    const listing = docListing.data()
+                    const listing = docListing.data.data()
+                    console.log('listing',listing)
                     switch (booking.bookingStatus) {
 
                         case 'Approved':
@@ -187,6 +193,7 @@ exports.actionsBooking = functions.firestore
                             return getUser(booking.userId)
                                 .then(doc => {
                                     const userData = doc.data()
+                                    console.log('categoryId',listing.categoryId)
                                     return getCategories(listing.categoryId)
                                         .then((docCat) => {
                                             const cateData = docCat.data()

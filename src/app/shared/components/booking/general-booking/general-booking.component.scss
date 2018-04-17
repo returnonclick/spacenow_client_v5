@@ -1,3 +1,8 @@
+@import
+  '~sass/abstracts/variables',
+  '~sass/abstracts/mixins',
+  '~sass/abstracts/icons';
+
 form {
   --gridGap: 20px;
 
@@ -5,4 +10,10 @@ form {
   grid-template-columns: auto;
   grid-template-rows: repeat(4, auto);
   grid-gap: var(--gridGap);
+}
+
+.icon-field {
+  display: grid;
+  grid-template-columns: 15% 85%;
+  align-items: center;
 }

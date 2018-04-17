@@ -38,6 +38,7 @@ import * as fromSpaces                from '@core/store/spaces/reducers/spaces'
 import * as fromBooking               from '@core/store/bookings/reducers/booking'
 import * as fromAmenities             from '@core/store/amenities/reducers/amenities'
 import * as fromListingSpecifications from '@core/store/listing-specifications/reducers/listing-specifications'
+import * as fromPages                 from '@core/store/pages/reducers/pages'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -56,6 +57,7 @@ export interface State {
   bookings:              fromBooking.State
   amenities:             fromAmenities.State
   listingSpecifications: fromListingSpecifications.State
+  pages:                 fromPages.State
   routerReducer:         fromRouter.RouterReducerState<RouterStateUrl>
 }
 
@@ -77,6 +79,7 @@ export const reducers: ActionReducerMap<State> = {
   bookings:              fromBooking.reducer,
   amenities:             fromAmenities.reducer,
   listingSpecifications: fromListingSpecifications.reducer,
+  pages:                 fromPages.reducer,
   routerReducer:         fromRouter.routerReducer,
 }
 
@@ -379,3 +382,20 @@ export const {
   selectAll:      getAllListingSpecifications,
   selectTotal:    getTotalListingSpecifications,
 } = fromListingSpecifications.listingSpecificationAdapter.getSelectors(getListingSpecificationEntitiesState)
+
+/**
+ * Pages Reducers
+ */
+export const getPagesState = createFeatureSelector<fromPages.State>('pages')
+
+export const getPageEntitiesState = createSelector(
+  getPagesState,
+  (state) => state
+)
+
+export const {
+  selectIds:      getPageIds,
+  selectEntities: getPageEntities,
+  selectAll:      getAllPages,
+  selectTotal:    getTotalPages,
+} = fromPages.pageAdapter.getSelectors(getPageEntitiesState)

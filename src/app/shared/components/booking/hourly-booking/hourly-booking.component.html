@@ -1,21 +1,33 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
-  <mat-form-field class="from-date">
-    <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="Date" formControlName="date" required>
-    <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
-    <mat-datepicker #fromDate></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field class="form-hour">
-    <mat-select placeholder="From hour" formControlName="fromHour" required>
-      <mat-option *ngFor="let hour of fromHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="to-hour">
-    <mat-select placeholder="To hour"formControlName="toHour" required>
-      <mat-option *ngFor="let hour of toHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="num-guests">
-    <input matInput type="number" min="0" placeholder="Guests" formControlName="numGuests" required>
-  </mat-form-field>
+  <div class="icon-field from-date">
+    <i class="function-space-35"></i>
+    <mat-form-field>
+      <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="Date" formControlName="date" required>
+      <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+      <mat-datepicker #fromDate></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="icon-field from-hour">
+    <i class="individual-alarms-amen-35"></i>
+    <mat-form-field>
+      <mat-select placeholder="From hour" formControlName="fromHour" required>
+        <mat-option *ngFor="let hour of fromHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="icon-field to-hour">
+    <i class="individual-alarms-amen-35"></i>
+    <mat-form-field>
+      <mat-select placeholder="To hour"formControlName="toHour" required>
+        <mat-option *ngFor="let hour of toHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="icon-field num-guests">
+    <i class="co-working-space-35"></i>
+    <mat-form-field class="num-guests">
+      <input matInput type="number" min="0" placeholder="Guests" formControlName="numGuests" required>
+    </mat-form-field>
+  </div>
   <button mat-raised-button [disabled]="form.invalid || form.pristine">{{ space.availability.bookingType == 'instantly' ? 'Book' : 'Request Booking' }}</button>
 </form>

@@ -21,12 +21,15 @@ import * as bookingActions from '@core/store/bookings/actions/booking'
 export class HourlyBookingComponent {
 
   @Input() space: Space
+  @Input() category: string
 
   form:           FormGroup
   fromHourList:   any[] = []
   toHourList:     any[] = []
   minDate:        Date = new Date()
   user:           User
+
+  guests:         any = []
 
   constructor(
     private _fb:       FormBuilder,
@@ -64,6 +67,18 @@ export class HourlyBookingComponent {
       this.fromHourList = this.generateHours(daySched.startHour, daySched.closeHour - 1)
       this.toHourList   = this.generateHours(daySched.startHour + 1, daySched.closeHour)
     })
+
+     // Set array for number of guests according to the capacity and category of a space
+     for(let i = 1; i <= this.space.specifications['capacity']; i++) {
+      if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
+        if ( i <= 10 )
+          this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
+        else if (i === 11)
+          this.guests.push({ display: '10+ guests', value: this.space.specifications['capacity'] })
+      } else {
+        this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
+      }
+    }
   }
 
   onSubmit() {

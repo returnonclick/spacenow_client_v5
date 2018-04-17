@@ -119,9 +119,12 @@
   @include sn-icon(30, 2, 100);
 }
 
+.search-100 {
+  @include sn-icon(14, 4, 100);
+}
+
 
 // Icons x80
-
 .advertising-80 {
   @include sn-icon(1, 2, 80);
 }
@@ -238,6 +241,10 @@
 
 .food-truck-80 {
   @include sn-icon(30, 2, 80);
+}
+
+.search-80 {
+  @include sn-icon(14, 4, 80);
 }
 
 
@@ -360,6 +367,10 @@
   @include sn-icon(30, 2, 50);
 }
 
+.search-50 {
+  @include sn-icon(14, 4, 50);
+}
+
 
 // Icons x35
 .advertising-35 {
@@ -478,6 +489,10 @@
 
 .food-truck-35 {
   @include sn-icon(30, 2, 35);
+}
+
+.search-35 {
+  @include sn-icon(14, 4, 35);
 }
 
 
@@ -627,7 +642,7 @@
   @include sn-icon(36,3,35);
 }
 
-.kitchen-space-amen-35  {
+.kitchen-amen-35  {
   @include sn-icon(37,3,35);
 }
 
@@ -686,3 +701,4 @@
 .clothing-racks-amen-35  {
   @include sn-icon(51,3,35);
 }
+
