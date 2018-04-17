@@ -54,19 +54,33 @@ export class GeneralBookingComponent {
     })
 
     // Set array for number of guests according to the capacity and category of a space
-    for(let i = 1; i <= this.space.specifications['capacity']; i++) {
+    for(let i=1; i<=this.space.specifications['capacity']; i++) {
       if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
-        if ( i <= 10 )
-          this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
+        if (i <= 10)
+          this.guests.push({
+            display: i + ' guest' + ((i === 1) ? '' : 's'),
+            value: i
+          })
         else if (i === 11)
-          this.guests.push({ display: '10+ guests', value: this.space.specifications['capacity'] })
+          this.guests.push({
+            display: '10+ guests',
+            value:   this.space.specifications['capacity'],
+          })
       } else {
-        this.guests.push({display: i === 1 ? i + ' guest': i + ' guests', value: i })
+        this.guests.push({
+          display: i + ' guest' + ((i == 1) ? '': 's'),
+          value:   i,
+        })
       }
     }
 
     for (let i = this.space.price.minimumTerm; i <= 20; i++) {
-      this.durationOptions.push({display: i === 1 ? i + ' ' + this.mapPriceUnit().replace('s', '') :  i + ' ' + this.mapPriceUnit(), value: i})
+      this.durationOptions.push({
+        display: (i === 1)
+          ? i + ' ' + this.mapPriceUnit().replace('s', '')
+          : i + ' ' + this.mapPriceUnit(),
+        value: i
+      })
     }
   }
 
