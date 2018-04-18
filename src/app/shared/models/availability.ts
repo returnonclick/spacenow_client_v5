@@ -10,11 +10,11 @@ export class Availability extends Object{
   constructor( model: any = null ) {
     super()
     if ( model ) {
-
+      console.log(model)
       this.bookingType      = model.bookingType || 'instantly'
       this.leadTime         = model.leadTime || 1
       this.openingTime      = new OpeningTime(model.openingTime) || new OpeningTime()
-      this.isOpen247        = model.isOpen247 || false
+      this.isOpen247        = typeof model.isOpen247 == 'undefined' ? false : model.isOpen247
       this.exceptionDays    = (model.exceptionDays || []).map(day => new ExceptionDay(day))
 
     }
@@ -41,7 +41,7 @@ export class ExceptionDay extends Object {
 
 }
 
-export class OpeningDay {
+export class OpeningDay extends Object {
   startHour:   number  = 0
   closeHour:   number  = 23
   startMinute: number  = 0 // not gonna be used yet
@@ -49,6 +49,7 @@ export class OpeningDay {
   isOpen:      boolean = true
 
   constructor(model: any = null) {
+    super()
     if(model) {
       this.startHour   = model.startHour || 0
       this.closeHour   = model.closeHour || 23

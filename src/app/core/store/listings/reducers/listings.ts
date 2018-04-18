@@ -1,17 +1,17 @@
 import { createSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-import { Listing } from '@shared/models/listing';
+import { Space } from '@shared/models/space';
 
 import * as actions from '@core/store/listings/actions/listing';
 
-export interface State extends EntityState<Listing> {
+export interface State extends EntityState<Space> {
     loading: boolean
     selectedListingId: string | null
 }
 
-export const listingAdapter: EntityAdapter<Listing> = createEntityAdapter<Listing>({
-    selectId: (obj: Listing) => obj.id,
+export const listingAdapter: EntityAdapter<Space> = createEntityAdapter<Space>({
+    selectId: (obj: Space) => obj.id,
     sortComparer: false,
 });
 
