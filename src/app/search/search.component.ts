@@ -70,6 +70,8 @@ export class SearchComponent {
       this.map.mapReady,
     ).subscribe(([searchResults, map]) => {
       this._clearMarkers()
+      // TODO(TT) delete this
+      // console.log(searchResults)
       if(searchResults && map) {
         for(let result of searchResults) {
           let latLng = new google.maps.LatLng(result.geopoint.latitude, result.geopoint.longitude);
