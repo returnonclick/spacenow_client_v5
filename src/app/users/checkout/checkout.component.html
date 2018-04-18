@@ -249,54 +249,37 @@
   </div>
   <aside>
     <div class="booking-cart">
-      <h3>Spaces</h3>
       <div class="space-breakdown">
         <ng-container *ngIf="(cart$ | async).length < 1; else hasItems">
-          <span>No items.</span>
+          <span class="none">No items.</span>
         </ng-container>
         <ng-template #hasItems>
-          <mat-accordion displayMode="flat">
-            <ng-container *ngFor="let cartItem of (cart$ | async)">
-              <mat-expansion-panel *ngIf="spaces[cartItem.spaceId]">
-                <mat-expansion-panel-header>
-                  {{ spaces[cartItem.spaceId].title }}
-                </mat-expansion-panel-header>
-
-                <h4>{{ categories[spaces[cartItem.spaceId].categoryId]?.name }}</h4>
-                <span>{{ spaces[cartItem.spaceId]?.address.full_name }}</span>
-                <span class="num-guests">
-                  {{ cartItem.numGuests }} occupant{{ cartItem.numGuests > 1 ? 's' : '' }}
-                </span>
-                <div>
-                  <ng-container *ngIf="spaces[cartItem.spaceId].priceUnit == 'hourly'; else notHourly">
-                    {{ formatDate(cartItem.bookingDates[0].date) }} from
-                    {{ formatDate(cartItem.bookingDates[0].fromHour, 'H', 'h A') }} to
-                    {{ formatDate(cartItem.bookingDates[0].toHour, 'H', 'h A') }}
-                  </ng-container>
-                  <ng-template #notHourly>
-                    {{ cartItem.bookingDates.length }} {{ mapPriceUnit(spaces[cartItem.spaceId].priceUnit) }}{{ cartItem.bookingDates.length > 1 ? 's' : '' }}
-                    starting {{ formatDate(cartItem.bookingDates[0].date) }}
-                    <div *ngIf="spaces[cartItem.spaceId].priceUnit == 'daily'">
-                      <h5>Days included:</h5>
-                      <ul>
-                        <li *ngFor="let date of cartItem.bookingDates">
-                          {{ formatDate(date.date) }}
-                        </li>
-                      </ul>
-                    </div>
-                  </ng-template>
+          <ng-container *ngFor="let cartItem of (cart$ | async)">
+            <h3>{{ spaces[cartItem.spaceId].title }}</h3>
+            <h4>{{ categories[spaces[cartItem.spaceId].categoryId]?.name }}</h4>
+            <span>{{ spaces[cartItem.spaceId]?.address.full_name }}</span>
+            <span>{{ cartItem.numGuests }} occupant{{ cartItem.numGuests > 1 ? 's' : '' }}</span>
+            <div>
+              <ng-container *ngIf="spaces[cartItem.spaceId].priceUnit == 'hourly'; else notHourly">
+                {{ formatDate(cartItem.bookingDates[0].date) }} from
+                {{ formatDate(cartItem.bookingDates[0].fromHour, 'H', 'h A') }} to
+                {{ formatDate(cartItem.bookingDates[0].toHour, 'H', 'h A') }}
+              </ng-container>
+              <ng-template #notHourly>
+                {{ cartItem.bookingDates.length }} {{ mapPriceUnit(spaces[cartItem.spaceId].priceUnit) }}{{ cartItem.bookingDates.length > 1 ? 's' : '' }}
+                starting {{ formatDate(cartItem.bookingDates[0].date) }}
+                <div class="day-breakdown" *ngIf="spaces[cartItem.spaceId].priceUnit == 'daily'">
+                  <h5>Days included:</h5>
+                  <ul>
+                    <li *ngFor="let date of cartItem.bookingDates">{{ formatDate(date.date) }}</li>
+                  </ul>
                 </div>
-
-                <mat-action-row>
-                  <button mat-button type="button" (click)="viewSpace(cartItem.spaceId)">View space</button>
-                  <button mat-button type="button" color="warn" (click)="removeItem(cartItem)">Remove</button>
-                </mat-action-row>
-              </mat-expansion-panel>
-            </ng-container>
-          </mat-accordion>
+              </ng-template>
+            </div>
+            <button mat-button type="button" (click)="viewSpace(cartItem.spaceId)">View space</button>
+          </ng-container>
         </ng-template>
       </div>
-      <button mat-button class="clear-cart" color="warn" (click)="clearCart()" [disabled]="(cart$ | async).length < 1">Remove All</button>
       <table class="price-breakdown">
         <tbody>
           <tr *ngFor="let item of costBreakdown">

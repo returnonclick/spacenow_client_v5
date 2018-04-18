@@ -1,24 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
 import { Store } from '@ngrx/store'
-import { Observable } from 'rxjs'
 
 import * as moment from 'moment'
 
-import { BookingRequest, BookingSpace, BookingDate } from '@models/booking'
+import { BookingDate, Booking, BookingStatus, PaymentStatus } from '@models/booking'
 import { Space } from '@models/space'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
-import * as cartActions from '@core/store/cart/actions/cart'
+import * as bookingActions from '@core/store/bookings/actions/booking'
 
 @Component({
   selector: 'sn-general-booking',
   templateUrl: './general-booking.component.html',
-  styleUrls: [ './general-booking.component.scss' ]
+  styleUrls: [ './general-booking.component.scss' ],
 })
-export class GeneralBookingComponent implements OnInit {
+export class GeneralBookingComponent {
 
   @Input() space: Space
   @Input() category: string
@@ -27,7 +26,8 @@ export class GeneralBookingComponent implements OnInit {
   minDate:        Date = new Date()
   user:           User
 
-  guests:         any = []
+  guests:          any = []
+  durationOptions: any = []
 
   constructor(
     private _fb:       FormBuilder,
@@ -45,26 +45,43 @@ export class GeneralBookingComponent implements OnInit {
       date: [ new Date(), Validators.required ],
       numGuests: [ 0, Validators.compose([
         Validators.required,
-        Validators.min(1)
+        Validators.min(1),
       ]) ],
       duration: [ 0, Validators.compose([
         Validators.required,
-        Validators.min(this.space.price.minimumTerm)
+        Validators.min(this.space.price.minimumTerm),
       ]) ],
     })
 
     // Set array for number of guests according to the capacity and category of a space
-    for(let i = 1; i <= this.space.specifications['capacity']; i++) {
+    for(let i=1; i<=this.space.specifications['capacity']; i++) {
       if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
-        if ( i <= 10 )
-          this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
+        if (i <= 10)
+          this.guests.push({
+            display: i + ' guest' + ((i === 1) ? '' : 's'),
+            value: i
+          })
         else if (i === 11)
-          this.guests.push({ display: '10+ Guests', value: this.space.specifications['capacity'] })
+          this.guests.push({
+            display: '10+ guests',
+            value:   this.space.specifications['capacity'],
+          })
       } else {
-        this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
+        this.guests.push({
+          display: i + ' guest' + ((i == 1) ? '': 's'),
+          value:   i,
+        })
       }
     }
 
+    for (let i = this.space.price.minimumTerm; i <= 20; i++) {
+      this.durationOptions.push({
+        display: (i === 1)
+          ? i + ' ' + this.mapPriceUnit().replace('s', '')
+          : i + ' ' + this.mapPriceUnit(),
+        value: i
+      })
+    }
   }
 
   mapPriceUnit() {
@@ -85,7 +102,8 @@ export class GeneralBookingComponent implements OnInit {
       return
 
     let formVal            = this.form.value
-    let bookingSpace       = new BookingSpace()
+    let bookingSpace       = new Booking()
+    bookingSpace.userId    = this.user ? this.user.uid : null
     bookingSpace.spaceId   = this.space.id
     bookingSpace.numGuests = formVal.numGuests
 
@@ -118,7 +136,9 @@ export class GeneralBookingComponent implements OnInit {
 
     let bookingType = this.space.availability.bookingType
     if(bookingType == 'instantly') {
-      this._store.dispatch(new cartActions.Add(bookingSpace))
+      bookingSpace.bookingStatus = BookingStatus.BOOKED
+      bookingSpace.paymentStatus = PaymentStatus.PENDING
+
       let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
       snackBar.onAction().subscribe(() => {
         window.open('/users/checkout')
@@ -126,35 +146,31 @@ export class GeneralBookingComponent implements OnInit {
       })
     }
     else if(bookingType == 'request') {
-      let request = new BookingRequest({
-        createdOn:    new Date(),
-        userId:       this.user.uid,
-        spaceBooking: bookingSpace
-      })
-      this._store.dispatch(new cartActions.Request(request))
-      let snackBar = this._snackBar.open('Request sent to host')
+      bookingSpace.bookingStatus = BookingStatus.PENDING
+      this._snackBar.open('Request sent to host')
     }
+    else
+      return
+    this._store.dispatch(new bookingActions.Book(bookingSpace))
   }
 
   // this one is a closure: a function that returns a function with the context
   // of `this.space`'s availability exceptions
   exceptions() {
     return (d: Date | null): boolean => {
+      let dayMoment       = moment(d)
+      let day             = dayMoment.format('ddd').toLowerCase()
       let exceptionRanges = this.space.availability.exceptionDays.map(range => {
         return {
           from: moment(range.fromDate),
           to:   moment(range.toDate),
         }
       })
-      // let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.fromDate).format('YYYY-MM-DD'))
-      let dayMoment      = moment(d)
-      let day            = dayMoment.format('ddd').toLowerCase()
 
       return exceptionRanges.reduce((acc, curr) => {
           acc = acc && !moment(d).isBetween(curr.from, curr.to, null, '[]')
           return acc
-        }, true)// exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
-        && this.space.availability.openingTime[day].isOpen
+        }, true) && this.space.availability.openingTime[day].isOpen
     }
   }
 

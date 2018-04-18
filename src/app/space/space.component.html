@@ -48,9 +48,9 @@
           <ng-container *ngFor="let id of space.amenityIds">
             <li *ngIf="(amenities$ | async)[id]">
               <!-- <mat-icon color="primary">{{ (amenities$ | async)[id].icon }}</mat-icon> -->
-         
+
               <i [ngClass]="(amenities$ | async)[id].slug + '-amen-35'"></i>
-              {{  (amenities$ | async)[id].name }} 
+              {{  (amenities$ | async)[id].name }}
             </li>
           </ng-container>
         </ul>
@@ -212,16 +212,24 @@
       <div class="booking-form">
         <mat-spinner *ngIf="(isLoadingPage$ | async); else doneLoading"></mat-spinner>
         <ng-template #doneLoading>
-          <sn-hourly-booking
-            *ngIf="space?.priceUnit == 'hourly'"
-            [space]="space"
-            [category]="(categories$ | async)[space?.categoryId]?.slug">
-          </sn-hourly-booking>
-          <sn-general-booking
-            *ngIf="space?.priceUnit != 'hourly'"
-            [space]="space"
-            [category]="(categories$ | async)[space?.categoryId]?.slug">
-          </sn-general-booking>
+          <sn-poa-booking
+            *ngIf="space?.price.price == 0; else hourly"
+            [space]="space">
+          </sn-poa-booking>
+          <ng-template #hourly>
+            <sn-hourly-booking
+              *ngIf="space?.priceUnit == 'hourly'; else general"
+              [space]="space"
+              [category]="(categories$ | async)[space?.categoryId]?.slug">
+            </sn-hourly-booking>
+          </ng-template>
+          <ng-template #general>
+            <sn-general-booking
+              *ngIf="space?.priceUnit != 'hourly'"
+              [space]="space"
+              [category]="(categories$ | async)[space?.categoryId]?.slug">
+            </sn-general-booking>
+          </ng-template>
         </ng-template>
       </div>
     </div>

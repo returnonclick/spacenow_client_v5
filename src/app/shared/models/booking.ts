@@ -1,101 +1,112 @@
-class BookingRequest {
-  id:           string       = ''
-  createdOn:    Date         = new Date()
-  userId:       string       = ''
-  spaceBooking: BookingSpace = null
+class Booking {
+  id:            string        = ''
+  userId:        string        = ''
+  spaceId:       string        = ''
+  numGuests:     number        = 0
+  finalPrice:    number        = 0
+  currency:      string        = ''
+  bookingStatus: BookingStatus = null
+  paymentStatus: PaymentStatus = null
+  bookingDates:  BookingDate[] = []
+  userNotes:     string        = ''
+  hostNotes:     string        = ''
+  poaDetails:    PoaDetails    = null
+  cancellation:  Cancellation  = null
+  createdOn:     Date          = new Date()
 
   constructor(model: any = null) {
     if(model) {
-      this.id           = model.id
-      this.createdOn    = model.createdOn
-      this.userId       = model.userId
-      this.spaceBooking = new BookingSpace(model.spaceBooking)
+      this.id            = model.id || ''
+      this.userId        = model.userId || ''
+      this.spaceId       = model.spaceId || ''
+      this.numGuests     = model.numGuests || 0
+      this.finalPrice    = model.finalPrice || 0
+      this.currency      = model.currency || ''
+      this.bookingStatus = model.bookingStatus || null
+      this.paymentStatus = model.paymentStatus || null
+      this.bookingDates  = (model.bookingDates || []).map(date => new BookingDate(date))
+      this.userNotes     = model.userNotes || ''
+      this.hostNotes     = model.hostNotes || ''
+      this.poaDetails    = model.poaDetails ? new PoaDetails(model.poaDetails) : null
+      this.cancellation  = model.cancellation ? new Cancellation(model.cancellation) : null
+      this.createdOn     = model.createdOn || new Date()
     }
   }
 }
 
-class Booking {
-  id:            string         = ''
-  userId:        string         = ''
-  createdOn:     Date           = null
-  finalPrice:    number         = 0
-  currency:      string         = ''
-  paymentStatus: string         = ''
-  bookingStatus: string         = ''
-  userNotes:     string         = ''
-  hostNotes:     string         = ''
-  cancellation:  Cancellation   = null
-  spaceBookings: BookingSpace[] = []
+enum BookingStatus {
+  PENDING   = 'Pending',
+  ENQUIRY   = 'Enquiry',
+  BOOKED    = 'Booked',
+  APPROVED  = 'Approved',
+  DECLINED  = 'Declined',
+  CONFIRMED = 'Confirmed',
+  CANCELED  = 'Canceled',
+  COMPLETED = 'Completed',
+}
+
+enum PaymentStatus {
+  PENDING    = 'Pending',
+  AUTHORIZED = 'Authorized',
+  COMPLETED  = 'Completed',
+}
+
+class BookingDate {
+  date:     Date   = new Date()
+  fromHour: number = 0
+  toHour:   number = 0
 
   constructor(model: any = null) {
     if(model) {
-      this.id            = model.id                             || ''
-      this.userId        = model.userId                         || ''
-      this.createdOn     = model.createdOn                      || null
-      this.finalPrice    = model.finalPrice                     || 0
-      this.currency      = model.currency                       || ''
-      this.paymentStatus = model.paymentStatus                  || ''
-      this.bookingStatus = model.bookingStatus                  || ''
-      this.userNotes     = model.userNotes                      || ''
-      this.hostNotes     = model.hostNotes                      || ''
-      this.cancellation  = new Cancellation(model.cancellation) || null
-      this.spaceBookings = (model.spaceBookings || []).map(booking => new BookingSpace(booking))
+      this.date     = model.date     || new Date()
+      this.fromHour = model.fromHour || 0
+      this.toHour   = model.toHour   || 0
+    }
+  }
+}
+class PoaDetails {
+  name:    string = ''
+  email:   string = ''
+  number:  string = ''
+  message: string = ''
+
+  constructor(model: any = null) {
+    if(model) {
+      this.name    = model.name || ''
+      this.email   = model.email || ''
+      this.number  = model.number || ''
+      this.message = model.message || ''
     }
   }
 }
 
 class Cancellation {
   reason: string = ''
-  date:   Date   = null
+  date:   Date   = new Date()
 
   constructor(model: any = null) {
     if(model) {
       this.reason = model.reason || ''
-      this.date   = model.date   || null
+      this.date   = model.date || new Date()
     }
   }
 }
 
-class BookingSpace {
-  spaceId:      string        = ''
-  numGuests:    number        = 0
-  bookingDates: BookingDate[] = []
-
-  constructor(model: any = null) {
-    if(model) {
-      this.spaceId      = model.spaceId                                         || ''
-      this.numGuests    = model.numGuests                                       || 0
-      this.bookingDates = model.bookingDates.map(date => new BookingDate(date)) || []
-    }
-  }
-}
-
-class BookingDate {
-  date:     Date   = null
-  fromHour: number = 0
-  toHour:   number = 0
-
-  constructor(model: any = null) {
-    if(model) {
-      this.date     = model.date     || null
-      this.fromHour = model.fromHour || 0
-      this.toHour   = model.toHour   || 0
-    }
-  }
-}
 
 export {
-  BookingRequest,
   Booking,
+  BookingDate,
+  BookingStatus,
   Cancellation,
-  BookingSpace,
-  BookingDate
+  PaymentStatus,
+  PoaDetails,
 }
 
 export default [
-  BookingRequest,
   Booking,
+  BookingDate,
+  BookingStatus,
   Cancellation,
-  BookingSpace,
-  BookingDate
+  PaymentStatus,
+  PoaDetails,
 ]

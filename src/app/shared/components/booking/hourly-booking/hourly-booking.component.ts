@@ -6,17 +6,17 @@ import { Store } from '@ngrx/store'
 import * as moment from 'moment'
 
 import { OpeningDay } from '@models/availability'
-import { BookingRequest, BookingSpace, BookingDate } from '@models/booking'
+import { BookingDate, Booking, BookingStatus, PaymentStatus } from '@models/booking'
 import { Space } from '@models/space'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
-import * as cartActions from '@core/store/cart/actions/cart'
+import * as bookingActions from '@core/store/bookings/actions/booking'
 
 @Component({
   selector: 'sn-hourly-booking',
   templateUrl: './hourly-booking.component.html',
-  styleUrls: [ './hourly-booking.component.scss' ]
+  styleUrls: [ './hourly-booking.component.scss' ],
 })
 export class HourlyBookingComponent {
 
@@ -47,15 +47,18 @@ export class HourlyBookingComponent {
       date:      [ new Date(), Validators.required ],
       fromHour:  [ '', Validators.required ],
       toHour:    [ '', Validators.required ],
-      numGuests: [ 0, Validators.compose([
-        Validators.required,
-        Validators.min(1)
-      ]) ]
+      numGuests: [
+        0,
+        Validators.compose([
+          Validators.required,
+          Validators.min(1),
+        ]),
+      ],
     }, {
       validator: [
         timeValidator,
         minTimeValidator(this.space.price.minimumTerm),
-      ]
+      ],
     })
 
     this.form.get('date').valueChanges.subscribe(date => {
@@ -66,15 +69,24 @@ export class HourlyBookingComponent {
     })
 
      // Set array for number of guests according to the capacity and category of a space
-     for(let i = 1; i <= this.space.specifications['capacity']; i++) {
+     for(let i=1; i<=this.space.specifications['capacity']; i++) {
       if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
         if ( i <= 10 )
-          this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
-        else if (i === 11)
-          this.guests.push({ display: '10+ Guests', value: this.space.specifications['capacity'] })
-      } else {
-        this.guests.push({display: i === 1 ? i + ' Guest': i + ' Guests', value: i })
+          this.guests.push({
+            display: i + 'guest' + ((i == 1) ? '': 's'),
+            value:   i,
+          })
+        else if (i == 11)
+          this.guests.push({
+            display: '10+ guests',
+            value:   this.space.specifications['capacity'],
+          })
       }
+      else
+        this.guests.push({
+          display: i + ' guest' + ((i == 1) ? '' : 's'),
+          value:   i,
+        })
     }
   }
 
@@ -84,9 +96,10 @@ export class HourlyBookingComponent {
       return
 
     let formVal               = this.form.value
-    let bookingSpace          = new BookingSpace()
-    bookingSpace.numGuests    = formVal.numGuests
+    let bookingSpace          = new Booking()
+    bookingSpace.userId       = this.user ? this.user.uid : null
     bookingSpace.spaceId      = this.space.id
+    bookingSpace.numGuests    = formVal.numGuests
     bookingSpace.bookingDates = [
       new BookingDate({
         date:     formVal.date,
@@ -97,7 +110,9 @@ export class HourlyBookingComponent {
 
     let bookingType = this.space.availability.bookingType
     if(bookingType == 'instantly') {
-      this._store.dispatch(new cartActions.Add(bookingSpace))
+      bookingSpace.bookingStatus = BookingStatus.BOOKED
+      bookingSpace.paymentStatus = PaymentStatus.PENDING
+
       let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
       snackBar.onAction().subscribe(() => {
         window.open('/users/checkout')
@@ -105,14 +120,12 @@ export class HourlyBookingComponent {
       })
     }
     else if(bookingType == 'request') {
-      let request = new BookingRequest({
-        createdOn:    new Date(),
-        userId:       this.user.uid,
-        spaceBooking: bookingSpace,
-      })
-      this._store.dispatch(new cartActions.Request(request))
-      let snackBar = this._snackBar.open('Request sent to host')
+      bookingSpace.bookingStatus = BookingStatus.PENDING
+      this._snackBar.open('Request sent to host')
     }
+    else
+      return
+    this._store.dispatch(new bookingActions.Book(bookingSpace))
   }
 
   generateHours(start, end) {
@@ -127,21 +140,19 @@ export class HourlyBookingComponent {
   // of `this.space`'s availability exceptions
   exceptions() {
     return (d: Date | null): boolean => {
+      let dayMoment       = moment(d)
+      let day             = dayMoment.format('ddd').toLowerCase()
       let exceptionRanges = this.space.availability.exceptionDays.map(range => {
         return {
           from: moment(range.fromDate),
           to:   moment(range.toDate),
         }
       })
-      // let exceptionDates = this.space.availability.exceptionDays.map(day => moment(day.fromDate).format('YYYY-MM-DD'))
-      let dayMoment      = moment(d)
-      let day            = dayMoment.format('ddd').toLowerCase()
 
       return exceptionRanges.reduce((acc, curr) => {
           acc = acc && !moment(d).isBetween(curr.from, curr.to, null, '[]')
           return acc
-        }, true)// exceptionDates.indexOf(dayMoment.format('YYYY-MM-DD')) == -1
-        && this.space.availability.openingTime[day].isOpen
+        }, true) && this.space.availability.openingTime[day].isOpen
     }
   }
 
