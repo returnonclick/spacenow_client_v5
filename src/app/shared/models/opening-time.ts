@@ -9,16 +9,16 @@ export class OpeningTime extends Object {
   fri: OpeningDay = new OpeningDay()
   sat: OpeningDay = new OpeningDay()
   constructor(model: any = null) {
-    super(model)
+    super()
 
     if(model) {
       this.sun = model.sun || new OpeningDay()
-      this.mon = model.sun || new OpeningDay()
-      this.tue = model.sun || new OpeningDay()
-      this.wed = model.sun || new OpeningDay()
-      this.thu = model.sun || new OpeningDay()
-      this.fri = model.sun || new OpeningDay()
-      this.sat = model.sun || new OpeningDay()
+      this.mon = model.mon || new OpeningDay()
+      this.tue = model.tue || new OpeningDay()
+      this.wed = model.wed || new OpeningDay()
+      this.thu = model.thu || new OpeningDay()
+      this.fri = model.fri || new OpeningDay()
+      this.sat = model.sat || new OpeningDay()
     }
   }
 }

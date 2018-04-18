@@ -368,7 +368,7 @@
 }
 
 .search-50 {
-  @include sn-icon(14, 4, 50);
+  @include sn-icon(5, 4, 50);
 }
 
 
@@ -489,6 +489,10 @@
 
 .food-truck-35 {
   @include sn-icon(30, 2, 35);
+}
+
+.calendar-35 {
+  @include sn-icon(31, 2, 35);
 }
 
 .search-35 {

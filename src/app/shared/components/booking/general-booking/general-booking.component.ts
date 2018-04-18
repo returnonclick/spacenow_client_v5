@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
 import { Store } from '@ngrx/store'
-
 import * as moment from 'moment'
 
 import { BookingDate, Booking, BookingStatus, PaymentStatus } from '@models/booking'
@@ -82,6 +81,11 @@ export class GeneralBookingComponent {
         value: i
       })
     }
+
+  }
+
+  formatTime(time) {
+    return moment(time, 'HH').format('h a')
   }
 
   mapPriceUnit() {

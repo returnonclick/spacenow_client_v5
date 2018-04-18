@@ -21,7 +21,7 @@ export class BankAccount extends Object {
 
   constructor( model: any = null ) {
 
-    super(model)
+    super()
 
     if( model ) {
 

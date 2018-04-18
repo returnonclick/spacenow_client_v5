@@ -54,7 +54,7 @@ export class OpeningDay {
       this.closeHour   = model.closeHour || 23
       this.startMinute = model.startMinute || 0
       this.closeMinute = model.closeMinute || 0
-      this.isOpen      = model.isOpen || true
+      this.isOpen      = typeof model.isOpen == 'undefined' ? true : model.isOpen
     }
   }
 
@@ -74,13 +74,13 @@ export class OpeningTime extends Object {
   constructor(model: any = null) {
     super()
     if(model) {
-      this.sun = new OpeningDay(model.sun) || new OpeningDay()
-      this.mon = new OpeningDay(model.mon) || new OpeningDay()
-      this.tue = new OpeningDay(model.tue) || new OpeningDay()
-      this.wed = new OpeningDay(model.wed) || new OpeningDay()
-      this.thu = new OpeningDay(model.thu) || new OpeningDay()
-      this.fri = new OpeningDay(model.fri) || new OpeningDay()
-      this.sat = new OpeningDay(model.sat) || new OpeningDay()
+      this.sun = new OpeningDay(model.sun || null)
+      this.mon = new OpeningDay(model.mon || null)
+      this.tue = new OpeningDay(model.tue || null)
+      this.wed = new OpeningDay(model.wed || null)
+      this.thu = new OpeningDay(model.thu || null)
+      this.fri = new OpeningDay(model.fri || null)
+      this.sat = new OpeningDay(model.sat || null)
     }
   }
 

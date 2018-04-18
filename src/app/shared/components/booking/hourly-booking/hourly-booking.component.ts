@@ -73,7 +73,7 @@ export class HourlyBookingComponent {
       if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
         if ( i <= 10 )
           this.guests.push({
-            display: i + 'guest' + ((i == 1) ? '': 's'),
+            display: i + ' guest' + ((i == 1) ? '': 's'),
             value:   i,
           })
         else if (i == 11)
@@ -88,6 +88,10 @@ export class HourlyBookingComponent {
           value:   i,
         })
     }
+  }
+  
+  formatTime(time) {
+    return moment(time, 'HH').format('h a')
   }
 
   onSubmit() {

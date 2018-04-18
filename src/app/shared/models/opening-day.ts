@@ -4,16 +4,16 @@ export class OpeningDay extends Object {
   closeHour:   number  = 0
   startMinute: number  = 0 // not gonna be used yet
   closeMinute: number  = 0 // not gonna be used yet
-  isOpen:      boolean = true
+  isOpen:      boolean = false
 
   constructor(model: any = null) {
-    super(model)
+    super()
     if(model) {
       this.startHour   = model.startHour || 0
       this.closeHour   = model.closeHour || 0
       this.startMinute = model.startMinute || 0
       this.closeMinute = model.closeMinute || 0
-      this.isOpen      = model.isOpen || true
+      this.isOpen      = model.isOpen
     }
   }
 

@@ -11,7 +11,7 @@ export class Card extends Object {
 
   constructor( model: any = null) {
 
-    super(model)
+    super()
 
     if (model) {
 
