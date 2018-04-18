@@ -106,8 +106,29 @@ hr {
   color: #6cde93;
   font-size: 22px;
   font-weight: 450;
+  margin-top: 15px;
 }
 
-mat-expansion-panel {
-  box-shadow: none !important;
+::ng-deep {
+
+
+  #accordion{
+
+    .mat-expansion-panel {
+      box-shadow: none;
+    
+      &.mat-expanded .mat-expansion-panel-header .mat-expansion-indicator {
+        transform: rotate(270deg);
+      }
+
+      .mat-expansion-panel-header .mat-expansion-indicator::after {
+        color: #abcdef;
+      }
+    
+    }
+
+  }
+
 }
+
+
