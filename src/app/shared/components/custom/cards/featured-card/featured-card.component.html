@@ -1,4 +1,4 @@
-<mat-card [ngStyle]="{'background': 'url(' + data.images[imageIndex].imageURL + ')'}">
+<mat-card [ngStyle]="{'background': 'url(' + imageRequest + data.images[imageIndex].imageURL + ')'}">
     <mat-card-header>
         <span class="stamp" *ngIf="data.isNew">new</span>
         <div class="nav-slider" *ngIf="data.images">
