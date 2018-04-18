@@ -8,7 +8,10 @@ import { Component } from '@angular/core'
 
 export class HelpComponent {
 
-  topQuestion: boolean = false;
+  topQuestion: boolean = false
+  whatsNew: boolean = false
+  aboutSpacenow: boolean = false
+  gettingStarted: boolean = false
 
   constructor(){}
 
