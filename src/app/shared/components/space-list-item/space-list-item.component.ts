@@ -14,6 +14,8 @@ export class SpaceListItemComponent {
   @Input() space: ListingShortDetail = null
   imageIndex:     number             = 0
 
+  imageRequest = "https://sn-image-service.appspot.com/crop?key=Spacenow123&width=400&height=300&url="
+
   constructor(private _router: Router) { }
 
   handleClick(src) {

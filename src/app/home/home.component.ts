@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable, HostListener, ElementRef, Renderer2 } from '@angular/core'
+import { Component, Inject, Injectable, HostListener, ElementRef, Renderer2, ViewChild } from '@angular/core'
 import {
   trigger,
   state,
@@ -123,23 +123,26 @@ export class HomeComponent {
     this.form.get('latitude').setValue(address.latitude)
     this.form.get('longitude').setValue(address.longitude)
     this.form.get('name').setValue(address.full_name)
+    this.el.nativeElement.querySelector("#submitButton").click()
   }
 
-  onSubmit() {
+  onSubmit(event: any) {
     this.form.updateValueAndValidity()
-    if (this.form.invalid)
+    if (this.form.invalid) {
       return
+    } else {
+      let formVal = this.form.value
 
-    let formVal = this.form.value
+      this._router.navigate(['/search'], {
+        queryParams: {
+          name: encodeURIComponent(formVal.name),
+          radius: formVal.radius,
+          latitude: formVal.latitude, longitude: formVal.longitude
+        }
+      })
 
-    this._router.navigate(['/search'], {
-      queryParams: {
-        name: encodeURIComponent(formVal.name),
-        radius: formVal.radius,
-        latitude: formVal.latitude,
-        longitude: formVal.longitude
-      }
-    })
+    }
+
   }
 
   private createForm() {
