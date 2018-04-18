@@ -187,8 +187,6 @@ export class BookingComponent {
     this.bookingForm.value.availability.openingTime = this.openingTime
     
     this.bookingForm.value.availability.exceptionDays = this.listing.availability.exceptionDays
-    console.log(this.bookingForm.value)
-    // this.bookingForm.value.availability.exceptionDays = Object.assign(this.bookingForm.value.availability.exceptionDays, this.openingTime)
 
     if(this.listing.id) {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.bookingForm.value ))
