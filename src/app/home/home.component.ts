@@ -126,7 +126,7 @@ export class HomeComponent {
     this.el.nativeElement.querySelector("#submitButton").click()
   }
 
-  onSubmit(event: any) {
+  onSubmit() {
     this.form.updateValueAndValidity()
     if (this.form.invalid) {
       return
