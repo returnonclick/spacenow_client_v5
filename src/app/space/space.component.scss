@@ -32,7 +32,7 @@
   grid-gap: var(--gridGap);
 
   margin: 24px 60px;
-  max-width: 1200px;
+  max-width: 1300px;
 
   #space-description {
     > div {
@@ -322,7 +322,7 @@
 
 @include respond-to('md') {
   #hero-image-container {
-    height: 300px;
+    height: 500px;
   }
 
   #space-section {
@@ -338,6 +338,7 @@
       #space-booking {
         position: initial;
         top: initial;
+        margin-top: -192px;
       }
     }
 

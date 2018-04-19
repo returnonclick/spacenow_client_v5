@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError, mergeMap } from 'rxjs/operators';
 
-import { Listing } from '@shared/models/listing'
+import { Space } from '@shared/models/space'
 import { ListingService } from '@core/store/listings/services/listing'
 
 import * as actions from '@core/store/listings/actions/listing'

@@ -1,7 +1,7 @@
 import {
   ForgotPasswordComponent,
   SignInComponent,
-  SignUpComponent
+  SignUpComponent,
 } from './authentication'
 
 import {
@@ -17,12 +17,12 @@ import {
   SliderComponent,
   TableComponent,
   TestimonialComponent,
-  VideoPlayerComponent
+  VideoPlayerComponent,
 } from './custom'
 
 import {
   LayoutComponent,
-  LayoutNoFooterComponent
+  LayoutNoFooterComponent,
 } from './theme'
 
 import { SpaceListItemComponent } from './space-list-item/space-list-item.component'
@@ -33,6 +33,7 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
 import {
   GeneralBookingComponent,
   HourlyBookingComponent,
+  PoaBookingComponent,
 } from './booking'
 
 export {
@@ -60,6 +61,7 @@ export {
 
   GeneralBookingComponent,
   HourlyBookingComponent,
+  PoaBookingComponent,
 }
 
 export default {
@@ -86,4 +88,5 @@ export default {
   LoadingOverlayComponent,
   GeneralBookingComponent,
   HourlyBookingComponent,
+  PoaBookingComponent,
 }

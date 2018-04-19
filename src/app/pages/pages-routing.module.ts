@@ -22,23 +22,23 @@ const routes: Routes = [
     path: '',
     component: ContainerComponent,
     children: [
-        { path: '', redirectTo: 'terms', pathMatch: 'full' },
-        { path: 'terms', component: TermComponent },
-        { path: 'host-terms', component: HostTermComponent },
-        { path: 'privacy', component: PrivacyComponent },
-        { path: 'dictionary', component: DictionaryComponent },
-        { path: 'refund-policy', component: RefundPolicyComponent },
-        { path: 'about', component: AboutComponent },
-        { path: 'news', component: NewsComponent },
-        { path: 'help', component: HelpComponent,
-          children: [
-            { path: 'top-questions', component: TopQuestionComponent },
-            { path: 'about-spacenow', component: AboutSpacenowComponent },
-            { path: 'getting-started', component: GettingStartedComponent },
-            { path: 'new', component: HowWorksComponent },
-            { path: '', redirectTo: 'top', pathMatch: 'full' }
-          ]    
-        }
+      { path: '', redirectTo: 'terms', pathMatch: 'full' },
+      { path: 'terms', component: TermComponent },
+      { path: 'host-terms', component: HostTermComponent },
+      { path: 'privacy', component: PrivacyComponent },
+      { path: 'dictionary', component: DictionaryComponent },
+      { path: 'refund-policy', component: RefundPolicyComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'news', component: NewsComponent },
+      { path: 'help', component: HelpComponent,
+        children: [
+          { path: 'top-questions', component: TopQuestionComponent },
+          { path: 'about-spacenow', component: AboutSpacenowComponent },
+          { path: 'getting-started', component: GettingStartedComponent },
+          { path: 'new', component: HowWorksComponent },
+          { path: '', redirectTo: 'top', pathMatch: 'full' }
+        ]    
+      }
     ]
   }
 ]

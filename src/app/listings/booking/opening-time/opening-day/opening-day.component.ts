@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { Observable } from 'rxjs/Observable'
 
-import { OpeningDay } from '@models/opening-day'
+import { OpeningDay } from '@models/availability'
 
 @Component({
   selector: 'sn-opening-day',
@@ -88,7 +88,7 @@ export class OpeningDayComponent implements OnInit {
       this.openingDayForm.controls['startHour'].setValue(8.0)
     }
 
-    if(this.openingDay.closeHour === 0) {
+    if(this.openingDay.closeHour === 23 || this.openingDay.closeHour === 0) {
       this.openingDayForm.controls['closeHour'].setValue(18.0)
     }
 

@@ -5,6 +5,7 @@ import { Dictionary } from '@ngrx/entity/src/models'
 import { Store } from '@ngrx/store'
 import { } from 'googlemaps'
 import { Observable, Subject } from 'rxjs'
+import 'rxjs/add/operator/takeUntil'
 
 import { Amenity } from '@models/amenity'
 import { Category } from '@models/category'
@@ -88,7 +89,7 @@ export class SpaceComponent {
     this._store.dispatch(new amenityActions.Query)
     this._store.dispatch(new categoryActions.Query)
     this._store.dispatch(new layoutActions.SetLogoGreen)
-    this._store.dispatch(new userActions.Query)
+    // this._store.dispatch(new userActions.Query)
 
     this._route.params
       .takeUntil(this.stopper$)
@@ -142,7 +143,7 @@ export class SpaceComponent {
 
   jumpToSection() {
     try {
-      document.querySelector('#' + this.fragment).scrollIntoView();
+      document.querySelector('#' + this.fragment).scrollIntoView()
     }
     catch(e) { }
   }

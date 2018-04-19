@@ -24,6 +24,7 @@ import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.com
 import { GettingStartedComponent } from './help/getting-started/getting-started.component'
 import { HowWorksComponent } from './help/how-works/how-works.component'
 import { NewsComponent } from './news/news.component'
+import { NewsItemComponent } from './news/news-item/news-item.component'
 
 
 const COMPONENTS = [
@@ -39,7 +40,8 @@ const COMPONENTS = [
   AboutSpacenowComponent,
   GettingStartedComponent,
   HowWorksComponent,
-  NewsComponent
+  NewsComponent,
+  NewsItemComponent
 ]
 
 const ENTRY_COMPONENTS = [

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { AngularFirestore } from 'angularfire2/firestore'
 import { Observable } from 'rxjs'
 
@@ -34,7 +34,7 @@ export class SpaceService {
     return Observable.fromPromise(
       this.afs.firestore.collection(this._ref)
       .where(params[0], params[1], params[2])
-      .limit(20)
+      // .limit(20)
       .get()
       .then(snapshot => snapshot.docChanges)
     )

@@ -1,8 +1,45 @@
+@import
+  '~sass/abstracts/variables',
+  '~sass/abstracts/mixins',
+  '~sass/abstracts/icons';
+
 form {
   --gridGap: 20px;
 
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: repeat(4, auto);
-  grid-gap: var(--gridGap);
+  grid-gap: var(--gridGap) 0;
 }
+
+.icon-field {
+  display: grid;
+  grid-template-columns: 10% 85%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none
+}
+
+.mat-expansion-panel-header {
+  padding: 0 8px 0 0
+}
+
+.title-av {
+  display: grid;
+  grid-template-columns: 10% 85%;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 17px;
+}
+
+.av-content {
+  display: grid;
+  grid-template-columns: 10% 40% 50%;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+}
+

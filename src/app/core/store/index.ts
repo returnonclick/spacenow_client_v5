@@ -1,20 +1,19 @@
 import {
-    ActionReducerMap,
-    createSelector,
-    createFeatureSelector,
-    ActionReducer,
-    MetaReducer,
+  ActionReducerMap,
+  createSelector,
+  createFeatureSelector,
+  ActionReducer,
+  MetaReducer,
 } from '@ngrx/store'
 import { environment } from '../../../environments/environment'
 import { RouterStateUrl } from './utils'
-import { localStorageSync } from 'ngrx-store-localstorage'
 
 /**
  * storeFreeze prevents state from being mutated. When mutation occurs, an
  * exception will be thrown. This is useful during development mode to
  * ensure that none of the reducers accidentally mutates the state.
  */
-import { storeFreeze } from 'ngrx-store-freeze'
+// import { storeFreeze } from 'ngrx-store-freeze'
 
 /**
  * Every reducer module's default export is the reducer function itself. In
@@ -23,9 +22,9 @@ import { storeFreeze } from 'ngrx-store-freeze'
  * notation packages up all of the exports into a single object.
  */
 
-/** * The following line about layout is commented, but you can refer to * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts * for detailed implementations
+/**
+ * The following line about layout is commented, but you can refer to * https://github.com/ngrx/platform/blob/master/example-app/app/reducers/index.ts * for detailed implementations
  */
-
 import * as fromRouter                from '@ngrx/router-store'
 import * as fromAuth                  from '@core/store/auth/reducers/auth'
 import * as fromUsers                 from '@core/store/users/reducers/users'
@@ -36,30 +35,30 @@ import * as fromListingsShortDetail   from '@core/store/listings-short-detail/re
 import * as fromCategories            from '@core/store/categories/reducers/categories'
 import * as fromSearch                from '@core/store/search/reducers/search'
 import * as fromSpaces                from '@core/store/spaces/reducers/spaces'
-import * as fromCart                  from '@core/store/cart/reducers/cart'
-import * as fromCheckout              from '@core/store/checkout/reducers/checkout'
+import * as fromBooking               from '@core/store/bookings/reducers/booking'
 import * as fromAmenities             from '@core/store/amenities/reducers/amenities'
 import * as fromListingSpecifications from '@core/store/listing-specifications/reducers/listing-specifications'
+import * as fromPages                 from '@core/store/pages/reducers/pages'
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  auth:                     fromAuth.State
-  users:                    fromUsers.State
-  usersProfile:             fromUsersProfile.State
-  layouts:                  fromLayouts.State
-  listings:                 fromListings.State
-  listingsShortDetail:      fromListingsShortDetail.State
-  categories:               fromCategories.State
-  search:                   fromSearch.State
-  spaces:                   fromSpaces.State
-  cart:                     fromCart.State
-  checkout:                 fromCheckout.State
-  amenities:                fromAmenities.State
-  listingSpecifications:    fromListingSpecifications.State
-  routerReducer:            fromRouter.RouterReducerState<RouterStateUrl>
+  auth:                  fromAuth.State
+  users:                 fromUsers.State
+  usersProfile:          fromUsersProfile.State
+  layouts:               fromLayouts.State
+  listings:              fromListings.State
+  listingsShortDetail:   fromListingsShortDetail.State
+  categories:            fromCategories.State
+  search:                fromSearch.State
+  spaces:                fromSpaces.State
+  bookings:              fromBooking.State
+  amenities:             fromAmenities.State
+  listingSpecifications: fromListingSpecifications.State
+  pages:                 fromPages.State
+  routerReducer:         fromRouter.RouterReducerState<RouterStateUrl>
 }
 
 /**
@@ -68,20 +67,20 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-  auth:                     fromAuth.reducer,
-  users:                    fromUsers.reducer,
-  usersProfile:             fromUsersProfile.reducer,
-  layouts:                  fromLayouts.reducer,
-  listings:                 fromListings.reducer,
-  listingsShortDetail:      fromListingsShortDetail.reducer,
-  categories:               fromCategories.reducer,
-  spaces:                   fromSpaces.reducer,
-  search:                   fromSearch.reducer,
-  cart:                     fromCart.reducer,
-  checkout:                 fromCheckout.reducer,
-  amenities:                fromAmenities.reducer,
-  listingSpecifications:    fromListingSpecifications.reducer,
-  routerReducer:            fromRouter.routerReducer,
+  auth:                  fromAuth.reducer,
+  users:                 fromUsers.reducer,
+  usersProfile:          fromUsersProfile.reducer,
+  layouts:               fromLayouts.reducer,
+  listings:              fromListings.reducer,
+  listingsShortDetail:   fromListingsShortDetail.reducer,
+  categories:            fromCategories.reducer,
+  spaces:                fromSpaces.reducer,
+  search:                fromSearch.reducer,
+  bookings:              fromBooking.reducer,
+  amenities:             fromAmenities.reducer,
+  listingSpecifications: fromListingSpecifications.reducer,
+  pages:                 fromPages.reducer,
+  routerReducer:         fromRouter.routerReducer,
 }
 
 // console.log all actions
@@ -94,24 +93,14 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   }
 }
 
-export function saveToCache(reducer: ActionReducer<State>): ActionReducer<State> {
-  return localStorageSync({
-    keys: [
-      'cart',
-    ],
-    rehydrate: true,
-    removeOnUndefined: true,
-  })(reducer)
-}
-
 /**
  * By default, @ngrx/store uses combineReducers with the reducer map to compose
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, saveToCache] //[logger, storeFreeze, saveToCache]
-  : [saveToCache,]
+  ? [ logger ]
+  : []
 
 /**
  * Router Reducers
@@ -130,33 +119,32 @@ export const getAuthState = createFeatureSelector<fromAuth.State>('auth')
 
 export const getAuthUser = createSelector(
   getAuthState,
-  (state) => state.user
+  (state) => state.user,
 )
 
 export const getIsSignedIn = createSelector(
   getAuthState,
-  (state) => state.isSignedIn
+  (state) => state.isSignedIn,
 )
 
 export const getAuthError = createSelector(
-    getAuthState,
-    (state) => state.error
+  getAuthState,
+  (state) => state.error,
 )
 
 /**
  * Users Reducer
  */
-
 export const getUsersState = createFeatureSelector<fromUsers.State>('users')
 
 export const getUserEntitiesState = createSelector(
   getUsersState,
-  (state) => state
+  (state) => state,
 )
 
 export const getSelectedUserId = createSelector(
   getUserEntitiesState,
-  fromUsers.getSelectedId
+  fromUsers.getSelectedId,
 )
 
 export const {
@@ -170,19 +158,18 @@ export const getSelectedUser = createSelector(
   getUserEntities,
   getSelectedUserId,
   (entities, selectedId) => {
-    return selectedId && entities[selectedId];
-  }
+    return selectedId && entities[selectedId]
+  },
 )
 
 /**
  * Users Profile Reducer
  */
-
 export const getUsersProfileState = createFeatureSelector<fromUsersProfile.State>('usersProfile')
 
 export const getUserProfileEntitiesState = createSelector(
   getUsersProfileState,
-  (state) => state
+  (state) => state,
 )
 
 export const {
@@ -196,29 +183,28 @@ export const getSelectedUserProfile = createSelector(
   getUserProfileEntities,
   getUsersProfileState,
   (entities, profileState) => {
-    return profileState.selectedId && entities[profileState.selectedId];
-  }
+    return profileState.selectedId && entities[profileState.selectedId]
+  },
 )
 
 export const getSelectedUserProfileId = createSelector(
   getUsersProfileState,
-  (state) => state.selectedId
+  (state) => state.selectedId,
 )
 
 export const getIsLoadingProfile = createSelector(
   getUsersProfileState,
-  (state) => state.loading
+  (state) => state.loading,
 )
 
- /**
+/**
  * Listings Reducers
  */
-
 export const getListingsState = createFeatureSelector<fromListings.State>('listings')
 
 export const getListingEntitiesState = createSelector(
   getListingsState,
-  (state) => state
+  (state) => state,
 )
 
 export const getSelectedListingId = (state: fromListings.State) => state.selectedListingId
@@ -228,14 +214,14 @@ export const selectListingEntities = createSelector(getListingsState, (listingsS
 export const selectCurrentListing = createSelector(
   selectListingEntities,
   selectCurrentListingId,
-  (listingEntities, listingId) => listingEntities[listingId]
+  (listingEntities, listingId) => listingEntities[listingId],
 )
 
 export const {
   selectIds:      getListingIds,
   selectEntities: getListingEntities,
   selectAll:      getAllListings,
-  selectTotal:    getTotalListings
+  selectTotal:    getTotalListings,
 } = fromListings.listingAdapter.getSelectors(getListingEntitiesState)
 
 export const getSelectedListing = createSelector(
@@ -246,59 +232,56 @@ export const getSelectedListing = createSelector(
 
 export const getIsListingLoading = createSelector(
   getListingsState,
-  (state) => state.loading
+  (state) => state.loading,
 )
 
 
 /**
- * Listings Reducers
+ * Listings Short Detail Reducers
  */
-
 export const getListingsShortDetailState = createFeatureSelector<fromListingsShortDetail.State>('listingsShortDetail')
 
 export const getListingsShortDetailEntitiesState = createSelector(
   getListingsShortDetailState,
-  (state) => state
+  (state) => state,
 )
 
 export const {
   selectIds:      getListingsShortDetailIds,
   selectEntities: getListingsShortDetailEntities,
   selectAll:      getAllListingsShortDetail,
-  selectTotal:    getTotalListingsShortDetail
+  selectTotal:    getTotalListingsShortDetail,
 } = fromListingsShortDetail.listingShortDetailAdapter.getSelectors(getListingsShortDetailEntitiesState)
 
 
- /**
+/**
  * Layouts Reducers
  */
-
 export const getLayoutsState = createFeatureSelector<fromLayouts.State>('layouts')
 
 export const getShowSidenav = createSelector(
   getLayoutsState,
-  (state) => state.showSidenav
+  (state) => state.showSidenav,
 )
 
 export const getLogo = createSelector(
   getLayoutsState,
-  (state) => state.logo
+  (state) => state.logo,
 )
 
 export const getSidenavComponent = createSelector(
   getLayoutsState,
-  (state) => state.sidenavComponent
+  (state) => state.sidenavComponent,
 )
 
 /**
  * Categories Reducers
  */
-
 export const getCategoriesState = createFeatureSelector<fromCategories.State>('categories')
 
 export const getCategoryEntitiesState = createSelector(
   getCategoriesState,
-  (state) => state
+  (state) => state,
 )
 
 export const {
@@ -310,7 +293,7 @@ export const {
 
 export const getIsCategoryLoading = createSelector(
   getCategoriesState,
-  fromCategories.getLoading
+  fromCategories.getLoading,
 )
 
 /**
@@ -320,7 +303,7 @@ export const getSearchState = createFeatureSelector<fromSearch.State>('search')
 
 export const getSearchEntitiesState = createSelector(
   getSearchState,
-  (state) => state
+  (state) => state,
 )
 
 export const {
@@ -339,75 +322,80 @@ export const getSpacesState = createFeatureSelector<fromSpaces.State>('spaces')
 
 export const getSpaceEntitiesState = createSelector(
   getSpacesState,
-  (state) => state
+  (state) => state,
 )
 
 export const {
   selectIds:      getSpaceIds,
   selectEntities: getSpaceEntities,
   selectAll:      getAllSpaces,
-  selectTotal:    getTotalSpaces
+  selectTotal:    getTotalSpaces,
 } = fromSpaces.spaceAdapter.getSelectors(getSpaceEntitiesState)
 export const isLoadingSpaces = createSelector(getSpacesState, fromSpaces.isLoading)
 
 
 /**
- *  Cart Reducer
+ *  Bookings Reducer
  */
-export const getCartState = createFeatureSelector<fromCart.State>('cart')
+export const getBookingsState = createFeatureSelector<fromBooking.State>('bookings')
 
-export const getCartEntitiesState = createSelector(
-  getCartState,
+export const {
+  selectIds:      getBookingIds,
+  selectEntities: getBookingEntities,
+  selectAll:      getAllBookings,
+  selectTotal:    getTotalBookings,
+} = fromBooking.bookingAdapter.getSelectors(getBookingsState)
+export const getBookingId      = createSelector(getBookingsState, fromBooking.getBookingId)
+export const isBookingsLoading = createSelector(getBookingsState, fromBooking.isLoading)
+export const getBookingsError  = createSelector(getBookingsState, fromBooking.getError)
+
+/**
+ * Amenities Reducers
+ */
+export const getAmenitiesState = createFeatureSelector<fromAmenities.State>('amenities')
+
+export const getAmenityEntitiesState = createSelector(
+  getAmenitiesState,
+  (state) => state,
+)
+
+export const {
+  selectIds: getAmenityIds,
+  selectEntities: getAmenityEntities,
+  selectAll: getAllAmenities,
+  selectTotal: getTotalAmenities,
+} = fromAmenities.amenityAdapter.getSelectors(getAmenityEntitiesState)
+
+/**
+ * ListingSpecifications Reducers
+ */
+export const getListingSpecificationsState = createFeatureSelector<fromListingSpecifications.State>('listingSpecifications')
+
+export const getListingSpecificationEntitiesState = createSelector(
+  getListingSpecificationsState,
+  (state) => state,
+)
+
+export const {
+  selectIds:      getListingSpecificationIds,
+  selectEntities: getListingSpecificationEntities,
+  selectAll:      getAllListingSpecifications,
+  selectTotal:    getTotalListingSpecifications,
+} = fromListingSpecifications.listingSpecificationAdapter.getSelectors(getListingSpecificationEntitiesState)
+
+/**
+ * Pages Reducers
+ */
+export const getPagesState = createFeatureSelector<fromPages.State>('pages')
+
+export const getPageEntitiesState = createSelector(
+  getPagesState,
   (state) => state
 )
 
 export const {
-  selectIds:      getBookingSpaceIds,
-  selectEntities: getBookingSpaceEntities,
-  selectAll:      getAllBookingSpaces,
-  selectTotal:    getTotalBookingSpaces,
-} = fromCart.cartAdapter.getSelectors(getCartEntitiesState)
-export const getCartError = createSelector(getCartState, fromCart.getError)
-
-/**
- *  Checkout State
- */
-export const getCheckoutState = createFeatureSelector<fromCheckout.State>('checkout')
-
-export const checkoutIsLoading = createSelector(getCheckoutState, fromCheckout.getIsLoading)
-export const getBookingId      = createSelector(getCheckoutState, fromCheckout.getBookingId)
-export const getCheckoutError  = createSelector(getCheckoutState, fromCheckout.getError)
-
-/**
-* Amenities Reducers
-*/
-export const getAmenitiesState = createFeatureSelector<fromAmenities.State>('amenities')
-
-export const getAmenityEntitiesState = createSelector(
-    getAmenitiesState,
-    (state) => state
-)
-
-export const {
-    selectIds: getAmenityIds,
-    selectEntities: getAmenityEntities,
-    selectAll: getAllAmenities,
-    selectTotal: getTotalAmenities,
-  } = fromAmenities.amenityAdapter.getSelectors(getAmenityEntitiesState)
-
-/**
-* ListingSpecifications Reducers
-*/
-export const getListingSpecificationsState = createFeatureSelector<fromListingSpecifications.State>('listingSpecifications')
-
-export const getListingSpecificationEntitiesState = createSelector(
-    getListingSpecificationsState,
-    (state) => state
-)
-
-export const {
-    selectIds: getListingSpecificationIds,
-    selectEntities: getListingSpecificationEntities,
-    selectAll: getAllListingSpecifications,
-    selectTotal: getTotalListingSpecifications,
-  } = fromListingSpecifications.listingSpecificationAdapter.getSelectors(getListingSpecificationEntitiesState)
+  selectIds:      getPageIds,
+  selectEntities: getPageEntities,
+  selectAll:      getAllPages,
+  selectTotal:    getTotalPages,
+} = fromPages.pageAdapter.getSelectors(getPageEntitiesState)

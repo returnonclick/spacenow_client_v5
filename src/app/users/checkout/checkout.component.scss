@@ -1,0 +1,161 @@
+@import '~sass/abstracts/mixins';
+
+section#checkout {
+  --gridGap: 40px;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 65% calc(35% - var(--gridGap));
+  grid-gap: var(--gridGap);
+
+  margin: 24px auto;
+  max-width: 1300px;
+
+  mat-tab-header {
+    border-bottom: 1px solid transparent;
+  }
+
+  .mat-tab-body-content {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 0;
+
+    section {
+      padding: 16px 0;
+
+      strong {
+        font-weight: 600;
+      }
+    }
+
+    h4 {
+      margin-top: 28px;
+    }
+
+    ol {
+      counter-reset: c;
+
+      > li {
+        list-style-position: inside;
+        text-indent: -1em;
+        margin: 1em 2em;
+
+        &:before {
+          content: counter(c, decimal);
+          counter-increment: c;
+          padding-right: 0.2em;
+        }
+      }
+    }
+
+  }
+
+  .confirm-user {
+    mat-form-field {
+      width: 100%;
+
+      textarea {
+        resize: none;
+      }
+    }
+  }
+
+  .booking-cart {
+    padding: 28px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 20px 0 rgba(48, 48, 48, 0.2);
+
+    > .space-breakdown {
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+
+      ul {
+        padding-left: 16px;
+
+        li:before {
+          content: '\2022';
+          font-weight: 800;
+          margin-right: 8px;
+        }
+      }
+
+      > button {
+        font-size: 14px;
+        font-weight: 400;
+        width: 100%;
+        margin-top: 12px;
+      }
+
+      > span.none {
+        text-align: center;
+        display: block;
+      }
+
+      .day-breakdown {
+        margin-top: 12px;
+      }
+
+      &:first-child {
+        margin-top: 16px;
+      }
+    }
+
+    > .price-breakdown {
+      margin-top: 16px;
+      width: 100%;
+      font-size: 14px;
+
+      tr {
+        --tdPadding: 4px 4px;
+        td {
+          padding: var(--tdPadding);
+
+          &:nth-child(2) {
+            text-align: right;
+          }
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid rgba(48, 48, 48, 0.2);
+        }
+
+        &:last-child {
+          --tdPadding: 8px 4px;
+          font-size: 1.5em;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+}
+
+@include respond-to('md') {
+
+  section#checkout {
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto;
+    margin: 24px 40px;
+
+    aside {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+    }
+
+    div#main {
+      grid-row: 2 / 3;
+      grid-column: 1 / 2;
+    }
+
+  }
+
+}
+
+@include respond-to('sm') {
+
+  section#checkout {
+    margin: 24px 20px;
+  }
+
+}

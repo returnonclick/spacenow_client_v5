@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" *ngIf="space">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Name" formControlName="name" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="email" placeholder="Email" formControlName="email" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Phone Number" formControlName="phone">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Message" formControlName="message" rows="5" required></textarea>
+  </mat-form-field>
+  <button mat-raised-button type="submit" [disabled]="form.pristine || form.invalid">Send Enquiry</button>
+</form>

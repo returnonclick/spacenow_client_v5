@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 
-import { OpeningDay } from '@models/opening-day'
-import { OpeningTime } from '@models/opening-time'
+import { OpeningDay } from '@models/availability'
+import { OpeningTime } from '@models/availability'
 
 @Component({
   selector: 'sn-opening-time',
