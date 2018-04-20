@@ -14,6 +14,8 @@ const routes: Routes = [
   { path: 'my-calendar', component: CalendarComponent },
   { path: 'my-bookings', component: BookingsComponent },
   { path: 'booking-requests', component: BookingRequestsComponent },
+  { path: 'booking-requests/:id', component: BookingRequestsComponent },
+  { path: 'booking-requests/:id/:action', component: BookingRequestsComponent },
   { path: 'checkout/:id', component: CheckoutComponent },
   { path: '', redirectTo: '/my-profile', pathMatch: 'full' },
 ]

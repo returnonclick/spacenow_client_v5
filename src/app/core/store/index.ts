@@ -161,6 +161,7 @@ export const getSelectedUser = createSelector(
     return selectedId && entities[selectedId]
   },
 )
+export const isLoadingUsers = createSelector(getUsersState, fromUsers.getLoading)
 
 /**
  * Users Profile Reducer

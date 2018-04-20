@@ -1,10 +1,13 @@
 import { Action } from '@ngrx/store'
 
-import { Booking } from '@models/booking'
+import { Booking, BookingStatus } from '@models/booking'
 
 export const QUERY     = '[Booking] query'
 export const SELECT    = '[Booking] select'
+export const FILTER    = '[Booking] filter'
 export const BOOK      = '[Booking] book'
+export const APPROVE   = '[Booking] approve'
+export const REJECT    = '[Booking] reject'
 export const CHECKOUT  = '[Booking] checkout'
 
 export const ADDED     = '[Booking] added'
@@ -24,9 +27,27 @@ export class Select implements Action {
   constructor(public bookingId: string) { }
 }
 
+export class Filter implements Action {
+  readonly type = FILTER
+  constructor(
+    public spaceIds: string[],
+    public status: BookingStatus = BookingStatus.PENDING,
+  ) { }
+}
+
 export class Book implements Action {
   readonly type = BOOK
   constructor(public booking: Booking) { }
+}
+
+export class Approve implements Action {
+  readonly type = APPROVE
+  constructor(public bookingId: string) { }
+}
+
+export class Reject implements Action {
+  readonly type = REJECT
+  constructor(public bookingId: string) { }
 }
 
 export class Checkout implements Action {
@@ -61,8 +82,12 @@ export class Fail implements Action {
 
 export type BookingActions
   = Query
-  | Book
   | Select
+  | Filter
+  | Book
+  | Approve
+  | Reject
+  | Checkout
   | Added
   | Modified
   | Removed

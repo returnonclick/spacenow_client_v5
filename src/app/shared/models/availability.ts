@@ -10,7 +10,6 @@ export class Availability extends Object{
   constructor( model: any = null ) {
     super()
     if ( model ) {
-      console.log(model)
       this.bookingType      = model.bookingType || 'instantly'
       this.leadTime         = model.leadTime || 1
       this.openingTime      = new OpeningTime(model.openingTime) || new OpeningTime()

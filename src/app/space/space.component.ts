@@ -74,7 +74,7 @@ export class SpaceComponent {
             this._store.dispatch(new profileActions.Query(this.owner.uid))
           }
           else
-            this._store.dispatch(new userActions.QueryOne(this.space.ownerUid))
+            this._store.dispatch(new userActions.Select([ this.space.ownerUid ]))
         }
       })
 
@@ -89,7 +89,6 @@ export class SpaceComponent {
     this._store.dispatch(new amenityActions.Query)
     this._store.dispatch(new categoryActions.Query)
     this._store.dispatch(new layoutActions.SetLogoGreen)
-    // this._store.dispatch(new userActions.Query)
 
     this._route.params
       .takeUntil(this.stopper$)

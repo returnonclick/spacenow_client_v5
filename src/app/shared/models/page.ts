@@ -1,12 +1,12 @@
-/* 
+/*
  * MODEL NAME
  * PageModel
- * 
+ *
  * IMPORTED MODES
  * Category
- * 
+ *
  * Path to firebase: `/pages/{$pageID}`
- * 
+ *
  *  */
 
 // import { PageCategory } from '@shared/models/page-category'
@@ -24,7 +24,6 @@ export class Page extends Object {
 
   constructor( model: any = null ) {
     super()
-    console.log('model')
     if(model) {
 
       this.id      = model.id || ''
@@ -48,7 +47,7 @@ class Content {
 
   constructor( model: any = null ) {
 
-    if(model) { 
+    if(model) {
 
       this.title       = model.title || ''
       this.description = model.description || []
