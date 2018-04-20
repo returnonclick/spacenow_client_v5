@@ -20,11 +20,6 @@ import {
   VideoPlayerComponent,
 } from './custom'
 
-import {
-  LayoutComponent,
-  LayoutNoFooterComponent,
-} from './theme'
-
 import { SpaceListItemComponent } from './space-list-item/space-list-item.component'
 
 import { LoadingComponent } from './loading/loading.component'
@@ -54,8 +49,6 @@ export {
   TableComponent,
   TestimonialComponent,
   VideoPlayerComponent,
-  LayoutComponent,
-  LayoutNoFooterComponent,
   LoadingComponent,
   LoadingOverlayComponent,
 
@@ -82,8 +75,6 @@ export default {
   TableComponent,
   TestimonialComponent,
   VideoPlayerComponent,
-  LayoutComponent,
-  LayoutNoFooterComponent,
   LoadingComponent,
   LoadingOverlayComponent,
   GeneralBookingComponent,

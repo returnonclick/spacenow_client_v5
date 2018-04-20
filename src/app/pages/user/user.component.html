@@ -1,0 +1,47 @@
+<gen-loading *ngIf="(isLoading$ | async) else profileContainer"></gen-loading>
+
+<ng-template #profileContainer>
+    <div class="grid">
+        <div class="wrapper">
+            <nav class="navigation" fxFlex fxLayout="column" fxLayoutAlign=" end">
+                <a href="#"><h4>Edit Profile</h4></a>
+                <a href="#"><h4>Settings</h4></a>
+                <a href="#"><h4>Logout</h4></a>
+            </nav>
+            <!-- SECTION ONE -->
+            <div id="profile" *ngIf="(authUser$ | async) as user" class="content">
+                <div class="header">
+                    <h1>My Profile</h1>
+                    <p class="warning" *ngIf="!user.isVerified">It looks like the email {{ user.email }} hasn't been verified yet. Please check your inbox for verification email. Resend email verification.</p>
+                </div>
+                <section>
+                    <div class="required">
+
+                        <!-- CONTACT FORM  -->
+                        <router-outlet></router-outlet>
+                        <!-- END CONTACT FORM  -->
+
+                    </div>
+                    <div class="picture">
+                        <h4>Current Profile Picture</h4>
+                        <image-data [path]='storagePath' (getImage)="getImage($event)"></image-data>
+
+                        <!-- <img [src]="user.photoURL" width="200" height="200" class="profile-picture"> -->
+
+                    </div>
+                    <div class="about-me">
+                        <h4>About Me</h4>
+                        <form (ngSubmit)="setAboutMe()" [formGroup]="aboutMeForm">
+                            <mat-form-field floatLabel="never">
+                                <textarea matInput placeholder="Tell something about yourself..." rows="5" formControlName="aboutMe"></textarea>
+                            </mat-form-field>
+                            <button mat-raised-button type="submit">Update</button>
+                        </form>
+                    </div>
+                    <!-- <button mat-raised-button (click)="getImages()">show images</button> -->
+                </section>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
