@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import { of } from 'rxjs/observable/of'
 import { map, switchMap, catchError, mergeMap } from 'rxjs/operators'
 
-import { Space } from '@shared/models/space'
+import { ListingShortDetail } from '@shared/models/listing-short-detail'
 import { SearchService } from '@core/store/search/services/search'
 
 import * as actions from '@core/store/search/actions/search'
@@ -17,7 +17,13 @@ export class SearchEffects {
   query$ = this._actions$.pipe(
     ofType<actions.Query>(actions.QUERY),
     switchMap(action => this._service.query(action.params)),
-    map(spaces => new actions.Done(spaces))
+    mergeMap(changes => changes),
+    map(action => {
+      return {
+        type: `[Search] ${action.type}`,
+        payload: action.doc.data()
+      }
+    })
   )
 
   constructor(

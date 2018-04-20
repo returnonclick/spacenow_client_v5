@@ -7,10 +7,12 @@ import { AgmMap, AgmMarker } from '@agm/core'
 import { } from 'googlemaps'
 
 import { ListingShortDetail } from '@shared/models/listing-short-detail'
+import { Category } from '@shared/models/category'
 
 import * as fromRoot from '@core/store'
 import * as searchActions from '@core/store/search/actions/search'
 import * as layoutActions from '@core/store/layouts/actions/layout'
+import * as categoryActions from '@core/store/categories/actions/category'
 
 @Component({
   selector: 'sn-search',
@@ -27,12 +29,18 @@ export class SearchComponent {
   latitude:   number                                    = -33.9108137
   longitude:  number                                    = 151.1960078
 
-  results$:   Observable<ListingShortDetail[]>
-  isLoading$: Observable<boolean>
+  results$:       Observable<ListingShortDetail[]>
+  resultsBackup$: Observable<ListingShortDetail[]>
+  isLoading$:     Observable<boolean>
 
   form:       FormGroup
   nativeMap:  google.maps.Map                           = null
   markerMap:  { [spaceId: string]: google.maps.Marker } = {}
+
+  categories$:   Observable<Category[]>
+  minPrice:      number                                   = null
+  maxPrice:      number                                   = null
+  categorySlug:  string                                   = ''
 
   constructor(
     private _fb:     FormBuilder,
@@ -40,12 +48,16 @@ export class SearchComponent {
     private _router: Router,
     private _store:  Store<fromRoot.State>,
   ) {
-    this.results$   = this._store.select(fromRoot.getAllSearches)
-    this.isLoading$ = this._store.select(fromRoot.isLoadingSearch)
+    this.results$     = this.resultsBackup$ = this._store.select(fromRoot.getAllSearches)
+    this.results$.subscribe(res => console.log(res))
+    this.isLoading$   = this._store.select(fromRoot.isLoadingSearch)
+    this.categories$  = this._store.select(fromRoot.getAllCategories)
+    
   }
 
   ngOnInit() {
     this._store.dispatch(new layoutActions.SetLogoGreen)
+    this._store.dispatch(new categoryActions.Query())
 
     Observable.combineLatest(
       this._route.queryParams,
@@ -56,6 +68,9 @@ export class SearchComponent {
         this.radius    = +queryParams.radius || this.radius
         this.latitude  = +queryParams.latitude || this.latitude
         this.longitude = +queryParams.longitude || this.longitude
+        this.categorySlug = queryParams.categorySlug || this.categorySlug
+        this.maxPrice = +queryParams.maxPrice || this.maxPrice
+        this.minPrice = +queryParams.minPrice || this.minPrice
         this._store.dispatch(new searchActions.Query(queryParams))
 
         if(!this.nativeMap)
@@ -64,7 +79,7 @@ export class SearchComponent {
         this._updateForm()
       }
     })
-
+    
     Observable.combineLatest(
       this.results$,
       this.map.mapReady,
@@ -107,6 +122,9 @@ export class SearchComponent {
         radius:    formVal.radius,
         latitude:  formVal.latitude,
         longitude: formVal.longitude,
+        categorySlug:  formVal.categorySlug,
+        minPrice: formVal.minPrice,
+        maxPrice: formVal.maxPrice
       }
     })
   }
@@ -130,11 +148,24 @@ export class SearchComponent {
 
   private _updateForm() {
     this.form = this._fb.group({
-      name:      [ this.name, Validators.required ],
-      radius:    [ this.radius, Validators.required ],
-      latitude:  [ this.latitude ],
-      longitude: [ this.longitude ],
+      name:       [ this.name, Validators.required ],
+      radius:     [ this.radius, Validators.required ],
+      latitude:   [ this.latitude ],
+      longitude:  [ this.longitude ],
+      minPrice:   [ this.minPrice ],
+      maxPrice:   [ this.maxPrice ],
+      categorySlug: [ this.categorySlug ],
     })
   }
+
+  // Filters
+  // categoryFilter() {
+  //   let results: Observable<ListingShortDetail[]>
+
+  //   this.resultsBackup$.subscribe(res => {    
+  //     this.results$ = Observable.of(res.filter(result => result.categorySlug === this.form.value.categorySlug))
+  //     // this.refreshMap(Observable.of(res.filter(result => result.categorySlug === this.form.value.categorySlug)))
+  //   })
+  // }
 
 }
