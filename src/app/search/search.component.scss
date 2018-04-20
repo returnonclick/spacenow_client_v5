@@ -3,7 +3,6 @@
 
 :host {
   --numColumns: 2;
-  --hover: #6cde93;
   --gridSpace: 20px;
 
   display: block;
@@ -73,18 +72,17 @@
 @include respond-to('xs') {
 
   .search-container {
-    
+
     .search-results {
-  
+
       display: grid;
       grid-template-columns: 1fr;
       grid-gap: var(--gridSpace);
-  
+
       overflow: scroll;
-  
+
     }
 
   }
 
 }
-
