@@ -16,14 +16,14 @@
     </div>
 
     <div class="actions">
-      <button mat-raised-button type="submit" class="next-button" 
-              [disabled]="specificationForm.invalid"> 
-              Continue 
+      <button mat-raised-button type="submit" class="next-button"
+              [disabled]="specificationForm.invalid">
+              Continue
       </button>
-      <button mat-button type="button" class="back-button" (click)="back()"> 
-            Back 
+      <button mat-button type="button" class="back-button" [disableRipple]="true" (click)="back()"> 
+            Back
       </button>
     </div>
   </div>
-  
+
 </form>

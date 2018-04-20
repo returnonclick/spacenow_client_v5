@@ -8,14 +8,14 @@
       <mat-form-field class="unit">
         <mat-select placeholder="Pricing System" name="priceUnit" formControlName="priceUnit" required (change)="loadComponent()">
           <mat-option *ngFor="let unit of priceUnits" [value]="unit.value" >
-            {{ unit.display }} 
+            {{ unit.display }}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="currency">
         <mat-select placeholder="Currency" name="currency" formControlName="currency" required>
           <mat-option *ngFor="let currency of currencies" [value]="currency">
-            {{ currency }} 
+            {{ currency }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -28,7 +28,7 @@
         <mat-form-field class="taxName">
           <mat-select placeholder="Registered for tax?" name="tax" formControlName="name" required>
             <mat-option *ngFor="let taxName of taxOptions" [value]="taxName.value" (click)="filterCountry(taxName.value)">
-              {{ taxName.display }} 
+              {{ taxName.display }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -55,12 +55,12 @@
 
     </div>
     <div class="actions">
-      <button mat-raised-button type="submit" class="next-button" 
-              [disabled]="priceForm.invalid"> 
-              Continue 
+      <button mat-raised-button type="submit" class="next-button"
+              [disabled]="priceForm.invalid">
+              Continue
       </button>
-      <button mat-button type="button" class="back-button" (click)="back()"> 
-            Back 
+      <button mat-button type="button" class="back-button" [disableRipple]="true" (click)="back()"> 
+            Back
       </button>
     </div>
   </div>

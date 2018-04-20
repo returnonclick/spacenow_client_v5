@@ -6,13 +6,13 @@
       <span style="font-size: 60px; line-height: 60px;">Booking system</span>
     </div>
     <div class="content" fxLayout="row wrap" fxLayoutAlign="space-between" formGroupName="availability">
-      
+
       <div class="booking-type" fxFlex="25%" fxFlex.lt-md="20%" fxFlex.lt-sm="100%" fxLayout="column">
 
         <mat-form-field>
           <mat-select placeholder="Booking System" name="booking-type" formControlName="bookingType" required [disabled]="this.listing?.price.price === 0">
             <mat-option *ngFor="let bookingType of bookingTypes" [value]="bookingType.value">
-              {{ bookingType.display }} 
+              {{ bookingType.display }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -20,16 +20,16 @@
         <mat-form-field>
           <mat-select placeholder="Lead Time" name="lead-time" formControlName="leadTime" required>
             <mat-option *ngFor="let leadTime of leadTimeOptions" [value]="leadTime">
-              {{ leadTime }} {{ leadTime === 1 ? leadTimeType : leadTimeType + 's' }} 
+              {{ leadTime }} {{ leadTime === 1 ? leadTimeType : leadTimeType + 's' }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        
+
         <div class="checkbox-list">
           <mat-checkbox (change)="onOpen247Change($event)" formControlName="isOpen247">Open 24/7</mat-checkbox>
         </div>
       </div>
-    
+
       <div class="booking-times"
         *ngIf="!bookingForm.controls.availability.value.isOpen247"
         fxFlex="60%" fxFlex.lt-md="75%" fxFlex.lt-sm="100%" fxLayout="column">
@@ -42,14 +42,14 @@
     </div>
 
     <div class="actions">
-      <button mat-raised-button type="submit" class="next-button" 
-              [disabled]="bookingForm.invalid"> 
-              Continue 
+      <button mat-raised-button type="submit" class="next-button"
+              [disabled]="bookingForm.invalid">
+              Continue
       </button>
-      <button mat-button type="button" class="back-button" (click)="back()"> 
-            Back 
+      <button mat-button type="button" class="back-button" [disableRipple]="true" (click)="back()"> 
+            Back
       </button>
     </div>
   </div>
-  
+
 </form>

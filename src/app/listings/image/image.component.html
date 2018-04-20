@@ -2,12 +2,12 @@
 <div class="image">
   <div class="title">
       <span style="font-size: 60px;line-height: 60px;">Upload your photos</span>
-  </div> 
+  </div>
   <div class="content">
       <div id="select-one"><span *ngIf="images.length < 3">Please upload at least 3 photos</span></div>
     <image-data #imageRef [path]='storagePath' (getImage)="getImage($event)"></image-data>
 
-   
+
 
     <div fxLayout="row wrap" fxLayoutAlign="start">
 
@@ -16,22 +16,21 @@
         <div class="overlay">
           <div class="text"><mat-icon (click)="remove(image)" id="delete-button">delete</mat-icon></div>
         </div>
-       
-      </div>  
+
+      </div>
       <div class="plus-divs container" fxLayoutAlign="center center" *ngFor="let count of getCountArray(countImages); let i = index">
         <mat-icon class="add-icon" *ngIf="i === 0" (click)="imageRef.triggerUpload()">add</mat-icon>
       </div>
 
     </div>
-    
+
   </div>
   <div class="actions">
-    <button mat-raised-button type="button" class="next-button" (click)="onSubmit()" [disabled]="!valid"> 
-        Continue 
+    <button mat-raised-button type="button" class="next-button" (click)="onSubmit()" [disabled]="!valid">
+        Continue
     </button>
-    <button mat-button type="button" class="back-button" (click)="back()"> 
-          Back 
+    <button mat-button type="button" class="back-button" [disableRipple]="true" (click)="back()"> 
+          Back
     </button>
   </div>
 </div>
-

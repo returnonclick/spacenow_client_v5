@@ -10,7 +10,7 @@
         <mat-form-field fxFlex="20%" fxFlex.lt-sm="40%">
           <input matInput readonly [matDatepicker]="picker" placeholder="From" formControlName="fromDate" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker> 
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <div fxFlex="5%" fxLayoutAlign="center center"><span>to</span></div>
         <mat-form-field fxFlex="20%" fxFlex.lt-sm="40%">
@@ -23,7 +23,7 @@
           <input matInput formControlName="note" placeholder="Note" maxlength="30">
         </mat-form-field>
         <div fxFlex="10%" style="padding: 22px 0;">
-          <a (click)="addExceptionDate()" 
+          <a (click)="addExceptionDate()"
               type="button"
               [ngClass]="{'disable-add': exceptionForm.controls.availability.invalid}"
               style="cursor: pointer">
@@ -31,7 +31,7 @@
           </a>
         </div>
       </div>
-    
+
       <!-- Show list of added exceptions -->
       <div *ngFor="let day of exceptionDays" fxFlexLayout="row wrap" fxLayoutAlign="space-between" id="box-exception" style="margin-bottom: 20px;">
 
@@ -40,24 +40,24 @@
           <div fxFlex="5%" fxLayoutAlign="center center" id="to-span"><span>to</span></div>
 
           <span fxFlex="20%" fxFlex.lt-sm="40%" class="dates-background"> {{day.toDate | date: 'd MMMM, yyyy'}}</span>
-        
+
           <div fxFlex="30%" fxFlex.lt-sm="80%"><span style="width: 100%">{{ day.note }}</span></div>
 
           <button fxFlex="10%" class="add-button" mat-icon-button (click)="deleteExceptionDay(day)" type="button">
             <mat-icon class="delete-button">delete_forever</mat-icon>
           </button>
 
-      </div> 
+      </div>
 
     </div>
     <div class="actions">
-      <button mat-raised-button type="submit" class="next-button"> 
-          Continue 
+      <button mat-raised-button type="submit" class="next-button">
+          Continue
       </button>
-      <button mat-button type="button" class="back-button" (click)="back()"> 
-            Back 
+      <button mat-button type="button" class="back-button" [disableRipple]="true" (click)="back()"> 
+            Back
       </button>
     </div>
   </div>
-  
+
 </form>

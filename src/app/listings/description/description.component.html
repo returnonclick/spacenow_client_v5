@@ -13,7 +13,7 @@
       <div fxLayout="row" style="margin-top: 20px">
         <span>Description *</span>
       </div>
-      <textarea 
+      <textarea
         (blur)="redBox()"
         (input)="redBox()"
         [ngClass]="{'textarea-required': textareaStatus}"
@@ -36,14 +36,14 @@
     </div>
 
     <div class="actions">
-      <button mat-raised-button type="submit" class="next-button" 
-              [disabled]="descriptionForm.invalid"> 
-              Continue 
+      <button mat-raised-button type="submit" class="next-button"
+              [disabled]="descriptionForm.invalid">
+              Continue
       </button>
-      <button mat-button type="button" class="back-button" (click)="back()"> 
-            Back 
+      <button mat-button type="button" class="back-button" [disableRipple]="true" (click)="back()"> 
+            Back
       </button>
     </div>
   </div>
-  
+
 </form>

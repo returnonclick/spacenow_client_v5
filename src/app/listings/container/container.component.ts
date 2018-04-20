@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from "@angular/router"
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
@@ -13,7 +13,8 @@ import * as layoutActions from '@core/store/layouts/actions/layout'
 @Component({
   selector: 'sn-listing-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.scss']
+  styleUrls: ['./container.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class ContainerComponent {
