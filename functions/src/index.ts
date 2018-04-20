@@ -117,31 +117,55 @@ exports.requestBooking = functions.firestore
         booking = event.data.data()
         let spaceId = booking.spaceBookings[0].spaceId
 
-        return getSpace(spaceId)
-            .then(docListing => {
-                const listing = docListing.data()
-                return getUser(listing.ownerUid)
-                    .then(doc => {
-                        const hostData = doc.data()
-                        return getUser(booking.userId)
-                            .then((docUser) => {
-                                const userData = docUser.data()
-                                return getCategories(listing.categoryId)
-                                    .then((docCat) => {
-                                        const cateData = docCat.data()
-                                        let subject = 'You have a new booking request.'
-                                        convertDate(booking.spaceBookings[0].bookingDates)
-                                            .then(dates => {
-                                                var context = { booking, listing, userData, hostData, cateData, dates }
-                                                // sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject)
-                                            })
-                                    }).catch(error => console.error('There was an error while sending the email:', error))
+        switch (booking.bookingStatus) {
+            case 'Pending':
+                return getSpace(spaceId)
+                    .then(docListing => {
+                        const listing = docListing.data()
+                        return getUser(listing.ownerUid)
+                            .then(doc => {
+                                const hostData = doc.data()
+                                return getUser(booking.userId)
+                                    .then((docUser) => {
+                                        const userData = docUser.data()
+                                        return getCategories(listing.categoryId)
+                                            .then((docCat) => {
+                                                const cateData = docCat.data()
+                                                let subject = 'You have a new booking request.'
+                                                convertDate(booking.spaceBookings[0].bookingDates)
+                                                    .then(dates => {
+                                                        var context = { booking, listing, userData, hostData, cateData, dates }
+                                                        // sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject)
+                                                    })
+                                            }).catch(error => console.error('There was an error while sending the email:', error))
+                                    }).catch(error => console.error(error))
                             }).catch(error => console.error(error))
-                    }).catch(error => console.error(error))
-            })
-            .catch(error => {
-                console.log(error)
-            })
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            case 'Enquiry':
+                return getUser(booking.userId)
+                    .then(doc => {
+                        const guestData = doc.data()
+                        return getSpace(spaceId)
+                            .then((docListing) => {
+                                const listing = docListing.data()
+                                return getUser(listing.ownerUid)
+                                    .then(hostDoc => {
+                                        const hostData = hostDoc.data()
+                                        return getCategories(listing.categoryId)
+                                            .then((docCat) => {
+                                                const cateData = docCat.data()
+                                                let subject = 'You have a new booking enquiry.'
+                                                var context = { listing, hostData, cateData, guestData }
+                                                // sendEmail('enquiryRequest-table.html', context, spacenow, hostData.email, subject)
+                                            }).catch(error => { console.log(error) })
+                                    }).catch(error => { console.log(error) })
+                            })
+                    }).catch(error => { console.log(error) })
+
+        }
     })
 /**
 * Booking Payment Request email // Booking Cancellation Request email //  Booking Confirmation Request email // Host Confirmation
@@ -226,35 +250,6 @@ exports.actionsBooking = functions.firestore
                 .catch(error => console.log(error))
         }
     })
-
-/**
-* Enquiry Request
-*/
-// exports.createEnquiryBooking = functions.firestore
-//     .document('bookingRequests/{id}')
-//     .onCreate(event => {
-//         const enquiry = event.data.data()
-//         return getUser(enquiry.userId)
-//             .then(doc => {
-//                 const guestData = doc.data()
-//                 return getSpace(enquiry.spaceId)
-//                 .then((docListing) => {
-//                     const listing = docListing.data()
-//                     return getUser(listing.ownerUid)
-//                         .then(hostDoc => {
-//                             const hostData = hostDoc.data() 
-//                             return getCategories(listing.categoryId)
-//                                 .then((docCat) => {
-//                                     const cateData = docCat.data()
-//                                     let subject = 'You have a new booking enquiry.'
-//                                     var context = { listing, hostData, cateData, guestData }
-//                                     sendEmail('enquiryRequest-table.html', context, spacenow, hostData.email, subject)
-//                                 }).catch(error => { console.log(error) })
-//                         }).catch(error => { console.log(error) })
-//                 })
-//             }).catch(error => { console.log(error) })
-//     })
-
 
 // maintenance function /listings-short-detail Document
 function updateShortDetailSpace(listing, cateData, hostData) {
