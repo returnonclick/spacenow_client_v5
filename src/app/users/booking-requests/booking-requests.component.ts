@@ -9,6 +9,8 @@ import 'rxjs/add/operator/combineLatest'
 import 'rxjs/add/operator/startWith'
 import 'rxjs/add/operator/takeUntil'
 
+import * as moment from 'moment'
+
 import { Booking } from '@models/booking'
 import { Space } from '@models/space'
 import { User } from '@models/user'
@@ -121,6 +123,13 @@ export class BookingRequestsComponent {
   ngOnDestroy() {
     this.stopper$.next(true)
     this.stopper$.complete()
+  }
+
+  formatDate(date, fromFormat, toFormat = 'DD MM YYYY') {
+    if(fromFormat)
+      return moment(date, fromFormat).format(toFormat)
+    else
+      return moment(date).format(toFormat)
   }
 
   modifyBooking(bookingId, isApproved) {

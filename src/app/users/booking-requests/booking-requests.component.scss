@@ -37,13 +37,14 @@
     display: contents;
 
     > :first-child {
+      text-align: right;
       font-weight: 500;
     }
   }
 }
 
 .mat-action-row {
-  > button {
+  > * {
     font-weight: 400;
   }
 }
