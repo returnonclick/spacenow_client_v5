@@ -92,13 +92,13 @@ export class ImageComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, { images: this.images } ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'terms'])
+    this.router.navigate(['list-space', this.listing.id, 'term'])
 
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'description'])
+    this.router.navigate(['list-space', this.listing.id, 'description'])
   }
   
 }

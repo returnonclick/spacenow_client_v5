@@ -12,13 +12,15 @@ import { ContainerComponent } from '@app/pages/list-space/container/container.co
 
 import { ListingService } from '@core/store/listings/services/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
+import { AmenityService } from '@app/core/store/amenities/services/amenity'
+import { AmenityEffects } from '@app/core/store/amenities/effects/amenity'
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     ListSpaceRoutingModule,
-    EffectsModule.forFeature([ListingEffects])
+    EffectsModule.forFeature([ListingEffects, AmenityEffects])
   ],
   declarations: [
     ContainerComponent
@@ -27,7 +29,8 @@ import { ListingEffects } from '@core/store/listings/effects/listing'
     ContainerComponent
   ],
   providers: [
-    ListingService
+    ListingService,
+    AmenityService
   ]
 })
 export class ListSpaceModule {

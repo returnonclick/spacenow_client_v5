@@ -1,8 +1,13 @@
 @import
   '~sass/abstracts/mixins';
 
-.mat-drawer-content {
-  display: grid !important;
+:host {
+    height: 110px;
+    //position: absolute;
+    width: 100%;
+    display: grid;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
 }
 
 .sm-facebook {

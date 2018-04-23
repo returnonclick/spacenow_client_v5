@@ -1,0 +1,14 @@
+.main-container {
+    > .mat-drawer-content {
+        display: grid;
+        grid-template-rows: auto;
+
+
+        .content {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            z-index: 1;
+        }
+
+    }
+}

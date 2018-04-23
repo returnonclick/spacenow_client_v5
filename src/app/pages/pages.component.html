@@ -1,14 +1,19 @@
 <mat-drawer-container class="main-container" fullscreen>
 
     <!-- Sidebar -->
-    <eff-quick-sidebar></eff-quick-sidebar>
+    <mat-drawer class="sidenav" [opened]="showSidenav$ | async" align="end" disableClose>
+      <eff-quick-sidebar></eff-quick-sidebar>
+    </mat-drawer>
     
     <mat-drawer-content>
   
       <!-- Nav -->
-      <eff-header></eff-header>
+      <eff-navbar></eff-navbar>
   
-      <router-outlet></router-outlet>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+      
   
     </mat-drawer-content>
   

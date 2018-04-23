@@ -3,19 +3,26 @@ import { CommonModule } from '@angular/common'
 import { Routes, RouterModule } from '@angular/router'
 import { LayoutModule } from '@app/layout/layout.module'
 import { MaterialModule } from '@app/shared/material.module'
+import { FooterComponent } from '@app/layout/footer/footer.component'
 import { RefundCancellationPolicyComponent } from './refund-cancellation-policy.component'
 import { TermsConditionsComponent } from '../terms-conditions.component'
 
 const routes: Routes = [
   {
-      "path": "",
-      "component": TermsConditionsComponent,
-      "children": [
+    "path": "",
+    "component": FooterComponent,
+    "children": [
+      {
+        "path": "",
+        "component": TermsConditionsComponent,
+        "children": [
           {
-              "path": "",
-              "component": RefundCancellationPolicyComponent
+            "path": "",
+            "component": RefundCancellationPolicyComponent
           }
-      ]
+        ]
+      }
+    ]
   }
 ];
 
@@ -32,5 +39,4 @@ const routes: Routes = [
   declarations: [RefundCancellationPolicyComponent]
 })
 
-export class PrivacyPolicyModule { }
- 
+export class RefundCancellationPolicyModule { }

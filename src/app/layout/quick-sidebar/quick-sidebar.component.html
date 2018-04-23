@@ -1,5 +1,5 @@
 <!-- begin::Quick Sidebar -->
-<mat-drawer class="sidenav" [opened]="showSidenav$ | async" align="end" disableClose>
+
     <button mat-icon-button (click)="closeSidenav()" class="closeMenu">
         <mat-icon aria-label="Close sidenav icon">arrow_forward</mat-icon>
     </button>
@@ -12,5 +12,5 @@
     <ng-container *ngIf="sidenavComponent === 'forgot-password'">
         <gen-forgot-password></gen-forgot-password>
     </ng-container>
-</mat-drawer>
-<!-- end::Quick Sidebar -->
+
+    <!-- end::Quick Sidebar -->

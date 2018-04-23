@@ -6,7 +6,7 @@
 		</div>
 		<div fxLayout="row" fxLayoutAlign="space-between">
 			<div fxFlex="24%" fxLayoutAlign="start center" fxLayout="column">
-				<a routerLink="top-questions" class="border-box" [ngClass]="{'bg-green': topQuestion}" (click)="topQuestion = true; aboutSpacenow = false; gettingStarted = false; whatsNew = false">
+				<a routerLink="top-question" class="border-box" [ngClass]="{'bg-green': topQuestion}" (click)="topQuestion = true; aboutSpacenow = false; gettingStarted = false; whatsNew = false">
 					<div class="content-box" fxLayout="column" fxLayoutAlign="center center">
 						<div class="si-icon si-users"></div>
 						<p class="text-box">Top User Questions</p>
@@ -33,7 +33,7 @@
 				<mat-icon *ngIf="gettingStarted" class="arrow-box">keyboard_arrow_down</mat-icon>
 			</div>
 			<div fxFlex="24%" fxLayoutAlign="start center" fxLayout="column">
-				<a routerLink="new" class="border-box" [ngClass]="{'bg-green': whatsNew}" (click)="topQuestion = false; aboutSpacenow = false; gettingStarted = false; whatsNew = true">
+				<a routerLink="how-works" class="border-box" [ngClass]="{'bg-green': whatsNew}" (click)="topQuestion = false; aboutSpacenow = false; gettingStarted = false; whatsNew = true">
 					<div class="content-box" fxLayout="column" fxLayoutAlign="center center">
 						<div class="si-icon si-tool"></div>
 						<p class="text-box">How it works</p>

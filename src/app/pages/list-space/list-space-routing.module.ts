@@ -6,13 +6,7 @@ import { ContainerComponent } from './container/container.component'
 const routes: Routes = [
   {
     "path": "",
-    "component": ContainerComponent,
-    "children": [
-      {
-        "path": "category",
-        "loadChildren": "./category/category.module#CategoryModule"
-      }
-    ]
+    "loadChildren": "./category/category.module#CategoryModule" 
   },
   {
     "path": ":id",

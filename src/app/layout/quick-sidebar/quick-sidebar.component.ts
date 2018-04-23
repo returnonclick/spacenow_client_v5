@@ -12,14 +12,13 @@ import * as layoutActions         from '@core/store/layouts/actions/layout'
 })
 export class QuickSidebarComponent {
 
-  showSidenav$:      Observable<boolean>
+  
   sidenavComponent$: Observable<string>
   sidenavComponent:  string
 
   constructor(
     private store: Store<fromRoot.State>
   ) {
-    this.showSidenav$      = this.store.pipe(select(fromRoot.getShowSidenav))
     this.sidenavComponent$ = this.store.pipe(select(fromRoot.getSidenavComponent))
 
     this.sidenavComponent$.subscribe(sidenavComponent => {

@@ -60,7 +60,7 @@ export class SpecificationComponent {
 
         // TODO: Change the Category, Specification and listing model to reference data so: just bring listing
         // For now, Wait while Observers are subscribed **
-        setTimeout(() => this.loadAmenities(), 100)
+        setTimeout(() => this.loadSpecifications(), 100)
         
       }
     })
@@ -71,7 +71,7 @@ export class SpecificationComponent {
     this.cdRef.detectChanges();
   }
 
-  loadAmenities() {
+  loadSpecifications() {
 
     // Load specifications according to category
     // TODO: Change when reference data to listing.category: all the data
@@ -95,12 +95,12 @@ export class SpecificationComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.specificationForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'price'])
+    this.router.navigate(['list-space', this.listing.id, 'price'])
   }
 
     // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
     back() {
-      this.router.navigate(['listing', this.listing.id, 'amenity'])
+      this.router.navigate(['list-space', this.listing.id, 'amenity'])
     }
  
 }

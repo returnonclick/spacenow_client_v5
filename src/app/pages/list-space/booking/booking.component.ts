@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
@@ -105,7 +105,8 @@ export class BookingComponent {
   constructor(private _store: Store<fromRoot.State>,
               private _fb: FormBuilder,
               private listingEffects: ListingEffects,
-              private router: Router
+              private router: Router,
+              private cdRef: ChangeDetectorRef
   ) {
 
     this.bookingForm = this._fb.group({
@@ -125,6 +126,10 @@ export class BookingComponent {
       }
     })
 
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
   }
 
   createForm() {
@@ -192,12 +197,12 @@ export class BookingComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.bookingForm.value ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'exception'])
+    this.router.navigate(['list-space', this.listing.id, 'exception'])
   }
 
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'price'])
+    this.router.navigate(['list-space', this.listing.id, 'price'])
   }
     
 }

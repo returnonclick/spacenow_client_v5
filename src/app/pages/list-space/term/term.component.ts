@@ -60,12 +60,12 @@ export class TermComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, this.termForm.value ))
     }
 
-    this.router.navigate(['users/my-spaces'])
+    this.router.navigate(['/my-spaces'])
   }
   
   // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
   back() {
-    this.router.navigate(['listing', this.listing.id, 'image'])
+    this.router.navigate(['list-space', this.listing.id, 'image'])
   }
 }
  

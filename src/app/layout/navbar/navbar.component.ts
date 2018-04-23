@@ -9,11 +9,11 @@ import * as actions               from '@core/store/auth/actions/auth'
 import * as layoutActions         from '@core/store/layouts/actions/layout'
 
 @Component({
-  selector: 'eff-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'eff-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class HeaderComponent {
+export class NavbarComponent {
 
   authUser$:         Observable<User>
   isSignedIn$:       Observable<boolean>
@@ -35,6 +35,7 @@ export class HeaderComponent {
   }
 
   openSidenav() {
+    event.preventDefault();
     this.store.dispatch(new layoutActions.OpenSidenav)
   }
 

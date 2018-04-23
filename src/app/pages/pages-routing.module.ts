@@ -11,16 +11,16 @@ const routes: Routes = [
         "component": PagesComponent,
         "children": [
         {
-            "path": "index",
+            "path": "",
             "loadChildren": "./index/index.module#IndexModule"
         },
         {
             "path": "spaces",
-            "loadChildren": "./index/index.module#IndexModule"
+            "loadChildren": "./spaces/spaces.module#SpacesModule"
         },
         {
             "path": "space",
-            "loadChildren": "./index/index.module#IndexModule"
+            "loadChildren": "./space/space.module#SpaceModule"
         },
         {
             "path": "list-space",
@@ -50,6 +50,14 @@ const routes: Routes = [
             "path": "ratings-reviews",
             "loadChildren": "./user/ratings-reviews/ratings-reviews.module#RatingsReviewsModule"
         },
+        {
+            "path": "booking-requests",
+            "loadChildren": "./user/booking-requests/booking-requests.module#BookingRequestsModule"
+        },
+        {
+            "path": "calendar",
+            "loadChildren": "./user/calendar/calendar.module#CalendarModule"
+          },
         {
             "path": "checkout",
             "loadChildren": "./checkout/checkout.module#CheckoutModule"
@@ -105,11 +113,6 @@ const routes: Routes = [
         {
             "path": "404",
             "loadChildren": "./not-found/not-found.module#NotFoundModule"
-        },
-        {
-            "path": "",
-            "redirectTo": "index",
-            "pathMatch": "full"
         }
         ]
     },

@@ -13,6 +13,9 @@ import { IndexComponent } from './index.component'
 import { ListingShortDetailEffects } from '@app/core/store/listings-short-detail/listing-short-detail.effect'
 import { ListingShortDetailService } from '@core/store/listings-short-detail/listing-short-detail.service'
 
+import { CategoryEffects } from '@app/core/store/categories/category.effect'
+import { CategoryService } from '@core/store/categories/category.service'
+
 const routes: Routes = [
   {
       "path": "",
@@ -35,7 +38,7 @@ const routes: Routes = [
     LayoutModule,
     MaterialModule,
     SharedModule,
-    EffectsModule.forFeature([ListingShortDetailEffects])
+    EffectsModule.forFeature([ListingShortDetailEffects, CategoryEffects])
   ],
   exports: [
     RouterModule
@@ -45,6 +48,7 @@ const routes: Routes = [
   ],
   providers: [
     ListingShortDetailService,
+    CategoryService
   ]
 })
 export class IndexModule { }

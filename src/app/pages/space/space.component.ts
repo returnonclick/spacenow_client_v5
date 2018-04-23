@@ -16,10 +16,11 @@ import { User } from '@models/user'
 import * as fromRoot from '@core/store'
 import * as amenityActions from '@core/store/amenities/actions/amenity'
 import * as categoryActions from '@core/store/categories/category.action'
-import * as layoutActions from '@core/store/layouts/actions/layout'
 import * as profileActions from '@core/store/users-profile/actions/user-profile'
 import * as spaceActions from '@core/store/spaces/actions/space'
 import * as userActions from '@core/store/users/actions/user'
+
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'sn-space',
@@ -87,7 +88,6 @@ export class SpaceComponent {
   ngOnInit() {
     this._store.dispatch(new amenityActions.Query)
     this._store.dispatch(new categoryActions.Query)
-    this._store.dispatch(new layoutActions.SetLogoGreen)
     this._store.dispatch(new userActions.Query)
 
     this._route.params

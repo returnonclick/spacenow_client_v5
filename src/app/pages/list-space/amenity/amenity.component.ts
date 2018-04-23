@@ -111,11 +111,11 @@ export class AmenityComponent {
       this._store.dispatch(new listingActions.Update( this.listing.id, result ))
     }
 
-    this.router.navigate(['listing', this.listing.id, 'specification'])
+    this.router.navigate(['list-space', this.listing.id, 'specification'])
   }
 
     back() {
-      this.router.navigate(['listing', this.listing.id, 'address'])
+      this.router.navigate(['list-space', this.listing.id, 'address'])
     }
  
 }

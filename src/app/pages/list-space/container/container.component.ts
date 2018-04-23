@@ -33,12 +33,12 @@ export class ContainerComponent {
    * https://angular.io/guide/router#activated-route-in-action
    */
   ngOnInit() {
-    let id = this.route.snapshot.params.get('id')
+    let id = this.route.snapshot.paramMap.get('id')
     this._store.dispatch(new listingActions.QueryOne( id ))
     this._store.dispatch(new amenityActions.Query())
     this._store.dispatch(new categoryActions.Query())
     this._store.dispatch(new listingSpecificationActions.Query())
-    this._store.dispatch(new layoutActions.SetLogoGreen)
+    // this._store.dispatch(new layoutActions.SetLogoGreen)
   }
 
 }

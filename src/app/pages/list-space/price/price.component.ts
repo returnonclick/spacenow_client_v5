@@ -1258,12 +1258,12 @@ export class PriceComponent {
           this._store.dispatch(new listingActions.Update( this.listing.id, this.priceForm.value ))
       }
 
-      this.router.navigate(['listing', this.listing.id, 'booking'])
+      this.router.navigate(['list-space', this.listing.id, 'booking'])
     }
 
     // TODO: Change this function for 'routerLink' in 'back-button' of price.component.html
     back() {
-        this.router.navigate(['listing', this.listing.id, 'specification'])
+        this.router.navigate(['list-space', this.listing.id, 'specification'])
     }
 
 }

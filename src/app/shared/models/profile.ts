@@ -33,7 +33,7 @@ export class Profile {
   coverUrl:        ImageData       = null
 
   constructor(model: any = null) {
-    if(model) {
+    if ( model ) {
       this.uid             = model.uid
       this.aboutMe         = model.aboutMe
       this.bankAccounts    = (model.bankAccounts || []).map(account => new BankAccount(account))

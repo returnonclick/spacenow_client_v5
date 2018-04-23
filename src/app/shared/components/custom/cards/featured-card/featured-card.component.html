@@ -13,7 +13,7 @@
             </button>
         </div>
     </mat-card-header>
-    <mat-card-content [routerLink]="'space/' + data.id" style="cursor: pointer">
+    <mat-card-content [routerLink]="'/space/' + data.id" style="cursor: pointer">
       <i class="material-icons">favorite_border</i>
       <h4>{{data.category}}</h4>
       <h2>{{data.title | slice:0:16}}</h2>

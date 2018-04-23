@@ -132,7 +132,7 @@ export class IndexComponent {
 
     let formVal = this.form.value
 
-    this._router.navigate(['/search'], {
+    this._router.navigate(['/spaces'], {
       queryParams: {
         name: encodeURIComponent(formVal.name),
         radius: formVal.radius,

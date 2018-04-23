@@ -79,7 +79,7 @@ export class CategoryComponent {
     if(this.listing.id) {
 
       this._store.dispatch(new listingActions.Update( this.listing.id, result ))
-      this.router.navigate(['listing', this.listing.id, 'address'])
+      this.router.navigate(['list-space', this.listing.id, 'address'])
 
     } else {
 
@@ -92,7 +92,7 @@ export class CategoryComponent {
 
       this._store.dispatch(new listingActions.Create( result ))
 
-      this.router.navigate(['listing', listingId, 'address'])
+      this.router.navigate(['list-space', listingId, 'address'])
 
     }
   }

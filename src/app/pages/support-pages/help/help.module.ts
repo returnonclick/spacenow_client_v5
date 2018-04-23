@@ -3,14 +3,20 @@ import { CommonModule } from '@angular/common'
 import { Routes, RouterModule } from '@angular/router'
 import { LayoutModule } from '@app/layout/layout.module'
 import { MaterialModule } from '@app/shared/material.module'
+import { FlexLayoutModule } from '@angular/flex-layout'
+import { FooterComponent } from '@app/layout/footer/footer.component'
 import { HelpComponent } from './help.component'
 import { SupportPagesComponent } from '../support-pages.component'
 
 const routes: Routes = [
   {
-      "path": "",
-      "component": SupportPagesComponent,
-      "children": [
+    "path": "",
+    "component": FooterComponent,
+    "children": [
+      {
+        "path": "",
+        "component": SupportPagesComponent,
+        "children": [
           {
             "path": "",
             "component": HelpComponent,
@@ -37,7 +43,9 @@ const routes: Routes = [
             "path": "help",
             "component": HelpComponent
           }
-      ]
+        ]
+      }
+    ]
   }
 ];
 
@@ -46,7 +54,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     LayoutModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   exports: [
     RouterModule

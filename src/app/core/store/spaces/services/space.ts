@@ -15,7 +15,7 @@ export class SpaceService {
 
   readAll() {
     return Observable.fromPromise(
-      this.afs.firestore.collection(this._ref).limit(20).get().then(snapshot => snapshot.docChanges)
+      this.afs.firestore.collection(this._ref).get().then(snapshot => snapshot.docChanges)
     )
   }
 
@@ -34,7 +34,6 @@ export class SpaceService {
     return Observable.fromPromise(
       this.afs.firestore.collection(this._ref)
       .where(params[0], params[1], params[2])
-      .limit(20)
       .get()
       .then(snapshot => snapshot.docChanges)
     )
