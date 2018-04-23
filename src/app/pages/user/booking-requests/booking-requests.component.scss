@@ -1,5 +1,50 @@
 :host {
   width: 100%;
   margin: 0 auto;
-  max-width: 1400px;
+  padding: 20px;
+  max-width: 1300px;
+}
+
+#booking-requests {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+  min-height: 240px;
+
+  > :not(.mat-accordion) {
+    margin: auto;
+  }
+}
+
+.mat-accordion {
+  width: 100%;
+}
+
+.mat-expansion-panel-header {
+  font-size: 18px;
+}
+
+.booking-details {
+  font-size: 16px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 8px 16px;
+
+  > .detail {
+    display: contents;
+
+    > :first-child {
+      text-align: right;
+      font-weight: 500;
+    }
+  }
+}
+
+.mat-action-row {
+  > * {
+    font-weight: 400;
+  }
 }

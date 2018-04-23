@@ -1,0 +1,57 @@
+<!-- Sidebar -->
+<mat-drawer-container class="main-container" fullscreen>
+
+  <mat-drawer class="sidenav" [opened]="showSidenav$ | async" align="end" disableClose>
+    <button mat-icon-button (click)="closeSidenav()" class="closeMenu">
+        <mat-icon aria-label="Close sidenav icon">arrow_forward</mat-icon>
+    </button>
+    <router-outlet name="sidenav"></router-outlet>
+  </mat-drawer>
+
+  <mat-drawer-content>
+
+    <!-- Nav -->
+    <nav id="main-nav">
+      <a routerLink="/" class="logo" [ngClass]="logo$ | async"></a>
+      <span><!-- fill space --></span>
+      <a routerLink="/listing/category">List your space</a>
+      <div *ngIf="isSignedIn$ | async; then authenticated else guest"></div>
+    </nav>
+
+    <!-- User NOT logged in -->
+    <ng-template #guest>
+      <button mat-icon-button [matMenuTriggerFor]="burguerMenu" class="hidden show-tablet">
+        <mat-icon aria-label="Menu" style="color: white">menu</mat-icon>
+      </button>
+      <mat-menu #burguerMenu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
+        <button mat-menu-item routerLink="/listing/category" style="color: white">List a space</button>
+        <button mat-menu-item (click)="openSidenav(); setSidenavLogin();" style="color: white">Log in</button>
+        <button mat-menu-item (click)="openSidenav(); setSidenavRegister();" style="color: white">Sign up</button>
+      </mat-menu>
+      <a href="#" (click)="openSidenav(); setSidenavLogin();" class="hidden-tablet" style="color: white">Log in</a>
+      <a href="#" (click)="openSidenav(); setSidenavRegister();" class="hidden-tablet" style="color: white">Sign up</a>
+    </ng-template>
+
+    <!-- User logged in -->
+    <ng-template #authenticated>
+      <button *ngIf="(authUser$ | async) as authUser" mat-icon-button [disableRipple]="true" [matMenuTriggerFor]="menu">
+        <div class="image-container">
+          <img [src]="authUser.photoURL" class="userProfilePicture">
+        </div>
+      </button>
+      <mat-menu #menu="matMenu" class="dropMenu" yPosition="below" xPosition="before" overlapTrigger="false">
+        <button mat-menu-item routerLink="/listing/category">List a space</button>
+        <button mat-menu-item routerLink="/users/my-spaces">My spaces</button>
+        <button mat-menu-item routerLink="/users/my-profile">Profile</button>
+        <button mat-menu-item routerLink="/users/my-favorites">Favorites</button>
+        <button mat-menu-item routerLink="/users/my-spaces">Manage Bookings</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="signOut()">Logout</button>
+      </mat-menu>
+    </ng-template>
+
+    <router-outlet></router-outlet>
+
+  </mat-drawer-content>
+
+</mat-drawer-container>

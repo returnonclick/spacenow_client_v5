@@ -3,7 +3,6 @@
 
 :host {
   --numColumns: 2;
-  --hover: #6cde93;
   --gridSpace: 20px;
 
   display: block;
@@ -24,7 +23,9 @@
     grid-column: 1 / 2;
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    // grid-template-columns: 3fr 1fr 1fr 2fr;
+    align-items: space-between;
 
     > * {
       justify-content: stretch;
@@ -73,18 +74,23 @@
 @include respond-to('xs') {
 
   .search-container {
-    
+
     .search-results {
-  
+
       display: grid;
       grid-template-columns: 1fr;
       grid-gap: var(--gridSpace);
-  
+
       overflow: scroll;
-  
+
     }
 
   }
 
+}
+
+.filters {
+  display: grid;
+  
 }
 

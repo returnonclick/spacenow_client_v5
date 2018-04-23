@@ -8,13 +8,13 @@
     <div fxLayout="column" style="margin-bottom: 20px">
       <mat-checkbox class="checkbox-list" (change)="onTCChange($event)" #tc>I accept the hosts terms</mat-checkbox>
       <mat-checkbox class="checkbox-list" (change)="onHTChange($event)" #ht>I accept spacenow t+c</mat-checkbox>
-      <!-- <mat-error 
+      <!-- <mat-error
         id="tc-notification"
-        align="start" 
+        align="start"
         *ngIf="(!tc.checked || !ht.checked)">Accepting Terms & Conditions and Host Terms are required</mat-error> -->
     </div>
 
-    <textarea readonly> 
+    <textarea readonly>
 Shared Space Australia Pty Limited ABN 28 607 793 144 (Spacenow) operates this Site. You are welcome to use this Site provided you accept the Terms of Use. If you do not agree to be bound you must cease using the Site. You agree to abide by and cause any Invitees to abide by these Terms of Use and any Space License Agreement and the Space Rules.
 
 1.    Documents and Dictionary. We are unable to set out the arrangements you may enter into through our Site in one document. We have created a Dictionary of the terms we use throughout our documentation. These agreements include Host Terms and any Space License Agreement. The link to the relevant agreement will appear when you use a particular Service.
@@ -99,13 +99,13 @@ i)    use the Service in any manner that violates any law or otherwise conduct i
 22.     Mobile Software Licence. Subject to the terms of these Terms of Use, Spacenow grants you a non-transferable, non-exclusive licence to download, install and use one copy of the Mobile Software in object code form only on a mobile device that you own or control. You may not derive or attempt to derive the source code of all or any portion of the Mobile Software, permit any third party to derive or attempt to derive such source code, or reverse engineer, decompile, disassemble, or translate the Mobile Software or any part of it. Spacenow and its licensors shall own and shall retain all intellectual property rights and other rights in and to the Mobile Software, and any changes, modifications or corrections to that software. It is your sole responsibility to comply with the terms and conditions of use of any provider of any mobile software application that is installed by you to a device.
     </textarea>
   </div>
-      
+
   <div class="actions">
-    <button mat-raised-button type="submit" class="next-button" [disabled]="!isHTChecked || !isTCChecked"> 
-        Finish 
+    <button mat-raised-button type="submit" class="next-button" [disabled]="!isHTChecked || !isTCChecked">
+        Finish
     </button>
-    <button mat-button type="button" class="back-button" (click)="back()"> 
-          Back 
+    <button mat-button type="button" class="back-button" [disableRipple]="true" (click)="back()"> 
+          Back
     </button>
   </div>
 </div>

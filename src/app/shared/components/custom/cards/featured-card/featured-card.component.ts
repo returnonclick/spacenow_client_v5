@@ -12,6 +12,8 @@ export class FeaturedCardComponent {
   imageIndex: number  = 0
   images: Array<any> = new Array()
 
+  imageRequest = "https://sn-image-service.appspot.com/crop?key=Spacenow123&width=400&height=300&url="
+
   constructor() {}
 
   ngOnInit() {

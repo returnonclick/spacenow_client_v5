@@ -44,6 +44,30 @@ export function reducer(
       })
     }
 
+    case actions.ADDED: {
+      return searchAdapter.addOne(action.payload, {
+        ...state,
+        isLoading: false,
+      })
+    }
+
+    case actions.MODIFIED: {
+      return searchAdapter.updateOne({
+        id:      action.payload.id,
+        changes: action.payload,
+      }, {
+        ...state,
+        isLoading: false,
+      })
+    }
+
+    case actions.REMOVED: {
+      return searchAdapter.removeOne(action.payload.id, {
+        ...state,
+        isLoading: false,
+      })
+    }
+
     default: {
       return state
     }

@@ -1,39 +1,47 @@
 <h2>Booking Requests</h2>
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      Header
-    </mat-expansion-panel-header>
-    Content
-    <mat-action-row>
-      Actions
-    </mat-action-row>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      Header
-    </mat-expansion-panel-header>
-    Content
-    <mat-action-row>
-      Actions
-    </mat-action-row>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      Header
-    </mat-expansion-panel-header>
-    Content
-    <mat-action-row>
-      Actions
-    </mat-action-row>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      Header
-    </mat-expansion-panel-header>
-    Content
-    <mat-action-row>
-      Actions
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+<div id="booking-requests">
+  <mat-spinner *ngIf="(isLoading$ | async); else doneLoading"></mat-spinner>
+  <ng-template #doneLoading>
+    <ng-container *ngIf="bookings.length < 1; else hasBookings">
+      <div class="no-bookings">
+        <h3>No booking requests</h3>
+      </div>
+    </ng-container>
+    <ng-template #hasBookings>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let booking of bookings" [expanded]="bookingId == booking.id">
+          <mat-expansion-panel-header>
+            {{ spaces[booking.spaceId].title }}
+          </mat-expansion-panel-header>
+          <div class="booking-details">
+            <div class="detail">
+              <span>Requested by</span>
+              <span>{{ owners[booking.userId]?.displayName }}</span>
+            </div>
+            <div class="detail">
+              <span>Requested on</span>
+              <span>{{ formatDate(booking.createdOn, null, 'DD MMM YYYY hh:mm a') }}</span>
+            </div>
+            <div class="detail">
+              <span># of Guests</span>
+              <span>{{ booking.numGuests }}</span>
+            </div>
+            <div class="detail">
+              <span>Schedule</span>
+              <ul>
+                <li *ngFor="let date of booking.bookingDates">
+                  {{ formatDate(date.date, null, 'DD MMM YYYY') }} {{ formatDate(date.fromHour, 'H', 'h A') }} - {{ formatDate(date.toHour, 'H', 'h A') }}
+                </li>
+              </ul>
+            </div>
+        </div>
+        <mat-action-row>
+          <a mat-button [routerLink]="[ '/', 'space', booking.spaceId ]" target="_blank">View Space</a>
+          <button mat-button (click)="modifyBooking(booking.id, true)">Approve</button>
+          <button mat-button (click)="modifyBooking(booking.id, false)">Reject</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-template>
+</ng-template>
+</div>

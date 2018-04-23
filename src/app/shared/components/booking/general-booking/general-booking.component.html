@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form" *ngIf="space">
   <div class="icon-field from-date">
-    <i class="function-space-35"></i>
+    <i class="calendar-35"></i>
     <mat-form-field>
       <input matInput [matDatepicker]="fromDate" [matDatepickerFilter]="exceptions()" [min]="minDate" placeholder="Start date" formControlName="date" required>
       <mat-datepicker-toggle matSuffix [for]="fromDate">
@@ -10,7 +10,7 @@
     </mat-form-field>
   </div>
   <div class="icon-field duration">
-    <i class="co-working-space-35"></i>
+    <i class="calendar-35"></i>
     <mat-form-field>
       <mat-select placeholder="Duration" formControlName="duration" required>
         <mat-option *ngFor="let item of durationOptions" [value]="item.value">
@@ -20,7 +20,7 @@
     </mat-form-field>
   </div>
   <div class="icon-field num-guests">
-    <i class="function-space-35"></i>
+    <i class="co-working-space-35"></i>
     <mat-form-field>
       <mat-select placeholder="Occupants" formControlName="numGuests" required>
         <mat-option *ngFor="let item of guests" [value]="item.value">
@@ -29,5 +29,24 @@
       </mat-select>
     </mat-form-field>
   </div>
+
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="title-av">
+          <i class="individual-alarms-amen-35"></i><span> Open - Closes</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="av-content"><span></span><span>Monday</span> <span>{{space.availability.openingTime.mon.isOpen ? formatTime(space.availability.openingTime.mon.startHour) + ' to ' + formatTime(space.availability.openingTime.mon.closeHour) : 'Closed'}}</span></div>
+      <div class="av-content"><span></span><span>Tuesday</span> <span>{{space.availability.openingTime.tue.isOpen ? formatTime(space.availability.openingTime.tue.startHour) + ' to ' + formatTime(space.availability.openingTime.tue.closeHour) : 'Closed'}}</span></div>
+      <div class="av-content"><span></span><span>Wednesday</span> <span>{{space.availability.openingTime.wed.isOpen ? formatTime(space.availability.openingTime.wed.startHour) + ' to ' + formatTime(space.availability.openingTime.wed.closeHour) : 'Closed'}}</span></div>
+      <div class="av-content"><span></span><span>Thursday</span> <span>{{space.availability.openingTime.thu.isOpen ? formatTime(space.availability.openingTime.thu.startHour) + ' to ' + formatTime(space.availability.openingTime.thu.closeHour) : 'Closed'}}</span></div>
+      <div class="av-content"><span></span><span>Friday</span> <span>{{space.availability.openingTime.fri.isOpen ? formatTime(space.availability.openingTime.fri.startHour) + ' to ' + formatTime(space.availability.openingTime.fri.closeHour) : 'Closed'}}</span></div>
+      <div class="av-content"><span></span><span>Saturday</span> <span>{{space.availability.openingTime.sat.isOpen ? formatTime(space.availability.openingTime.sat.startHour) + ' to ' + formatTime(space.availability.openingTime.sat.closeHour) : 'Closed'}}</span></div>
+      <div class="av-content"><span></span><span>Sunday</span> <span>{{space.availability.openingTime.sun.isOpen ? formatTime(space.availability.openingTime.sun.startHour) + ' to ' + formatTime(space.availability.openingTime.sun.closeHour) : 'Closed'}}</span></div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
   <button mat-raised-button type="submit" [disabled]="form.invalid || form.pristine">{{ space.availability.bookingType == 'instantly' ? 'Book' : 'Request Booking' }}</button>
 </form>

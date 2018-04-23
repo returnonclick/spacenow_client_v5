@@ -28,7 +28,8 @@ export function reducer(
   switch(action.type) {
 
     case actions.QUERY:
-    case actions.SELECT: {
+    case actions.SELECT:
+    case actions.FILTER: {
       return bookingAdapter.removeAll({
         ...state,
         isLoading: true,
@@ -36,7 +37,9 @@ export function reducer(
       })
     }
 
-    case actions.BOOK: {
+    case actions.BOOK:
+    case actions.APPROVE:
+    case actions.REJECT: {
       return {
         ...state,
         isLoading: true,

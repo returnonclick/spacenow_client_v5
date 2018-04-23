@@ -1,21 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { AngularFirestore } from 'angularfire2/firestore'
-import { User } from '@shared/models/user';
+import { Observable } from 'rxjs'
+
+import { User } from '@shared/models/user'
 
 @Injectable()
 export class UserService {
 
   ref: string = `users`
 
-  constructor( public afs: AngularFirestore ) {
-  }
+  constructor(public afs: AngularFirestore) { }
 
   public readAll() {
     return this.afs.collection<User>(this.ref).stateChanges()
   }
 
-  public readOne(uid) {
-    return this.afs.collection<User>(this.ref, ref => ref.where(`uid`, '==', `${uid}`)).stateChanges()
+  public select(userIds: string[]) {
+    return Observable.merge(
+      ...userIds.map(id =>
+        this.afs.doc<User>(`${this.ref}/${id}`).snapshotChanges()
+      )
+    )
+    // return this.afs.collection<User>(this.ref, ref => ref.where(`uid`, '==', `${uid}`)).stateChanges()
   }
 
   public readRoleByUser(role: string) {

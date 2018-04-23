@@ -44,6 +44,8 @@ export class GoogleAddressDirective {
             address[addressType] = addressComp[field]
         }
         this.getAddress.emit(address)
+        // TODO(TT): delete this
+        // console.log(address)
       })
     })
   }

@@ -7,6 +7,7 @@ import { AgmMap, AgmMarker } from '@agm/core'
 import { } from 'googlemaps'
 
 import { ListingShortDetail } from '@shared/models/listing-short-detail'
+import { Category } from '@shared/models/category'
 
 import * as fromRoot from '@core/store'
 import * as searchActions from '@core/store/search/actions/search'
@@ -28,12 +29,18 @@ export class SpacesComponent {
   latitude:   number                                    = -33.9108137
   longitude:  number                                    = 151.1960078
 
-  results$:   Observable<ListingShortDetail[]>
-  isLoading$: Observable<boolean>
+  results$:       Observable<ListingShortDetail[]>
+  resultsBackup$: Observable<ListingShortDetail[]>
+  isLoading$:     Observable<boolean>
 
   form:       FormGroup
   nativeMap:  google.maps.Map                           = null
   markerMap:  { [spaceId: string]: google.maps.Marker } = {}
+
+  categories$:   Observable<Category[]>
+  minPrice:      number                                   = null
+  maxPrice:      number                                   = null
+  categorySlug:  string                                   = ''
 
   constructor(
     private _fb:     FormBuilder,
@@ -41,8 +48,11 @@ export class SpacesComponent {
     private _router: Router,
     private _store:  Store<fromRoot.State>,
   ) {
-    this.results$   = this._store.select(fromRoot.getAllSearches)
-    this.isLoading$ = this._store.select(fromRoot.isLoadingSearch)
+    this.results$     = this.resultsBackup$ = this._store.select(fromRoot.getAllSearches)
+    this.results$.subscribe(res => console.log(res))
+    this.isLoading$   = this._store.select(fromRoot.isLoadingSearch)
+    this.categories$  = this._store.select(fromRoot.getAllCategories)
+    
   }
 
   ngOnInit() {
@@ -57,6 +67,9 @@ export class SpacesComponent {
         this.radius    = +queryParams.radius || this.radius
         this.latitude  = +queryParams.latitude || this.latitude
         this.longitude = +queryParams.longitude || this.longitude
+        this.categorySlug = queryParams.categorySlug || this.categorySlug
+        this.maxPrice = +queryParams.maxPrice || this.maxPrice
+        this.minPrice = +queryParams.minPrice || this.minPrice
         this._store.dispatch(new searchActions.Query(queryParams))
 
         if(!this.nativeMap)
@@ -65,12 +78,14 @@ export class SpacesComponent {
         this._updateForm()
       }
     })
-
+    
     Observable.combineLatest(
       this.results$,
       this.map.mapReady,
     ).subscribe(([searchResults, map]) => {
       this._clearMarkers()
+      // TODO(TT) delete this
+      // console.log(searchResults)
       if(searchResults && map) {
         for(let result of searchResults) {
           let latLng = new google.maps.LatLng(result.geopoint.latitude, result.geopoint.longitude);
@@ -106,6 +121,9 @@ export class SpacesComponent {
         radius:    formVal.radius,
         latitude:  formVal.latitude,
         longitude: formVal.longitude,
+        categorySlug:  formVal.categorySlug,
+        minPrice: formVal.minPrice,
+        maxPrice: formVal.maxPrice
       }
     })
   }
@@ -129,10 +147,13 @@ export class SpacesComponent {
 
   private _updateForm() {
     this.form = this._fb.group({
-      name:      [ this.name, Validators.required ],
-      radius:    [ this.radius, Validators.required ],
-      latitude:  [ this.latitude ],
-      longitude: [ this.longitude ],
+      name:       [ this.name, Validators.required ],
+      radius:     [ this.radius, Validators.required ],
+      latitude:   [ this.latitude ],
+      longitude:  [ this.longitude ],
+      minPrice:   [ this.minPrice ],
+      maxPrice:   [ this.maxPrice ],
+      categorySlug: [ this.categorySlug ],
     })
   }
 

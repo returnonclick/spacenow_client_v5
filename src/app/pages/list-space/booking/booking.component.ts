@@ -10,7 +10,7 @@ import * as listingActions from '@core/store/listings/actions/listing'
 import { ListingEffects } from '@core/store/listings/effects/listing'
 
 import { Space } from '@shared/models/space'
-import { OpeningTime } from '@models/opening-time'
+import { OpeningTime } from '@models/availability'
 
 
 @Component({

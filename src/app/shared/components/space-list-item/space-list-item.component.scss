@@ -8,25 +8,42 @@
 
   --color_mischka: #dedfe5;
   --color_oslo_gray: #8c9199;
+  --color_faded_gray: #e8e8e8;
   --color_pastel_green: #6cde93;
-  --border_color: transparent;
   --gap: 30px;
 
   transition: all 0.5s ease;
   z-index: 0;
 
-  box-shadow: 0 0 20px 0 rgba(48, 48, 48, 0.2) !important;
-  padding: 16px !important;
-  border: 2px solid var(--border_color);
-  border-radius: 8px !important;
+  box-shadow: 0 0 0 0 transparent !important;
+  margin: 12px !important;
+  border-radius: 0px !important;
   cursor: pointer;
   height: 100%;
 
-  > .image-container {
+  > .images {
     border-radius: 12px;
     overflow: hidden;
-    height: 300px;
-    > img {
+    height: 250px;
+    position: relative;
+    border: 1px solid var(--color_faded_gray);
+
+    .image-container {
+      height: 100%;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent);
+        height: 100px;
+      }
+    }
+
+    img {
       height: 100%;
       width: 100%;
       object-fit: cover;
@@ -47,7 +64,7 @@
       width: auto;
       .material-icons {
         font-size: 14px;
-        color: var(--color_pastel_green);
+        color: white;
       }
     }
   }
@@ -59,10 +76,12 @@
     > .category {
       display: flex;
       background-color: #ffffff;
-      border: 1px solid var(--color_oslo_gray);
+      border: 1px solid var(--color_faded_gray);
       border-radius: var(--gap);
-      margin-top: -60px;
+      margin-top: -53px;
       padding: 4px 12px;
+      font-size: 12px;
+      text-transform: uppercase;
 
       position: absolute;
       left: 50%;
@@ -71,32 +90,34 @@
       > :not(:last-child) {
         padding-right: 8px;
         margin-right: 8px;
-        border-right: 2px solid var(--color_oslo_gray);
+        border-right: 1px solid var(--color_faded_gray);
       }
 
     }
 
     > .title {
+      font-size: 20px;
       font-weight: 500;
       margin-top: var(--gap);
     }
 
     > .price {
-      font-size: calc(var(--gap) / 1.5);
+      font-size: 17px;
       > span {
         color: var(--color_pastel_green);
-        font-size: var(--gap);
+        font-size: 1.3em;
       }
     }
 
     > .location {
+      font-size: 14px;
       font-weight: 300;
     }
 
-  }
+    > :not(.category) {
+      margin-bottom: 8px;
+    }
 
-  &:hover {
-    --border_color: var(--color_pastel_green);
   }
 
 }

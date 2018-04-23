@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core'
 import { AngularFirestore } from 'angularfire2/firestore'
 import { Observable } from 'rxjs'
 import { } from 'googlemaps'
+import { mergeMap } from 'rxjs/operators'
+import { of } from 'rxjs/observable/of'
+import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import * as firebase from 'firebase/app'
 
@@ -15,21 +18,40 @@ export class SearchService {
   constructor(private _afs: AngularFirestore) { }
 
   public query(params: any = null) {
-    return this._afs.collection<ListingShortDetail>(this.ref)
-      .valueChanges()
-      .map(listings =>
-        listings.filter(listing => {
-            if(listing.status === 'active') {
-              let p1 = new google.maps.LatLng(+params.latitude, +params.longitude)
-              let p2 = new google.maps.LatLng(listing.geopoint.latitude, listing.geopoint.longitude)
-              return this.distBetween(p1, p2) <= (params.radius * 1000)
-            }
-          }
-        )
-      )
+
+    // IT'S MISSING ADD THE LOCATION FILTER
+    var aux = firebase.firestore().collection("listings-short-detail").where('status', '==', 'active')
+    
+    if( params.categorySlug ) { aux = aux.where('categorySlug', '==', params.categorySlug) }
+    if( params.minPrice ) { aux = aux.where('price', '>=', +params.minPrice) }
+    if( params.maxPrice ) { aux = aux.where('price', '<=', +params.maxPrice) }
+
+    return aux.get().then( snapshot => snapshot.docChanges )
+    
+    // HOW IT WAS BEFORE
+    // return this._afs.collection<ListingShortDetail>(this.ref)
+    //   .valueChanges()
+    //   .map(listings => 
+    //     // TODO(TT) delete this
+    //     // console.log(listings)
+    //     listings.filter(listing => {
+    //         if(listing.status === 'active') {
+    //           let p1 = new google.maps.LatLng(+params.latitude, +params.longitude)
+    //           let p2 = new google.maps.LatLng(listing.geopoint.latitude, listing.geopoint.longitude)
+    //           // TODO(TT) delete this
+    //           // console.log("p1: lat:" + p1.lat() + "lng: " + p1.lng())
+    //           // console.log("p2: lat:" + p2.lat() + "lng: " + p2.lng())
+    //           return this.distBetween(p1, p2) <= (params.radius * 1000)
+    //         }
+    //       }
+    //     )
+    //   )
   }
 
   public distBetween(p1: google.maps.LatLng, p2: google.maps.LatLng) {
+    // TODO(TT) delete this
+    // let distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
+    // console.log(distance)
     return google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
   }
 

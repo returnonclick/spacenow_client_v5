@@ -98,41 +98,38 @@ exports.activeListing = functions.firestore
 /**
 * Booking Request email
 */
-// exports.requestBooking = functions.firestore
-//     .document('bookings/{id}')
-//     .onCreate(event => {
-//         const booking = event.data.data()
-//         // RETIRAR spaceID HARDCODE
-//         //************************************* */
-//         // const spaceId = 'QV18Xnq4nKkVqVOuSRwpb'
-//         // return getSpace(spaceId)  ---TEST
-//         //************************************* */
-//         return getSpace(booking.spaceBookings[0].spaceId)
-//             .then(docListing => {
-//                 const listing = docListing.data()
-//                 return getUser(listing.ownerUid)
-//                     .then(doc => {
-//                         const hostData = doc.data()
-//                         return getUser(booking.userId)
-//                             .then((docUser) => {
-//                                 const userData = docUser.data()
-//                                 return getCategories(listing.categoryId)
-//                                     .then((docCat) => {
-//                                         const cateData = docCat.data()
-//                                         let subject = 'You have a new booking request.'
-//                                         convertDate(booking.spaceBookings[0].bookingDates)
-//                                             .then(dates => {
-//                                                 var context = { booking, listing, userData, hostData, cateData, dates }
-//                                                 sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject)
-//                                             })
-//                                     }).catch(error => console.error('There was an error while sending the email:', error))
-//                             }).catch(error => console.error(error))
-//                     }).catch(error => console.error(error))
-//             })
-//             .catch(error => {
-//                 console.log(error)
-//             })
-//     })
+exports.requestBooking = functions.firestore
+    .document('bookings/{id}')
+    .onCreate(event => {
+    let booking = new booking_1.Booking;
+    booking = event.data.data();
+    let spaceId = booking.spaceBookings[0].spaceId;
+    return getSpace(spaceId)
+        .then(docListing => {
+        const listing = docListing.data();
+        return getUser(listing.ownerUid)
+            .then(doc => {
+            const hostData = doc.data();
+            return getUser(booking.userId)
+                .then((docUser) => {
+                const userData = docUser.data();
+                return getCategories(listing.categoryId)
+                    .then((docCat) => {
+                    const cateData = docCat.data();
+                    let subject = 'You have a new booking request.';
+                    convertDate(booking.spaceBookings[0].bookingDates)
+                        .then(dates => {
+                        var context = { booking, listing, userData, hostData, cateData, dates };
+                        // sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject)
+                    });
+                }).catch(error => console.error('There was an error while sending the email:', error));
+            }).catch(error => console.error(error));
+        }).catch(error => console.error(error));
+    })
+        .catch(error => {
+        console.log(error);
+    });
+});
 /**
 * Booking Payment Request email // Booking Cancellation Request email //  Booking Confirmation Request email // Host Confirmation
 */
@@ -141,18 +138,13 @@ exports.actionsBooking = functions.firestore
     .onUpdate(event => {
     let booking = new booking_1.Booking;
     booking = event.data.data();
-    console.log(typeof booking);
-    console.log('spaceBooking', typeof booking.spaceBookings);
     const bookingPrevious = event.data.previous.data();
-    // RETIRAR spaceID HARDCODE
-    //************************************* */
-    // const spaceId = 'QV18Xnq4nKkVqVOuSRwpb'
-    //************************************* */
+    let spaceId = booking.spaceBookings[0].spaceId;
     if (booking.bookingStatus !== bookingPrevious.bookingStatus) {
-        return getSpace(booking.spaceBookings)
+        console.log(spaceId);
+        return getSpace(spaceId)
             .then((docListing) => {
-            const listing = docListing.data.data();
-            console.log('listing', listing);
+            const listing = docListing.data();
             switch (booking.bookingStatus) {
                 case 'Approved':
                     return getUser(booking.userId)
@@ -168,7 +160,7 @@ exports.actionsBooking = functions.firestore
                                 let daysTot = booking.spaceBookings[0].bookingDates.length;
                                 var context = { booking, userData, listing, cateData, bookingDates, daysTot };
                                 let subject = 'Your booking request has been approved.';
-                                sendEmail('bookingConfirmation-table.html', context, spacenow, userData.email, subject);
+                                // sendEmail('bookingConfirmation-table.html', context, spacenow, userData.email, subject)
                             }).catch(error => console.error('There was an error while sending the email:', error));
                         }).catch(error => console.error(error));
                     }).catch(error => console.error(error));
@@ -182,7 +174,7 @@ exports.actionsBooking = functions.firestore
                             const cateData = docCat.data();
                             let subject = 'Unfortunately the host has declined your booking request.';
                             var context = { booking, userData, listing, cateData };
-                            sendEmail('bookingCancellation-table.html', context, spacenow, userData.email, subject);
+                            // sendEmail('bookingCancellation-table.html', context, spacenow, userData.email, subject)
                             let status = 'Canceled';
                             updateBooking(booking, status);
                         }).catch(error => console.error('There was an error while sending the email:', error));
@@ -200,14 +192,14 @@ exports.actionsBooking = functions.firestore
                                 let subject = 'Your space has been booked and you have a new guest coming for the below space.';
                                 let guestSubject = 'Congratulations your booking has been confirmed for the below space.';
                                 const context = { booking, hostData, listing, userData, cateData };
-                                pdfGenerator('Invoice_host.pdf', context).then(pdfFile => {
-                                    sendEmailInvoice('bookingHostConfirmation-table.html', context, spacenow, hostData.email, subject, booking.id + '_Invoice.pdf', pdfFile);
+                                pdfGenerator(booking.id + 'Invoice_host.pdf', context).then(pdfFile => {
+                                    // sendEmailInvoice('bookingHostConfirmation-table.html', context, spacenow, hostData.email, subject,booking.id+'_Invoice.pdf', pdfFile)
+                                    pdfGeneratorGuest(booking.id + 'Invoice_guest.pdf', context).then(pdfFileGuest => {
+                                        // sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject,booking.id+'Invoice_guest.pdf',pdfFileGuest)
+                                        let status = 'Completed';
+                                        updateBooking(booking, status);
+                                    }).catch(error => console.error(error));
                                 }).catch(error => console.error(error));
-                                pdfGenerator("Invoice_guest.pdf", context).then(pdfFileGuest => {
-                                    sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject, booking.id + 'Invoice_guest.pdf', pdfFileGuest);
-                                }).catch(error => console.error(error));
-                                let status = 'Completed';
-                                updateBooking(booking, status);
                             }).catch(error => console.error('There was an error getCategories function', error));
                         }).catch(error => console.error(error));
                     }).catch(error => console.error(error));
@@ -339,26 +331,38 @@ function pdfGenerator(fileName, context) {
     return new Promise(resolve => {
         let fs = require('fs');
         let pdf = require('html-pdf');
-        // let pathName = path.join(__dirname,'/(new)Invoice.html')
-        // let html = fs.readFileSync(pathName, 'utf8')
         let options = {
             format: 'A4',
             border: { top: "0.5cm", right: "0.5cm", bottom: "0.5cm", left: "0.5cm" },
             type: 'pdf',
             timeout: 600000,
-            // phantomPath: "./node_modules/phantomjs-prebuilt/bin/phantomjs",
             renderDelay: 1000,
         };
         templates.render('(new)Invoice.html', context, function (err, html) {
-            console.log('html = ', html);
-            // pdf.create(html, options).toFile('./lib/pdf/test.pdf', function(err, res) {
-            //  if (err) return console.log(err);
-            //   console.log(res);  // { filename: '/app/businesscard.pdf' }
-            // });
             pdf.create(html, options).toBuffer(function (err, buffer) {
-                // console.log('This is a buffer:', Buffer.isBuffer(buffer))
-                // console.log('Buffer = ', buffer)
-                // console.log('error = ',err) ;
+                if (!err) {
+                    uploadFile(fileName, buffer).then(pdfFile => {
+                        console.log('pdfFile = ', pdfFile);
+                        resolve(pdfFile);
+                    }).catch(error => console.error(error));
+                }
+            });
+        });
+    });
+}
+function pdfGeneratorGuest(fileName, context) {
+    return new Promise(resolve => {
+        let fs = require('fs');
+        let pdf = require('html-pdf');
+        let options = {
+            format: 'A4',
+            border: { top: "0.5cm", right: "0.5cm", bottom: "0.5cm", left: "0.5cm" },
+            type: 'pdf',
+            timeout: 600000,
+            renderDelay: 1000,
+        };
+        templates.render('(new)Invoice.html', context, function (err, html) {
+            pdf.create(html, options).toBuffer(function (err, buffer) {
                 if (!err) {
                     uploadFile(fileName, buffer).then(pdfFile => {
                         console.log('pdfFile = ', pdfFile);
@@ -371,9 +375,6 @@ function pdfGenerator(fileName, context) {
 }
 function uploadFile(fileName, buffer) {
     return new Promise(resolve => {
-        // const bucket = admin.storage().bucket();
-        // const file = bucket.file('/pdf/' + fileName);
-        // file.save(buffer, ((error) => {
         var bucket = gcs.bucket('gs://spacenow-bca9c.appspot.com');
         const gcsname = '/pdf/' + fileName;
         const file = bucket.file(gcsname);
@@ -395,28 +396,6 @@ function uploadFile(fileName, buffer) {
             resolve(pdfFile);
         });
         stream.end(new Buffer(buff));
-        // bucket.upload('/pdf/'+buffer, function(err, file) {
-        //     // bucket.upload('/pdf/'+fileName, function(err, file) {
-        //     if (!err) {
-        //         console.log("file uploaded");
-        //         let pdfFile = "https://storage.googleapis.com/" + BUCKET_NAME +
-        //             "/pdf/" + fileName;
-        //           resolve(pdfFile)
-        //     } console.log("Unable to upload file",err);
-        // })    
-        // console.log('error = ',error)
-        //         if (error) {
-        //           // return res.status(500).send('Unable to upload file.');
-        //           console.log("Unable to upload file",error);
-        //           resolve(error)
-        //         } else {
-        //             console.log("file uploaded");
-        // let pdfFile = "https://storage.googleapis.com/" + BUCKET_NAME +
-        //     "/pdf/" + fileName;
-        //   resolve(pdfFile)
-        //               // return res.status(200).send('Uploaded');
-        //     }
-        //   }));
     });
 }
 //# sourceMappingURL=index.js.map

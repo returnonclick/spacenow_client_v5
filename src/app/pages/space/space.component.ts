@@ -5,6 +5,7 @@ import { Dictionary } from '@ngrx/entity/src/models'
 import { Store } from '@ngrx/store'
 import { } from 'googlemaps'
 import { Observable, Subject } from 'rxjs'
+import 'rxjs/add/operator/takeUntil'
 
 import { Amenity } from '@models/amenity'
 import { Category } from '@models/category'
@@ -74,7 +75,7 @@ export class SpaceComponent {
             this._store.dispatch(new profileActions.Query(this.owner.uid))
           }
           else
-            this._store.dispatch(new userActions.QueryOne(this.space.ownerUid))
+            this._store.dispatch(new userActions.Select([ this.space.ownerUid ]))
         }
       })
 

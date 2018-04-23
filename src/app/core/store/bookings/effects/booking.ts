@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { Actions, Effect, ofType } from '@ngrx/effects'
-import { map, mergeMap, switchMap } from 'rxjs/operators'
+import { map, mergeMap, startWith, switchMap } from 'rxjs/operators'
 
-import { Booking } from '@models/booking'
+import { Booking, BookingStatus } from '@models/booking'
 import { BookingService } from '@core/store/bookings/services/booking'
 
 import * as actions from '@core/store/bookings/actions/booking'
@@ -14,13 +14,18 @@ export class BookingEffects {
   query$ = this._actions$.pipe(
     ofType<actions.Query>(actions.QUERY),
     switchMap(action => this._service.query(action.userId)),
-    mergeMap(changes => changes),
-    map(change => {
-      return {
-        type:    `[Booking] ${change.type}`,
-        payload: new Booking(change.doc.data()),
-      }
-    }),
+    mergeMap(changes => [
+      new actions.Success,
+      ...changes,
+    ]),
+    map(change =>
+      change.type == actions.SUCCESS
+        ? change
+        : {
+          type:    `[Booking] ${change.type}`,
+          payload: new Booking(change.payload.doc.data()),
+        }
+    ),
   )
 
   @Effect()
@@ -33,12 +38,45 @@ export class BookingEffects {
   )
 
   @Effect()
+  filter$ = this._actions$.pipe(
+    ofType<actions.Filter>(actions.FILTER),
+    switchMap(action => this._service.filter(action.spaceIds, action.status)),
+    mergeMap(changes => [
+      new actions.Success,
+      ...changes,
+    ]),
+    map(change =>
+      change.type == actions.SUCCESS
+        ? change
+        : {
+          type:    `[Booking] ${change.type}`,
+          payload: new Booking(change.payload.doc.data()),
+        }
+    )
+  )
+
+  @Effect()
   book$ = this._actions$.pipe(
     ofType<actions.Book>(actions.BOOK),
     switchMap(action =>
       this._service.book(action.booking)
         .then(() => new actions.Success)
         .catch(err => new actions.Fail(err)),
+    ),
+  )
+
+  @Effect()
+  bookRequest$ = this._actions$.pipe(
+    ofType<actions.Approve | actions.Reject>(actions.APPROVE, actions.REJECT),
+    switchMap(action =>
+      this._service.modifyBooking(
+        action.bookingId,
+        action.type == actions.APPROVE
+          ? BookingStatus.APPROVED
+          : BookingStatus.DECLINED,
+      )
+        .then(() => new actions.Success)
+        .catch(err=> new actions.Fail(err))
     ),
   )
 

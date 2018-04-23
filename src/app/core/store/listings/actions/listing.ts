@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store'
-import { Listing } from '@shared/models/listing'
+import { Space } from '@shared/models/space'
 
 export const QUERY      = '[Listing] query'
 export const QUERY_ONE  = '[Listing] query one'
@@ -29,29 +29,29 @@ export class QueryOne implements Action {
 
 export class Added implements Action {
     readonly type = ADDED
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Space ) { }
 }
 
 export class Modified implements Action {
     readonly type = MODIFIED
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Space ) { }
 }
 
 export class Removed implements Action {
     readonly type = REMOVED
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Space ) { }
 }
 
 export class Create implements Action {
     readonly type = CREATE
-    constructor( public payload: Listing ) { }
+    constructor( public payload: Space ) { }
 }
 
 export class Update implements Action {
     readonly type = UPDATE
     constructor( 
         public id: string, 
-        public changes: Partial<Listing> 
+        public changes: Partial<Space> 
     ) { }
 }
 

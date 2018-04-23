@@ -1,13 +1,32 @@
 <div class="search-container">
   <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
     <mat-form-field>
       <input matInput sn-google-address type="text" placeholder="Location" (getAddress)="selectedAddress($event)" formControlName="name">
     </mat-form-field>
-    <div class="radius-slider">
+    <mat-form-field>
+      <input matInput type="number" placeholder="Min Price" formControlName="minPrice">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Max Price" formControlName="maxPrice">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Space Type" name="category" formControlName="categorySlug">
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.slug">
+          {{ category.name }} 
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+   
+    <!-- Set radius into advanced filters -->
+    <div class="radius-slider" style="display: none">
       Search Radius
       <mat-slider min="1" max="20" formControlName="radius"></mat-slider>
       {{ form.get('radius').value }} km
     </div>
+
+
+
     <button mat-raised-button type="submit">Filter Spaces</button>
   </form>
   <ng-container *ngIf="(isLoading$ | async); else doneLoading">
