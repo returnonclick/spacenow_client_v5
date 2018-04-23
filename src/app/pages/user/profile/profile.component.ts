@@ -5,15 +5,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router'
 import { Store, select } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
 import { map, combineLatest } from 'rxjs/operators'
-
+import { User } from '@shared/models/user'
+import { Profile } from '@shared/models/profile'
 import { Contact } from '@shared/models/contact'
 import { Card } from '@shared/models/card'
-import { User } from '@models/user'
-import { Profile } from '@models/profile'
 
+import * as actions from '@core/store/auth/actions/auth'
 import * as profileActions from '@core/store/users-profile/actions/user-profile'
-import * as userActions from '@core/store/users/actions/user'
-import * as layoutActions from '@core/store/layouts/actions/layout'
 import * as fromRoot from '@core/store'
 
 @Component({
@@ -23,47 +21,16 @@ import * as fromRoot from '@core/store'
 })
 export class ProfileComponent {
 
-  isLoading$:   Observable<boolean>
-  authUser$:    Observable<User>
-  userProfile$: Observable<Profile>
+  @Input('profile')
+  public profile: Profile
 
-  authUser:     User
-  storagePath:  string = `/images/users-profile/{$usersProfileID}/{$imageID}/{IMAGE_SIZE.JPG}`
-  profile:      Profile
-  aboutMeForm:  FormGroup
-  profileForm:  FormGroup
+  public profileForm: FormGroup
 
   constructor(
+    private _fb: FormBuilder,
     private _store: Store<fromRoot.State>,
-    private _fb:    FormBuilder,
     private cdRef: ChangeDetectorRef
   ) {
-    this.isLoading$   = this._store.pipe(select(fromRoot.getIsLoadingProfile))
-    this.userProfile$ = this._store.pipe(select(fromRoot.getSelectedUserProfile))
-    this.authUser$    = this._store.pipe(select(fromRoot.getAuthUser))
-
-    this.aboutMeForm = this._fb.group({
-      aboutMe: [ '' ]
-    })
-
-    this.authUser$.subscribe(user => {
-      if(user) {
-        this.authUser    = user
-        this.storagePath = `/images/users-profile/${user.uid}`
-        this._store.dispatch(new profileActions.Query(user.uid))
-      }
-    })
-    this.userProfile$.subscribe(profile => {
-      console.log(profile)
-      if(profile) {
-        this.profile = profile
-        this.aboutMeForm.get('aboutMe').setValue(this.profile.aboutMe)
-      }
-    })
-   }
-
-  ngOnInit() {
-    this._store.dispatch(new layoutActions.SetLogoGreen())
     this.createForm()
   }
 
@@ -82,25 +49,6 @@ export class ProfileComponent {
     let frmProfile = Object.assign({}, this.profileForm.value);
     this.profile = Object.assign(this.profile, this.profileForm.value)
     this._store.dispatch(new profileActions.Update( this.profile.uid, this.profile ))
-  }
-
-  getImage(event) {
-    this._store.dispatch(
-      new userActions.Update(
-        this.authUser.uid,
-        { photoURL: event.imageURL }
-      )
-    )
-  }
-
-  setAboutMe() {
-    if(this.aboutMeForm.invalid)
-      return
-
-    this.profile.aboutMe = this.aboutMeForm.value.aboutMe
-    this._store.dispatch(
-      new profileActions.Update(this.profile.uid, this.profile)
-    )
   }
 
 }
