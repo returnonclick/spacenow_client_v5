@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ViewEncapsulation } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
 import { Store } from '@ngrx/store'
@@ -7,7 +7,7 @@ import * as moment from 'moment'
 
 import { OpeningDay } from '@models/availability'
 import { BookingDate, Booking, BookingStatus, PaymentStatus } from '@models/booking'
-import { Space } from '@models/space'
+import { Hourly, Space } from '@models/space'
 import { User } from '@models/user'
 
 import * as fromRoot from '@core/store'
@@ -17,19 +17,23 @@ import * as bookingActions from '@core/store/bookings/actions/booking'
   selector: 'sn-hourly-booking',
   templateUrl: './hourly-booking.component.html',
   styleUrls: [ './hourly-booking.component.scss' ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HourlyBookingComponent {
 
-  @Input() space: Space
-  @Input() category: string
+  @Input() space:     Space
+  @Input() category:  string
 
-  form:           FormGroup
-  fromHourList:   any[] = []
-  toHourList:     any[] = []
-  minDate:        Date = new Date()
-  user:           User
+  form:               FormGroup
+  formOptions:        any                      = []
+  fromHourList:       any[]                    = []
+  toHourList:         any[]                    = []
+  minDate:            Date                     = new Date()
+  guests:             any                      = []
+  user:               User
+  selectedIncentive:  string                   = 'none'
 
-  guests:         any = []
+  private _transform: (number) => string       = (i: number) => `${i | 0} ${(i % 1) * 60}`
 
   constructor(
     private _fb:       FormBuilder,
@@ -44,10 +48,12 @@ export class HourlyBookingComponent {
 
   ngOnInit() {
     this.form = this._fb.group({
-      date:      [ new Date(), Validators.required ],
-      fromHour:  [ '', Validators.required ],
-      toHour:    [ '', Validators.required ],
-      numGuests: [
+      date:          [ new Date(), Validators.required ],
+      fromHour:      [ '', Validators.required ],
+      toHour:        [ '', Validators.required ],
+      incentiveType: [ 'none', this.space.price.incentives ? Validators.required : [] ],
+      incentive:     [ '' ] ,
+      numGuests:     [
         0,
         Validators.compose([
           Validators.required,
@@ -61,37 +67,90 @@ export class HourlyBookingComponent {
       ],
     })
 
-    this.form.get('date').valueChanges.subscribe(date => {
+    let date = new Date()
+    this.form.get('date').valueChanges.subscribe(selectedDate => {
+      date              = selectedDate
       let day           = moment(date).format('ddd').toLowerCase()
       let daySched      = this.space.availability.openingTime[day] as OpeningDay
       this.fromHourList = this.generateHours(daySched.startHour, daySched.closeHour - 1)
       this.toHourList   = this.generateHours(daySched.startHour + 1, daySched.closeHour)
     })
 
-     // Set array for number of guests according to the capacity and category of a space
-     for(let i=1; i<=this.space.specifications['capacity']; i++) {
-      if (this.category !== 'co-working-space' && this.category !== 'desk_only') {
-        if ( i <= 10 )
-          this.guests.push({
-            display: i + ' guest' + ((i == 1) ? '': 's'),
-            value:   i,
-          })
-        else if (i == 11)
-          this.guests.push({
-            display: '10+ guests',
-            value:   this.space.specifications['capacity'],
-          })
+    let fromHour = this.form.get('fromHour')
+    let toHour   = this.form.get('toHour')
+    this.form.get('incentiveType').valueChanges.subscribe(type => {
+      this.selectedIncentive = type
+      let price              = this.space.price as Hourly
+      let day                = moment(date).format('ddd').toLowerCase()
+      let daySched           = this.space.availability.openingTime[day] as OpeningDay
+      switch(type) {
+        case 'halfday':
+          let mid = (daySched.startHour + daySched.closeHour) / 2.0
+          this.formOptions.incentiveScheds = [
+            {
+              display: 'Half Day Pass (AM)',
+              value: new BookingDate({
+                date:           date,
+                fromHour:       daySched.startHour,
+                toHour:         mid,
+                incentivePrice: price.halfDay,
+              }),
+            },
+            {
+              display: 'Half Day Pass (PM)',
+              value: new BookingDate({
+                date:           date,
+                fromHour:       mid,
+                toHour:         daySched.closeHour,
+                incentivePrice: price.halfDay,
+              }),
+            },
+          ]
+          break
+        case 'fullday':
+          this.formOptions.incentiveScheds = [
+            {
+              display: 'Full Day Pass ()',
+              value: new BookingDate({
+                date:           date,
+                fromHour:       daySched.startHour,
+                toHour:         daySched.closeHour,
+                incentivePrice: price.day,
+              }),
+            },
+          ]
+          break
+        case 'none':
+        default:
+          this.formOptions.incentiveScheds = []
+          break
       }
-      else
-        this.guests.push({
-          display: i + ' guest' + ((i == 1) ? '' : 's'),
-          value:   i,
-        })
+      fromHour.setValue(null)
+      toHour.setValue(null)
+    })
+
+    this.form.get('incentive').valueChanges.subscribe(incentive => {
+      fromHour.setValue(incentive.fromHour)
+      toHour.setValue(incentive.toHour)
+    })
+
+     // Set array for number of guests according to the capacity and category of a space
+    let cap = this.space.specifications['capacity']
+    this.formOptions.guests = Array(cap)
+      .fill(0)
+      .map((el, i) => {
+        return {
+          display: `${i + 1} guest${i == 0 ? '' : 's'}`,
+          value: i + 1,
+        }
+      })
+    if(cap > 10 && !(this.category == 'co-working-space' || this.category == 'desk_only')) {
+      this.formOptions.guests = this.formOptions.guests.slice(0, 11)
+      this.formOptions.guests[10] = {
+        display: '10+ guests',
+        value:   cap,
+      }
     }
-  }
-  
-  formatTime(time) {
-    return moment(time, 'HH').format('h a')
   }
 
   onSubmit() {
@@ -106,9 +165,10 @@ export class HourlyBookingComponent {
     bookingSpace.numGuests    = formVal.numGuests
     bookingSpace.bookingDates = [
       new BookingDate({
-        date:     formVal.date,
-        fromHour: formVal.fromHour,
-        toHour:   formVal.toHour,
+        date:           formVal.date,
+        fromHour:       formVal.fromHour,
+        toHour:         formVal.toHour,
+        incentivePrice: formVal.incentive ? formVal.incentive.incentivePrice : 0,
       })
     ]
 
@@ -119,7 +179,7 @@ export class HourlyBookingComponent {
 
       let snackBar = this._snackBar.open('Space added to Booking List', 'Open')
       snackBar.onAction().subscribe(() => {
-        window.open('/users/checkout')
+        window.open('/users/my-bookings')
         snackBar.dismiss()
       })
     }
@@ -130,6 +190,10 @@ export class HourlyBookingComponent {
     else
       return
     this._store.dispatch(new bookingActions.Book(bookingSpace))
+  }
+
+  formatTime(time) {
+    return moment(this._transform(time), 'HH mm').format('h:mm a')
   }
 
   generateHours(start, end) {
@@ -171,10 +235,11 @@ const timeValidator = (fg: FormGroup): { [key: string]: boolean } => {
 
 const minTimeValidator = (minTime: number) => {
   return (fg: FormGroup): { [key: string]: boolean } => {
-    let fromHour = fg.get('fromHour').value
-    let toHour = fg.get('toHour').value
+    let fromHour  = fg.get('fromHour').value
+    let toHour    = fg.get('toHour').value
+    let incentive = fg.get('incentive').value
 
-    if(toHour - fromHour < minTime)
+    if(toHour - fromHour < minTime || incentive)
       return { 'lessThanMinTime': true }
 
     return null
