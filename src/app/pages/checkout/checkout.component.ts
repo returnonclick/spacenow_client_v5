@@ -87,7 +87,9 @@ export class CheckoutComponent {
           if(space) {
             let spacePrice = space.price
             let price      = 0
-            if(space.priceUnit == 'hourly')
+            if(item.bookingDates[0].incentivePrice)
+              price += item.bookingDates[0].incentivePrice
+            else if(space.priceUnit == 'hourly')
               price += spacePrice.price * (item.bookingDates[0].toHour - item.bookingDates[0].fromHour)
             else
               price += spacePrice.price * item.bookingDates.length
