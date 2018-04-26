@@ -90,7 +90,7 @@ export class HourlyBookingComponent {
           let mid = (daySched.startHour + daySched.closeHour) / 2.0
           this.formOptions.incentiveScheds = [
             {
-              display: 'Half Day Pass (AM)',
+              display: `${this.formatTime(daySched.startHour)} - ${this.formatTime(mid)}`,
               value: new BookingDate({
                 date:           date,
                 fromHour:       daySched.startHour,
@@ -99,7 +99,7 @@ export class HourlyBookingComponent {
               }),
             },
             {
-              display: 'Half Day Pass (PM)',
+              display: `${this.formatTime(mid)} - ${this.formatTime(daySched.closeHour)}`,
               value: new BookingDate({
                 date:           date,
                 fromHour:       mid,
@@ -112,7 +112,7 @@ export class HourlyBookingComponent {
         case 'fullday':
           this.formOptions.incentiveScheds = [
             {
-              display: 'Full Day Pass ()',
+              display: `${this.formatTime(daySched.startHour)} - ${this.formatTime(daySched.closeHour)}`,
               value: new BookingDate({
                 date:           date,
                 fromHour:       daySched.startHour,
@@ -241,7 +241,7 @@ const minTimeValidator = (minTime: number) => {
     let toHour    = fg.get('toHour').value
     let incentive = fg.get('incentive').value
 
-    if(toHour - fromHour < minTime || incentive)
+    if(toHour - fromHour < minTime && !incentive)
       return { 'lessThanMinTime': true }
 
     return null
