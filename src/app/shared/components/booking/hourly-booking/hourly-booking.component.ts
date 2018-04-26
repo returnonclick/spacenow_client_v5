@@ -25,15 +25,12 @@ export class HourlyBookingComponent {
   @Input() category:  string
 
   form:               FormGroup
-  formOptions:        any                      = []
-  fromHourList:       any[]                    = []
-  toHourList:         any[]                    = []
-  minDate:            Date                     = new Date()
-  guests:             any                      = []
+  formOptions:        any                = {}
+  minDate:            Date               = new Date()
   user:               User
-  selectedIncentive:  string                   = 'none'
+  selectedIncentive:  string             = 'none'
 
-  private _transform: (number) => string       = (i: number) => `${i | 0} ${(i % 1) * 60}`
+  private _transform: (number) => string = (i: number) => `${i | 0} ${(i % 1) * 60}`
 
   constructor(
     private _fb:       FormBuilder,
@@ -44,6 +41,11 @@ export class HourlyBookingComponent {
       if(user)
         this.user = user
     })
+    this.formOptions.incentiveTypes = [
+      { display: 'No incentive', value: 'none' },
+      { display: 'Half-day Pass', value: 'halfday' },
+      { display: 'Full-day Pass', value: 'fullday' },
+    ]
   }
 
   ngOnInit() {
@@ -69,11 +71,11 @@ export class HourlyBookingComponent {
 
     let date = new Date()
     this.form.get('date').valueChanges.subscribe(selectedDate => {
-      date              = selectedDate
-      let day           = moment(date).format('ddd').toLowerCase()
-      let daySched      = this.space.availability.openingTime[day] as OpeningDay
-      this.fromHourList = this.generateHours(daySched.startHour, daySched.closeHour - 1)
-      this.toHourList   = this.generateHours(daySched.startHour + 1, daySched.closeHour)
+      date                      = selectedDate
+      let day                   = moment(date).format('ddd').toLowerCase()
+      let daySched              = this.space.availability.openingTime[day] as OpeningDay
+      this.formOptions.fromHour = this.generateHours(daySched.startHour, daySched.closeHour - 1)
+      this.formOptions.toHour   = this.generateHours(daySched.startHour + 1, daySched.closeHour)
     })
 
     let fromHour = this.form.get('fromHour')

@@ -25,7 +25,7 @@
         <i class="individual-alarms-amen-35"></i>
         <mat-form-field>
           <mat-select placeholder="From" formControlName="fromHour" required>
-            <mat-option *ngFor="let hour of fromHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
+            <mat-option *ngFor="let hour of formOptions.fromHour" [value]="hour">{{ transformHour(hour) }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -33,7 +33,7 @@
         <i class="individual-alarms-amen-35"></i>
         <mat-form-field>
           <mat-select placeholder="To" formControlName="toHour" required>
-            <mat-option *ngFor="let hour of toHourList" [value]="hour">{{ transformHour(hour) }}</mat-option>
+            <mat-option *ngFor="let hour of formOptions.toHour" [value]="hour">{{ transformHour(hour) }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
