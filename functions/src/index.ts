@@ -1,5 +1,5 @@
 import { ListingShortDetail } from "./models/listing-short-detail"
-import { Booking, BookingSpace } from "./models/booking"
+import { Booking } from "./models/booking"
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -11,7 +11,7 @@ const gmailEmail = functions.config().gmail.email;
 const gmailPassword = functions.config().gmail.password;
 const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 const moment = require('moment')
-const path = require('path')
+// const path = require('path')
 // const phantomPath = require('witch')('phantomjs-prebuilt', 'phantomjs');
 // admin.initializeApp(functions.config().firebase);
 admin.initializeApp({
@@ -40,7 +40,6 @@ const templates = new EmailTemplate({
 var spacenow = '"Spacenow" <noreply@spacenow-bca9c.firebaseapp.com>'
 
 
-
 // });
 
 /**
@@ -58,7 +57,7 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate((event) => {
 exports.createNewListing = functions.firestore
     .document('listings/{id}')
     .onCreate(event => {
-        const listing = event.data.data()
+        const listing = event.data()
         return getUser(listing.ownerUid)
             .then(doc => {
                 const hostData = doc.data()
@@ -75,9 +74,9 @@ exports.createNewListing = functions.firestore
 // */
 exports.activeListing = functions.firestore
     .document('listings/{id}')
-    .onUpdate(event => {
-        const listing = event.data.data()
-        const listingPrevious = event.data.previous.data()
+    .onUpdate((event, context) => {
+        const listing = event.after.data()
+        const listingPrevious = event.previous.data()
 
             return getCategories(listing.categoryId)
                 .then((docCat) => {
@@ -112,10 +111,11 @@ exports.activeListing = functions.firestore
 */
 exports.requestBooking = functions.firestore
     .document('bookings/{id}')
-    .onCreate(event => {
+    .onCreate((event, context) => {
         let booking = new Booking
-        booking = event.data.data()
-        let spaceId = booking.spaceBookings[0].spaceId
+        // console.log(event.data())
+        booking = event.data()
+        let spaceId = booking.spaceId
 
         switch (booking.bookingStatus) {
             case 'Pending':
@@ -125,15 +125,19 @@ exports.requestBooking = functions.firestore
                         return getUser(listing.ownerUid)
                             .then(doc => {
                                 const hostData = doc.data()
+
                                 return getUser(booking.userId)
                                     .then((docUser) => {
                                         const userData = docUser.data()
+
                                         return getCategories(listing.categoryId)
                                             .then((docCat) => {
                                                 const cateData = docCat.data()
+
                                                 let subject = 'You have a new booking request.'
-                                                convertDate(booking.spaceBookings[0].bookingDates)
+                                                convertDate(booking.bookingDates)
                                                     .then(dates => {
+    
                                                         var context = { booking, listing, userData, hostData, cateData, dates }
                                                         // sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject)
                                                     })
@@ -145,9 +149,6 @@ exports.requestBooking = functions.firestore
                         console.log(error)
                     })
             case 'Enquiry':
-                return getUser(booking.userId)
-                    .then(doc => {
-                        const guestData = doc.data()
                         return getSpace(spaceId)
                             .then((docListing) => {
                                 const listing = docListing.data()
@@ -158,13 +159,11 @@ exports.requestBooking = functions.firestore
                                             .then((docCat) => {
                                                 const cateData = docCat.data()
                                                 let subject = 'You have a new booking enquiry.'
-                                                var context = { listing, hostData, cateData, guestData }
+                                                var context = { booking, listing, hostData, cateData }
                                                 // sendEmail('enquiryRequest-table.html', context, spacenow, hostData.email, subject)
                                             }).catch(error => { console.log(error) })
                                     }).catch(error => { console.log(error) })
                             })
-                    }).catch(error => { console.log(error) })
-
         }
     })
 /**
@@ -172,13 +171,14 @@ exports.requestBooking = functions.firestore
 */
 exports.actionsBooking = functions.firestore
     .document('bookings/{id}')
-    .onUpdate(event => {
+    .onUpdate((event, context) => {
         let booking = new Booking
-         booking  = event.data.data()
-        const bookingPrevious = event.data.previous.data()
-        let spaceId = booking.spaceBookings[0].spaceId
+        booking  = event.after.data()
+        const bookingPrevious = event.before.data()
+        let spaceId = booking.spaceId
+
         if (booking.bookingStatus !== bookingPrevious.bookingStatus) {
-            console.log(spaceId)
+           
             return getSpace(spaceId)
                 .then((docListing) => {
                     const listing = docListing.data()
@@ -192,11 +192,11 @@ exports.actionsBooking = functions.firestore
                                     return getCategories(listing.categoryId)
                                         .then((docCat) => {
                                             const cateData = docCat.data()
-                                            convertDate(booking.spaceBookings[0].bookingDates)
+                                            convertDate(booking.bookingDates)
                                                 .then(dates => {
                                                     let bookingDates = new Object([])
                                                     bookingDates = dates
-                                                    let daysTot: number = booking.spaceBookings[0].bookingDates.length                              
+                                                    let daysTot: number = booking.bookingDates.length                              
                                                     var context = { booking, userData, listing, cateData, bookingDates, daysTot }
                                                     let subject = 'Your booking request has been approved.'
                                                     // sendEmail('bookingConfirmation-table.html', context, spacenow, userData.email, subject)
@@ -208,7 +208,7 @@ exports.actionsBooking = functions.firestore
                             return getUser(booking.userId)
                                 .then(doc => {
                                     const userData = doc.data()
-                                    console.log('categoryId',listing.categoryId)
+                
                                     return getCategories(listing.categoryId)
                                         .then((docCat) => {
                                             const cateData = docCat.data()
@@ -234,9 +234,9 @@ exports.actionsBooking = functions.firestore
                                                     let guestSubject = 'Congratulations your booking has been confirmed for the below space.'
                                                     const context = { booking, hostData, listing, userData, cateData }
                                                     pdfGenerator(booking.id+'Invoice_host.pdf',context).then(pdfFile => {
-                                                    // sendEmailInvoice('bookingHostConfirmation-table.html', context, spacenow, hostData.email, subject,booking.id+'_Invoice.pdf', pdfFile)
+                                                        sendEmailInvoice('bookingHostConfirmation-table.html', context, spacenow, hostData.email, subject,booking.id+'_Invoice.pdf', pdfFile)
                                                         pdfGeneratorGuest(booking.id+'Invoice_guest.pdf',context).then(pdfFileGuest => {
-                                                        // sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject,booking.id+'Invoice_guest.pdf',pdfFileGuest)
+                                                            sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject,booking.id+'Invoice_guest.pdf',pdfFileGuest)
                                                             let status = 'Completed'
                                                             updateBooking(booking, status)
                                                         }).catch(error => console.error(error))
@@ -368,17 +368,21 @@ function pdfGenerator(fileName , context): Promise<any> {
             timeout: 600000, 
             renderDelay: 1000,
         };
-  
-         templates.render('(new)Invoice.html', context, function(err, html) {      
+
+        console.log('pdfGenerator Host')
+        templates.render('invoice.html', context, function(err, html) {  
+            console.log(html)   
              pdf.create(html , options).toBuffer(function(err, buffer) {
+                
                if (!err) {
                    uploadFile(fileName, buffer).then(pdfFile => { 
                        console.log('pdfFile = ',pdfFile); resolve(pdfFile)
                     }).catch(error => console.error(error));
-               }
-             })
-         })
-      
+                }
+            })
+            console.log(err)
+        })
+    
     })
 }
 
@@ -393,8 +397,9 @@ function pdfGeneratorGuest(fileName , context): Promise<any> {
             timeout: 600000, 
             renderDelay: 1000,
         };
-  
-         templates.render('(new)Invoice.html', context, function(err, html) {
+        
+        console.log('pdfGenerator Guest')
+         templates.render('invoice.html', context, function(err, html) {
          
              pdf.create(html , options).toBuffer(function(err, buffer) {
                if (!err) {

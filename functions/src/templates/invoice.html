@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Invoice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+    .container {
+        max-width:21cm;
+        height: 30cm;
+        margin:auto;
+        padding-left:0px;
+        border:1px solid #eee;
+        box-shadow:0 0 10px rgba(0, 0, 0, .15);
+        font-size:16px;
+        line-height:24px;
+        font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color:#173839;
+        background-image: url("https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2FSpacenow_Email_Invoice.png?alt=media&token=14d22b47-70bf-4839-a000-44db1cb0df91");
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+
+    #info {
+      padding-left:65px;
+      padding-right: 25px;
+      padding-top: 5px;
+      width: 100%
+    }
+
+</style>
+</head>
+
+    <body>
+      <div class="container">
+        <br><br><br><br><br><br><br><br><br>
+        <tr>
+          <td>
+              <table id="info">
+                  <tr align="left">
+                    <td align="left; text-align:center">
+                      <br><strong>Name:</strong>
+                      <span style="margin-left: 14px;"> {{userData.displayName}}</span>
+                      <br>
+                      <strong>Phone:</strong>
+                      <span style="margin-left: 8px;"> {{userData.phoneNumber}}</span>
+                      <br>
+                      <strong>Email:</strong>
+                      <span style="margin-left: 14px;"> {{userData.email}}</span>
+                    </td>
+                    <td style="padding-top:48px; padding-left:50px; text-align:center">
+                      <strong>{{booking.id}}</strong>
+                    </td>
+                  </tr>
+                  <tr align="left">
+                      <td align="left" style="padding-top:90px; width:50%">
+                          <br><strong>{{listing.address.full_name}}</strong>
+                          <br><br>
+                          <strong>Monday</strong>
+                          <!-- <span style="margin-left: 52px;">{{listing.availability.openingTime.mon.startHour}}:{{listing.availability.openingTime.mon.startMinute}}</span> -->
+                          <span style="margin-left: 52px;">09:00 - 15:00</span>
+                          <br>
+                          <strong>Tuesday</strong>
+                          <!-- <span style="margin-left: 50px;">{{listing.availability.openingTime.tue.startHour}}:{{listing.availability.openingTime.tue.startMinute}}</span> -->
+                          <span style="margin-left: 49px;">CLOSED</span>
+                          <br>
+                          <strong>Wednesday</strong>
+                          <!-- <span style="margin-left: 27px;"> {{listing.availability.openingTime.wed.startHour}}:{{listing.availability.openingTime.wed.startMinute}}</span> -->
+                          <span style="margin-left: 25px;">09:00 - 15:00</span>
+                          <br>
+                          <strong>Thursday</strong>
+                          <!-- <span style="margin-left: 43px;"> {{listing.availability.openingTime.thu.startHour}}:{{listing.availability.openingTime.thu.startMinute}}</span> -->
+                          <span style="margin-left: 41px;">09:00 - 15:00</span>
+                          <br>
+                          <strong>Friday</strong>
+                          <!-- <span style="margin-left: 67px;"> {{listing.availability.openingTime.fri.startHour}}:{{listing.availability.openingTime.fri.startMinute}}</span> -->
+                          <span style="margin-left: 64px;">09:00 - 15:00</span>
+                          <br>
+                          <strong>Saturday</strong>
+                          <!-- <span style="margin-left: 48px;"> {{listing.availability.openingTime.sat.startHour}}:{{listing.availability.openingTime.sat.startMinute}}</span> -->
+                          <span style="margin-left: 44px;">09:00 - 15:00</span>
+                          <br>
+                          <strong>Sunday</strong>
+                          <!-- <span style="margin-left: 60px;"> {{listing.availability.openingTime.sun.startHour}}:{{listing.availability.openingTime.sun.startMinute}}</span> -->
+                          <span style="margin-left: 54px;">09:00 - 15:00</span>
+                          <br>
+                        </td>
+                        <td style="padding-top:55px; width:50%" >
+
+                          <!-- <p><b>{{booking.spaceBookings[0].numGuests}}</b>  Guests</p> -->
+                            <p><b>3</b> Guests  <span style="margin-left:155px; font-size:26px"><b>AMOUNT</b></span></p>
+                            <p><b>09:00</b> 15/03/2018 <span style="margin-left:145px">03 hours</span></p>
+                            <p><b>15:00</b> 15/03/2018 <span style="margin-left:85px; font-size:18px">AUS: $3000,00</span></p></p>
+                        </td>
+                  </tr>
+                </table>
+                <br><br>
+                <hr style="margin-left:0px" width="50%" color="#6cde93"></hr>
+                <tr align="right">
+                    <td>
+                        <p style="padding-right:55px; padding-top:155px ; text-align:right">AUS: $3200,00
+                        <br>AUS:  $200,00<br><br>
+                        <!-- <br><h1 style="text-align:right ; padding-right:45px ; color:#fff">${{booking.finalPrice}} </h1> -->
+                        <br><h1 style="text-align:right ; padding-right:45px ; color:#fff">$3200,00 </h1>
+
+
+                        </p>
+                    </td>
+
+                  </tr>
+          </td>
+        </tr>
+
+      </div>
+
+    </body>
+
