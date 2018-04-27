@@ -6,6 +6,7 @@ import { ListingShortDetail } from '@models/listing-short-detail'
 export const ALL      = '[Spaces] all'
 export const SELECT   = '[Spaces] select'
 export const FILTER   = '[Spaces] filter'
+export const RELATED  = '[Spaces] related'
 
 export const ADD_MANY = '[Spaces] add many'
 export const ADDED    = '[Spaces] added'
@@ -34,6 +35,11 @@ export class Filter implements Action {
     public params: any[],
     public isShort: boolean = false
   ) { }
+}
+
+export class Related implements Action {
+  readonly type = RELATED
+  constructor(public spaceId: string) { }
 }
 
 export class AddMany implements Action {
@@ -71,6 +77,7 @@ export type SpaceActions
   = All
   | Select
   | Filter
+  | Related
   | AddMany
   | Added
   | Modified

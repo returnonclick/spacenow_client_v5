@@ -13,6 +13,7 @@ import { Profile } from '@models/profile'
 import { Space } from '@models/space'
 import { ListingShortDetail } from '@models/listing-short-detail'
 import { User } from '@models/user'
+import { FeaturedCardComponent } from '@shared/components/custom/cards'
 
 import * as fromRoot from '@core/store'
 import * as amenityActions from '@core/store/amenities/actions/amenity'
@@ -20,8 +21,6 @@ import * as categoryActions from '@core/store/categories/category.action'
 import * as profileActions from '@core/store/users-profile/actions/user-profile'
 import * as spaceActions from '@core/store/spaces/actions/space'
 import * as userActions from '@core/store/users/actions/user'
-
-import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'sn-space',
@@ -36,9 +35,11 @@ export class SpaceComponent {
   categories$:    Observable<Dictionary<Category>>
   isLoadingPage$: Observable<boolean>
   owner$:         Observable<Dictionary<User>>
+  related$:       Observable<ListingShortDetail[]>
   spaces$:        Observable<Dictionary<Space | ListingShortDetail>>
   stopper$:       Subject<boolean>
 
+  spaceCards              = FeaturedCardComponent
   fragment:       string  = ''
   latitude:       number  = 0
   longitude:      number  = 0
@@ -56,9 +57,9 @@ export class SpaceComponent {
     this.categories$    = this._store.select(fromRoot.getCategoryEntities)
     this.isLoadingPage$ = this._store.select(fromRoot.isLoadingSpaces)
     this.owner$         = this._store.select(fromRoot.getUserEntities)
+    this.related$       = new Observable()
     this.spaces$        = this._store.select(fromRoot.getSpaceEntities)
     this.stopper$       = new Subject()
-
 
     Observable.combineLatest(
       this.spaces$,
@@ -70,6 +71,7 @@ export class SpaceComponent {
           this.latitude  = +this.space.address.latitude
           this.longitude = +this.space.address.longitude
 
+          this._store.dispatch(new spaceActions.Related(this.space.id))
           if(owner[this.space.ownerUid]) {
             this.owner = owner[this.space.ownerUid]
             this._store.dispatch(new profileActions.Query(this.owner.uid))
@@ -96,6 +98,11 @@ export class SpaceComponent {
       .subscribe(params => {
         this.spaceId = params.id
         this._store.dispatch(new spaceActions.Select([ this.spaceId ]))
+
+        this.related$ = this._store.select(fromRoot.getAllSpaces)
+          .map(spaces =>
+            spaces.filter(space => space.id != this.spaceId)
+          ) as Observable<ListingShortDetail[]>
       })
 
     this._route.fragment.subscribe(fragment => {

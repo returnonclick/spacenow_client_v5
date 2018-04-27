@@ -244,18 +244,15 @@
     [longitude]="longitude">
   </agm-map>
 </section>
-<section id="related-space-section">
-  <div id="related-space-title-container">
-    <div id="related-space-title-wrapper">
-      <h2 id="related-space-title">You may also like</h2>
-    </div>
-    <div id="related-space-title-icon-wrapper">
-      <mat-icon class="related-space-title-icon">arrow_forward</mat-icon>
-    </div>
+<section id="related-section">
+  <div class="title right">
+    <h2>You may also like</h2>
+    <span class="si-icon-small si-left"></span>
   </div>
-  <div id="related-spaces-container">
-    <div class="related-space-container">
-
-    </div>
-  </div>
+  <gen-slider
+    [component]="spaceCards"
+    [items]="related$ | async"
+    perPage="1"
+    style="--perPage: 1;">
+  </gen-slider>
 </section>

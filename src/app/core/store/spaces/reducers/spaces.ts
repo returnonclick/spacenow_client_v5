@@ -37,6 +37,14 @@ export function reducer(
       })
     }
 
+    case actions.RELATED: {
+      return {
+        ...state,
+        isLoading: true,
+        error:     null,
+      }
+    }
+
     case actions.ADD_MANY: {
       return spaceAdapter.addMany(action.payload, state)
     }

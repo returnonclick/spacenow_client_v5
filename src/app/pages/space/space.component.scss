@@ -320,6 +320,37 @@
   }
 }
 
+#related-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 32px;
+  justify-items: right;
+  width: 100%;
+  margin: 52px;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    max-width: 250px;
+
+    &.right {
+      text-align: right;
+    }
+  }
+}
+
+.si-icon-small {
+  height: 50px;
+  width: 50px;
+}
+
+.si-left {
+    @include sn-icon(9, 4, 50);
+    @include respond-to('phone-wide') {
+        @include sn-icon(9, 4, 35);
+    }
+}
+
 @include respond-to('md') {
   #hero-image-container {
     height: 500px;
