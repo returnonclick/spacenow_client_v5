@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { AngularFirestore } from 'angularfire2/firestore'
 import { Observable } from 'rxjs'
+import { map, switchMap } from 'rxjs/operators'
 
-import { Space } from '@models/space'
+import { ListingStatus, Space } from '@models/space'
 import { ListingShortDetail } from '@models/listing-short-detail'
 
 @Injectable()
@@ -15,7 +16,7 @@ export class SpaceService {
 
   readAll() {
     return Observable.fromPromise(
-      this.afs.firestore.collection(this._ref).limit(20).get().then(snapshot => snapshot.docChanges)
+      this.afs.firestore.collection(this._ref).get().then(snapshot => snapshot.docChanges)
     )
   }
 
@@ -33,11 +34,38 @@ export class SpaceService {
   filter(params: any[]) {
     return Observable.fromPromise(
       this.afs.firestore.collection(this._ref)
-      .where(params[0], params[1], params[2])
-      // .limit(20)
-      .get()
-      .then(snapshot => snapshot.docChanges)
+        .where(params[0], params[1], params[2])
+        .get()
+        .then(snapshot => snapshot.docChanges)
+        .then(changes => changes.map(change =>
+          (change.doc.data() as Space).id)
+        )
     )
+  }
+
+  related(spaceId: string) {
+    return this.afs.doc(`${this._ref}/${spaceId}`)
+      .snapshotChanges()
+      .pipe(
+        map(change => (change.payload.data() as Space).categoryId),
+        switchMap(categoryId =>
+          this.afs.collection<Space>(this._ref, ref =>
+            ref.where('categoryId', '==', categoryId)
+              .where('status', '==', ListingStatus.ACTIVE)
+          ).stateChanges()
+        ),
+        map(actions =>
+          actions.map(action => (action.payload.doc.data() as Space).id)
+            .filter(id => id != spaceId)
+            .slice(0, 20)
+        ),
+        switchMap(spaceIds => Observable.merge(
+          ...spaceIds.map(id =>
+            this.afs.doc<ListingShortDetail>(`${this._shortRef}/${id}`)
+              .snapshotChanges()
+          )
+        )),
+      )
   }
 
 }

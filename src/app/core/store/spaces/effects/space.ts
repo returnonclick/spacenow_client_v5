@@ -52,13 +52,18 @@ export class SpaceEffects {
       this._isShortQuery = action.isShort
       return this._service.filter(action.params)
     }),
-    map(changes =>
-      changes.map(change => {
-        let space = change.doc.data() as (Space | ListingShortDetail)
-        return space.id
-      })
-    ),
     map(spaceIds => new spaceActions.Select(spaceIds, this._isShortQuery))
+  )
+
+  @Effect({ dispatch: true })
+  related$ = this._actions$.pipe(
+    ofType<spaceActions.Related>(spaceActions.RELATED),
+    switchMap(action => this._service.related(action.spaceId)),
+    map(action => {
+      return new spaceActions.Added(
+        new ListingShortDetail(action.payload.data())
+      )
+    })
   )
 
   @Effect()

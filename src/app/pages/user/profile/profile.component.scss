@@ -1,0 +1,121 @@
+:host {
+    
+    --gap: 30px;
+
+    .profileForm {
+        
+        display: grid;
+        grid-gap: var(--gap);
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        
+    }
+
+}
+
+.wrapper {
+
+    --gap: 30px;
+    --color__pastel_green: #6cde93;
+    --color__gable_green: #173839;
+
+    grid-gap: var(--gap);
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+    "navigation content";
+
+    .navigation {
+        grid-area: navigation;
+        justify-self: end;
+
+        a {
+            margin-bottom: calc(var(--gap) / 2);
+        }
+
+    }
+
+    .content {
+        grid-area: content;
+
+        display: grid;
+        grid-row-gap: var(--gap);
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+
+        h4 {
+            border-bottom: 1px solid var(--color__gable_green);
+            padding: calc(var(--gap) / 2) 0;
+        }
+
+        .header {
+
+            display: grid;
+            grid-row-gap: var(--gap);
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+
+            .warning {
+                background-color: var(--color__pastel_green);
+                border-radius: 5px;
+                color: white;
+                padding: calc(var(--gap) * 1.5) var(--gap);
+            }
+
+        }
+
+        section {
+
+            display: grid;
+            grid-gap: var(--gap);
+            grid-template-columns: 3fr 2fr;
+            grid-template-rows: auto 1fr;
+            grid-template-areas:
+              "required picture"
+              "required aboutme";
+
+            .required {
+                grid-area: required;
+            }
+
+            .picture {
+                grid-area: picture;
+                // justify-self: center;
+
+                .profile-picture-drop-zone {
+
+                    height: 400px;
+                    position: absolute;
+                    width: 400px;
+
+                }
+
+                .profile-picture {
+
+                    border-radius: 50%;
+
+                }
+
+            }
+
+            .about-me {
+                grid-area: aboutme;
+
+                mat-form-field {
+                    width: 100%;
+
+                    textarea {
+                        resize: none;
+                    }
+                }
+
+                button {
+                    width: 100%;
+                }
+            }
+
+        }
+
+    }
+
+}

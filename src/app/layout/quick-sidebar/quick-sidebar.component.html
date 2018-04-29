@@ -1,0 +1,16 @@
+<!-- begin::Quick Sidebar -->
+
+    <button mat-icon-button (click)="closeSidenav()" class="closeMenu">
+        <mat-icon aria-label="Close sidenav icon">arrow_forward</mat-icon>
+    </button>
+    <ng-container *ngIf="sidenavComponent === 'sign-in'">
+        <gen-sign-in></gen-sign-in>
+    </ng-container>
+    <ng-container *ngIf="sidenavComponent === 'register'">
+        <gen-sign-up></gen-sign-up>
+    </ng-container>
+    <ng-container *ngIf="sidenavComponent === 'forgot-password'">
+        <gen-forgot-password></gen-forgot-password>
+    </ng-container>
+
+    <!-- end::Quick Sidebar -->

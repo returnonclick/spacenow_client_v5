@@ -19,7 +19,6 @@
 
 @import
   '~sass/layout/navigation',
-  '~sass/layout/grid',
   '~sass/layout/header',
   '~sass/layout/footer',
   '~sass/layout/sidebar',
@@ -32,9 +31,6 @@
   '~sass/components/cover',
   '~sass/components/dropdown',
   '~sass/components/panels';
-
-@import
-  '~sass/pages/home';
 
 @import
   '~sass/themes/_sn-material-theme',

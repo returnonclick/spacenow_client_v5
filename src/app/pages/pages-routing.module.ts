@@ -1,52 +1,130 @@
 import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
+import {Routes, RouterModule} from '@angular/router';
 
-import { ContainerComponent } from './container/container.component'
-import { TermComponent } from './terms/term.component'
-import { HostTermComponent } from './host-terms/host-term.component'
-import { PrivacyComponent } from './privacy/privacy.component'
-import { DictionaryComponent } from './dictionary/dictionary.component'
-import { RefundPolicyComponent } from './refund-policy/refund.component'
-import { AboutComponent } from './about/about.component'
-import { HelpComponent } from './help/help.component'
-import { TopQuestionComponent } from './help/top-question/top-question.component'
-import { AboutSpacenowComponent } from './help/about-spacenow/about-spacenow.component'
-import { GettingStartedComponent } from './help/getting-started/getting-started.component'
-import { HowWorksComponent } from './help/how-works/how-works.component'
-import { NewsComponent } from './news/news.component'
-import { WhyComponent } from './why/why.component'
+import { PagesComponent } from './pages.component'
+
+// import {AuthGuard} from "../auth/_guards/auth.guard";
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ContainerComponent,
-    children: [
-      { path: '', redirectTo: 'terms', pathMatch: 'full' },
-      { path: 'terms', component: TermComponent },
-      { path: 'host-terms', component: HostTermComponent },
-      { path: 'privacy', component: PrivacyComponent },
-      { path: 'dictionary', component: DictionaryComponent },
-      { path: 'refund-policy', component: RefundPolicyComponent },
-      { path: 'about', component: AboutComponent },
-      { path: 'why', component: WhyComponent },
-      { path: 'news', component: NewsComponent },
-      {
-        path: 'help',
-        component: HelpComponent,
-        children: [
-          { path: 'top-questions', component: TopQuestionComponent },
-          { path: 'about-spacenow', component: AboutSpacenowComponent },
-          { path: 'getting-started', component: GettingStartedComponent },
-          { path: 'new', component: HowWorksComponent },
-          { path: '', redirectTo: 'top', pathMatch: 'full' }
+    {
+        "path": "",
+        "component": PagesComponent,
+        "children": [
+        {
+            "path": "",
+            "loadChildren": "./index/index.module#IndexModule"
+        },
+        {
+            "path": "spaces",
+            "loadChildren": "./spaces/spaces.module#SpacesModule"
+        },
+        {
+            "path": "space",
+            "loadChildren": "./space/space.module#SpaceModule"
+        },
+        {
+            "path": "list-space",
+            "loadChildren": "./list-space/list-space.module#ListSpaceModule"
+        },
+        {
+            "path": "profile",
+            "loadChildren": "./user/profile/profile.module#ProfileModule"
+        },
+        {
+            "path": "settings",
+            "loadChildren": "./user/settings/settings.module#SettingsModule"
+        },
+        {
+            "path": "transactions-history",
+            "loadChildren": "./user/transactions-history/transactions-history.module#TransactionsHistoryModule"
+        },
+        {
+            "path": "my-spaces",
+            "loadChildren": "./user/my-spaces/my-spaces.module#MySpacesModule"
+        },
+        {
+            "path": "manage-bookings",
+            "loadChildren": "./user/manage-bookings/manage-bookings.module#ManageBookingsModule"
+        },
+        {
+            "path": "ratings-reviews",
+            "loadChildren": "./user/ratings-reviews/ratings-reviews.module#RatingsReviewsModule"
+        },
+        {
+            "path": "booking-requests",
+            "loadChildren": "./user/booking-requests/booking-requests.module#BookingRequestsModule"
+        },
+        {
+            "path": "calendar",
+            "loadChildren": "./user/calendar/calendar.module#CalendarModule"
+          },
+        {
+            "path": "checkout",
+            "loadChildren": "./checkout/checkout.module#CheckoutModule"
+        },
+        {
+            "path": "success",
+            "loadChildren": "./success/success.module#SuccessModule"
+        },
+        {
+            "path": "why",
+            "loadChildren": "./support-pages/why/why.module#WhyModule"
+        },
+        {
+            "path": "career",
+            "loadChildren": "./support-pages/career/career.module#CareerModule"
+        },
+        {
+            "path": "press",
+            "loadChildren": "./support-pages/press/press.module#PressModule"
+        },
+        {
+            "path": "help",
+            "loadChildren": "./support-pages/help/help.module#HelpModule"
+        },
+        {
+            "path": "news",
+            "loadChildren": "./support-pages/news/news.module#NewsModule"
+        },
+        {
+            "path": "about-us",
+            "loadChildren": "./support-pages/about-us/about-us.module#AboutUsModule"
+        },
+        {
+            "path": "terms-service",
+            "loadChildren": "./terms-conditions/terms-service/terms-service.module#TermsServiceModule"
+        },
+        {
+            "path": "host-terms",
+            "loadChildren": "./terms-conditions/host-terms/host-terms.module#HostTermsModule"
+        },
+        {
+            "path": "privacy-policy",
+            "loadChildren": "./terms-conditions/privacy-policy/privacy-policy.module#PrivacyPolicyModule"
+        },
+        {
+            "path": "refund-cancellation-policy",
+            "loadChildren": "./terms-conditions/refund-cancellation-policy/refund-cancellation-policy.module#RefundCancellationPolicyModule"
+        },
+        {
+            "path": "dictionary",
+            "loadChildren": "./terms-conditions/dictionary/dictionary.module#DictionaryModule"
+        },
+        {
+            "path": "404",
+            "loadChildren": "./not-found/not-found.module#NotFoundModule"
+        }
         ]
-      },
-    ],
-  },
+    },
+    {
+        "path": "**",
+        "redirectTo": "404",
+        "pathMatch": "full"
+    }
 ]
 
 @NgModule({
-  imports: [ RouterModule.forChild(routes) ],
-  exports: [ RouterModule ],
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class PagesRoutingModule { }

@@ -1,0 +1,258 @@
+<div id="hero-image-container">
+  <img id="space-hero-image" src="{{ space?.images[0]?.imageURL }}" alt="Space Feature Image">
+</div>
+<section id="space-section">
+  <div id="space-description">
+    <ul class="description-navigator">
+      <li>
+        <a (click)="navigateTo('space-overview')">overview</a>
+      </li>
+      <!-- <li>
+        <a (click)="navigateTo('space-review')">review</a>
+      </li> -->
+      <li>
+        <a (click)="navigateTo('space-host')">the host</a>
+      </li>
+      <li>
+        <a (click)="navigateTo('map-section')">location</a>
+      </li>
+    </ul>
+    <div id="space-overview">
+      <div class="overview-title">
+        <span class="address">{{ space?.address.full_name }}</span>
+        <h2 class="title">{{ space?.title }}</h2>
+        <!-- <div class="rating">
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star_border</mat-icon>
+        </div> -->
+        <div class="category">
+          <!-- <div class="icon-container">
+            <mat-icon color="primary">people_outline</mat-icon>
+          </div>
+          Coworking -->
+          {{ (categories$ | async)[space?.categoryId]?.name }}
+        </div>
+      </div>
+      <div id="overview-about" class="paragraph-section">
+        <h3>About the Space</h3>
+        <p gen-folding-p>
+          {{ space?.description }}
+        </p>
+      </div>
+      <div class="overview-ammenities" *ngIf="space?.amenityIds.length > 0">
+        <h3>Ammenities</h3>
+        <ul class="ammenities-list">
+          <ng-container *ngFor="let id of space.amenityIds">
+            <li *ngIf="(amenities$ | async)[id]">
+              <!-- <mat-icon color="primary">{{ (amenities$ | async)[id].icon }}</mat-icon> -->
+
+              <i [ngClass]="(amenities$ | async)[id].slug + '-amen-35'"></i>
+              {{  (amenities$ | async)[id].name }}
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+      <div id="overview-rules" class="paragraph-section" *ngIf="space?.rules">
+        <h3>Space Rules</h3>
+        <p gen-folding-p>
+          {{ space.rules }}
+        </p>
+      </div>
+      <div id="overview-cancellations" class="paragraph-section">
+        <h3>Cancellations</h3>
+        <ul>
+          <li>
+            A Host may cancel a reservation if a contract has been entered into the sale of the Space or the
+            Building.
+          </li>
+          <li>
+            If a Host cancels a Reservation you can transfer your payment to a new Reservation provided you do so
+            within 7 days of the cancellation.
+          </li>
+          <li>
+            For an Hourly Reservation if a Guest cancels within 1 hour of the Agreement Time or 24 hours before
+            the start of the Term a full refund of the Fees and Taxes paid in respect of that Reservation. However,
+            if a Guest chooses to cancel more than 1 hour after the Agreement Time or within 24 hours of the
+            Start Time no moneys will be refundable.
+          </li>
+          <li>
+            For a Daily Reservation if a Guest cancels within 1 hour of the Agreement Time or 36 hours before the
+            start of the Term a full refund of the Fees and Taxes paid in respect of that Reservation. However,
+            if a Guest chooses to cancel more than 1 hour after the Agreement Time or within 36 hours of the Start
+            Time no moneys will be refundable.
+          </li>
+          <li>
+            For a Weekly Reservation if a Guest cancels within 1 hour of the Agreement Time or 48 hours before the
+            start of the Term a full refund of the Fees and Taxes paid in respect of that Reservation. However, if
+            a Guest chooses to cancel more than 1 hour after the Agreement Time or within 48 hours of the Start
+            Time no moneys will be refundable.
+          </li>
+          <li>
+            For a Monthly Reservation if a Guest cancels within 1 day of making the Agreement Time or at least 30
+            days before the Start Date the Guest will receive a full refund of the Deposit and any Fees and Taxes
+            paid in respect of that Reservation. However, if a Guest chooses to cancel after the Agreement Date plus
+            1 day, but less than 30 days before the State Date, 50% of the Fees and Taxes payable in respect of that
+            Reservation will refunded but the Guest is no longer obligated to pay the remaining Fees and Taxes for
+            the Minimum Term.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div id="space-review">
+      <div class="review-title">
+        <h2>13 Reviews</h2>
+        <div class="rating">
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star_border</mat-icon>
+        </div>
+      </div>
+      <ul class="review-list">
+        <li>
+          <div class="person">
+            <div class="person-image">
+              <img src="http://www.math.uni-frankfurt.de/~person/_4170854.jpg" />
+            </div>
+            <span class="person-name">Ben</span>
+            <div class="person-rating">
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star_border</mat-icon>
+            </div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+            sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </li>
+        <li>
+          <div class="person">
+            <div class="person-image">
+              <img src="http://www.math.uni-frankfurt.de/~person/_4170854.jpg" />
+            </div>
+            <span class="person-name">Robbie</span>
+            <div class="person-rating">
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star</mat-icon>
+              <mat-icon color="primary">star_border</mat-icon>
+            </div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+            sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </li>
+      </ul>
+      <a>more</a>
+    </div> -->
+    <div id="space-host">
+      <h2>Your host</h2>
+      <div class="host-details">
+        <div class="host-image">
+          <img src="{{ owner?.photoURL }}">
+        </div>
+        <div class="host-bio">
+          <h4 class="host-name">{{ owner?.displayName }}</h4>
+          <ng-container *ngIf="ownerProfile?.aboutMe">
+            <p class="host-introduction">
+              {{ ownerProfile?.aboutMe }}
+            </p>
+          </ng-container>
+          <a>contact {{ owner?.displayName }}</a>
+          <div class="host-social">
+            <a href="#"><i class="fab fa-facebook-square fa-2x"></i></a>
+            <a href="#"><i class="fab fa-google-plus-square fa-2x"></i></a>
+            <a href="#"><i class="fab fa-linkedin fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="aside">
+    <div id="space-booking">
+      <div class="space-host">
+        <span class="host-name">Host {{ owner?.displayName }}</span>
+        <div class="host-badge">
+          <span>Trusted</span>
+        </div>
+        <div class="host-avatar">
+          <img src="{{ owner?.photoURL }}">
+        </div>
+        <!-- <div class="host-rating">
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star</mat-icon>
+          <mat-icon color="primary">star_border</mat-icon>
+        </div> -->
+      </div>
+      <div class="space-price" *ngIf="space?.price.price === 0">
+        <span class="currency">POA</span>
+      </div>
+      <div class="space-price" *ngIf="space?.price.price !== 0">
+        <span class="currency">{{ space?.currency }}</span>
+        <span class="price">${{ space?.price.price }}</span> a
+        <span class="unit">{{ mapPriceUnit() }}</span>
+      </div>
+      <div class="booking-form">
+        <mat-spinner *ngIf="(isLoadingPage$ | async); else doneLoading"></mat-spinner>
+        <ng-template #doneLoading>
+          <sn-poa-booking
+            *ngIf="space?.price.price == 0; else hourly"
+            [space]="space">
+          </sn-poa-booking>
+          <ng-template #hourly>
+            <sn-hourly-booking
+              *ngIf="space?.priceUnit == 'hourly'; else general"
+              [space]="space"
+              [category]="(categories$ | async)[space?.categoryId]?.slug">
+            </sn-hourly-booking>
+          </ng-template>
+          <ng-template #general>
+            <sn-general-booking
+              *ngIf="space?.priceUnit != 'hourly'"
+              [space]="space"
+              [category]="(categories$ | async)[space?.categoryId]?.slug">
+            </sn-general-booking>
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="map-section">
+  <agm-map
+    [zoom]="16"
+    [streetViewControl]="false"
+    gestureHandling="cooperative"
+    [latitude]="latitude"
+    [longitude]="longitude">
+  </agm-map>
+</section>
+<section id="related-section">
+  <div class="title right">
+    <h2>You may also like</h2>
+    <span class="si-icon-small si-left"></span>
+  </div>
+  <gen-slider
+    [component]="spaceCards"
+    [items]="related$ | async"
+    perPage="1"
+    style="--perPage: 1;">
+  </gen-slider>
+</section>
