@@ -35,70 +35,46 @@ const templates = new EmailTemplate({
     root: './src/templates/'
 });
 var spacenow = '"Spacenow" <noreply@spacenow-bca9c.firebaseapp.com>';
-// });
 /**
 * New User - Welcome email
 */
-exports.sendWelcomeEmail = functions.auth.user().onCreate((event) => {
-    const userData = event.data;
+const sendWelcomeEmail = functions.auth
+    .user()
+    .onCreate(userData => {
+    let context = { userData };
     let subject = 'Welcome to Spacenow';
-    var context = { userData };
-    sendEmail('userNewWelcome.html', context, spacenow, userData.email, subject);
+    return sendEmail('userNewWelcome.html', context, spacenow, userData.email, subject);
 });
 /**
-* Creating listings-short-detail document
-*/
-exports.createNewListing = functions.firestore
+ * Creating listings-short-detail document
+ */
+const createNewListing = functions.firestore
     .document('listings/{id}')
     .onCreate(event => {
-    const listing = event.data();
-    return getUser(listing.ownerUid)
-        .then(doc => {
-        const hostData = doc.data();
-        return getCategories(listing.categoryId)
-            .then((docCat) => {
-            const cateData = docCat.data();
-            updateShortDetailSpace(listing, cateData, hostData);
-        }).catch(error => { console.log(error); });
-    }).catch(error => { console.log(error); });
-});
-// /**
-// * Listing Active email / Listing Approved email
-// */
-exports.activeListing = functions.firestore
-    .document('listings/{id}')
-    .onUpdate((event, context) => {
-    const listing = event.after.data();
-    const listingPrevious = event.previous.data();
-    return getCategories(listing.categoryId)
-        .then((docCat) => {
-        const cateData = docCat.data();
-        return getUser(listing.ownerUid)
-            .then(doc => {
-            const hostData = doc.data();
-            updateShortDetailSpace(listing, cateData, hostData);
-            // switch (listing.status) {  
-            //     case 'pending':
-            //         var subject = 'Spacenow: Your space is now live.'
-            //         var context = { listing, hostData, cateData }
-            //         // MISSING THE SPACENOW ADMIN EMAIL
-            //         sendEmail('listingToApprove-table.html', context, spacenow, hostData.email, subject)
-            //     case 'active':
-            //         var subject = 'Spacenow: Your space is now live.'
-            //         var context = { listing, hostData, cateData } 
-            //         sendEmail('listingActive-table.html', context, spacenow, hostData.email, subject) 
-            // }    
-        }).catch(error => { console.log(error); });
-    })
-        .catch(error => {
-        console.error('There was an error while sending the email:', error);
-    })
-        .catch(error => { console.log(error); });
+    let listing = event.data();
+    let userP = getUser(listing.ownerUid);
+    let catP = getCategories(listing.categoryId);
+    return Promise.all([userP, catP])
+        .then(([hostData, catData]) => updateShortDetailSpace(listing, catData.data(), hostData.data()))
+        .catch(err => console.log(err));
 });
 /**
-* Booking Request email
-*/
-exports.requestBooking = functions.firestore
+ *  Listing Active email / Listing Approved email
+ */
+const activeListing = functions.firestore
+    .document('listings/{id}')
+    .onUpdate((event, context) => {
+    let listing = event.after.data();
+    let userP = getUser(listing.ownerUid);
+    let catP = getCategories(listing.categoryId);
+    return Promise.all([userP, catP])
+        .then(([hostData, catData]) => updateShortDetailSpace(listing, catData.data(), hostData.data()))
+        .catch(err => console.log(err));
+});
+/**
+ * Booking Request email
+ */
+const requestBooking = functions.firestore
     .document('bookings/{id}')
     .onCreate((event, context) => {
     let booking = new booking_1.Booking;
@@ -151,9 +127,9 @@ exports.requestBooking = functions.firestore
     }
 });
 /**
-* Booking Payment Request email // Booking Cancellation Request email //  Booking Confirmation Request email // Host Confirmation
-*/
-exports.actionsBooking = functions.firestore
+ * Booking Payment Request email // Booking Cancellation Request email //  Booking Confirmation Request email // Host Confirmation
+ */
+const actionsBooking = functions.firestore
     .document('bookings/{id}')
     .onUpdate((event, context) => {
     let booking = new booking_1.Booking;
@@ -226,34 +202,40 @@ exports.actionsBooking = functions.firestore
             .catch(error => console.log(error));
     }
 });
-// maintenance function /listings-short-detail Document
-function updateShortDetailSpace(listing, cateData, hostData) {
-    let shortData = new listing_short_detail_1.ListingShortDetail;
-    shortData.id = listing.id;
-    shortData.title = listing.title;
-    shortData.countryName = listing.address.country;
-    shortData.currency = listing.currency;
-    shortData.fullAddress = listing.address.full_name;
-    shortData.priceUnit = listing.priceUnit;
-    shortData.price = listing.price.price;
-    shortData.category = cateData.name;
-    shortData.geopoint = listing.address;
-    shortData.images = listing.images;
-    shortData.ownerDisplayName = hostData.displayName;
-    shortData.categorySlug = cateData.slug || null;
-    shortData.status = listing.status;
-    shortData.capacity = listing.specifications.capacity || null;
+module.exports = {
+    sendWelcomeEmail,
+    createNewListing,
+    activeListing,
+};
+/* maintenance function /listings-short-detail Document */
+function updateShortDetailSpace(listing, catData, hostData) {
+    let shortData = new listing_short_detail_1.ListingShortDetail({
+        id: listing.id,
+        title: listing.title,
+        countryName: listing.address.country,
+        currency: listing.currency,
+        fullAddress: listing.address.full_name,
+        priceUnit: listing.priceUnit,
+        price: listing.price.price,
+        category: catData.name,
+        geopoint: listing.address,
+        images: listing.images,
+        ownerDisplayName: hostData.displayName,
+        categorySlug: catData.slug || null,
+        status: listing.status,
+        capacity: listing.specifications.capacity || null,
+    });
     const data = Object.assign({}, shortData);
-    admin.firestore().collection('listings-short-detail').doc(`${shortData.id}`).set(data);
+    return admin.firestore().doc(`/listings-short-detail/${shortData.id}`).set(data);
 }
 function getSpace(id) {
-    return admin.firestore().collection('listings').doc(`${id}`).get();
+    return admin.firestore().collection('listings').doc(id).get();
 }
 function getUser(id) {
-    return admin.firestore().collection('users').doc(`${id}`).get();
+    return admin.firestore().doc(`/users/${id}`).get();
 }
 function getCategories(id) {
-    return admin.firestore().collection('categories').doc(`${id}`).get();
+    return admin.firestore().doc(`/categories/${id}`).get();
 }
 function updateBooking(booking, status) {
     let data = booking;
@@ -262,20 +244,21 @@ function updateBooking(booking, status) {
     return admin.firestore().collection('bookings').doc(`${booking.id}`).set(data);
 }
 function sendEmail(template, context, from, email, subject) {
-    templates.render(`${template}`, context, function (err, html) {
-        return mailTransport.sendMail({
-            from: from,
-            to: email,
-            html: html,
-            subject: subject
-        }).then(() => {
-            console.log('Email Template:', template + ', ' + 'send to', email);
-            // return true
-        }).catch(error => {
-            console.error('There was an error while sending the email:', error);
-            // return false
+    return new Promise((resolve, reject) => {
+        templates.render(template, context, (err, html) => {
+            if (err)
+                reject(err);
+            resolve(html);
         });
-    });
+    })
+        .then(html => mailTransport.sendMail({
+        from: from,
+        to: email,
+        html: html,
+        subject: subject,
+    }))
+        .then(() => console.log(`Email Template: ${template}, sent to ${email}`))
+        .catch(err => console.error('There was an error while sending the email:', err));
 }
 function sendEmailInvoice(template, context, from, email, subject, fileName = null, filePath = null) {
     templates.render(`${template}`, context, function (err, html) {
