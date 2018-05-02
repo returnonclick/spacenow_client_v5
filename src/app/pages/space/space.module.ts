@@ -14,6 +14,8 @@ import { SpaceService } from '@core/store/spaces/services/space'
 import { SpaceEffects } from '@core/store/spaces/effects/space'
 import { AmenityEffects } from '@app/core/store/amenities/effects/amenity'
 import { AmenityService } from '@app/core/store/amenities/services/amenity'
+import { BookingService } from '@core/store/bookings/services/booking'
+import { BookingEffects } from '@core/store/bookings/effects/booking'
 
 const routes: Routes = [
   {
@@ -31,7 +33,11 @@ const routes: Routes = [
     FlexLayoutModule,
     MaterialModule,
     SharedModule,
-    EffectsModule.forFeature([AmenityEffects, SpaceEffects]),
+    EffectsModule.forFeature([
+      AmenityEffects,
+      BookingEffects,
+      SpaceEffects,
+    ]),
     LayoutModule,
     AgmCoreModule
   ],
@@ -42,8 +48,9 @@ const routes: Routes = [
     SpaceComponent
   ],
   providers: [
+    AmenityService,
+    BookingService,
     SpaceService,
-    AmenityService
   ]
 })
 export class SpaceModule { }

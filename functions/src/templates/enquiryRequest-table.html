@@ -137,7 +137,7 @@
 
         <tr style="background-color: #FFF" align="center">
             <td>
-                <img width="70%" src="{{listing.images[0].imageURL}}" alt="images">
+                <img width="70%" src="{{ listing.images[0].imageURL }}" alt="images">
             </td>
         </tr>
 
@@ -156,7 +156,7 @@
                             <hr color="#E4E4E4"></hr>
                             <br>
                             <p>Hi
-                                <b>{{hostData.displayName}}</b>,
+                                <b>{{ hostData.displayName }}</b>,
                                 <br>You have a new booking enquiry.</p>
                         </td>
                     </tr>
@@ -169,31 +169,31 @@
                     <tr>
                         <td align="left">
                             <strong>Title:</strong>
-                            <span style="margin-left: 77px;"> {{listing.title}}</span>
+                            <span style="margin-left: 77px;">{{ listing.title }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Price:</strong>
-                            <span style="margin-left: 57px;"> $ {{listing.price.price}} AUD</span>
+                            <span style="margin-left: 57px;">$ {{ listing.price.price }} AUD</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Address:</strong>
-                            <span style="margin-left: 47px;"> {{listing.address.full_name}}</span>
+                            <span style="margin-left: 47px;">{{ listing.address.full_name }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Category:</strong>
-                            <span style="margin-left: 37px;"> {{cateData.name }}</span>
+                            <span style="margin-left: 37px;">{{ cateData.name }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Capacity:</strong>
-                            <span style="margin-left: 38px;"> {{ listing.specifications.capacity }}</span>
+                            <span style="margin-left: 38px;">{{ listing.specifications.capacity }}</span>
                         </td>
                     </tr>
                 </table>
@@ -207,21 +207,19 @@
                     <tr>
                         <td align="left">
                             <strong>Guest Name:</strong>
-                            <span style="margin-left: 22px;">{{ booking.poaDetails.name }}
-                            </span>
+                            <span style="margin-left: 22px;">{{ booking.poaDetails.name }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Guest e-mail:</strong>
-                            <span style="margin-left: 20px;">{{ booking.poaDetails.email }}
-                            </span>
+                            <span style="margin-left: 20px;">{{ booking.poaDetails.email }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Guest phone:</strong>
-                            <span style="margin-left: 20px;"> {{booking.poaDetails.number}}</span>
+                            <span style="margin-left: 20px;">{{ booking.poaDetails.number }}</span>
                         </td>
                     </tr>
                 </table>

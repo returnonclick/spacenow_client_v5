@@ -13,11 +13,11 @@
 	</button>
 	<mat-menu #burguerMenu="matMenu" yPosition="below" xPosition="before" overlapTrigger="false">
 		<button mat-menu-item routerLink="/list-space" style="color: white">List a space</button>
-		<button mat-menu-item (click)="openSidenav(); setSidenavLogin();" style="color: white">Log in</button>
-		<button mat-menu-item (click)="openSidenav(); setSidenavRegister();" style="color: white">Sign up</button>
+		<button mat-menu-item (click)="openSidenav($event); setSidenavLogin();" style="color: white">Log in</button>
+		<button mat-menu-item (click)="openSidenav($event); setSidenavRegister();" style="color: white">Sign up</button>
 	</mat-menu>
-	<a href="#" (click)="openSidenav(); setSidenavLogin();" class="hidden-tablet" style="color: white">Log in</a>
-	<a href="#" (click)="openSidenav(); setSidenavRegister();" class="hidden-tablet" style="color: white">Sign up</a>
+	<a href="#" (click)="openSidenav($event); setSidenavLogin();" class="hidden-tablet" style="color: white">Log in</a>
+	<a href="#" (click)="openSidenav($event); setSidenavRegister();" class="hidden-tablet" style="color: white">Sign up</a>
 </ng-template>
 
 <!-- User logged in -->

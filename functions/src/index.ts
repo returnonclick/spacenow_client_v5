@@ -87,62 +87,54 @@ const activeListing = functions.firestore
  * Booking Request email
  */
 const requestBooking = functions.firestore
-    .document('bookings/{id}')
-    .onCreate((event, context) => {
-        let booking = new Booking
-        // console.log(event.data())
-        booking = event.data()
-        let spaceId = booking.spaceId
+  .document('bookings-errol/{id}') // TODO: change back to original
+  .onCreate((event, ctx) => {
+    let booking = new Booking(event.data())
 
-        switch (booking.bookingStatus) {
-            case 'Pending':
-                return getSpace(spaceId)
-                    .then(docListing => {
-                        const listing = docListing.data()
-                        return getUser(listing.ownerUid)
-                            .then(doc => {
-                                const hostData = doc.data()
+    switch (booking.bookingStatus) {
+      case 'Pending': {
+        let spaceP = getSpace(booking.spaceId)
+        let datesP = convertDates(booking.bookingDates)
+        let guestP = getUser(booking.userId)
 
-                                return getUser(booking.userId)
-                                    .then((docUser) => {
-                                        const userData = docUser.data()
+        return Promise.all([ spaceP, datesP, guestP ])
+          .then(([ space, dates, guest ]) => {
+            let listing  = space.data()
+            let userData = guest.data()
+            let hostP    = getUser(listing.ownerUid)
+            let catP     = getCategories(listing.categoryId)
 
-                                        return getCategories(listing.categoryId)
-                                            .then((docCat) => {
-                                                const cateData = docCat.data()
+            return Promise.all([ hostP, catP ])
+              .then(([ host, cat ]) => {
+                let hostData = host.data()
+                let cateData = cat.data()
+                let subject  = 'You have a new booking request.'
+                let context  = { booking, listing, userData, hostData, cateData, dates }
+                return sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject)
+              })
+          })
+          .catch(err => console.error(err))
+      }
+      case 'Enquiry': {
+        return getSpace(booking.spaceId)
+          .then(space => {
+            let listing = space.data()
+            let hostP   = getUser(listing.ownerUid)
+            let catP    = getCategories(listing.categoryId)
 
-                                                let subject = 'You have a new booking request.'
-                                                convertDate(booking.bookingDates)
-                                                    .then(dates => {
-
-                                                        var context = { booking, listing, userData, hostData, cateData, dates }
-                                                        // sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject)
-                                                    })
-                                            }).catch(error => console.error('There was an error while sending the email:', error))
-                                    }).catch(error => console.error(error))
-                            }).catch(error => console.error(error))
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            case 'Enquiry':
-                        return getSpace(spaceId)
-                            .then((docListing) => {
-                                const listing = docListing.data()
-                                return getUser(listing.ownerUid)
-                                    .then(hostDoc => {
-                                        const hostData = hostDoc.data()
-                                        return getCategories(listing.categoryId)
-                                            .then((docCat) => {
-                                                const cateData = docCat.data()
-                                                let subject = 'You have a new booking enquiry.'
-                                                var context = { booking, listing, hostData, cateData }
-                                                // sendEmail('enquiryRequest-table.html', context, spacenow, hostData.email, subject)
-                                            }).catch(error => { console.log(error) })
-                                    }).catch(error => { console.log(error) })
-                            })
-        }
-    })
+            return Promise.all([ hostP, catP ])
+              .then(([ host, cat ]) => {
+                let hostData = host.data()
+                let cateData = cat.data()
+                let subject  = 'You have a new booking enquiry.'
+                let context  = { booking, listing, hostData, cateData }
+                return sendEmail('enquiryRequest-table.html', context, spacenow, hostData.email, subject)
+              })
+          })
+          .catch(err => console.error(err))
+      }
+    }
+  })
 
 /**
  * Booking Payment Request email // Booking Cancellation Request email //  Booking Confirmation Request email // Host Confirmation
@@ -170,7 +162,7 @@ const actionsBooking = functions.firestore
                                     return getCategories(listing.categoryId)
                                         .then((docCat) => {
                                             const cateData = docCat.data()
-                                            convertDate(booking.bookingDates)
+                                            convertDates(booking.bookingDates)
                                                 .then(dates => {
                                                     let bookingDates = new Object([])
                                                     bookingDates = dates
@@ -233,6 +225,7 @@ module.exports = {
   sendWelcomeEmail,
   createNewListing,
   activeListing,
+  requestBooking,
 }
 
 /* maintenance function /listings-short-detail Document */
@@ -282,20 +275,18 @@ function sendEmail(template, context, from, email, subject) {
     templates.render(template, context, (err, html) => {
       if(err)
         reject(err)
-
       resolve(html)
     })
-  })
-  .then(html =>
-    mailTransport.sendMail({
-      from:    from,
-      to:      email,
-      html:    html,
-      subject: subject,
-    })
-  )
-  .then(() => console.log(`Email Template: ${template}, sent to ${email}`))
-  .catch(err => console.error('There was an error while sending the email:', err))
+  }).then(html =>
+      mailTransport.sendMail({
+        from:    from,
+        to:      email,
+        html:    html,
+        subject: subject,
+      })
+    )
+    .then(() => console.log(`Email Template: ${template}, sent to ${email}`))
+    .catch(err => console.error('There was an error while sending the email:', err))
 }
 
 function sendEmailInvoice(template, context, from, email, subject, fileName = null,filePath = null) {
@@ -318,29 +309,27 @@ function sendEmailInvoice(template, context, from, email, subject, fileName = nu
     })
 }
 
-function convertDate(bookingDates: Array<any>): Promise<Array<any>> {
-    return new Promise(resolve => {
-        let dates: Array<any> = new Array()
-        let count = bookingDates.length
+function convertDates(bookingDates: any[]): Promise<any[]> {
+  return new Promise((resolve, reject) => {
+    if(bookingDates.length < 1)
+      reject()
 
-        for (let i = 0; count >= 1; i++) {
-            dates.push({
-                date: formatDate(bookingDates[i].date),
-                fromHour: formatDate(bookingDates[i].fromHour, 'H', 'h A'),
-                toHour: formatDate(bookingDates[i].toHour, 'H', 'h A')
-            })
-            count = count - 1
-            if (count <= 1) {
-                resolve(dates)
-            }
-        }
+    let dates = bookingDates.map(date => {
+      return {
+        date:     formatDate(date.date),
+        fromHour: formatDate(date.fromHour, 'H', 'h A'),
+        toHour:   formatDate(date.toHour, 'H', 'h A'),
+      }
     })
+
+    resolve(dates)
+  })
 }
 
 function formatDate(d: number, fromFmt: string = null, toFmt: string = 'DD-MM-YYYY') {
-    if (!fromFmt)
-        return moment(d).format(toFmt)
-    return moment(d, fromFmt).format(toFmt)
+  if(!fromFmt)
+    return moment(d).format(toFmt)
+  return moment(d, fromFmt).format(toFmt)
 }
 
 function pdfGenerator(fileName , context): Promise<any> {

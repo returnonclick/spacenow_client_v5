@@ -34,7 +34,7 @@ export class NavbarComponent {
     this.cdRef.detectChanges()
   }
 
-  openSidenav() {
+  openSidenav(event) {
     event.preventDefault();
     this.store.dispatch(new layoutActions.OpenSidenav)
   }
