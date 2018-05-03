@@ -1,4 +1,4 @@
-<div class="search-container">
+<div class="search-container" id="search">
   <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
     <mat-form-field>
@@ -11,23 +11,15 @@
       <input matInput type="number" placeholder="Max Price" formControlName="maxPrice">
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Space Type" name="category" formControlName="categorySlug">
-        <mat-option *ngFor="let category of categories$ | async" [value]="category.slug">
+      <mat-select placeholder="Space Type" name="category" formControlName="categoryId">
+        <mat-option [value]="''">All</mat-option>
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
           {{ category.name }} 
         </mat-option>
       </mat-select>
     </mat-form-field>
-   
-    <!-- Set radius into advanced filters -->
-    <div class="radius-slider" style="display: none">
-      Search Radius
-      <mat-slider min="1" max="20" formControlName="radius"></mat-slider>
-      {{ form.get('radius').value }} km
-    </div>
 
-
-
-    <button mat-raised-button type="submit">Filter Spaces</button>
+    <button mat-raised-button type="submit" id="submit" >Filter Spaces</button>
   </form>
   <ng-container *ngIf="(isLoading$ | async); else doneLoading">
     <mat-spinner></mat-spinner>
@@ -41,6 +33,14 @@
         (mouseleave)="toggleHover(space, false)">
       </sn-space-list-item>
   </div>
+  
+  <!-- For the pagination back and next buttons --> 
+  <!-- <mat-spinner *ngIf="results.loading | async"></mat-spinner> -->
+  <!-- <div style="width: 40%">
+    <button (click)="backPage()">back</button>
+    <button (click)="nextPage()" [disabled]="results.done | async">next</button>
+  </div> -->
+  
   </ng-template>
   <agm-map
     [zoom]="zoom"

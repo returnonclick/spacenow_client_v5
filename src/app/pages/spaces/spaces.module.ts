@@ -7,6 +7,10 @@ import { MaterialModule } from "@shared/material.module"
 import { SharedModule } from '@app/shared/shared.module'
 import { SpacesComponent } from './spaces.component'
 import { AgmCoreModule } from '@agm/core'
+import { EffectsModule } from '@ngrx/effects'
+
+import { SearchEffects } from '@app/core/store/search/effects/search'
+import { SearchService } from '@app/core/store/search/services/search';
 
 const routes: Routes = [
   {
@@ -24,11 +28,17 @@ const routes: Routes = [
     FlexLayoutModule,
     MaterialModule,
     SharedModule,
-    AgmCoreModule
+    AgmCoreModule,
+    EffectsModule.forFeature([SearchEffects]),
   ],
   exports: [
     RouterModule
   ],
-  declarations: [SpacesComponent]
+  declarations: [
+    SpacesComponent
+  ],
+  providers: [
+    SearchService
+  ]
 })
 export class SpacesModule { }

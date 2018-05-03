@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core'
-import { AngularFirestore } from 'angularfire2/firestore'
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore'
 import { Observable } from 'rxjs'
-import { } from 'googlemaps'
-import { mergeMap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
-import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import * as firebase from 'firebase/app'
 
@@ -13,46 +10,28 @@ import { ListingShortDetail } from '@shared/models/listing-short-detail'
 @Injectable()
 export class SearchService {
 
-  ref: string = `listings-short-detail`
-
+  ref: string = `listings` // change for listing-short-details in store as well
+  
   constructor(private _afs: AngularFirestore) { }
 
   public query(params: any = null) {
 
-    // IT'S MISSING ADD THE LOCATION FILTER
-    var aux = firebase.firestore().collection("listings-short-detail").where('status', '==', 'active')
+    var data = firebase.firestore().collection("listings").where('status', '==', 'active')
+
+    if( params.categoryId ) { data = data.where('categoryId', '==', params.categoryId) }
+    if( params.minPrice ) { data = data.where('price.price', '>=', +params.minPrice) }
+    if( params.maxPrice ) { data = data.where('price.price', '<=', +params.maxPrice) }
+    if( params.country ) { data = data.where('address.country', '==', params.country) }
+    if( params.locality ) { data = data.where('address.locality', '==', params.locality) }
+    if( params.street ) { data = data.where('address.route', '==', params.street) }
+    data = data.limit(10)
     
-    if( params.categorySlug ) { aux = aux.where('categorySlug', '==', params.categorySlug) }
-    if( params.minPrice ) { aux = aux.where('price', '>=', +params.minPrice) }
-    if( params.maxPrice ) { aux = aux.where('price', '<=', +params.maxPrice) }
+    return data.get().then( snapshot => {
+      if(snapshot.docs.length > 0) 
+        return snapshot.docChanges
+      else 
+        return of(null)
+    })
 
-    return aux.get().then( snapshot => snapshot.docChanges )
-    
-    // HOW IT WAS BEFORE
-    // return this._afs.collection<ListingShortDetail>(this.ref)
-    //   .valueChanges()
-    //   .map(listings => 
-    //     // TODO(TT) delete this
-    //     // console.log(listings)
-    //     listings.filter(listing => {
-    //         if(listing.status === 'active') {
-    //           let p1 = new google.maps.LatLng(+params.latitude, +params.longitude)
-    //           let p2 = new google.maps.LatLng(listing.geopoint.latitude, listing.geopoint.longitude)
-    //           // TODO(TT) delete this
-    //           // console.log("p1: lat:" + p1.lat() + "lng: " + p1.lng())
-    //           // console.log("p2: lat:" + p2.lat() + "lng: " + p2.lng())
-    //           return this.distBetween(p1, p2) <= (params.radius * 1000)
-    //         }
-    //       }
-    //     )
-    //   )
   }
-
-  public distBetween(p1: google.maps.LatLng, p2: google.maps.LatLng) {
-    // TODO(TT) delete this
-    // let distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
-    // console.log(distance)
-    return google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
-  }
-
 }

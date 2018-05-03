@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store'
 
-import { ListingShortDetail } from '@shared/models/listing-short-detail'
+import { Space } from '@shared/models/space'
 
 export const QUERY = '[Search] query'
 export const DONE  = '[Search] done'
@@ -17,7 +17,7 @@ export class Query implements Action {
 
 export class Done implements Action {
   readonly type = DONE
-  constructor(public payload: ListingShortDetail[]) { }
+  constructor(public payload: Space[]) { }
 }
 
 export class Error implements Action {
@@ -27,17 +27,17 @@ export class Error implements Action {
 
 export class Added implements Action {
   readonly type = ADDED
-  constructor(public payload: ListingShortDetail) { }
+  constructor(public payload: Space) { }
 }
 
 export class Modified implements Action {
   readonly type = MODIFIED
-  constructor(public payload: ListingShortDetail) { }
+  constructor(public payload: Space) { }
 }
 
 export class Removed implements Action {
   readonly type = REMOVED
-  constructor(public payload: ListingShortDetail) { }
+  constructor(public payload: Space) { }
 }
 
 export type SearchActions
