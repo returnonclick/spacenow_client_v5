@@ -43,21 +43,21 @@
                   <tr align="left">
                     <td align="left; text-align:center">
                       <br><strong>Name:</strong>
-                      <span style="margin-left: 14px;"> {{userData.displayName}}</span>
+                      <span style="margin-left: 14px;">{{ userData.displayName }}</span>
                       <br>
                       <strong>Phone:</strong>
-                      <span style="margin-left: 8px;"> {{userData.phoneNumber}}</span>
+                      <span style="margin-left: 8px;">{{ userData.phoneNumber }}</span>
                       <br>
                       <strong>Email:</strong>
-                      <span style="margin-left: 14px;"> {{userData.email}}</span>
+                      <span style="margin-left: 14px;">{{ userData.email }}</span>
                     </td>
                     <td style="padding-top:48px; padding-left:50px; text-align:center">
-                      <strong>{{booking.id}}</strong>
+                      <strong>{{ booking.id }}</strong>
                     </td>
                   </tr>
                   <tr align="left">
                       <td align="left" style="padding-top:90px; width:50%">
-                          <br><strong>{{listing.address.full_name}}</strong>
+                          <br><strong>{{ listing.address.full_name }}</strong>
                           <br><br>
                           <strong>Monday</strong>
                           <!-- <span style="margin-left: 52px;">{{listing.availability.openingTime.mon.startHour}}:{{listing.availability.openingTime.mon.startMinute}}</span> -->
@@ -90,7 +90,7 @@
                         </td>
                         <td style="padding-top:55px; width:50%" >
 
-                          <!-- <p><b>{{booking.spaceBookings[0].numGuests}}</b>  Guests</p> -->
+                          <!-- <p><b>{{ booking.numGuests }}</b>  Guests</p> -->
                             <p><b>3</b> Guests  <span style="margin-left:155px; font-size:26px"><b>AMOUNT</b></span></p>
                             <p><b>09:00</b> 15/03/2018 <span style="margin-left:145px">03 hours</span></p>
                             <p><b>15:00</b> 15/03/2018 <span style="margin-left:85px; font-size:18px">AUS: $3000,00</span></p></p>
@@ -117,4 +117,3 @@
       </div>
 
     </body>
-

@@ -158,7 +158,14 @@ const actionsBooking = functions.firestore
               return Promise.all([ datesP, catP ])
                 .then(([ bookingDates, cat ]) => {
                   let cateData = cat.data()
-                  let context  = { currBooking, userData, listing, cateData, bookingDates, daysTot }
+                  let context  = {
+                    booking: currBooking,
+                    userData,
+                    listing,
+                    cateData,
+                    bookingDates,
+                    daysTot,
+                  }
                   let subject  = 'Your booking request has been approved.'
                   return sendEmail('bookingConfirmation-table.html', context, SPACENOW, userData.email, subject)
                 })
@@ -167,7 +174,12 @@ const actionsBooking = functions.firestore
               return getCategories(listing.categoryId)
                 .then(cat => {
                   let cateData = cat.data()
-                  let context = { currBooking, userData, listing, cateData }
+                  let context = {
+                    booking: currBooking,
+                    userData,
+                    listing,
+                    cateData,
+                  }
                   let subject = 'Unfortunately the host has declined your booking request.'
 
                   return Promise.all([
@@ -176,48 +188,54 @@ const actionsBooking = functions.firestore
                   ])
                 })
             }
-            // case BookingStatus.CONFIRMED: {
-            //   let hostP = getUser(listing.ownerUid)
-            //   let catP = getCategories(listing.categoryId)
-            //
-            //   return Promise.all([ hostP, catP ])
-            //     .then(([ host, cat ]) => {
-            //       let hostData = host.data()
-            //       let cateData = cat.data()
-            //       let context = { currBooking, hostData, listing, userData, cateData }
-            //
-            //       let hostSubject = 'Your space has booked and you have a new guest coming.'
-            //       let hostPdfP = generatePdf(`${currBooking.id}_Invoice_host.pdf`, context)
-            //         .then(pdf =>
-            //           sendEmailInvoice(
-            //             'bookingHostConfirmation-table.html',
-            //             context,
-            //             spacenow,
-            //             hostData.email,
-            //             hostSubject,
-            //             `${currBooking.id}_Invoice.pdf`,
-            //             pdf,
-            //           )
-            //         )
-            //
-            //       let guestSubject = 'Congratulations! Your booking has been confirmed'
-            //       let guestPdfP = generatePdf(`${currBooking.id}_Invoice_guest.pdf`, context)
-            //         .then(pdf =>
-            //           sendEmailInvoice(
-            //             'bookingGuestConfirmation-table.html',
-            //             context,
-            //             spacenow,
-            //             userData.email,
-            //             guestSubject,
-            //             `${currBooking.id}_Invoice.pdf`,
-            //             pdf,
-            //           )
-            //         )
-            //
-            //       return Promise.all([ hostPdfP, guestPdfP ])
-            //         .then(pdfs => updateBookingStatus(currBooking, BookingStatus.COMPLETED))
-            //     })
-            // }
+            case BookingStatus.CONFIRMED: {
+              let hostP = getUser(listing.ownerUid)
+              let catP = getCategories(listing.categoryId)
+
+              return Promise.all([ hostP, catP ])
+                .then(([ host, cat ]) => {
+                  let hostData = host.data()
+                  let cateData = cat.data()
+                  let context = {
+                    booking: currBooking,
+                    hostData,
+                    listing,
+                    userData,
+                    cateData,
+                  }
+
+                  let hostSubject = 'Your space has booked and you have a new guest coming.'
+                  let hostPdfP = generatePdf(`${currBooking.id}_Invoice_host.pdf`, context)
+                    .then(pdf =>
+                      sendEmailInvoice(
+                        'bookingHostConfirmation-table.html',
+                        context,
+                        SPACENOW,
+                        hostData.email,
+                        hostSubject,
+                        `${currBooking.id}_Invoice.pdf`,
+                        pdf,
+                      )
+                    )
+
+                  let guestSubject = 'Congratulations! Your booking has been confirmed'
+                  let guestPdfP = generatePdf(`${currBooking.id}_Invoice_guest.pdf`, context)
+                    .then(pdf =>
+                      sendEmailInvoice(
+                        'bookingGuestConfirmation-table.html',
+                        context,
+                        SPACENOW,
+                        userData.email,
+                        guestSubject,
+                        `${currBooking.id}_Invoice.pdf`,
+                        pdf,
+                      )
+                    )
+
+                  return Promise.all([ hostPdfP, guestPdfP ])
+                    .then(pdfs => updateBookingStatus(currBooking, BookingStatus.COMPLETED))
+                })
+            }
             default:
               return null
           }
@@ -310,19 +328,19 @@ function sendEmailInvoice(template, context, from, email, subject, fileName = nu
       if(email != 'errol+test@returnonclick.com.au') // TODO: remove
         reject('Not errol+test@returnonclick.com.au')
       if(err)
-        reject()
+        reject(err)
       resolve(html)
     })
   })
     .then(html =>
       mailTransport.sendMail({
-        from: from,
-        to: email,
-        html: html,
+        from:    from,
+        to:      email,
+        html:    html,
         subject: subject,
         attachments: [{
-          filename: fileName,
-          path: filePath,
+          filename:    fileName,
+          path:        filePath,
           contentType: 'application/pdf',
         }],
       })
@@ -334,7 +352,7 @@ function sendEmailInvoice(template, context, from, email, subject, fileName = nu
 function convertDates(bookingDates: any[]): Promise<any[]> {
   return new Promise((resolve, reject) => {
     if(bookingDates.length < 1)
-      reject()
+      reject('Invalid list of bookingDates')
 
     let dates = bookingDates.map(date => {
       return {
@@ -388,12 +406,10 @@ function generatePdf(fileName, context): Promise<any> {
 
 function uploadFile(fileName, buffer): Promise<string> {
   return new Promise((resolve, reject) => {
-    const GCS_NAME = `/pdf/${fileName}`
+    const GCS_NAME = `pdf/${fileName}`
     let bucket     = GCS.bucket(BUCKET_NAME)
     let file       = bucket.file(GCS_NAME)
-
-    let buff   = Buffer.from(buffer)
-    let stream = file.createWriteStream({
+    let stream     = file.createWriteStream({
       metadata: {
         contentType: 'application/pdf'
       }
@@ -402,13 +418,11 @@ function uploadFile(fileName, buffer): Promise<string> {
       reject(err)
     })
     stream.on('finish', () => {
-      resolve(`https://storage.googleapis.com/${BUCKET_NAME}/${GCS_NAME}`)
+      let transform = GCS_NAME.replace('/', '%2F')
+      resolve(`https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/${transform}?alt=media`)
+      // resolve(`https://storage.googleapis.com/${BUCKET_NAME}/${GCS_NAME}`)
     })
-    stream.end(new Buffer(buff))
-
-    file.save(buffer, err => {
-      reject(err)
-    })
+    stream.end(buffer)
   })
 }
 

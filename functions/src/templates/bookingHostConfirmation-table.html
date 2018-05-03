@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        
+
         .body {
             color: #163839;
             font-size: 20px;
@@ -36,12 +36,12 @@
             width: 960px ;
 
         }
-   
+
         #intro h2{
             text-align: left;
             font-size: 28px;
 
-        }     
+        }
         #footer  {
             text-align: center;
             font-size: 10px;
@@ -50,14 +50,14 @@
             align-self: center;
             background-color: #E9E9E9;
             font-size: 14px;
-           
+
         }
 
         #footer ul {
             padding:0;
 
         }
-        
+
         #footer ul li {
             display: inline-block;
             list-style-type: none;
@@ -68,7 +68,7 @@
             font-size: 20px;
             text-align: left;
             width: 960px ;
-            
+
         }
 
         #listing h2 {
@@ -116,7 +116,7 @@
 
         <tr style="background-color: #FFF" align="center">
             <td>
-                <img width="70%" src="{{listing.images[0].imageURL}}" alt="images">
+                <img width="70%" src="{{ listing.images[0].imageURL }}" alt="images">
             </td>
         </tr>
 
@@ -135,7 +135,7 @@
                             <hr color="#E4E4E4"></hr>
                             <br>
                             <p>Hi
-                                <b>{{userData.displayName}}</b>,
+                                <b>{{ userData.displayName }}</b>,
                                 <br>Great news, a booking for your space has been confirmed.</p>
                         </td>
                     </tr>
@@ -152,7 +152,7 @@
                             <h3>Title:</h3>
                         </td>
                         <td>
-                            <span>{{listing.title}}</span>
+                            <span>{{ listing.title }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -160,7 +160,7 @@
                             <h3>Price:</h3>
                         </td>
                         <td>
-                            <span>{{listing.price.price}}</span>
+                            <span>{{ listing.price.price }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -168,7 +168,7 @@
                             <h3>Address:</h3>
                         </td>
                         <td>
-                            <span>{{listing.address.full_name}}</span>
+                            <span>{{ listing.address.full_name }}</span>
                         </td>
                     </tr>
                     <tr>
