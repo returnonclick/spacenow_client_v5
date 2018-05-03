@@ -137,7 +137,7 @@
 
         <tr style="background-color: #FFF" align="center">
             <td>
-                <img width="70%" src="{{listing.images[0].imageURL}}" alt="images">
+                <img width="70%" src="{{ listing.images[0].imageURL }}" alt="images">
             </td>
         </tr>
 
@@ -156,7 +156,7 @@
                             <hr color="#E4E4E4"></hr>
                             <br>
                             <p>Hi
-                                <b>{{userData.displayName}}</b>,
+                                <b>{{ userData.displayName }}</b>,
                                 <br>IMPORTANT: To finalise your booking please click on the “Booking Confirmation” button below.</p>
                         </td>
                     </tr>
@@ -169,31 +169,31 @@
                     <tr>
                         <td align="left">
                             <strong>Title:</strong>
-                            <span style="margin-left: 77px;"> {{listing.title}}</span>
+                            <span style="margin-left: 77px;">{{ listing.title }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Price:</strong>
-                            <span style="margin-left: 57px;"> $ {{listing.price.price}} AUD</span>
+                            <span style="margin-left: 57px;">$ {{ listing.price.price }} AUD</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Address:</strong>
-                            <span style="margin-left: 47px;"> {{listing.address.full_name}}</span>
+                            <span style="margin-left: 47px;">{{ listing.address.full_name }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Category:</strong>
-                            <span style="margin-left: 37px;"> {{cateData.name }}</span>
+                            <span style="margin-left: 37px;">{{ cateData.name }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Capacity:</strong>
-                            <span style="margin-left: 38px;"> {{ listing.specifications.capacity }}</span>
+                            <span style="margin-left: 38px;">{{ listing.specifications.capacity }}</span>
                         </td>
                     </tr>
                 </table>
@@ -207,29 +207,27 @@
                     <tr>
                         <td align="left">
                             <strong>Start Time:</strong>
-                            <span style="margin-left: 20px;">{{ bookingDates[1].date }}, {{bookingDates[1].fromHour}}
-                            </span>
+                            <span style="margin-left: 20px;">{{ bookingDates[0].date }}, {{ bookingDates[0].fromHour }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>End Time:</strong>
-                            <span style="margin-left: 23px;">{{ bookingDates[daysTot].date }}, {{bookingDates[1].toHour}}
-                            </span>
+                            <span style="margin-left: 23px;">{{ bookingDates[daysTot - 1].date }}, {{ bookingDates[daysTot - 1].toHour }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Price:</strong>
-                            <span style="margin-left: 56px;"> AUD ${{booking.finalPrice}}</span>
+                            <span style="margin-left: 56px;">$ {{ booking.finalPrice }} AUD</span>
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
                             <strong>Guests:</strong>
-                            <span style="margin-left: 52px;"> {{booking.spaceBookings[0].numGuests}}</span>
+                            <span style="margin-left: 52px;">{{ booking.numGuests }}</span>
                         </td>
-                    </tr>  
+                    </tr>
                 </table>
                 <br>
 
@@ -250,7 +248,7 @@
                             <table width="100%" align="center" style="margin-top: 24px;margin-bottom: 24px;">
                                 <tr align="center">
                                     <td align="center">
-                                        <a href="https://spacenow-bca9c.firebaseapp.com/users/checkout/{{booking.id}}" target="_blank" class="btn">Booking Confirmation</a>
+                                        <a href="https://spacenow-bca9c.firebaseapp.com/users/checkout/{{ booking.id }}" target="_blank" class="btn">Booking Confirmation</a>
                                     </td>
                                 </tr>
                             </table>

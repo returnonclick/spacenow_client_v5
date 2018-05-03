@@ -1,40 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const listing_short_detail_1 = require("./models/listing-short-detail");
 const booking_1 = require("./models/booking");
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const functions = require("firebase-functions");
-const nodemailer = require("nodemailer");
-const admin = require("firebase-admin");
-const serviceAccount = require("./service-account-v5.json");
+const listing_short_detail_1 = require("./models/listing-short-detail");
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+const functions = require('firebase-functions');
+const nodemailer = require('nodemailer');
+const admin = require('firebase-admin');
+const moment = require('moment');
+const gcloud = require('google-cloud');
+const EmailTemplate = require('swig-email-templates');
 const gmailEmail = functions.config().gmail.email;
 const gmailPassword = functions.config().gmail.password;
 const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
-const moment = require('moment');
-// const path = require('path')
-// const phantomPath = require('witch')('phantomjs-prebuilt', 'phantomjs');
-// admin.initializeApp(functions.config().firebase);
+const BUCKET_NAME = 'gs://spacenow-bca9c.appspot.com';
+let serviceAccount = require('./service-account-v5.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "gs://spacenow-bca9c.appspot.com/",
-    databaseURL: "https://spacenow-bca9c.firebaseio.com"
+    storageBucket: BUCKET_NAME,
+    databaseURL: 'https://spacenow-bca9c.firebaseio.com'
 });
-// Require gcloud
-var gcloud = require('google-cloud');
-// Enable Storage
-var gcs = gcloud.storage({
-    projectId: "spacenow-bca9c",
-    keyFilename: './lib/service-account-v5.json'
+const SPACENOW = '"Spacenow" <noreply@spacenow-bca9c.firebaseapp.com>';
+const TEMPLATES = new EmailTemplate({
+    root: './src/templates/',
 });
-// const serviceAccount = require("./service-account-v5.json");
-const BUCKET_NAME = "gs://spacenow-bca9c.appspot.com";
-const EmailTemplate = require('swig-email-templates');
-// create template renderer
-const templates = new EmailTemplate({
-    root: './src/templates/'
+const GCS = gcloud.storage({
+    projectId: 'spacenow-bca9c',
+    keyFilename: './lib/service-account-v5.json',
 });
-var spacenow = '"Spacenow" <noreply@spacenow-bca9c.firebaseapp.com>';
 /**
 * New User - Welcome email
 */
@@ -43,7 +36,7 @@ const sendWelcomeEmail = functions.auth
     .onCreate(userData => {
     let context = { userData };
     let subject = 'Welcome to Spacenow';
-    return sendEmail('userNewWelcome.html', context, spacenow, userData.email, subject);
+    return sendEmail('userNewWelcome.html', context, SPACENOW, userData.email, subject);
 });
 /**
  * Creating listings-short-detail document
@@ -79,7 +72,7 @@ const requestBooking = functions.firestore
     .onCreate((event, ctx) => {
     let booking = new booking_1.Booking(event.data());
     switch (booking.bookingStatus) {
-        case 'Pending': {
+        case booking_1.BookingStatus.PENDING: {
             let spaceP = getSpace(booking.spaceId);
             let datesP = convertDates(booking.bookingDates);
             let guestP = getUser(booking.userId);
@@ -95,12 +88,12 @@ const requestBooking = functions.firestore
                     let cateData = cat.data();
                     let subject = 'You have a new booking request.';
                     let context = { booking, listing, userData, hostData, cateData, dates };
-                    return sendEmail('bookingRequest-table.html', context, spacenow, hostData.email, subject);
+                    return sendEmail('bookingRequest-table.html', context, SPACENOW, hostData.email, subject);
                 });
             })
                 .catch(err => console.error(err));
         }
-        case 'Enquiry': {
+        case booking_1.BookingStatus.ENQUIRY: {
             return getSpace(booking.spaceId)
                 .then(space => {
                 let listing = space.data();
@@ -112,94 +105,111 @@ const requestBooking = functions.firestore
                     let cateData = cat.data();
                     let subject = 'You have a new booking enquiry.';
                     let context = { booking, listing, hostData, cateData };
-                    return sendEmail('enquiryRequest-table.html', context, spacenow, hostData.email, subject);
+                    return sendEmail('enquiryRequest-table.html', context, SPACENOW, hostData.email, subject);
                 });
             })
                 .catch(err => console.error(err));
         }
+        default:
+            return null;
     }
 });
 /**
  * Booking Payment Request email // Booking Cancellation Request email //  Booking Confirmation Request email // Host Confirmation
  */
 const actionsBooking = functions.firestore
-    .document('bookings/{id}')
-    .onUpdate((event, context) => {
-    let booking = new booking_1.Booking;
-    booking = event.after.data();
-    const bookingPrevious = event.before.data();
-    let spaceId = booking.spaceId;
-    if (booking.bookingStatus !== bookingPrevious.bookingStatus) {
-        return getSpace(spaceId)
-            .then((docListing) => {
-            const listing = docListing.data();
-            switch (booking.bookingStatus) {
-                case 'Approved':
-                    return getUser(booking.userId)
-                        .then((docUser) => {
-                        const userData = docUser.data();
-                        return getCategories(listing.categoryId)
-                            .then((docCat) => {
-                            const cateData = docCat.data();
-                            convertDates(booking.bookingDates)
-                                .then(dates => {
-                                let bookingDates = new Object([]);
-                                bookingDates = dates;
-                                let daysTot = booking.bookingDates.length;
-                                var context = { booking, userData, listing, cateData, bookingDates, daysTot };
-                                let subject = 'Your booking request has been approved.';
-                                // sendEmail('bookingConfirmation-table.html', context, spacenow, userData.email, subject)
-                            }).catch(error => console.error('There was an error while sending the email:', error));
-                        }).catch(error => console.error(error));
-                    }).catch(error => console.error(error));
-                case 'Declined':
-                    return getUser(booking.userId)
-                        .then(doc => {
-                        const userData = doc.data();
-                        return getCategories(listing.categoryId)
-                            .then((docCat) => {
-                            const cateData = docCat.data();
-                            let subject = 'Unfortunately the host has declined your booking request.';
-                            var context = { booking, userData, listing, cateData };
-                            // sendEmail('bookingCancellation-table.html', context, spacenow, userData.email, subject)
-                            let status = 'Canceled';
-                            updateBooking(booking, status);
-                        }).catch(error => console.error('There was an error while sending the email:', error));
-                    }).catch(error => console.error(error));
-                case 'Confirmed':
-                    return getUser(booking.userId)
-                        .then(doc => {
-                        const userData = doc.data();
-                        return getUser(listing.ownerUid)
-                            .then(hostDoc => {
-                            const hostData = hostDoc.data();
-                            return getCategories(listing.categoryId)
-                                .then((docCat) => {
-                                const cateData = docCat.data();
-                                let subject = 'Your space has been booked and you have a new guest coming for the below space.';
-                                let guestSubject = 'Congratulations your booking has been confirmed for the below space.';
-                                const context = { booking, hostData, listing, userData, cateData };
-                                pdfGenerator(booking.id + 'Invoice_host.pdf', context).then(pdfFile => {
-                                    sendEmailInvoice('bookingHostConfirmation-table.html', context, spacenow, hostData.email, subject, booking.id + '_Invoice.pdf', pdfFile);
-                                    pdfGeneratorGuest(booking.id + 'Invoice_guest.pdf', context).then(pdfFileGuest => {
-                                        sendEmailInvoice('bookingGuestConfirmation-table.html', context, spacenow, userData.email, guestSubject, booking.id + 'Invoice_guest.pdf', pdfFileGuest);
-                                        let status = 'Completed';
-                                        updateBooking(booking, status);
-                                    }).catch(error => console.error(error));
-                                }).catch(error => console.error(error));
-                            }).catch(error => console.error('There was an error getCategories function', error));
-                        }).catch(error => console.error(error));
-                    }).catch(error => console.error(error));
+    .document('bookings-errol/{id}') // TODO: change back to original
+    .onUpdate((event, ctx) => {
+    let currBooking = new booking_1.Booking(event.after.data());
+    let prevBooking = event.before.data();
+    if (currBooking.bookingStatus !== prevBooking.bookingStatus) {
+        let spaceP = getSpace(currBooking.spaceId);
+        let guestP = getUser(currBooking.userId);
+        return Promise.all([spaceP, guestP])
+            .then(([space, guest]) => {
+            let listing = space.data();
+            let userData = guest.data();
+            let daysTot = currBooking.bookingDates.length;
+            switch (currBooking.bookingStatus) {
+                case booking_1.BookingStatus.APPROVED: {
+                    let datesP = convertDates(currBooking.bookingDates);
+                    let catP = getCategories(listing.categoryId);
+                    return Promise.all([datesP, catP])
+                        .then(([bookingDates, cat]) => {
+                        let cateData = cat.data();
+                        let context = { currBooking, userData, listing, cateData, bookingDates, daysTot };
+                        let subject = 'Your booking request has been approved.';
+                        return sendEmail('bookingConfirmation-table.html', context, SPACENOW, userData.email, subject);
+                    });
+                }
+                case booking_1.BookingStatus.DECLINED: {
+                    return getCategories(listing.categoryId)
+                        .then(cat => {
+                        let cateData = cat.data();
+                        let context = { currBooking, userData, listing, cateData };
+                        let subject = 'Unfortunately the host has declined your booking request.';
+                        return Promise.all([
+                            sendEmail('bookingCancellation-table.html', context, SPACENOW, userData.email, subject),
+                            updateBookingStatus(currBooking, booking_1.BookingStatus.CANCELED),
+                        ]);
+                    });
+                }
+                // case BookingStatus.CONFIRMED: {
+                //   let hostP = getUser(listing.ownerUid)
+                //   let catP = getCategories(listing.categoryId)
+                //
+                //   return Promise.all([ hostP, catP ])
+                //     .then(([ host, cat ]) => {
+                //       let hostData = host.data()
+                //       let cateData = cat.data()
+                //       let context = { currBooking, hostData, listing, userData, cateData }
+                //
+                //       let hostSubject = 'Your space has booked and you have a new guest coming.'
+                //       let hostPdfP = generatePdf(`${currBooking.id}_Invoice_host.pdf`, context)
+                //         .then(pdf =>
+                //           sendEmailInvoice(
+                //             'bookingHostConfirmation-table.html',
+                //             context,
+                //             spacenow,
+                //             hostData.email,
+                //             hostSubject,
+                //             `${currBooking.id}_Invoice.pdf`,
+                //             pdf,
+                //           )
+                //         )
+                //
+                //       let guestSubject = 'Congratulations! Your booking has been confirmed'
+                //       let guestPdfP = generatePdf(`${currBooking.id}_Invoice_guest.pdf`, context)
+                //         .then(pdf =>
+                //           sendEmailInvoice(
+                //             'bookingGuestConfirmation-table.html',
+                //             context,
+                //             spacenow,
+                //             userData.email,
+                //             guestSubject,
+                //             `${currBooking.id}_Invoice.pdf`,
+                //             pdf,
+                //           )
+                //         )
+                //
+                //       return Promise.all([ hostPdfP, guestPdfP ])
+                //         .then(pdfs => updateBookingStatus(currBooking, BookingStatus.COMPLETED))
+                //     })
+                // }
+                default:
+                    return null;
             }
         })
-            .catch(error => console.log(error));
+            .catch(err => console.error(err));
     }
+    return null;
 });
 module.exports = {
     sendWelcomeEmail,
     createNewListing,
     activeListing,
     requestBooking,
+    actionsBooking,
 };
 /* maintenance function /listings-short-detail Document */
 function updateShortDetailSpace(listing, catData, hostData) {
@@ -231,20 +241,28 @@ function getUser(id) {
 function getCategories(id) {
     return admin.firestore().doc(`/categories/${id}`).get();
 }
-function updateBooking(booking, status) {
-    let data = booking;
-    data.bookingStatus = status;
-    data.paymentStatus = status;
-    return admin.firestore().collection('bookings').doc(`${booking.id}`).set(data);
+function updateBookingStatus(booking, status) {
+    let data = {
+        // ...booking,
+        bookingStatus: status,
+        paymentStatus: status,
+    };
+    return admin.firestore().doc(`bookings-errol/${booking.id}`) // TODO: change back to original
+        .set(data, {
+        merge: true,
+    });
 }
 function sendEmail(template, context, from, email, subject) {
     return new Promise((resolve, reject) => {
-        templates.render(template, context, (err, html) => {
+        TEMPLATES.render(template, context, (err, html) => {
+            if (email != 'errol+test@returnonclick.com.au') // TODO: remove
+                reject('Not errol+test@returnonclick.com.au');
             if (err)
                 reject(err);
             resolve(html);
         });
-    }).then(html => mailTransport.sendMail({
+    })
+        .then(html => mailTransport.sendMail({
         from: from,
         to: email,
         html: html,
@@ -254,23 +272,28 @@ function sendEmail(template, context, from, email, subject) {
         .catch(err => console.error('There was an error while sending the email:', err));
 }
 function sendEmailInvoice(template, context, from, email, subject, fileName = null, filePath = null) {
-    templates.render(`${template}`, context, function (err, html) {
-        return mailTransport.sendMail({
-            from: from,
-            to: email,
-            html: html,
-            subject: subject,
-            attachments: [
-                { filename: fileName, path: filePath, contentType: 'application/pdf' }
-            ],
-        }).then(() => {
-            console.log('Email Template:', template + ', ' + 'send to', email);
-            // return true
-        }).catch(error => {
-            console.error('There was an error while sending the email:', error);
-            // return false
+    return new Promise((resolve, reject) => {
+        TEMPLATES.render(template, context, (err, html) => {
+            if (email != 'errol+test@returnonclick.com.au') // TODO: remove
+                reject('Not errol+test@returnonclick.com.au');
+            if (err)
+                reject();
+            resolve(html);
         });
-    });
+    })
+        .then(html => mailTransport.sendMail({
+        from: from,
+        to: email,
+        html: html,
+        subject: subject,
+        attachments: [{
+                filename: fileName,
+                path: filePath,
+                contentType: 'application/pdf',
+            }],
+    }))
+        .then(() => console.log(`Email Template: ${template}, sent to: ${email}`))
+        .catch(err => console.error('There was an error while sending the email:', err));
 }
 function convertDates(bookingDates) {
     return new Promise((resolve, reject) => {
@@ -291,79 +314,58 @@ function formatDate(d, fromFmt = null, toFmt = 'DD-MM-YYYY') {
         return moment(d).format(toFmt);
     return moment(d, fromFmt).format(toFmt);
 }
-function pdfGenerator(fileName, context) {
-    return new Promise(resolve => {
-        let fs = require('fs');
+function generatePdf(fileName, context) {
+    return new Promise((resolve, reject) => {
+        TEMPLATES.render('invoice.html', context, (err, html) => {
+            if (err)
+                reject(err);
+            resolve(html);
+        });
+    })
+        .then(html => new Promise((resolve, reject) => {
         let pdf = require('html-pdf');
         let options = {
             format: 'A4',
-            border: { top: "0.5cm", right: "0.5cm", bottom: "0.5cm", left: "0.5cm" },
+            border: {
+                top: '0.5cm',
+                right: '0.5cm',
+                bottom: '0.5cm',
+                left: '0.5cm',
+            },
             type: 'pdf',
             timeout: 600000,
             renderDelay: 1000,
         };
-        console.log('pdfGenerator Host');
-        templates.render('invoice.html', context, function (err, html) {
-            console.log(html);
-            pdf.create(html, options).toBuffer(function (err, buffer) {
-                if (!err) {
-                    uploadFile(fileName, buffer).then(pdfFile => {
-                        console.log('pdfFile = ', pdfFile);
-                        resolve(pdfFile);
-                    }).catch(error => console.error(error));
-                }
-            });
-            console.log(err);
+        pdf.create(html, options).toBuffer((err, buffer) => {
+            if (err)
+                reject(err);
+            resolve(buffer);
         });
-    });
-}
-function pdfGeneratorGuest(fileName, context) {
-    return new Promise(resolve => {
-        let fs = require('fs');
-        let pdf = require('html-pdf');
-        let options = {
-            format: 'A4',
-            border: { top: "0.5cm", right: "0.5cm", bottom: "0.5cm", left: "0.5cm" },
-            type: 'pdf',
-            timeout: 600000,
-            renderDelay: 1000,
-        };
-        console.log('pdfGenerator Guest');
-        templates.render('invoice.html', context, function (err, html) {
-            pdf.create(html, options).toBuffer(function (err, buffer) {
-                if (!err) {
-                    uploadFile(fileName, buffer).then(pdfFile => {
-                        console.log('pdfFile = ', pdfFile);
-                        resolve(pdfFile);
-                    }).catch(error => console.error(error));
-                }
-            });
-        });
-    });
+    }))
+        .then(buffer => uploadFile(fileName, buffer))
+        .catch(err => console.error(err));
 }
 function uploadFile(fileName, buffer) {
-    return new Promise(resolve => {
-        var bucket = gcs.bucket('gs://spacenow-bca9c.appspot.com');
-        const gcsname = '/pdf/' + fileName;
-        const file = bucket.file(gcsname);
-        var buff = Buffer.from(buffer);
-        const stream = file.createWriteStream({
+    return new Promise((resolve, reject) => {
+        const GCS_NAME = `/pdf/${fileName}`;
+        let bucket = GCS.bucket(BUCKET_NAME);
+        let file = bucket.file(GCS_NAME);
+        let buff = Buffer.from(buffer);
+        let stream = file.createWriteStream({
             metadata: {
                 contentType: 'application/pdf'
             }
         });
-        file.save(buffer, ((error) => { console.log(error); }));
-        stream.on('error', (err) => {
-            console.log(err);
-            resolve(err);
+        stream.on('error', err => {
+            reject(err);
         });
         stream.on('finish', () => {
-            console.log(gcsname);
-            let pdfFile = "https://storage.googleapis.com/" + BUCKET_NAME +
-                "/pdf/" + fileName;
-            resolve(pdfFile);
+            resolve(`https://storage.googleapis.com/${BUCKET_NAME}/${GCS_NAME}`);
         });
         stream.end(new Buffer(buff));
+        file.save(buffer, err => {
+            reject(err);
+        });
     });
 }
 //# sourceMappingURL=index.js.map
