@@ -35,7 +35,7 @@ const sendWelcomeEmail = functions.auth
     .user()
     .onCreate(userData => {
     let context = { userData };
-    let subject = 'Welcome to Spacenow';
+    const subject = 'Welcome to Spacenow';
     return sendEmail('userNewWelcome.html', context, SPACENOW, userData.email, subject);
 });
 /**
@@ -159,7 +159,7 @@ const actionsBooking = functions.firestore
                             listing,
                             cateData,
                         };
-                        let subject = 'Unfortunately the host has declined your booking request.';
+                        const subject = 'Unfortunately the host has declined your booking request.';
                         return Promise.all([
                             sendEmail('bookingCancellation-table.html', context, SPACENOW, userData.email, subject),
                             updateBookingStatus(currBooking, booking_1.BookingStatus.CANCELED),
@@ -169,8 +169,9 @@ const actionsBooking = functions.firestore
                 case booking_1.BookingStatus.CONFIRMED: {
                     let hostP = getUser(listing.ownerUid);
                     let catP = getCategories(listing.categoryId);
-                    return Promise.all([hostP, catP])
-                        .then(([host, cat]) => {
+                    let datesP = convertDates(currBooking.bookingDates, 'D MMM YYYY');
+                    return Promise.all([hostP, catP, datesP])
+                        .then(([host, cat, dates]) => {
                         let hostData = host.data();
                         let cateData = cat.data();
                         let context = {
@@ -179,11 +180,12 @@ const actionsBooking = functions.firestore
                             listing,
                             userData,
                             cateData,
+                            dates,
                         };
-                        let hostSubject = 'Your space has booked and you have a new guest coming.';
+                        const hostSubject = 'Your space has booked and you have a new guest coming.';
                         let hostPdfP = generatePdf(`${currBooking.id}_Invoice_host.pdf`, context)
                             .then(pdf => sendEmailInvoice('bookingHostConfirmation-table.html', context, SPACENOW, hostData.email, hostSubject, `${currBooking.id}_Invoice.pdf`, pdf));
-                        let guestSubject = 'Congratulations! Your booking has been confirmed';
+                        const guestSubject = 'Congratulations! Your booking has been confirmed';
                         let guestPdfP = generatePdf(`${currBooking.id}_Invoice_guest.pdf`, context)
                             .then(pdf => sendEmailInvoice('bookingGuestConfirmation-table.html', context, SPACENOW, userData.email, guestSubject, `${currBooking.id}_Invoice.pdf`, pdf));
                         return Promise.all([hostPdfP, guestPdfP])
@@ -289,13 +291,13 @@ function sendEmailInvoice(template, context, from, email, subject, fileName = nu
         .then(() => console.log(`Email Template: ${template}, sent to: ${email}`))
         .catch(err => console.error('There was an error while sending the email:', err));
 }
-function convertDates(bookingDates) {
+function convertDates(bookingDates, toFmt = 'DD-MM-YYYY') {
     return new Promise((resolve, reject) => {
         if (bookingDates.length < 1)
             reject('Invalid list of bookingDates');
         let dates = bookingDates.map(date => {
             return {
-                date: formatDate(date.date),
+                date: formatDate(date.date, null, toFmt),
                 fromHour: formatDate(date.fromHour, 'H', 'h A'),
                 toHour: formatDate(date.toHour, 'H', 'h A'),
             };
@@ -310,7 +312,7 @@ function formatDate(d, fromFmt = null, toFmt = 'DD-MM-YYYY') {
 }
 function generatePdf(fileName, context) {
     return new Promise((resolve, reject) => {
-        TEMPLATES.render('invoice.html', context, (err, html) => {
+        TEMPLATES.render('invoice_new.html', context, (err, html) => {
             if (err)
                 reject(err);
             resolve(html);
