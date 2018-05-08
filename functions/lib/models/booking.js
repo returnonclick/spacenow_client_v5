@@ -59,10 +59,12 @@ class BookingDate {
         this.date = new Date();
         this.fromHour = 0;
         this.toHour = 0;
+        this.incentivePrice = 0;
         if (model) {
             this.date = model.date || new Date();
             this.fromHour = model.fromHour || 0;
             this.toHour = model.toHour || 0;
+            this.incentivePrice = model.incentivePrice || 0;
         }
     }
 }

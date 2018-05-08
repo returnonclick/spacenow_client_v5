@@ -3,117 +3,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Invoice</title>
-    <!-- <style>
-      body {
-        --accent: #6cde93;
-        --accent-border: 5px solid var(--accent);
-        --dark: #152F30;
-        --gap: 20px;
-        --spacing: 20px;
-
-        margin: 0;
-        font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-
-      header,
-      section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: var(--gap);
-        align-items: center;
-
-        box-sizing: border-box;
-      }
-
-      header > *,
-      section > * {
-        padding: 0 var(--spacing);
-      }
-
-      header > div,
-      section > div {
-        width: 100%;
-      }
-
-      header > *:first-child,
-      section > *:first-child {
-        justify-self: start;
-      }
-
-      header > *:last-child:not(:first-child),
-      section > *:last-child:not(:first-child) {
-        justify-self: end;
-        text-align: right;
-      }
-
-      header {
-        border-bottom: var(--accent-border);
-        height: 130px;
-      }
-
-      header > img {
-        height: 100%;
-        object-fit: contain;
-        filter: brightness(1.1);
-      }
-
-      .business-details {
-        display: flex;
-        flex-direction: column;
-      }
-
-      #guest-details {
-        align-items: baseline;
-      }
-
-      #guest-details .invoice-num {
-        letter-spacing: 0.3em;
-      }
-
-      td:first-child {
-        font-weight: 600;
-        color: var(--dark);
-      }
-
-      td:last-child {
-        text-align: right;
-      }
-
-      #booking-title,
-      #booking-details {
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-gap: var(--gap);
-        align-items: baseline;
-      }
-
-      #booking-details:after {
-        content: '';
-        width: 100%;
-        border-bottom: var(--accent-border);
-      }
-
-      #booking-breakdown,
-      #schedule-breakdown,
-      #amount-breakdown {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .emphasize {
-        background-color: var(--accent);
-        width: calc(100% - var(--spacing) * 2);
-        color: var(--dark);
-      }
-
-      #price-details table {
-        margin-left: auto;
-      }
-    </style> -->
     <style>
       body {
         margin: 0;
@@ -171,6 +60,7 @@
       }
 
       span.emphasis {
+        padding: 5px;
         color: white;
       }
 
@@ -180,7 +70,7 @@
 
       ul {
         list-style-type: none;
-        padding-left: 10px;
+        padding-left: 0px;
       }
     </style>
   </head>
@@ -189,10 +79,10 @@
       <table class="full-width" cellspacing="0" cellpadding="0">
         <tbody>
           <tr class="accent-divider">
-            <td class="include" colspan="2">
-              <img src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fspacenow_logo.jpg?alt=media&token=525e40f3-b778-4c73-b773-f9e299b441bd" height="70px">
+            <td class="include" colspan="2" width="50%">
+              <img src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fspacenow-logo.svg?alt=media&token=272e60a0-b450-4007-b67b-d25b6111e6c9" height="35px">
             </td>
-            <td class="right include" colspan="2">
+            <td class="right include" colspan="2" width="50%">
               <span>spacenow.com</span>
               <br />
               <span>(+61) 1300 021 087</span>
@@ -203,7 +93,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2" valign="baseline">
+            <td colspan="2" width="50%" valign="baseline">
               <h3>Guest Details</h3>
               <table>
                 <tbody>
@@ -222,15 +112,16 @@
                 </tbody>
               </table>
             </td>
-            <td class="right" colspan="2" valign="baseline">
-              <h2>Invoice</h2>
+            <td class="right" colspan="2" width="50%" valign="baseline">
+              <h1>Invoice</h1>
               <span>No: {{ booking.id }}</span>
             </td>
           </tr>
           <tr>
-            <td class="emphasis" colspan="2">
+            <td class="emphasis" colspan="2" width="50%">
               <h3>Booking Details</h3>
             </td>
+            <td colspan="2" width="50%"></td>
           </tr>
           <tr class="accent-divider">
             <td class="include" colspan="2" width="50%" valign="baseline">
@@ -238,199 +129,122 @@
               <span>{{ list.address.full_name }}</span>
               <!-- <br />
               <span>NSW 2015, Australia</span> -->
-              <table>
+              <table style="width: 75%;">
                 <tbody>
                   <tr>
                     <td>Monday</td>
-                    <td class="right">09:00 - 17:00</td>
+                    <td class="right">
+                      {% if listing.availability.openingTime.mon.isOpen %}
+                        {{ listing.availability.openingTime.mon.startHour }}:00 - {{ listing.availability.openingTime.mon.closeHour }}:00
+                      {% else %}
+                        Closed
+                      {% endif %}
+                    </td>
                   </tr>
                   <tr>
                     <td>Tuesday</td>
-                    <td class="right">09:00 - 17:00</td>
+                    <td class="right">
+                      {% if listing.availability.openingTime.tue.isOpen %}
+                        {{ listing.availability.openingTime.tue.startHour }}:00 - {{ listing.availability.openingTime.tue.closeHour }}:00
+                      {% else %}
+                        Closed
+                      {% endif %}
+                    </td>
                   </tr>
                   <tr>
                     <td>Wednesday</td>
-                    <td class="right">09:00 - 17:00</td>
+                    <td class="right">
+                      {% if listing.availability.openingTime.wed.isOpen %}
+                        {{ listing.availability.openingTime.wed.startHour }}:00 - {{ listing.availability.openingTime.wed.closeHour }}:00
+                      {% else %}
+                        Closed
+                      {% endif %}
+                    </td>
                   </tr>
                   <tr>
                     <td>Thursday</td>
-                    <td class="right">09:00 - 17:00</td>
+                    <td class="right">
+                      {% if listing.availability.openingTime.thu.isOpen %}
+                        {{ listing.availability.openingTime.thu.startHour }}:00 - {{ listing.availability.openingTime.thu.closeHour }}:00
+                      {% else %}
+                        Closed
+                      {% endif %}
+                    </td>
                   </tr>
                   <tr>
                     <td>Friday</td>
-                    <td class="right">09:00 - 17:00</td>
+                    <td class="right">
+                      {% if listing.availability.openingTime.fri.isOpen %}
+                        {{ listing.availability.openingTime.fri.startHour }}:00 - {{ listing.availability.openingTime.fri.closeHour }}:00
+                      {% else %}
+                        Closed
+                      {% endif %}
+                    </td>
                   </tr>
                   <tr>
                     <td>Saturday</td>
-                    <td class="right">09:00 - 17:00</td>
+                    <td class="right">
+                      {% if listing.availability.openingTime.sat.isOpen %}
+                        {{ listing.availability.openingTime.sat.startHour }}:00 - {{ listing.availability.openingTime.sat.closeHour }}:00
+                      {% else %}
+                        Closed
+                      {% endif %}
+                    </td>
                   </tr>
                   <tr>
                     <td>Sunday</td>
-                    <td class="right">09:00 - 17:00</td>
+                    <td class="right">
+                      {% if listing.availability.openingTime.sun.isOpen %}
+                        {{ listing.availability.openingTime.sun.startHour }}:00 - {{ listing.availability.openingTime.sun.closeHour }}:00
+                      {% else %}
+                        Closed
+                      {% endif %}
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </td>
-            <td width="25%" valign="baseline">
-              <span>{{ booking.numGuests }} Guests</span>
+            <td colspan="1" width="25%" valign="baseline">
+              <span><strong>{{ booking.numGuests }}</strong> Guests</span>
               <br />
               <ul>
                 {% for item in dates %}
                   <li><strong>{{ item.fromHour }}</strong> {{ item.date }}</li>
                 {% endfor %}
-                <!-- <li><strong>09:00</strong> 25 Dec 2017</li>
-                <li><strong>09:00</strong> 25 Dec 2017</li>
-                <li><strong>09:00</strong> 25 Dec 2017</li> -->
               </ul>
             </td>
-            <td class="right" width="25%" valign="baseline">
+            <td class="right" colspan="1" width="25%" valign="baseline">
               <h3>Amount</h3>
               <span>03 Hours</span>
               <br />
-              <span>AUD: $3000.00</span>
+              <span>AUD: ${{ price.accom.toFixed(2) }}</span>
             </td>
           </tr>
           <tr>
-            <td colspan="2"></td>
-            <td colspan="2">
+            <td colspan="2" width="50%"></td>
+            <td colspan="2" width="50%">
               <table style="margin-left: auto;">
                 <tbody>
                   <tr>
                     <td>Subtotal</td>
-                    <td class="right">AUD: $3200.00</td>
+                    <td class="right">AUD: ${{ price.accom.toFixed(2) }}</td>
                   </tr>
                   <tr>
                     <td>VAT/GST Total</td>
-                    <td class="right">AUD: $0.00</td>
+                    <td class="right">AUD: ${{ price.tax.toFixed(2) }}</td>
                   </tr>
                 </tbody>
               </table>
             </td>
           </tr>
           <tr>
-            <td></td>
-            <td class="right" colspan="3">
-              <h3>Balance due <span class="emphasis">${{ booking.finalPrice }}</span></h3>
+            <td colspan="1" width="25%"></td>
+            <td class="right" colspan="3" width="75%">
+              <h3>Balance due <span class="emphasis">${{ price.total.toFixed(2) }}</span></h3>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <!-- <header>
-      <img src="https://firebasestorage.googleapis.com/v0/b/spacenow-bca9c.appspot.com/o/images%2Femail-templates%2Fspacenow_logo.jpg?alt=media&token=525e40f3-b778-4c73-b773-f9e299b441bd">
-      <div class="business-details">
-        <span>spacenow.com</span>
-        <span>(+61) 1300 021 087</span>
-        <span>admin@spacenow.com.au</span>
-        <span>ABN: 81 602 090 997</span>
-      </div>
-    </header>
-    <section id="guest-details">
-      <div>
-        <h3>Guest Details</h3>
-        <table>
-          <tbody>
-            <tr>
-              <td>Name:</td>
-              <td>John Doe</td>
-            </tr>
-            <tr>
-              <td>Phone:</td>
-              <td>(+61) 0000 000 000</td>
-            </tr>
-            <tr>
-              <td>Email:</td>
-              <td>john@doe.com</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <h2>Invoice</h2>
-        <span class="invoice-num">NO: 000027306408030</span>
-      </div>
-    </section>
-    <section id="booking-title">
-      <div class="emphasize">
-        <h3>Booking Details</h3>
-      </div>
-      <div></div>
-    </section>
-    <section id="booking-details">
-      <div id="booking-breakdown">
-        <h4>Cloub of United BUsiness Sydney</h4>
-        <span>2 Huntley Street, Alexandria</span>
-        <span>NSW 2015, Australia</span>
-        <table>
-          <tbody>
-            <tr>
-              <td>Monday</td>
-              <td>09:00 - 15:00</td>
-            </tr>
-            <tr>
-              <td>Tuesday</td>
-              <td>09:00 - 15:00</td>
-            </tr>
-            <tr>
-              <td>Wednesday</td>
-              <td>09:00 - 15:00</td>
-            </tr>
-            <tr>
-              <td>Thursday</td>
-              <td>09:00 - 15:00</td>
-            </tr>
-            <tr>
-              <td>Friday</td>
-              <td>09:00 - 15:00</td>
-            </tr>
-            <tr>
-              <td>Saturday</td>
-              <td>09:00 - 15:00</td>
-            </tr>
-            <tr>
-              <td>Sunday</td>
-              <td>Closed</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div id="schedule-breakdown">
-        <span><strong>10</strong> Guests</span>
-        <ul>
-          <li><strong>09:00 - 17:00</strong> 25 Dec 2017</li>
-          <li><strong>09:00 - 17:00</strong> 25 Dec 2017</li>
-          <li><strong>09:00 - 17:00</strong> 25 Dec 2017</li>
-          <li><strong>09:00 - 17:00</strong> 25 Dec 2017</li>
-          <li><strong>09:00 - 17:00</strong> 25 Dec 2017</li>
-          <li><strong>09:00 - 17:00</strong> 25 Dec 2017</li>
-          <li><strong>09:00 - 17:00</strong> 25 Dec 2017</li>
-        </ul>
-      </div>
-      <div id="amount-breakdown">
-        <h3>Amount</h3>
-        <span>3 Hours</span>
-        <span>AUD: $3200.00</span>
-      </div>
-    </section>
-    <section id="price-details">
-      <div></div>
-      <div>
-        <table>
-          <tbody>
-            <tr>
-              <td>Subtotal</td>
-              <td>AUD: $3200.00</td>
-            </tr>
-            <tr>
-              <td>VAT/GST Total</td>
-              <td>AUD: $0.00</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-    <section id="final-price">
-
-    </section> -->
   </body>
 </html>

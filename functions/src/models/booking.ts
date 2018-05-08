@@ -52,15 +52,17 @@ enum PaymentStatus {
 }
 
 class BookingDate {
-  date:     Date   = new Date()
-  fromHour: number = 0
-  toHour:   number = 0
+  date:           Date   = new Date()
+  fromHour:       number = 0
+  toHour:         number = 0
+  incentivePrice: number = 0
 
   constructor(model: any = null) {
     if(model) {
-      this.date     = model.date     || new Date()
-      this.fromHour = model.fromHour || 0
-      this.toHour   = model.toHour   || 0
+      this.date           = model.date || new Date()
+      this.fromHour       = model.fromHour || 0
+      this.toHour         = model.toHour || 0
+      this.incentivePrice = model.incentivePrice || 0
     }
   }
 }

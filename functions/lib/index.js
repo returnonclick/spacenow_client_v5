@@ -174,6 +174,20 @@ const actionsBooking = functions.firestore
                         .then(([host, cat, dates]) => {
                         let hostData = host.data();
                         let cateData = cat.data();
+                        let price = {
+                            accom: 0,
+                            tax: 0,
+                            total: 0,
+                        };
+                        if (currBooking.bookingDates[0].incentivePrice)
+                            price.accom += currBooking.bookingDates[0].incentivePrice;
+                        else if (listing.priceUnit == 'hourly')
+                            price.accom += listing.price.price * (currBooking.bookingDates[0].toHour - currBooking.bookingDates[0].fromHour);
+                        else
+                            price.accom += listing.price.price * currBooking.bookingDates.length;
+                        price.accom *= (cateData.slug == 'desk_only' || cateData.slug == 'co-working-space') ? currBooking.numGuests : 1;
+                        price.tax = price.accom * (listing.tax.percent / 100.0);
+                        price.total = price.accom + price.tax;
                         let context = {
                             booking: currBooking,
                             hostData,
@@ -181,6 +195,7 @@ const actionsBooking = functions.firestore
                             userData,
                             cateData,
                             dates,
+                            price,
                         };
                         const hostSubject = 'Your space has booked and you have a new guest coming.';
                         let hostPdfP = generatePdf(`${currBooking.id}_Invoice_host.pdf`, context)
