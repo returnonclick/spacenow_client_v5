@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import { of } from 'rxjs/observable/of'
 import { map, switchMap, catchError, mergeMap } from 'rxjs/operators'
 
-import { ListingShortDetail } from '@shared/models/listing-short-detail'
+// import { ListingShortDetail } from '@shared/models/listing-short-detail'
 import { SearchService } from '@core/store/search/services/search'
 
 import * as actions from '@core/store/search/actions/search'
@@ -19,9 +19,16 @@ export class SearchEffects {
     switchMap(action => this._service.query(action.params)),
     mergeMap(changes => changes),
     map(action => {
-      return {
-        type: `[Search] ${action.type}`,
-        payload: action.doc.data()
+      if (action) {
+        return {
+          type: `[Search] ${action.type}`,
+          payload: action.doc.data()
+        }
+      } else {
+        return {
+          type: `[Search] done`,
+          payload: null
+        }
       }
     })
   )

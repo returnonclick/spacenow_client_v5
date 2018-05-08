@@ -52,6 +52,9 @@ export class IndexComponent {
   radius: number = 5
   latitude: number = -33.9108137
   longitude: number = 151.1960078
+  country: string = ''
+  locality: string = ''
+  street: string = ''
 
   categories$: Observable<Category[]>
   listingsShortDetailAustralia$: Observable<ListingShortDetail[]>
@@ -123,6 +126,9 @@ export class IndexComponent {
     this.form.get('latitude').setValue(address.latitude)
     this.form.get('longitude').setValue(address.longitude)
     this.form.get('name').setValue(address.full_name)
+    this.country = address.country
+    this.locality = address.locality
+    this.street = address.route
     this.el.nativeElement.querySelector("#submitButton").click()
   }
 
@@ -133,16 +139,17 @@ export class IndexComponent {
     } else {
       let formVal = this.form.value
 
-      this._router.navigate(['/search'], {
+      this._router.navigate(['/spaces'], {
         queryParams: {
           name: encodeURIComponent(formVal.name),
-          radius: formVal.radius,
-          latitude: formVal.latitude, longitude: formVal.longitude
+          latitude: formVal.latitude, 
+          longitude: formVal.longitude,
+          country: this.country,
+          locality: this.locality,
+          street: this.street
         }
       })
-
     }
-
   }
 
   private createForm() {

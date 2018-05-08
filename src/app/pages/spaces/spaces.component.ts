@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core'
 import { FormBuilder,  FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Store } from '@ngrx/store'
@@ -6,12 +6,15 @@ import { Observable } from 'rxjs'
 import { AgmMap, AgmMarker } from '@agm/core'
 import { } from 'googlemaps'
 
-import { ListingShortDetail } from '@shared/models/listing-short-detail'
+import { Space } from '@shared/models/space'
 import { Category } from '@shared/models/category'
 
 import * as fromRoot from '@core/store'
+import * as categoryActions from '@core/store/categories/category.action'
 import * as searchActions from '@core/store/search/actions/search'
 import * as layoutActions from '@core/store/layouts/actions/layout'
+
+import { SearchService } from '@core/store/search/services/search'
 
 @Component({
   selector: 'sn-spaces',
@@ -23,14 +26,12 @@ export class SpacesComponent {
 
   @ViewChild(AgmMap) map: AgmMap
 
-  zoom:       number                                    = 16
+  zoom:       number                                    = 15
   name:       string                                    = ''
-  radius:     number                                    = 5
-  latitude:   number                                    = -33.9108137
-  longitude:  number                                    = 151.1960078
+  latitude:   number                                    = null
+  longitude:  number                                    = null
 
-  results$:       Observable<ListingShortDetail[]>
-  resultsBackup$: Observable<ListingShortDetail[]>
+  results$:       Observable<Space[]> 
   isLoading$:     Observable<boolean>
 
   form:       FormGroup
@@ -40,100 +41,152 @@ export class SpacesComponent {
   categories$:   Observable<Category[]>
   minPrice:      number                                   = null
   maxPrice:      number                                   = null
-  categorySlug:  string                                   = ''
+  categoryId:    string                                   = ''
+  country:       string                                   = ''
+  locality:      string                                   = ''
+  street:        string                                   = ''
 
   constructor(
     private _fb:     FormBuilder,
     private _route:  ActivatedRoute,
     private _router: Router,
-    private _store:  Store<fromRoot.State>,
+    public el:       ElementRef,
+    // public results:  SearchService,    For pagination service (next, back buttons)
+    private _store:  Store<fromRoot.State>
   ) {
-    this.results$     = this.resultsBackup$ = this._store.select(fromRoot.getAllSearches)
-    this.results$.subscribe(res => console.log(res))
+    this.results$ = this._store.select(fromRoot.getAllSearches)
     this.isLoading$   = this._store.select(fromRoot.isLoadingSearch)
     this.categories$  = this._store.select(fromRoot.getAllCategories)
-    
   }
 
   ngOnInit() {
     this._store.dispatch(new layoutActions.SetLogoGreen)
-
+    this._store.dispatch(new categoryActions.Query())
     Observable.combineLatest(
       this._route.queryParams,
       this.map.mapReady,
     ).subscribe(([queryParams, map]) => {
       if(queryParams && map) {
-        this.name      = queryParams.name ? decodeURIComponent(queryParams.name): this.name
-        this.radius    = +queryParams.radius || this.radius
-        this.latitude  = +queryParams.latitude || this.latitude
-        this.longitude = +queryParams.longitude || this.longitude
-        this.categorySlug = queryParams.categorySlug || this.categorySlug
-        this.maxPrice = +queryParams.maxPrice || this.maxPrice
-        this.minPrice = +queryParams.minPrice || this.minPrice
+        this.name       = queryParams.name ? decodeURIComponent(queryParams.name): this.name
+        this.latitude   = +queryParams.latitude || this.latitude
+        this.longitude  = +queryParams.longitude || this.longitude
+        this.categoryId = queryParams.categoryId || this.categoryId
+        this.maxPrice   = +queryParams.maxPrice || this.maxPrice
+        this.minPrice   = +queryParams.minPrice || this.minPrice
+        this.country    = queryParams.country || this.country
+        this.locality   = queryParams.locality || this.locality
+        this.street     = queryParams.street || this.street
         this._store.dispatch(new searchActions.Query(queryParams))
+
+        // ** For using the next and back buttons **
+        // this.results.query(queryParams)
+        // this.results$ = this.results.data
 
         if(!this.nativeMap)
           this.nativeMap = <google.maps.Map> map
 
         this._updateForm()
+        this._clearForm(this.form.value)
       }
     })
-    
     Observable.combineLatest(
       this.results$,
       this.map.mapReady,
     ).subscribe(([searchResults, map]) => {
       this._clearMarkers()
-      // TODO(TT) delete this
-      // console.log(searchResults)
       if(searchResults && map) {
         for(let result of searchResults) {
-          let latLng = new google.maps.LatLng(result.geopoint.latitude, result.geopoint.longitude);
-          let marker      = new google.maps.Marker({
+          let latLng = new google.maps.LatLng(result.address.latitude, result.address.longitude);
+          let marker = new google.maps.Marker({
             map:      this.nativeMap,
             position: latLng,
-            icon:     'assets/icons/spacenow_icon_01.svg',
+            icon:     'assets/icons/linkedin_icon.svg',
           })
           this.markerMap[result.id] = marker
         }
       }
     })
-
-    this._updateForm()
+    this._updateForm()  
   }
 
+
   selectedAddress(address) {
-    this.form.get('latitude').setValue(address.latitude)
-    this.form.get('longitude').setValue(address.longitude)
     this.form.get('name').setValue(address.full_name)
+    this.country = address.country
+    this.locality = address.locality
+    this.latitude = address.latitude
+    this.longitude = address.longitude
+    this.street = address.route
+    this.el.nativeElement.querySelector("#submit").click()
   }
 
   onSubmit() {
+    let formVal: any = ''
     this.form.updateValueAndValidity()
+
     if(this.form.invalid)
       return
 
-    let formVal = this.form.value
+    formVal = this.form.value
+    this._clearForm(formVal)
 
-    this._router.navigate(['spaces'], {
+    // this.results.query( ** For using the next and back buttons **
+    this._router.navigate(['/spaces'], {
       queryParams: {
         name:      encodeURIComponent(formVal.name),
-        radius:    formVal.radius,
-        latitude:  formVal.latitude,
-        longitude: formVal.longitude,
-        categorySlug:  formVal.categorySlug,
+        categoryId:  formVal.categoryId,
         minPrice: formVal.minPrice,
-        maxPrice: formVal.maxPrice
-      }
-    })
+        maxPrice: formVal.maxPrice,
+        latitude:  this.latitude,
+        longitude: this.longitude,
+        country:  this.country,
+        locality:  this.locality,
+        street:  this.street
+    }})
   }
+
+  // **For using the next and back buttons**
+
+  // nextPage() {
+  //   let formVal: any = ''
+  //   formVal = this.form.value
+  //   this.results.next(
+  //     {
+  //       name:      encodeURIComponent(formVal.name),
+  //       categoryId:  formVal.categoryId,
+  //       minPrice: formVal.minPrice,
+  //       maxPrice: formVal.maxPrice,
+  //       latitude:  this.latitude,
+  //       longitude: this.longitude,
+  //       country:  this.country,
+  //       locality:  this.locality,
+  //       street:  this.street
+  //     })
+  // }
+
+  // backPage() {
+  //   let formVal: any = ''
+  //   formVal = this.form.value
+  //   this.results.back(
+  //     {
+  //       name:      encodeURIComponent(formVal.name),
+  //       categoryId:  formVal.categoryId,
+  //       minPrice: formVal.minPrice,
+  //       maxPrice: formVal.maxPrice,
+  //       latitude:  this.latitude,
+  //       longitude: this.longitude,
+  //       country:  this.country,
+  //       locality:  this.locality,
+  //       street:  this.street
+  //     })
+  // }
 
   toggleHover(space, enterFlag) {
     let marker: google.maps.Marker = this.markerMap[space.id]
     if(enterFlag)
-      marker.setIcon('assets/icons/spacenow_icon_02.svg')
+      marker.setIcon('assets/icons/linkedin_icon.svg')
     else
-      marker.setIcon('assets/icons/spacenow_icon_01.svg')
+      marker.setIcon('assets/icons/linkedin_icon.svg')
   }
 
   private _clearMarkers() {
@@ -147,14 +200,40 @@ export class SpacesComponent {
 
   private _updateForm() {
     this.form = this._fb.group({
-      name:       [ this.name, Validators.required ],
-      radius:     [ this.radius, Validators.required ],
-      latitude:   [ this.latitude ],
-      longitude:  [ this.longitude ],
+      name:       [ this.name ],
       minPrice:   [ this.minPrice ],
       maxPrice:   [ this.maxPrice ],
-      categorySlug: [ this.categorySlug ],
+      categoryId: [ this.categoryId ]
     })
   }
 
+  private _clearForm(formVal) {
+    if (formVal.categoryId == '') this.categoryId = ''
+    if (formVal.maxPrice == null) this.maxPrice = null
+    if (formVal.minPrice == null) this.minPrice = null
+
+    if (formVal.name == '') {
+      this.getLocation()
+      this.name = ''
+      this.country = ''
+      this.locality = ''
+      this.street = ''
+      this.zoom = 12
+    } else this.zoom = 14
+
+    if ((this.locality == '' && this.country != '') 
+        || ((this.locality == this.country) 
+        && this.country != '')) this.zoom = 5 
+  }
+
+  x = document.getElementById("search")
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude
+        this.longitude = position.coords.longitude
+      })
+    }
+  }
 }
